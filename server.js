@@ -5,11 +5,10 @@ const bodyParser = require('body-parser');
 const ejsMate = require("ejs-mate");
 const cors = require("cors");
 const axios = require("axios");
-// const crypto = require("crypto-js");
+
 const crypto = require('crypto');
 
 const dotenv = require('dotenv');
-const mailsender = require("./utils/mailsender");
 const Templatesender = require("./utils/templatemailer");
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -19,9 +18,11 @@ const multer = require('multer');
 const fs = require('fs');
 const User = require("./models/User");
 const Blog = require('./models/Blog');
-const bcrypt = require('bcrypt');
+
 const passport = require('./config/passport');
-const LocalStrategy = require('passport-local').Strategy;
+
+const { google } = require('googleapis');
+
 
 const app = express();
 
@@ -117,6 +118,63 @@ const isAdmin = (req, res, next) => {
 
 
 
+// Load client secrets from a local file.
+const credentials = require('./credentials.json');
+
+// Create a JWT client for service account
+const client = new google.auth.JWT(
+    credentials.client_email,
+    null,
+    credentials.private_key,
+    ['https://www.googleapis.com/auth/spreadsheets'] // Scopes
+);
+
+// Function to append data to Google Sheets
+async function appendToSheet(auth, data) {
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = '1sAGLiARDBiDy-1a7PqNaCphH0SjppsTCJ1zC4ktVGyI';
+    const range = 'Website Leads!A:C'; // Adjust range as needed
+    const valueInputOption = 'RAW';
+
+    let values = [];
+    if (data.number) {
+        // For /submit-quote-lead route
+        values = [data.number, new Date().toISOString()];
+    } else if (data.tel) {
+        // For /submit-quote route
+        values = [
+            data.tel,
+            new Date().toISOString(),
+            `${data.firstName} ${data.lastName}`,
+            data.email,
+            data.service,
+        ];
+    }
+
+    const resource = {
+        values: [values]
+    };
+
+    console.log('Data being appended to sheet:', JSON.stringify(resource.values, null, 2));
+
+    try {
+        const result = await sheets.spreadsheets.values.append({
+            spreadsheetId,
+            range,
+            valueInputOption,
+            resource,
+        });
+        console.log(`${result.data.updates.updatedCells} cells appended.`);
+        console.log('Append response:', JSON.stringify(result.data, null, 2));
+    } catch (err) {
+        console.error('Error appending to sheet:', err);
+    }
+}
+
+
+
+
+
 
 
 
@@ -169,7 +227,7 @@ app.get("/email-marketing", (req, res) => {
 })
 
 
-app.get("/search-engine-optimization" , (req, res)=>{
+app.get("/search-engine-optimization", (req, res) => {
     res.render("seo")
 })
 
@@ -354,26 +412,162 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
 
 
 
-//   const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
-const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com'];
+// const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
+const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com' , 'bgmilelomujhse@gmail.com'];
 
 
 
 
 
 
-app.post('/submit-quote', (req, res) => {
+
+app.post('/submit-quote', async (req, res) => {
     const formData = req.body;
+    const htmlTemplate = `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shashi sales and marketing</title>
+        <style>
+        .main-page{
+            height: 100vh;
+            width: 100%;
+            position: relative;
+        }
+        .details{
+            width: 350px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(239, 229, 229);
+            padding: 3rem 1.5rem;
+            
+        }
+
+        .details h1{
+            font-size: 1.5rem;
+
+
+        }
+        
+
+
+    </style>
+    </head>
+    
+    <body>
+        <div class="main-page">
+            <div class="details">
+                <h1>New Lead Notification</h1>
+                <br>
+                <p id="Full name"><b>Name :</b> ${formData.firstName} ${formData.lastName}</p>
+                <br>
+                <p class="phone-number"><b>Number :</b> ${formData.tel}</p> <br>
+                <p class="email"><b>Email :</b> ${formData.email}</p> <br>
+                <p class="service"><b>Service :</b> ${formData.service}</p> <br>
+            </div>
+            </div>
+    
+                    
+    </body>
+    
+    </html>`
+
+    const referrerUrl = req.get('Referrer') || '/';
 
     try {
         console.log('Received form data:', formData);
-        mailsender(formData, recipients);
+        // mailsender(formData, recipients);
+        Templatesender(recipients, htmlTemplate);
+
+         // Append data to Google Sheets
+         await appendToSheet(client, formData);
         req.session.successMessage = 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon';
-        res.redirect('/');
+        res.redirect(referrerUrl);
     } catch (error) {
         console.error('Failed to send email:', error);
         req.session.errorMessage = 'An error occurred while submitting your form. Please try again later.';
-        res.redirect('/');
+        res.redirect(referrerUrl);
+    }
+});
+
+app.post('/submit-quote-lead', async (req, res) => {
+    const formData = req.body;
+    const referrerUrl = req.get('Referrer') || '/';
+    const htmlTemplate = `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shashi sales and marketing</title>
+        <style>
+            .main-page{
+                height: 100vh;
+                width: 100%;
+                position: relative;
+            }
+            .details{
+                width: 350px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgb(239, 229, 229);
+                padding: 3rem 1.5rem;
+                
+            }
+    
+            .details h1{
+                font-size: 1.5rem;
+   
+    
+            }
+            
+    
+    
+        </style>
+    </head>
+    
+    <body>
+        <div class="main-page">
+            <div class="details">
+                <h1>New Lead Notification</h1>
+            
+               <br>
+                
+                <p class="phone-number"><b>Number :</b> ${formData.number}</p>
+                <p><strong>Submitted At:</strong> ${new Date().toLocaleString()}</p>
+               
+            </div>
+            </div>
+    
+                    
+    </body>
+    
+    </html>`
+
+    try {
+        console.log('Received form data:', formData);
+        // mailsender(formData, recipients);
+        Templatesender(recipients, htmlTemplate);
+
+        // Append data to Google Sheets
+        await appendToSheet(client, formData);
+
+
+
+
+
+        req.session.successMessage = 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon';
+        res.redirect(referrerUrl);
+    } catch (error) {
+        console.error('Failed to send email:', error);
+        req.session.errorMessage = 'An error occurred while submitting your form. Please try again later.';
+        res.redirect(referrerUrl);
     }
 });
 
@@ -475,10 +669,10 @@ app.get("/phonepe-form", async (req, res) => {
 app.post("/payment", async (req, res) => {
     try {
         const { name, number, amount, email } = req.body;
-        const merchantTransactionId =  'T' + Date.now();;
+        const merchantTransactionId = 'T' + Date.now();;
         const data = {
             "merchantId": process.env.PHONEPE_MERCHANT_ID,
-            "merchantTransactionId":merchantTransactionId,
+            "merchantTransactionId": merchantTransactionId,
             "merchantUserId": process.env.PHONEPE_MERCHANT_UID,
 
             "amount": amount * 100,
@@ -514,11 +708,11 @@ app.post("/payment", async (req, res) => {
         };
 
         axios
-  .request(options)
-      .then(function (response) {
-          console.log(response.data);
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
 
-          const htmlTemplate =`
+                const htmlTemplate = `
           <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -686,10 +880,10 @@ app.post("/payment", async (req, res) => {
 </html>
           `
 
-          Templatesender(email, htmlTemplate);
+                Templatesender(email, htmlTemplate);
 
 
-          const htmlTemplate2 =`
+                const htmlTemplate2 = `
           <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -859,17 +1053,17 @@ app.post("/payment", async (req, res) => {
 </body>
 </html>
           `
-          Templatesender("info@shashisales.com" , htmlTemplate2)
+                Templatesender("info@shashisales.com", htmlTemplate2)
 
-        res.redirect(response.data.data.instrumentResponse.redirectInfo.url)
+                res.redirect(response.data.data.instrumentResponse.redirectInfo.url)
 
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-       
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
 
-       
+
+
     } catch (error) {
         console.error('Error details:', {
             message: error.message,
@@ -918,7 +1112,7 @@ app.post("/status/:txnId", async (req, res) => {
     try {
         const response = await axios.request(options);
         console.log("PhonePe API Response:", response.data);
-        
+
         if (response.data.success === true) {
             console.log("Payment successful, redirecting to success page");
             // Get the amount from the response
@@ -933,7 +1127,7 @@ app.post("/status/:txnId", async (req, res) => {
         console.error("Status:", error.response?.status);
         console.error("Headers:", error.response?.headers);
         console.error("Data:", error.response?.data);
-        
+
         return res.redirect("/phonepe-form");
     }
 });
@@ -942,9 +1136,9 @@ app.get("/payment-successful", (req, res) => {
     const amount = req.query.amount || 'N/A';
     res.render("paymentsucess.ejs", { amount: amount });
 
-   
+
 });
-app.get("/payment-failed" , (req, res)=>{
+app.get("/payment-failed", (req, res) => {
     res.render("paymentfail.ejs")
 })
 
