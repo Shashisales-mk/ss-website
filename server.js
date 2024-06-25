@@ -412,8 +412,8 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
 
 
 
-// const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
-const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com' , 'bgmilelomujhse@gmail.com'];
+//   const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
+const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com'];
 
 
 
