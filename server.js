@@ -122,12 +122,12 @@ const isAdmin = (req, res, next) => {
 // const credentials = require('./credentials.json');
 const privateKey = process.env.GOOGLE_PRIVATE_KEY;
 
-if (typeof privateKey === 'string') {
-    privateKey = privateKey.replace(/\\n/g, '\n');
-  } else {
-    console.error('GOOGLE_PRIVATE_KEY is not set or not a string');
-    privateKey = null; // or set a default value if appropriate
-  }
+// if (typeof privateKey === 'string') {
+//     privateKey = privateKey.replace(/\\n/g, '\n');
+//   } else {
+//     console.error('GOOGLE_PRIVATE_KEY is not set or not a string');
+//     privateKey = null; // or set a default value if appropriate
+//   }
 
 const credentials = {
     type: 'service_account',
