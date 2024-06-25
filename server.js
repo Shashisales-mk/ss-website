@@ -572,9 +572,9 @@ app.post('/submit-quote-lead', async (req, res) => {
         // mailsender(formData, recipients);
         Templatesender(recipients, htmlTemplate);
 
-        const authClient = await authenticate();
-        // Append data to Google Sheets
-        await appendToSheet(authClient, formData);
+        // const authClient = await authenticate();
+        // // Append data to Google Sheets
+        // await appendToSheet(authClient, formData);
 
 
 
