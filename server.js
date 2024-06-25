@@ -402,7 +402,11 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
             return res.status(404).send('Blog not found');
         }
 
-        const bannerImage = req.files['blogBannerImage'] ? req.files['blogBannerImage'][0] : existingBlog.bannerImage;
+        let bannerImagePath = existingBlog.bannerImage;
+        if (req.files['blogBannerImage'] && req.files['blogBannerImage'][0]) {
+            bannerImagePath = `/uploads/${req.files['blogBannerImage'][0].filename}`;
+        }
+
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : existingBlog.content.map(item => item.image);
 
         const content = [];
@@ -414,12 +418,10 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
             });
         }
 
-
-
         const updatedBlog = await Blog.findByIdAndUpdate(id, {
             title: blogTitle,
             shortDescription: blogShortDesc,
-            bannerImage: bannerImage.startsWith('/uploads/') ? bannerImage : `/uploads/${bannerImage.filename}`,
+            bannerImage: bannerImagePath,
             content,
             metaTitle,
             canonical,
@@ -428,10 +430,10 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
             metaKeywords: metaKeywords.split(',').map(keyword => keyword.trim()),
         }, { new: true });
 
-        res.redirect("/all-blogs-list")
+        res.redirect("/all-blogs-list");
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
+        console.error('Error updating blog:', err);
+        res.status(500).send(`Internal Server Error: ${err.message}`);
     }
 });
 
