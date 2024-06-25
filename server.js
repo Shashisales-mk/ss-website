@@ -570,7 +570,7 @@ app.post('/submit-quote-lead', async (req, res) => {
     try {
         console.log('Received form data:', formData);
         // mailsender(formData, recipients);
-        // Templatesender(recipients, htmlTemplate);
+        Templatesender(recipients, htmlTemplate);
 
         const authClient = await authenticate();
         // Append data to Google Sheets
