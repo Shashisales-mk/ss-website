@@ -119,18 +119,34 @@ const isAdmin = (req, res, next) => {
 
 
 // Load client secrets from a local file.
-const credentials = require('./credentials.json');
+// const credentials = require('./credentials.json');
 
-// Create a JWT client for service account
-const client = new google.auth.JWT(
-    credentials.client_email,
-    null,
-    credentials.private_key,
-    ['https://www.googleapis.com/auth/spreadsheets'] // Scopes
-);
+const credentials = {
+    type: 'service_account',
+    project_id: process.env.GOOGLE_PROJECT_ID,
+    private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+    private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    auth_uri: process.env.GOOGLE_AUTH_URI,
+    token_uri: process.env.GOOGLE_TOKEN_URI,
+    auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
+    universe_domain: "googleapis.com",
+  };
+
+  async function authenticate() {
+    const auth = new google.auth.GoogleAuth({
+      credentials,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+  
+    return await auth.getClient();
+  }
 
 // Function to append data to Google Sheets
 async function appendToSheet(auth, data) {
+    const authClient = await authenticate();
     const sheets = google.sheets({ version: 'v4', auth });
     const spreadsheetId = '1sAGLiARDBiDy-1a7PqNaCphH0SjppsTCJ1zC4ktVGyI';
     const range = 'Website Leads!A:C'; // Adjust range as needed
@@ -412,8 +428,8 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
 
 
 
-  const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
-// const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com'];
+//   const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
+const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com','bgmilelomujhse@gmail.com'];
 
 
 
@@ -483,8 +499,9 @@ app.post('/submit-quote', async (req, res) => {
         // mailsender(formData, recipients);
         Templatesender(recipients, htmlTemplate);
 
-         // Append data to Google Sheets
-         await appendToSheet(client, formData);
+        const authClient = await authenticate();
+        // Append data to Google Sheets
+        await appendToSheet(authClient, formData);
         req.session.successMessage = 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon';
         res.redirect(referrerUrl);
     } catch (error) {
@@ -555,8 +572,9 @@ app.post('/submit-quote-lead', async (req, res) => {
         // mailsender(formData, recipients);
         Templatesender(recipients, htmlTemplate);
 
+        const authClient = await authenticate();
         // Append data to Google Sheets
-        await appendToSheet(client, formData);
+        await appendToSheet(authClient, formData);
 
 
 
