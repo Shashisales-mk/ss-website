@@ -27,6 +27,9 @@
 
 
 @media only screen and (max-width: 768px) {
+    .sma{
+        display: none;
+    }
 
     .contact-bar{
         display: none;

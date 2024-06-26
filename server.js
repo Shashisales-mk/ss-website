@@ -154,6 +154,7 @@ const credentials = {
   }
 
 // Function to append data to Google Sheets
+// Function to append data to Google Sheets
 async function appendToSheet(auth, data) {
     const authClient = await authenticate();
     const sheets = google.sheets({ version: 'v4', auth });
@@ -161,18 +162,34 @@ async function appendToSheet(auth, data) {
     const range = 'Website Leads!A:C'; // Adjust range as needed
     const valueInputOption = 'RAW';
 
+    function extractPhoneDetails(phone) {
+        const regex = /^(\+\d{1,3})(\d{10})$/;
+        const match = phone.match(regex);
+        if (match) {
+            return {
+                countryCode: match[1],
+                phoneNumber: match[2]
+            };
+        }
+        return {
+            countryCode: '',
+            phoneNumber: phone
+        };
+    }
+
     let values = [];
     if (data.number) {
-        // For /submit-quote-lead route
-        values = [data.number, new Date().toISOString()];
+        const { countryCode, phoneNumber } = extractPhoneDetails(data.number);
+        values = [phoneNumber, new Date().toISOString(), countryCode];
     } else if (data.tel) {
-        // For /submit-quote route
+        const { countryCode, phoneNumber } = extractPhoneDetails(data.tel);
         values = [
-            data.tel,
+            phoneNumber,
             new Date().toISOString(),
             `${data.firstName} ${data.lastName}`,
             data.email,
             data.service,
+            countryCode
         ];
     }
 
