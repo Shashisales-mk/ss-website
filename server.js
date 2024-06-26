@@ -141,49 +141,35 @@ const credentials = {
     auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
     client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
     universe_domain: "googleapis.com",
-  };
+};
 
 
-  async function authenticate() {
+async function authenticate() {
     const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        credentials,
+        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
-  
-    return await auth.getClient();
-  }
 
-// Function to append data to Google Sheets
-// Function to append data to Google Sheets
+    return await auth.getClient();
+}
+
 async function appendToSheet(auth, data) {
     const authClient = await authenticate();
     const sheets = google.sheets({ version: 'v4', auth });
     const spreadsheetId = '1sAGLiARDBiDy-1a7PqNaCphH0SjppsTCJ1zC4ktVGyI';
-    const range = 'Website Leads!A:C'; // Adjust range as needed
+    const range = 'Website Leads!A:D'; // Adjust range as needed
     const valueInputOption = 'RAW';
-
-    function extractPhoneDetails(phone) {
-        const regex = /^(\+\d{1,3})(\d{10})$/;
-        const match = phone.match(regex);
-        if (match) {
-            return {
-                countryCode: match[1],
-                phoneNumber: match[2]
-            };
-        }
-        return {
-            countryCode: '',
-            phoneNumber: phone
-        };
-    }
 
     let values = [];
     if (data.number) {
-        const { countryCode, phoneNumber } = extractPhoneDetails(data.number);
-        values = [phoneNumber, new Date().toISOString(), countryCode];
+        // For /submit-quote-lead route
+        const { countryCode, phoneNumber } = parsePhoneNumber(data.number);
+        values = [countryCode, phoneNumber, new Date().toISOString()];
     } else if (data.tel) {
-        const { countryCode, phoneNumber } = extractPhoneDetails(data.tel);
+        // For /submit-quote route
+        const { countryCode, phoneNumber } = parsePhoneNumber(data.tel);
         values = [
+            
             phoneNumber,
             new Date().toISOString(),
             `${data.firstName} ${data.lastName}`,
@@ -212,6 +198,22 @@ async function appendToSheet(auth, data) {
         console.error('Error appending to sheet:', err);
     }
 }
+
+// Helper function to parse the phone number into country code and phone number
+function parsePhoneNumber(phoneNumber) {
+    const match = phoneNumber.match(/^\+(\d+)\s(\d{10})$/);
+    if (match) {
+        return {
+            countryCode: `+${match[1]}`,
+            phoneNumber: match[2]
+        };
+    }
+    return {
+        countryCode: '',
+        phoneNumber: phoneNumber
+    };
+}
+
 
 
 
@@ -457,7 +459,7 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
 
 
 //   const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
-const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com','bgmilelomujhse@gmail.com'];
+const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com', 'bgmilelomujhse@gmail.com'];
 
 
 
@@ -525,7 +527,7 @@ app.post('/submit-quote', async (req, res) => {
     try {
         console.log('Received form data:', formData);
         // mailsender(formData, recipients);
-        Templatesender(recipients, htmlTemplate);
+        Templatesender(recipients, htmlTemplate, "You Got New Lead");
 
         const authClient = await authenticate();
         // Append data to Google Sheets
@@ -598,7 +600,7 @@ app.post('/submit-quote-lead', async (req, res) => {
     try {
         console.log('Received form data:', formData);
         // mailsender(formData, recipients);
-        Templatesender(recipients, htmlTemplate);
+        Templatesender(recipients, htmlTemplate, "You Got New Lead");
 
         const authClient = await authenticate();
         // Append data to Google Sheets
@@ -926,7 +928,7 @@ app.post("/payment", async (req, res) => {
 </html>
           `
 
-                Templatesender(email, htmlTemplate);
+                Templatesender(email, htmlTemplate, "Thank you from shashi sales and marketing");
 
 
                 const htmlTemplate2 = `
@@ -1099,7 +1101,7 @@ app.post("/payment", async (req, res) => {
 </body>
 </html>
           `
-                Templatesender("info@shashisales.com", htmlTemplate2)
+                Templatesender("info@shashisales.com", htmlTemplate2, "Payment INfo")
 
                 res.redirect(response.data.data.instrumentResponse.redirectInfo.url)
 

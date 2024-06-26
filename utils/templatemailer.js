@@ -20,11 +20,11 @@ const transporter = nodemailer.createTransport({
 });
 
 // Function to send email notification
-const sendEmail = (recipient, htmlTemplate) => {
+const sendEmail = (recipient, htmlTemplate, subject) => {
   const mailOptions = {
     from: fromUser, // Replace with your Gmail email
     to: recipient,
-    subject: 'Payment Notification',
+    subject: subject,
     html: htmlTemplate,
   };
 
