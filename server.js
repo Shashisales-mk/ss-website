@@ -157,7 +157,7 @@ async function appendToSheet(auth, data) {
     const authClient = await authenticate();
     const sheets = google.sheets({ version: 'v4', auth });
     const spreadsheetId = '1sAGLiARDBiDy-1a7PqNaCphH0SjppsTCJ1zC4ktVGyI';
-    const range = 'Website Leads!A:D'; // Adjust range as needed
+    const range = 'Website Leads!A:E'; // Adjust range as needed
     const valueInputOption = 'RAW';
 
     let values = [];
@@ -169,7 +169,6 @@ async function appendToSheet(auth, data) {
         // For /submit-quote route
         const { countryCode, phoneNumber } = parsePhoneNumber(data.tel);
         values = [
-            
             phoneNumber,
             new Date().toISOString(),
             `${data.firstName} ${data.lastName}`,
@@ -201,16 +200,16 @@ async function appendToSheet(auth, data) {
 
 // Helper function to parse the phone number into country code and phone number
 function parsePhoneNumber(phoneNumber) {
-    const match = phoneNumber.match(/^\+(\d+)\s(\d{10})$/);
+    const match = phoneNumber.match(/^\+(\d{1,3})\s(\d{4}\s\d{3}\s\d{3}|\d{10})$/);
     if (match) {
         return {
             countryCode: `+${match[1]}`,
-            phoneNumber: match[2]
+            phoneNumber: match[2].replace(/\s/g, '')
         };
     }
     return {
         countryCode: '',
-        phoneNumber: phoneNumber
+        phoneNumber: phoneNumber.replace(/\s/g, '')
     };
 }
 
