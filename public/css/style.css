@@ -379,3 +379,582 @@ th {
         padding: 3vw;
     }
 }
+
+
+
+
+
+
+/* business services code css */
+
+
+
+/* 
+::-webkit-scrollbar {
+    width: 4px;
+    height: 80px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background:#222A35;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #575C66;
+    border-radius: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #626970;
+  }
+
+ */
+
+/* Slider */
+.product{
+    color: white;
+    padding: 20px;
+}
+.product-container{
+    margin: 1rem;
+    padding: 0 0;
+    gap: 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+.product-container::-webkit-scrollbar{
+    display: none;
+}
+.button-center{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.pre-btn, .nxt-btn{
+    border: none;
+    border-radius: 11px;
+    width: 2vw;
+    height: 70px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    background: none;
+    cursor: pointer;
+}
+.pre-btn{
+    left: 0;
+    -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+            transform: rotate(180deg);
+}
+.nxt-btn{
+    right: 0;
+}
+.nxt-btn:hover{
+    opacity: 1;
+}
+
+
+.box-container {
+    width: 200px;
+    height: 200px; 
+    position: relative;
+}
+
+.box-container::before,
+.box-container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: lightblue;
+}
+
+.box-container::before {
+    top: 0;
+}
+
+.box-container::after {
+    bottom: 0;
+}
+
+
+
+  /* footer */
+/* footer{
+    margin-top: 2rem;
+} */
+/* .footer-cont{
+    background-color: black;
+    color: white;
+    padding: 0 3vw;
+}
+.footer-s1{
+    padding: 2vw 0 0 0;
+    border-bottom: 1px solid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.footer-s1 div{
+    margin-bottom: 2vw;
+}
+.footer-s1 ul{
+    display: grid;
+    gap: 1.5vw;
+    list-style: none;
+}
+.fsfoot-h{
+    font-size: 1.5vw;
+}
+.sg{
+    font-size: 1.1vw;
+    color: #7A7A7A;
+}
+
+
+.footer-s2{
+    background-image: url('../images/back-img.png');
+    width: auto;
+    background-size: cover;
+    background-position: center;
+}
+.footer-s2-1{
+    padding: 2vw 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.links-cont ul{
+    font-size: 1.2vw;
+    list-style: none;
+    display: grid;
+    gap: 1.5vw;
+    text-decoration: underline;
+}
+
+.footer-s2-2{
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+    padding: 0 15vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.footer-s2-2 img{
+    width: 3vw;    
+}
+.footer-desc{
+    font-size: 1vw;
+    text-align: center;
+    color: grey;
+    display: grid;
+    gap: 1vw;
+}
+
+
+.footer-s3{
+    padding: 3vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer-end{
+    font-size: 1.5vw;
+    padding: 2vw 0;
+}
+ */
+
+
+
+
+
+
+
+
+
+
+ /* email marketing */
+
+
+ 
+ /* Email Marketing Section one */
+.em-sec-one{
+    padding: 10vw 4vw 0vw 4vw;
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+.em-sec-one-left{
+    width: 60%;
+    display: flex;
+    align-items: center;
+}
+.em-sec-one-left span, .em-sec-two-right span{
+    display: grid;
+    gap: 2vw;
+}
+.em-sec-one-left button{
+    background: transparent;
+    border: none;
+    display: flex;
+}
+.em-sec-one-left button a {
+    font-size: 1.2vw;
+    font-weight: bold;
+    background: transparent;
+    color: black;
+    padding: 0.8vw 5vw;
+    border: 1px solid black;
+    border-radius: 2vw;
+}
+.em-sec-one-left p:nth-child(1), .em-sec-two-right p:nth-child(1){
+    font-size: 3vw;
+    font-family: "Roboto Serif";
+}
+.em-sec-one-left p:nth-child(2), .em-sec-two-right p:nth-child(2){
+    font-size: 1.5vw;
+    line-height: 1.5;
+    font-family: "Roboto";
+    color: #868686;
+    font-family: "Roboto Serif";
+}
+.em-sec-one-right{
+    width: 40%;
+    height: 100%;
+    position: relative;
+}
+.em-sec-one-right img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/* Email Marketing Section two */
+.em-sec-two{
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+    padding: 0vw 4vw 3vw 4vw;
+}
+.em-sec-two-left{
+    width: 40%;
+    height: 100%;
+    position: relative;
+}
+.em-sec-two-left img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+} 
+.em-sec-two-right{
+    width: 60%;
+    display: flex;
+    align-items: center;
+}
+
+
+/* Email Marketing Section Six */
+.em-sec-six{
+    padding: 3vw 4vw 0vw 4vw;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1.3vw;
+  }
+td, th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 1vw;
+  }
+th {
+    background-color: #f2f2f2;
+}
+.full-width {
+    text-align: center;
+}
+.equal-width th, .equal-width td {
+    width: 33.33%;
+}
+.table-bg{
+    background: #C4C800;
+}
+
+
+
+
+/* Business Servicces */
+.sub-header{
+    margin: 2vw 0;
+    padding-top: 7.6vw;
+}
+.sub-header ul{
+    font-size: 1.3vw;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+    padding: 0 4vw;
+    list-style: none;
+}
+.bus-ser{
+    background: black;
+    display: flex;
+    justify-content: space-between;
+}
+.bus-ser-l{
+    width: 70%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bus-ser-l span{
+    width: 70%;
+    line-height: 2;
+}
+.bus-ser-l span p:nth-child(1){
+    font-family: "Roboto-Serif";
+    font-size: 4vw;
+}
+.bus-ser-r{
+    position: relative;
+    width: 30%;
+    aspect-ratio: 555/639;
+}
+.bus-ser-r img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: auto;
+    width: 100%;
+}
+.bus-ser-btn {
+    margin-top: 2vw;
+    font-weight: 600;
+    display: inline-block;
+    padding: 0.6vw 6vw;
+    font-size: 1.4vw;
+    color: #C4C800;
+    background-color: transparent;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5vw;
+    border: 1px solid #C4C800;
+    cursor: pointer;
+}
+.bus-ser-btn:hover {
+    background-color: #C4C800;
+    color: black;
+}
+.ccs, .occs, .oea{
+    padding: 0 4vw;
+    color: #868686;
+    font-size: 1.6vw;
+    line-height: 1.8;
+}
+.ccs p, .occs p, .occs li, .oea p, .oea li{
+    font-family: "Roboto";
+    margin-top: 0.7vw;
+}
+.occs ul, .oea ul{
+    margin-left: 4vw;
+    line-height: 2;
+}
+.oea-img{
+    aspect-ratio: 982 / 437;
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
+.oea-img img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.wcu{
+    padding: 0 4vw;
+}
+.wcu ul{
+    margin-left: 2vw;
+}
+.wcu p{
+    color: #868686;
+    margin-bottom: 1vw;
+    font-family: "Roboto";
+    font-size: 1.6vw;
+    line-height: 1.8;
+}
+.wcu li{
+    font-family: "Roboto";
+    font-size: 1.6vw;
+    text-decoration: underline;
+}
+.call-center-services{
+    display: block;
+}
+.service-desk-solutions{
+    display: none;
+}
+.network-support-service{
+    display: none;
+}
+.technical-support{
+    display: none;
+}
+.oea-in{
+    display: flex;
+    justify-content: space-between;
+}
+.oea-in div:nth-child(1){
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+.occs li a{
+    color: #C4C800;
+}
+@media only screen and (max-width: 600px){
+    .sub-header {
+        margin: 2vw 0;
+        padding-top: 17.6vw;
+    }
+    .sub-header ul {
+        font-size: 2.5vw;
+        font-weight: 600;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 5vw;
+        padding: 0 4vw;
+        list-style: none;
+    }
+    .oea-in{
+        display: block;
+    }
+    .oea-in div:nth-child(1){
+        width: 100%;
+    }
+    .oea-img {
+        margin-top: 2vw;
+        width: 100%;
+    }
+    .wcu {
+        padding: 0vw 4vw 20vw 4vw;
+    }
+    .fsmph {
+        font-size: 3.2vw !important;
+    }
+    .pbph{
+        padding-bottom: 20vw !important;
+    }
+    .wcu li {
+        font-family: "Roboto";
+        font-size: 3.6vw;
+        text-decoration: underline;
+    }
+    .wcu p {
+        color: #868686;
+        margin-bottom: 1vw;
+        font-family: "Roboto";
+        font-size: 2.6vw;
+        line-height: 1.8;
+    }
+
+    .ccs, .occs, .oea {
+        padding: 0 4vw;
+        color: #868686;
+        font-size: 3.6vw;
+        line-height: 1.8;
+    }
+    .em-sec-one {
+        padding: 20vw 4vw 0vw 4vw;
+        display: flex;
+        gap: 2vw;
+    }
+    .em-sec-one-left button a {
+        font-size: 1.8vw;
+        font-weight: bold;
+        background: transparent;
+        color: black;
+        padding: 0.8vw 6vw;
+        border: 1px solid black;
+        border-radius: 2vw;
+    }
+    .em-sec-one-left span, .em-sec-two-right span {
+        display: grid;
+        gap: 2vw;
+    }
+    .em-sec-one-left p:nth-child(1), .em-sec-two-right p:nth-child(1) {
+        font-size: 3vw;
+        font-weight: bold;
+        font-family: "Roboto Serif";
+    }
+    .em-sec-one-left p:nth-child(2), .em-sec-two-right p:nth-child(2) {
+        font-size: 2.3vw;
+        font-family: "Roboto";
+        color: #868686;
+        font-family: "Roboto Serif";
+    }
+    .em-sec-one-left{
+        width: 50%;
+        display: flex;
+        align-items: center;
+    }
+    .em-sec-one-right{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    .em-sec-two-left{
+        width: 50%;
+        height: 100%;
+        position: relative;
+    } 
+    .em-sec-two-right{
+        width: 50%;
+        display: flex;
+        align-items: center;
+    }
+    .em-sec-six {
+        padding: 3vw 4vw 20vw 4vw;
+    }
+    .em-sec-six table{
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 2.3vw;
+    }
+    .em-sec-six td, .em-sec-six th {
+        border: 1px solid black;
+        text-align: center;
+        padding: 3vw;
+    }
+}

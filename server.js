@@ -275,6 +275,11 @@ app.get("/search-engine-optimization", (req, res) => {
 })
 
 
+app.get("/business-services" , (req, res)=>{
+    res.render("businessServices")
+})
+
+
 
 app.get("/hidden-img", (req, res) => {
     res.render("hidden")
