@@ -229,51 +229,104 @@ app.get("/", async (req, res) => {
     console.log('errorMessage:', errorMessage); // Log the value of errorMessage
     req.session.successMessage = null; // Clear the success message after displaying it
     req.session.errorMessage = null; // Clear the error message after displaying it
-    res.render("home", { successMessage, errorMessage, blogs, truncateString });
+    res.render("home", { 
+        successMessage, 
+        errorMessage, 
+        blogs, 
+        truncateString,
+        title: "Tech Services & Solutions | Digital Evolution- Shashi Sales ",
+        description: "Shashi Sales, Integrated digital business solutions, with 18+ years of experience in website development, SEO, UI/UX design, social media marketing."
+     });
 });
 
 
 
 
-app.get("/about-us", (req, res) => {
-    res.render("aboutUs")
-})
+app.get("/about-us" , (req, res)=>{
+    res.render("aboutUs",{
+        title: 'About us | Digital Marketing Agency | Shashi Sales ',
+        description: 'Shashi Sales and Marketing offers expert digital marketing services to enhance online presence, boost engagement, and drive business growth.'
+    });
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 app.get("/web-development", (req, res) => {
-    res.render("webDevelopment")
+    res.render("webDevelopment", {
+        title: "Leading Website Development Companies - Shashi Sales ",
+        description: "Get to know the top website development companies of 2024 and their innovative approaches to web development."
+    })
 })
-app.get("/contact-us", (req, res) => {
-    res.render("contact")
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+app.get("/contact-us" , (req, res)=>{
+    res.render("contact", {
+        title: 'Contact us | Shashi Sales contact information | IT Outsourcing Company',
+        description: 'Reach out to Shashi Sales And Marketing to discuss your Integrated Digital Business Solutions needs. Discover the IT solutions tailored for your business.'
+    })
 })
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 app.get("/fusion-marketing", (req, res) => {
-    res.render("advertisement")
+    res.render("advertisement", {
+        title: "Affiliate Marketing and off-page seo techniques-Fusion Marketing",
+        description: "Shashi Sales and Marketing's fusion funnel approach is a comprehensive marketing strategy that integrates affiliate marketing, and SEO techniques."
+    })
 })
-app.get("/terms-of-use", (req, res) => {
-    res.render("terms")
-})
+
 app.get("/cookie-policy", (req, res) => {
     res.render("cookiePolicy")
 })
 app.get("/refund-policy", (req, res) => {
     res.render("refundPolicy")
 })
-app.get("/privacy-policy", (req, res) => {
-    res.render("privacyPolicy")
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/terms-of-use", (req, res) => {
+    res.render("terms", {
+        title: "Privacy Policy - Shashi Sales - website development company",
+        description: "Choose the top e-commerce website development company in Delhi for powerful, scalable online stores."
+    })
 })
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+app.get("/privacy-policy", (req, res) => {
+    res.render("privacyPolicy", {
+        title: "Privacy Policy - Shashi Sales - website development company",
+        description: "Consult with Delhi’s best e-commerce website development experts for customized and effective online solutions."
+    })
+})
+
+///////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/graphic-design", (req, res) => {
-    res.render("design")
+    res.render("design", {
+        title: "Top-Rated Web Design Company in Delhi - Shashi Sales ",
+        description: "Get Your Online Website In Just 7 Days Rank Your Website Amongst The Top website design Delhi Unlimited Graphic Designing and Video Designing."
+    })
 })
 
+/////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/email-marketing", (req, res) => {
-    res.render("emailMarketing")
+    res.render("emailMarketing", {
+        title: "Email Marketing Services in Delhi - Shashi Sales And Marketing",
+        description: "Shashi Sales, Delhi's trusted email marketing company, offers affordable campaigns to boost your brand, sales, and conversions. Call 1800-571-0605 today!"
+    })
 })
 
+///////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/search-engine-optimization", (req, res) => {
-    res.render("seo")
+app.get("/search-engine-optimization" , (req, res)=>{
+    res.render("seo", {
+        title: "SEO  Company in Delhi-NCR, Best SEO Agency in  Hyderabad, India: Shashi Sales And Marketing ",
+        description: "Shashi Sales And Marketing - seo company in delhi-ncr, India provides the best seo services to improve your organic seo rankings, traffic and sales. "
+    })
 })
-
 
 app.get("/business-services" , (req, res)=>{
     res.render("businessServices")
@@ -302,7 +355,12 @@ app.get("/blogs", async (req, res) => {
     try {
         const blogs = await Blog.find().sort({ createdAt: -1 });
         console.log(blogs.canonical);
-        res.render("blog", { blogs, truncateString });
+        res.render("blog", { 
+            blogs, 
+            truncateString,
+            title: "Draggan AI  Revolutionizing Workflow Optimization - Shashi Sales",
+            description: "Discover how Draggan AI is revolutionizing workflow optimization. Explore its powerful capabilities in automating tasks and enhancing efficiency across projects."
+         });
     } catch (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
@@ -717,7 +775,10 @@ app.get('/logout', (req, res) => {
 
 
 app.get("/phonepe-form", async (req, res) => {
-    res.render("phonepayForm")
+    res.render("phonepayForm", {
+        title: "Digital marketing companies kochi - Shashi Sales And Marketing ",
+        description: "Shashi Sales, Access the best digital marketing services tailored for businesses in Kochi to maximize their online potential. Call Call 1800-571-0605 today!"
+    })
 })
 
 app.post("/payment", async (req, res) => {
