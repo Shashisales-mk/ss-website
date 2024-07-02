@@ -277,10 +277,16 @@ app.get("/fusion-marketing", (req, res) => {
 })
 
 app.get("/cookie-policy", (req, res) => {
-    res.render("cookiePolicy")
+    res.render("cookiePolicy" , {
+        title : " ",
+        description : " "
+    })
 })
 app.get("/refund-policy", (req, res) => {
-    res.render("refundPolicy")
+    res.render("refundPolicy" , {
+        title : " ",
+        description : " "
+    })
 })
 
 
@@ -329,7 +335,10 @@ app.get("/search-engine-optimization" , (req, res)=>{
 })
 
 app.get("/business-services" , (req, res)=>{
-    res.render("businessServices")
+    res.render("businessServices" , {
+        title : " ",
+        description : " "
+    })
 })
 
 
@@ -337,7 +346,7 @@ app.get("/business-services" , (req, res)=>{
 
 
 app.get("/hidden-img", (req, res) => {
-    res.render("hidden")
+    res.render("hidden" )
 })
 
 app.get("/hidden-img2", (req, res) => {
@@ -439,7 +448,8 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const AllBlogs = await Blog.find();
     // console.log(AllBlogs);
-    res.render("allBlogs", { AllBlogs })
+    res.render("allBlogs", { AllBlogs ,  title : " ",
+    description : " "} )
 })
 
 app.delete('/delete-blog/:id', async (req, res) => {
@@ -468,7 +478,8 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
             return res.status(404).send('Blog not found');
         }
 
-        res.render('blogEdit', { blog });
+        res.render('blogEdit', { blog ,  title : " ",
+        description : " " });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -736,7 +747,8 @@ async function createDefaultAdminUsers() {
 
 app.get('/login', (req, res) => {
     const { successMessage, errorMessage } = req.flash();
-    res.render('login', { successMessage, errorMessage });
+    res.render('login', { successMessage, errorMessage ,  title : " ",
+    description : " "});
 });
 
 app.post(
@@ -761,7 +773,10 @@ app.get('/logout', (req, res) => {
         if (err) {
             console.error('Error during logout:', err);
         }
-        res.redirect('/login');
+        res.redirect('/login' , {
+            title : " ",
+            description : " "
+        });
     });
 });
 
@@ -1254,7 +1269,10 @@ app.get("/payment-successful", (req, res) => {
 
 });
 app.get("/payment-failed", (req, res) => {
-    res.render("paymentfail.ejs")
+    res.render("paymentfail.ejs" , {
+        title : " ",
+        description : " "
+    })
 })
 
 
