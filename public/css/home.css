@@ -1405,11 +1405,12 @@ font-weight: bold;
 .footer-s1 ul{
   display: -ms-grid;
   display: grid;
-  gap: 1.5vw;
+  gap: 0.3rem;
   list-style: none;
 }
 .fsfoot-h{
   font-size: 1.5vw;
+  padding-bottom: 1vw;
 }
 .sg{
   font-size: 1.1vw;

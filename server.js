@@ -234,8 +234,8 @@ app.get("/", async (req, res) => {
         errorMessage, 
         blogs, 
         truncateString,
-        title: "Tech Services & Solutions | Digital Evolution- Shashi Sales ",
-        description: "Shashi Sales, Integrated digital business solutions, with 18+ years of experience in website development, SEO, UI/UX design, social media marketing."
+        title: "Leading Website Development & Digital Marketing Services | Shashi Sales",
+        description: "Shashi Sales and Marketing provides integrated digital business solutions including website development, advertising, Digital Marketing Services, UI/UX design, graphic and video design, product shoots, branding and PR."
      });
 });
 
@@ -262,7 +262,7 @@ app.get("/web-development", (req, res) => {
 
 app.get("/contact-us" , (req, res)=>{
     res.render("contact", {
-        title: 'Contact us | Shashi Sales contact information | IT Outsourcing Company',
+        title: 'Contact us - Shashi Sales contact information',
         description: 'Reach out to Shashi Sales And Marketing to discuss your Integrated Digital Business Solutions needs. Discover the IT solutions tailored for your business.'
     })
 })
@@ -277,15 +277,15 @@ app.get("/fusion-marketing", (req, res) => {
 })
 
 app.get("/cookie-policy", (req, res) => {
-    res.render("cookiePolicy" , {
-        title : " ",
-        description : " "
+    res.render("cookiePolicy", {
+        title: "Cookie Policy - Shashi Sales - Website Developer near me",
+        description: "Find your local web development expert now. Get customized, professional website solutions that boost your online presence and growth. Call 1800-571-0605"
     })
 })
 app.get("/refund-policy", (req, res) => {
-    res.render("refundPolicy" , {
-        title : " ",
-        description : " "
+    res.render("refundPolicy", {
+        title: "Refund Policy - Shashi Sales - Web Designers near me",
+        description: "Local web designers can enhance your online presence with custom website designs tailored to your business. Discover experts, Call 1800-571-0605  today!"
     })
 })
 
@@ -293,10 +293,11 @@ app.get("/refund-policy", (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/terms-of-use", (req, res) => {
     res.render("terms", {
-        title: "Privacy Policy - Shashi Sales - website development company",
+        title: "Term of Use - Shashi Sales - Website Development Company",
         description: "Choose the top e-commerce website development company in Delhi for powerful, scalable online stores."
     })
 })
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -329,15 +330,15 @@ app.get("/email-marketing", (req, res) => {
 
 app.get("/search-engine-optimization" , (req, res)=>{
     res.render("seo", {
-        title: "SEO  Company in Delhi-NCR, Best SEO Agency in  Hyderabad, India: Shashi Sales And Marketing ",
-        description: "Shashi Sales And Marketing - seo company in delhi-ncr, India provides the best seo services to improve your organic seo rankings, traffic and sales. "
+        title: "Leading SEO Company in Delhi-NCR & Best SEO Agency in Hyderabad | Shashi Sales",
+        description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic."
     })
 })
 
 app.get("/business-services" , (req, res)=>{
-    res.render("businessServices" , {
-        title : " ",
-        description : " "
+    res.render("businessServices", {
+        title: "Digital Marketing Services in Delhi | Shashi Sales And Marketing ",
+        description: "Shashi Sales offers digital marketing solutions to businesses across India, U.S. Contact us today to discover how our services can boost your business growth."
     })
 })
 
@@ -393,9 +394,14 @@ app.get("/blog-detail/:canonical", async (req, res) => {
     }
 });
 
+
 app.get("/blog-form", isAdmin, (req, res) => {
-    res.render("uploadForm");
+    res.render("uploadForm", {
+        title: "Blog Form | Draggan Website: Revolutionizing the Future of AI Technology | Shashi  Sales",
+        description: "Visit the Draggan website to learn about groundbreaking AI advancements, tools, and solutions that can transform your business operations and efficiency."
+    });
 });
+
 
 // Route for handling blog upload
 app.post('/upload-blog', uploadFields, async (req, res) => {
@@ -448,8 +454,11 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const AllBlogs = await Blog.find();
     // console.log(AllBlogs);
-    res.render("allBlogs", { AllBlogs ,  title : " ",
-    description : " "} )
+    res.render("allBlogs", { 
+        AllBlogs,
+        title: "All Blog List - how to create a website - Shashi Sales",
+        description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch."
+     })
 })
 
 app.delete('/delete-blog/:id', async (req, res) => {
@@ -747,8 +756,12 @@ async function createDefaultAdminUsers() {
 
 app.get('/login', (req, res) => {
     const { successMessage, errorMessage } = req.flash();
-    res.render('login', { successMessage, errorMessage ,  title : " ",
-    description : " "});
+    res.render('login', { 
+        successMessage, 
+        errorMessage,
+        title: "Login | Top Companies in Digital Marketing: Boost Your Online Presence | Shashi Sales",
+        description: "Discover the top companies in digital marketing that can help elevate your online presence, drive traffic, and increase your business's success in the digital age." 
+    });
 });
 
 app.post(

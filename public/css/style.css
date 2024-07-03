@@ -958,3 +958,119 @@ th {
         padding: 3vw;
     }
 }
+
+
+
+.fts1{
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 2vw 10vw;
+}
+.fts1 ul{
+    font-size: 1.5vw;
+    display: flex;
+    font-weight: 600;
+    list-style: none;
+    justify-content: space-between;
+}
+.fts1 ul li{
+    color: #f2f2f2;
+}
+.fts1 ul li:hover {
+    color: #868686;
+}
+.fts2{
+    display: flex;
+    border-bottom: 1px solid white;
+    padding: 1vw 0;
+}
+.fts2-s2 p{
+    padding: 1vw;
+    font-size: 1.2vw;
+    text-align: center;
+    color: #868686;
+}
+.fts2-s1, .fts2-s2{
+    width: 50%;
+}
+.fts2-s2{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+.fts2-s1{
+    border-right: 1px solid white;
+}
+.fts2-s1 ul{
+    line-height: 2;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: space-between;
+}
+.fts2-s1 ul li{
+    font-size: 1vw;
+    width: 20vw;
+    color: #c9c9ce;
+}
+.fts2-s1 ul li a{
+    color: #c9c9ce;
+}
+.fts2-s1 ul li:hover{
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.fts2-s1 ul li a:hover{
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.ftlas{
+    display: flex;
+    align-items: center;
+    padding: 2vw 0;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+}
+.ftlas div:nth-child(2){
+    display: grid;
+    font-size: 1vw;
+}
+.ftlas div:nth-child(3){
+    display: flex;
+    gap: 2vw;
+}
+.ftlas ul{
+    display: flex;
+    list-style: none;
+    gap: 3vw;
+    margin-top: 1vw;
+}
+.ftlas a{
+    color: #868686;
+}
+.ftlas div:nth-child(3) a img{
+    height: 2vw;
+    width: auto;
+}
+.footer-cont {
+    padding: 3vw 3vw 3vw 3vw;
+    background-image: url('/assets/images/back-img.png');
+  width: auto;
+  background-size: cover;
+  background-position: center;
+}
+.ftloc ul{
+    margin-left: 1vw;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    gap: 1.6vw;
+    line-height: 0;
+    color: #868686;
+}
+.ftloc li a{
+    color: #868686;
+    font-size: 0.7vw;
+} 
