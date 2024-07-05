@@ -1290,7 +1290,9 @@ app.get("/payment-failed", (req, res) => {
 
 
 
-
+app.all("*", (req, res) => {
+    res.render("error" );
+  });
 
 
 
