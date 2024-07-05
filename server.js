@@ -18,6 +18,7 @@ const multer = require('multer');
 const fs = require('fs');
 const User = require("./models/User");
 const Blog = require('./models/Blog');
+const PaymentDetails = require('./models/PaymentDetails');
 
 const passport = require('./config/passport');
 
@@ -229,21 +230,21 @@ app.get("/", async (req, res) => {
     console.log('errorMessage:', errorMessage); // Log the value of errorMessage
     req.session.successMessage = null; // Clear the success message after displaying it
     req.session.errorMessage = null; // Clear the error message after displaying it
-    res.render("home", { 
-        successMessage, 
-        errorMessage, 
-        blogs, 
+    res.render("home", {
+        successMessage,
+        errorMessage,
+        blogs,
         truncateString,
         title: "Leading Website Development & Digital Marketing Services | Shashi Sales",
         description: "Shashi Sales and Marketing provides integrated digital business solutions including website development, advertising, Digital Marketing Services, UI/UX design, graphic and video design, product shoots, branding and PR."
-     });
+    });
 });
 
 
 
 
-app.get("/about-us" , (req, res)=>{
-    res.render("aboutUs",{
+app.get("/about-us", (req, res) => {
+    res.render("aboutUs", {
         title: 'About us | Digital Marketing Agency | Shashi Sales ',
         description: 'Shashi Sales and Marketing offers expert digital marketing services to enhance online presence, boost engagement, and drive business growth.'
     });
@@ -260,7 +261,7 @@ app.get("/web-development", (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/contact-us" , (req, res)=>{
+app.get("/contact-us", (req, res) => {
     res.render("contact", {
         title: 'Contact us - Shashi Sales contact information',
         description: 'Reach out to Shashi Sales And Marketing to discuss your Integrated Digital Business Solutions needs. Discover the IT solutions tailored for your business.'
@@ -328,14 +329,14 @@ app.get("/email-marketing", (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/search-engine-optimization" , (req, res)=>{
+app.get("/search-engine-optimization", (req, res) => {
     res.render("seo", {
         title: "Leading SEO Company in Delhi-NCR & Best SEO Agency in Hyderabad | Shashi Sales",
         description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic."
     })
 })
 
-app.get("/business-services" , (req, res)=>{
+app.get("/business-services", (req, res) => {
     res.render("businessServices", {
         title: "Digital Marketing Services in Delhi | Shashi Sales And Marketing ",
         description: "Shashi Sales offers digital marketing solutions to businesses across India, U.S. Contact us today to discover how our services can boost your business growth."
@@ -347,7 +348,7 @@ app.get("/business-services" , (req, res)=>{
 
 
 app.get("/hidden-img", (req, res) => {
-    res.render("hidden" )
+    res.render("hidden")
 })
 
 app.get("/hidden-img2", (req, res) => {
@@ -365,12 +366,12 @@ app.get("/blogs", async (req, res) => {
     try {
         const blogs = await Blog.find().sort({ createdAt: -1 });
         console.log(blogs.canonical);
-        res.render("blog", { 
-            blogs, 
+        res.render("blog", {
+            blogs,
             truncateString,
             title: "Draggan AI  Revolutionizing Workflow Optimization - Shashi Sales",
             description: "Discover how Draggan AI is revolutionizing workflow optimization. Explore its powerful capabilities in automating tasks and enhancing efficiency across projects."
-         });
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send("Internal Server Error");
@@ -454,11 +455,11 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const AllBlogs = await Blog.find();
     // console.log(AllBlogs);
-    res.render("allBlogs", { 
+    res.render("allBlogs", {
         AllBlogs,
         title: "All Blog List - how to create a website - Shashi Sales",
         description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch."
-     })
+    })
 })
 
 app.delete('/delete-blog/:id', async (req, res) => {
@@ -487,8 +488,10 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
             return res.status(404).send('Blog not found');
         }
 
-        res.render('blogEdit', { blog ,  title : " ",
-        description : " " });
+        res.render('blogEdit', {
+            blog, title: " ",
+            description: " "
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -756,11 +759,11 @@ async function createDefaultAdminUsers() {
 
 app.get('/login', (req, res) => {
     const { successMessage, errorMessage } = req.flash();
-    res.render('login', { 
-        successMessage, 
+    res.render('login', {
+        successMessage,
         errorMessage,
         title: "Login | Top Companies in Digital Marketing: Boost Your Online Presence | Shashi Sales",
-        description: "Discover the top companies in digital marketing that can help elevate your online presence, drive traffic, and increase your business's success in the digital age." 
+        description: "Discover the top companies in digital marketing that can help elevate your online presence, drive traffic, and increase your business's success in the digital age."
     });
 });
 
@@ -786,9 +789,9 @@ app.get('/logout', (req, res) => {
         if (err) {
             console.error('Error during logout:', err);
         }
-        res.redirect('/login' , {
-            title : " ",
-            description : " "
+        res.redirect('/login', {
+            title: " ",
+            description: " "
         });
     });
 });
@@ -812,7 +815,19 @@ app.get("/phonepe-form", async (req, res) => {
 app.post("/payment", async (req, res) => {
     try {
         const { name, number, amount, email } = req.body;
-        const merchantTransactionId = 'T' + Date.now();;
+        const merchantTransactionId = 'T' + Date.now();
+
+
+        const paymentDetails = new PaymentDetails({
+            merchantTransactionId,
+            name,
+            number,
+            email,
+            amount
+        });
+        await paymentDetails.save();
+
+
         const data = {
             "merchantId": process.env.PHONEPE_MERCHANT_ID,
             "merchantTransactionId": merchantTransactionId,
@@ -855,18 +870,98 @@ app.post("/payment", async (req, res) => {
             .then(function (response) {
                 console.log(response.data);
 
-                const htmlTemplate = `
-          <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shashi sales and marketing</title>
 
-    <style>
-        ._failed {
-            border-bottom: solid 4px red !important;
+
+                res.redirect(response.data.data.instrumentResponse.redirectInfo.url)
+
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+
+
+
+    } catch (error) {
+        console.error('Error details:', {
+            message: error.message,
+            status: error.response?.status,
+            headers: error.response?.headers,
+            data: error.response?.data,
+        });
+        res.status(500).send({
+            message: error.message,
+            success: false,
+            details: error.response?.data || 'No additional details available'
+        });
+    }
+});
+
+
+
+
+
+app.post("/status/:txnId", async (req, res) => {
+    console.log("Received status callback for txnId:", req.params.txnId);
+    console.log("Request body:", req.body);
+
+    const merchantTransactionId = req.body.transactionId;
+
+    try {
+        // Retrieve payment details from database
+        const paymentDetails = await PaymentDetails.findOne({ merchantTransactionId });
+
+        if (!paymentDetails) {
+            console.error("Payment details not found for transaction:", merchantTransactionId);
+            return res.redirect("/phonepe-form");
         }
+
+        const { name, number, amount, email } = paymentDetails;
+
+        const merchantId = process.env.PHONEPE_MERCHANT_ID;
+        const key = process.env.PHONEPE_SALT;
+        const keyIndex = process.env.PHONEPE_KEY_INDEX;
+        const string = `/pg/v1/status/${merchantId}/${merchantTransactionId}${key}`;
+        const sha256 = crypto.createHash('sha256').update(string).digest('hex');
+        const checksum = sha256 + "###" + keyIndex;
+
+        console.log("Generated checksum:", checksum);
+
+        const URL = `https://api.phonepe.com/apis/hermes/pg/v1/status/${merchantId}/${merchantTransactionId}`;
+        console.log("Requesting URL:", URL);
+
+        const options = {
+            method: 'GET',
+            url: URL,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-VERIFY': checksum,
+                'X-MERCHANT-ID': merchantId
+            },
+        };
+
+        const response = await axios.request(options);
+        console.log("PhonePe API Response:", response.data);
+
+        if (response.data.success === true) {
+            console.log("Payment successful, sending emails and redirecting to success page");
+
+            // Update payment status in database
+            paymentDetails.status = 'completed';
+            await paymentDetails.save();
+
+            const htmlTemplate = `
+                <!DOCTYPE html>
+             <html lang="en">
+                <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Shashi sales and marketing</title>
+
+                    <style>
+            ._failed {
+            border-bottom: solid 4px red !important;
+            }
 
         ._failed i {
             color: red !important;
@@ -1023,10 +1118,10 @@ app.post("/payment", async (req, res) => {
 </html>
           `
 
-                Templatesender(email, htmlTemplate, "Thank you from shashi sales and marketing");
+             Templatesender(email, htmlTemplate, "Thank you from shashi sales and marketing");
 
 
-                const htmlTemplate2 = `
+            const htmlTemplate2 = `
           <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1196,81 +1291,20 @@ app.post("/payment", async (req, res) => {
 </body>
 </html>
           `
-                Templatesender("info@shashisales.com", htmlTemplate2, "Payment INfo")
+             Templatesender("info@shashisales.com", htmlTemplate2, "Payment INfo")
 
-                res.redirect(response.data.data.instrumentResponse.redirectInfo.url)
-
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-
-
-
-    } catch (error) {
-        console.error('Error details:', {
-            message: error.message,
-            status: error.response?.status,
-            headers: error.response?.headers,
-            data: error.response?.data,
-        });
-        res.status(500).send({
-            message: error.message,
-            success: false,
-            details: error.response?.data || 'No additional details available'
-        });
-    }
-});
-
-
-
-app.post("/status/:txnId", async (req, res) => {
-    console.log("Received status callback for txnId:", req.params.txnId);
-    console.log("Request body:", req.body);
-
-    const merchantId = process.env.PHONEPE_MERCHANT_ID;
-    const merchantTransactionId = req.body.transactionId;
-    const key = process.env.PHONEPE_SALT;
-    const keyIndex = process.env.PHONEPE_KEY_INDEX;
-    const string = `/pg/v1/status/${merchantId}/${merchantTransactionId}${key}`;
-    const sha256 = crypto.createHash('sha256').update(string).digest('hex');
-    const checksum = sha256 + "###" + keyIndex;
-
-    console.log("Generated checksum:", checksum);
-
-    const URL = `https://api.phonepe.com/apis/hermes/pg/v1/status/${merchantId}/${merchantTransactionId}`;
-    console.log("Requesting URL:", URL);
-
-    const options = {
-        method: 'GET',
-        url: URL,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-VERIFY': checksum,
-            'X-MERCHANT-ID': merchantId
-        },
-    };
-
-    try {
-        const response = await axios.request(options);
-        console.log("PhonePe API Response:", response.data);
-
-        if (response.data.success === true) {
-            console.log("Payment successful, redirecting to success page");
-            // Get the amount from the response
-            const amount = response.data.data.amount / 100; // Assuming the amount is in paise
             return res.redirect(`/payment-successful?amount=${amount}`);
         } else {
             console.log("Payment unsuccessful, redirecting to form");
+
+            // Update payment status in database
+            paymentDetails.status = 'failed';
+            await paymentDetails.save();
+
             return res.redirect("/payment-failed");
         }
     } catch (error) {
-        console.error("Error in PhonePe status check:");
-        console.error("Status:", error.response?.status);
-        console.error("Headers:", error.response?.headers);
-        console.error("Data:", error.response?.data);
-
+        console.error("Error in PhonePe status check:", error);
         return res.redirect("/phonepe-form");
     }
 });
@@ -1282,17 +1316,17 @@ app.get("/payment-successful", (req, res) => {
 
 });
 app.get("/payment-failed", (req, res) => {
-    res.render("paymentfail.ejs" , {
-        title : " ",
-        description : " "
+    res.render("paymentfail.ejs", {
+        title: " ",
+        description: " "
     })
 })
 
 
 
 app.all("*", (req, res) => {
-    res.render("error" );
-  });
+    res.render("error");
+});
 
 
 
