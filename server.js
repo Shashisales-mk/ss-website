@@ -1311,7 +1311,8 @@ app.post("/status/:txnId", async (req, res) => {
 
 app.get("/payment-successful", (req, res) => {
     const amount = req.query.amount || 'N/A';
-    res.render("paymentsucess.ejs", { amount: amount });
+    res.render("paymentsucess.ejs", { amount: amount , title: " ",
+    description: " " });
 
 
 });
