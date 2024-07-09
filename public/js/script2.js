@@ -19,6 +19,23 @@ tiles.forEach(tile => {
   });
 });
 
+const tiles2 = document.querySelectorAll('.tile2');
+const mainView2 = document.querySelector('.main-view2');
+
+tiles2.forEach(tile2 => {
+  tile2.addEventListener('click', () => {
+    const tileImage = tile2.querySelector('img').src;
+    const tileHeading = tile2.querySelector('h2').textContent;
+
+    mainView2.innerHTML = `
+      <img src="${tileImage}" alt="${tileHeading}">
+      <div class="text">
+        <h2>${tileHeading}</h2>
+      </div>
+    `;
+  });
+});
+
 
 // Change
 document.addEventListener("DOMContentLoaded", function() {
@@ -235,19 +252,3 @@ document.addEventListener('touchmove', preventBodyScroll, { passive: false });
 
 
 
-const tiles2 = document.querySelectorAll('.tile2');
-const mainView2 = document.querySelector('.main-view2');
-
-tiles2.forEach(tile2 => {
-  tile2.addEventListener('click', () => {
-    const tileImage = tile2.querySelector('img').src;
-    const tileHeading = tile2.querySelector('h2').textContent;
-
-    mainView2.innerHTML = `
-      <img src="${tileImage}" alt="${tileHeading}">
-      <div class="text">
-        <h2>${tileHeading}</h2>
-      </div>
-    `;
-  });
-});
