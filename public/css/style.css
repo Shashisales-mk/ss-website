@@ -1317,8 +1317,8 @@ th {
     list-style: none;
     justify-content: space-between;
 }
-.fts1 ul li{
-    color: #f2f2f2;
+.fts1 ul li a{
+    color: #f2f2f2 !important;
 }
 .fts1 ul li:hover {
     color: #868686;
