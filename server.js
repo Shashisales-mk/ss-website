@@ -334,14 +334,22 @@ app.get("/search-engine-optimization", (req, res) => {
         title: "Leading SEO Company in Delhi-NCR & Best SEO Agency in Hyderabad | Shashi Sales",
         description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic."
     })
-})
+});
 
 app.get("/business-services", (req, res) => {
     res.render("businessServices", {
         title: "Digital Marketing Services in Delhi | Shashi Sales And Marketing ",
         description: "Shashi Sales offers digital marketing solutions to businesses across India, U.S. Contact us today to discover how our services can boost your business growth."
     })
-})
+});
+
+
+app.get("/product-shoot" , (req, res)=>{
+    res.render("photography", {
+        title: "Product Shoot and Model Shoot Page | Shashi Sales And Marketing",
+        description: "Shashi Sales offers Product and Model Shoot to entites across India, U.S. Contact Us today to discover how our services can boost your growth"
+    })
+});
 
 
 

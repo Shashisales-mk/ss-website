@@ -1,0 +1,336 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    .bl {
+      background-color: #000;
+    }
+    .highlight {
+      color: #C4C800;
+      text-decoration: underline;
+    }
+    .service-menu li {
+      cursor: pointer;
+    }
+    .selected {
+        border-bottom: 4px solid #C4C800 !important;
+        color: #C4C800;
+    }
+    .selected2 {
+        border-bottom: 1.5px solid #C4C800 !important;
+        color: #C4C800;
+    }
+    @media only screen and (max-width: 600px){
+        .selected2 {
+        border-bottom: 1.5px solid black !important;
+        color: white !important;
+        background: black !important;
+    }
+    }
+  </style>
+<div class="ph-gr-1">
+    <div class="ph-gr-left">
+        <span>
+            <p>WHEN PRODUCT IS BOLD APPEARANCE GETS IT SOLD</p>
+            <div style="padding-bottom: 4vw;"><a href="/contact-us" class="bus-ser-btn">CONSULT NOW</a></div>
+        </span>
+    </div>
+    <div class="ph-gr-right">
+        <!-- <div class="bg-g"></div> -->
+        <img src="/assets/images/camera-stand.webp" alt="Camera Stand">
+    </div>
+</div>
+
+<div class="hed fsm">WHAT WE<span style="color: #C4C800;"> SPECIALIZE </span> IN</div>
+<div class="container">
+    <div class="first-part">
+        <div class="tile2">
+            <img src="/assets/images/o2.webp " alt="o2">
+            <div class="text">
+                <h2>Porttraited</h2>
+            </div>
+        </div>
+        <div class="tile2">
+            <img src="/assets/images/o3.webp" alt="o3">
+            <div class="text">
+                <h2>Fashion Photography</h2>
+            </div>
+        </div>
+        <div class="tile2 tile-img1">
+            <img  src="/assets/images/o4.webp" alt="o4">
+            <div class="text">
+                <h2>Videography</h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main-view2">
+        <img src="/assets/images/o1.webp" alt="Design Service">
+        <div class="text">
+            <h2>Product Photography</h2>
+        </div>
+    </div>
+
+
+
+    <div class="last-part">
+        <div class="tile2">
+            <img src="/assets/images/o5.webp" alt="Photography">
+            <div class="text">
+                <h2>Interior Photography</h2>
+            </div>
+        </div>
+        <div class="tile2">
+            <img src="/assets/images/o6.webp" alt="Business Services">
+            <div class="text">
+                <h2>Reel Shoot</h2>
+            </div>
+        </div>
+        <div class="tile2 tile-img2">
+            <img  src="/assets/images/o7.webp" alt="Training">
+            <div class="text ">
+                <h2>Image Editing</h2>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="hed fsm">WORK PORTFOLIO</div>
+
+<div class="dfl">
+    <div class="selected2" onclick="showSer('c1', this)">Product Photography</div>
+    <div onclick="showSer('c2', this)">Fashion</div>
+    <div onclick="showSer('c3', this)">Interior</div>
+    <div onclick="showSer('c4', this)">Videography</div>
+    <div onclick="showSer('c5', this)">Portraited</div>
+    <div onclick="showSer('c6', this)">Reel Shoot</div>
+    <div onclick="showSer('c7', this)">Image Editing</div>
+</div>
+<div class="ph-container">
+    <div class="c1 work-portfolio">
+        <p><img src="assets/images/pht1.webp" alt="ph1"></p>
+        <p>
+            <span><img src="/assets/images/pht2.webp" alt="ph2"></span>
+            <span><img src="/assets/images/pht3.webp" alt="ph3"></span>
+        </p>
+        <p>
+            <span><img src="/assets/images/pht4.webp" alt="ph4"></span>
+            <span><img src="/assets/images/pht5.webp" alt="ph5"></span>
+        </p>
+    </div>
+    <div class="c2 work-portfolio">
+        <p><img src="assets/images/pht1.webp" alt="ph1"></p>
+        <p>
+            <span><img src="/assets/images/pht3.webp" alt="ph3"></span>
+            <span><img src="/assets/images/pht4.webp" alt="ph4"></span></p>
+        <p>
+            <span><img src="/assets/images/pht5.webp" alt="ph5"></span>
+            <span><img src="/assets/images/pht2.webp" alt="ph2"></span>
+        </p>
+    </div>
+    <div class="c3 work-portfolio">
+        <p><img src="assets/images/pht1.webp" alt="ph1"></p>
+        <p>
+            <span><img src="/assets/images/pht4.webp" alt="ph4"></span>
+            <span><img src="/assets/images/pht2.webp" alt="ph2"></span>
+        </p>
+        <p>
+            <span><img src="/assets/images/pht3.webp" alt="ph3"></span>
+            <span><img src="/assets/images/pht5.webp" alt="ph5"></span>
+        </p>
+    </div>
+    <div class="c4 work-portfolio">
+        <p><img src="assets/images/pht1.webp" alt="ph1"></p>
+        <p>
+            <span><img src="/assets/images/pht2.webp" alt="ph2"></span>
+            <span><img src="/assets/images/pht5.webp" alt="ph5"></span>
+        </p>
+        <p>
+            <span><img src="/assets/images/pht3.webp" alt="ph3"></span>
+            <span><img src="/assets/images/pht4.webp" alt="ph4"></span>
+        </p>
+    </div>
+    <div class="c5 work-portfolio">
+        <p><img src="assets/images/pht1.webp" alt="ph1"></p>
+        <p>
+            <span><img src="/assets/images/pht2.webp" alt="ph2"></span>
+            <span><img src="/assets/images/pht4.webp" alt="ph4"></span>
+        </p>
+        <p>
+            <span><img src="/assets/images/pht3.webp" alt="ph3"></span>
+            <span><img src="/assets/images/pht5.webp" alt="ph5"></span>
+        </p>
+    </div>
+    <div class="c6 work-portfolio">
+        <p><img src="assets/images/pht1.webp" alt="ph1"></p>
+        <p>
+            <span><img src="/assets/images/pht3.webp" alt="ph3"></span>
+            <span><img src="/assets/images/pht2.webp" alt="ph2"></span>
+        </p>
+        <p>
+            <span><img src="/assets/images/pht4.webp" alt="ph4"></span>
+            <span><img src="/assets/images/pht5.webp" alt="ph5"></span>
+        </p>
+    </div>
+    <div class="c7 work-portfolio">
+        <p><img src="assets/images/pht1.webp" alt="ph1"></p>
+        <p>
+            <span><img src="/assets/images/pht2.webp" alt="ph2"></span>
+            <span><img src="/assets/images/pht3.webp" alt="ph3"></span>
+        </p>
+        <p>
+            <span><img src="/assets/images/pht5.webp" alt="ph5"></span>
+            <span><img src="/assets/images/pht4.webp" alt="ph4"></span>
+        </p>
+    </div>
+</div>
+
+<div class="phh">
+    <div class="selected" onclick="showService('tb1', this)">Model Shoot</div>
+    <div onclick="showService('tb2', this)">Product Shoot</div>
+</div>
+<div class="service-container">
+    <div class="tb1 ph-tb">
+        <table class="custom-table">
+            <tr>
+                <td>500 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>600 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>800 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>1000 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>500 INR</td>
+                <td>Per product shoot 4 angels with available model White Background.</td>
+            </tr>
+            <tr>
+                <td>40000 INR</td>
+                <td>Theme based Creative Background Model Shoot fashion garment 6-7images Starting</td>
+            </tr>
+            <tr>
+                <td>2000 INR</td>
+                <td>Per model reel video clothing and fashion Accessories. 20-30sec.</td>
+            </tr>
+            <tr>
+                <td>200 INR</td>
+                <td>Behind-the-scenes raw video with mobile</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tb2 ph-tb">
+        <table class="custom-table">
+            <tr>
+                <td>5000 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>600 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>800 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>1000 INR</td>
+                <td>Per product clothing Western wear model shoot for 6 angles  according to e-commerce guidelines (white background)</td>
+            </tr>
+            <tr>
+                <td>500 INR</td>
+                <td>Per product shoot 4 angels with available model White Background.</td>
+            </tr>
+            <tr>
+                <td>40000 INR</td>
+                <td>Theme based Creative Background Model Shoot fashion garment 6-7images Starting</td>
+            </tr>
+            <tr>
+                <td>2000 INR</td>
+                <td>Per model reel video clothing and fashion Accessories. 20-30sec.</td>
+            </tr>
+            <tr>
+                <td>200 INR</td>
+                <td>Behind-the-scenes raw video with mobile</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Call Section -->
+<div class="contact-bar">
+    <div class="number">
+      <img src="/assets/images/call.png" loading="lazy" alt="" />
+      <div class="cn">
+        <a href="tel:18005710605">1800-571-0605</a>
+        <a href="tel:+13211255890">+1321-125-5890</a>
+      </div>
+    </div>
+    <div class="chat">
+      <img src="/assets/images/chat.png" loading="lazy" alt="" />
+      <a
+        href="https://wa.me/9457979134?text=Let%27s%20Talk%20Web%20And%20Marketing%20%5B5%25%20Off%5D"
+        >Chat With Us</a
+      >
+    </div>
+    <div class="face chat">
+      <a href="https://calendly.com/shashisales">Fix A Face-2-Face</a>
+    </div>
+    <div class="mail">
+      <img src="/assets/images/mail.png" loading="lazy" alt="" />
+      <a
+        href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!"
+      >
+        info@shashisales.com</a
+      >
+    </div>
+  </div>
+
+<script>
+    function showService(service, element) {
+      const services = document.querySelectorAll('.service-container > div');
+      services.forEach(s => {
+        s.style.display = s.classList.contains(service) ? 'block' : 'none';
+      });
+  
+      const menuItems = document.querySelectorAll('.phh div');
+      menuItems.forEach(item => {
+        item.classList.remove('selected');
+      });
+  
+      element.classList.add('selected'); 
+    }
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      showService('tb1', document.querySelector('.phh .selected'));
+    });
+  </script>
+
+<script>
+    function showSer(service, element) {
+      const services = document.querySelectorAll('.ph-container > div');
+      services.forEach(s => {
+        s.style.display = s.classList.contains(service) ? 'flex' : 'none';
+      });
+  
+      const menuItems = document.querySelectorAll('.dfl div');
+      menuItems.forEach(item => {
+        item.classList.remove('selected2');
+      });
+  
+      element.classList.add('selected2');
+    }
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      showSer('c1', document.querySelector('.dfl .selected2'));
+    });
+  </script>
