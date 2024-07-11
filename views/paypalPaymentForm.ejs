@@ -1,17 +1,59 @@
 <% layout("/layouts/boilerplate") %>
 <style>
-    /* Your existing styles here */
-    .submit-button {
-        background-color: #0070ba;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
+    .bl{
+        background-color: #000;
     }
-    .submit-button:hover {
-        background-color: #003087;
+    .main-page{
+        margin-top: 9rem;
+        margin-bottom: 3rem;
+    }
+    .payment-form{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+    }
+    .payment-form form{
+        width: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1.3rem;
+        background-color: #5F259F;
+        padding: 3rem;
+        border-radius: 10px;
+
+    }
+    input{
+        width: 100%;
+        padding: 1rem;
+        border-radius: 5px;
+        border: none;
+    }
+    input[type="submit"]{
+        width: 100px;
+    }
+    
+    @media screen and (max-width:420px) {
+        .payment-form{
+            padding: 2vw;
+        }
+        .payment-form form{
+            width: 90%;
+            padding:3rem 6vw;
+        }
+        h1{
+            font-size: 5vw !important;
+        }
+    }
+
+    @media screen and (max-width:900px) {
+        h1{
+          font-size: 4vw !important;  
+        }
     }
 </style>
 
