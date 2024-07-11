@@ -563,7 +563,7 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
 
 
 //   const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
-const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com', 'bgmilelomujhse@gmail.com'];
+const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com' ];
 
 
 
@@ -632,6 +632,7 @@ app.post('/submit-quote', async (req, res) => {
         console.log('Received form data:', formData);
         // mailsender(formData, recipients);
         Templatesender(recipients, htmlTemplate, "You Got New Lead");
+        Templatesender("bgmilelomujhse@gmail.com", htmlTemplate, "You Got New Lead");
 
         const authClient = await authenticate();
         // Append data to Google Sheets
@@ -705,6 +706,7 @@ app.post('/submit-quote-lead', async (req, res) => {
         console.log('Received form data:', formData);
         // mailsender(formData, recipients);
         Templatesender(recipients, htmlTemplate, "You Got New Lead");
+        Templatesender("bgmilelomujhse@gmail.com", htmlTemplate, "You Got New Lead");
 
         const authClient = await authenticate();
         // Append data to Google Sheets
