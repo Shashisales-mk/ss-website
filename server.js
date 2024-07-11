@@ -28,10 +28,10 @@ const paypal = require('paypal-rest-sdk');
 
 // Configure PayPal SDK
 paypal.configure({
-    'mode': "live",
+    'mode': process.env.PAYPAL_MODE || 'live', // Make sure this is correct
     'client_id': process.env.PAYPAL_CLIENT_ID,
-    'client_secret': process.env.PAYPAL_CLIENT_SECRET,
-});
+    'client_secret': process.env.PAYPAL_CLIENT_SECRET
+  });
 
 
 const app = express();
