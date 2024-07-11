@@ -1342,7 +1342,10 @@ app.get("/payment-failed", (req, res) => {
 
 
 app.get("/pay-via-paypal" , (req, res) => {
-    res.render("paypalPaymentForm");
+    res.render("paypalPaymentForm" , {
+        title: " ",
+        description: " "
+    } );
 })
 
 app.post('/create-payment', (req, res) => {
