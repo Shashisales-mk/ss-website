@@ -1,0 +1,29 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    /* Your existing styles here */
+    .submit-button {
+        background-color: #0070ba;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .submit-button:hover {
+        background-color: #003087;
+    }
+</style>
+
+<div class="main-page">
+    <div class="payment-form">
+        <h1 style="text-align: center; font-size: 2.5vw; margin-bottom: 1rem;">Make your payment</h1>
+        <form action="/create-payment" method="POST">
+            <input type="text" name="name" placeholder="Enter Your Name" required>
+            <input type="number" name="number" placeholder="Enter Your Contact Number" required>
+            <input type="email" name="email" placeholder="Enter Your Email" required>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <input type="submit" value="Pay with PayPal" class="submit-button">
+        </form>
+    </div>
+</div>

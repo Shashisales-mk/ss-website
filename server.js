@@ -24,6 +24,15 @@ const passport = require('./config/passport');
 
 const { google } = require('googleapis');
 
+const paypal = require('paypal-rest-sdk');
+
+// Configure PayPal SDK
+paypal.configure({
+    'mode': "live",
+    'client_id': process.env.PAYPAL_CLIENT_ID,
+    'client_secret': process.env.PAYPAL_CLIENT_SECRET,
+});
+
 
 const app = express();
 
@@ -1330,6 +1339,61 @@ app.get("/payment-failed", (req, res) => {
         description: " "
     })
 })
+
+
+app.get("/pay-via-paypal" , (req, res) => {
+    res.render("paypalPaymentForm");
+})
+
+app.post('/create-payment', (req, res) => {
+    const { name, number, email, amount } = req.body;
+
+    const create_payment_json = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": `https://www.shashisales.com/payment-sucessfull?amount=${amount}`,
+            "cancel_url": "https://www.shashisales.com/payment-failed"
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": `Payment for ${name}`,
+                    "sku": "001",
+                    "price": amount,
+                    "currency": "USD",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "currency": "USD",
+                "total": amount
+            },
+            "description": `Payment from ${name} (${email})`
+        }]
+    };
+
+    paypal.payment.create(create_payment_json, function (error, payment) {
+        if (error) {
+            console.error('PayPal Error:', error);
+            res.render('error', { message: 'An error occurred with PayPal' });
+        } else {
+            for (let i = 0; i < payment.links.length; i++) {
+                if (payment.links[i].rel === 'approval_url') {
+                    res.redirect(payment.links[i].href);
+                    return;
+                }
+            }
+            res.render('error', { message: 'No approval URL found' });
+        }
+    });
+});
+
+
+
+
 
 
 
