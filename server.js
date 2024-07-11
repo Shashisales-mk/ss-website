@@ -1348,8 +1348,13 @@ app.get("/pay-via-paypal" , (req, res) => {
     } );
 })
 
+console.log('PayPal Client ID:', process.env.PAYPAL_CLIENT_ID);
+console.log('PayPal Client Secret:', process.env.PAYPAL_CLIENT_SECRET);
+
+
 app.post('/create-payment', (req, res) => {
     const { name, number, email, amount } = req.body;
+    console.log('Received form data:', req.body);
 
     const create_payment_json = {
         "intent": "sale",
@@ -1381,8 +1386,10 @@ app.post('/create-payment', (req, res) => {
     paypal.payment.create(create_payment_json, function (error, payment) {
         if (error) {
             console.error('PayPal Error:', error);
-            res.render('error', { message: 'An error occurred with PayPal' });
-        } else {
+            console.error('Error Response:', error.response);
+            console.error('HTTP Status Code:', error.httpStatusCode);
+            return res.status(500).send('An error occurred with PayPal');
+          } else {
             for (let i = 0; i < payment.links.length; i++) {
                 if (payment.links[i].rel === 'approval_url') {
                     res.redirect(payment.links[i].href);
