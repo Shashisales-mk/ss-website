@@ -1419,7 +1419,7 @@ app.post('/create-payment', (req, res) => {
 // POST review
 app.post('/submit-review', async (req, res) => {
     try {
-        const { rating, question1, question2, question3, question4 } = req.body;
+        const { rating, question1, question2, question3, question4, email, number} = req.body;
 
         // email = "suryakantgupta678@gmail.com";
         // number = 8090890890;
@@ -1429,8 +1429,8 @@ app.post('/submit-review', async (req, res) => {
             question2,
             question3,
             question4,
-            // email,
-            // number
+            email,
+            number
         });
 
         await newReview.save();
