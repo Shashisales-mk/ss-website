@@ -111,6 +111,12 @@
             margin-inline: auto;
             margin-top: 1rem;
         }
+
+        .form-label{
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: .5rem;
+        }
     </style>
 
     <div class="main-page">
@@ -135,7 +141,7 @@
                 
                 <input type="hidden" name="email" value="<%= email %>">
                 <input type="hidden" name="number" value="<%= number %>">
-                <label class="form-label" for="rating">Please Leave Your Review</label>
+                <label class="form-label" for="rating" >Please Leave Your Review</label>
                 <fieldset class="starability-fade">
                     <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked
                         aria-label="No rating." />
