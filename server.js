@@ -18,6 +18,7 @@ const multer = require('multer');
 const fs = require('fs');
 const User = require("./models/User");
 const Blog = require('./models/Blog');
+const Review = require('./models/Review');
 const PaymentDetails = require('./models/PaymentDetails');
 
 const passport = require('./config/passport');
@@ -31,7 +32,7 @@ paypal.configure({
     'mode': process.env.PAYPAL_MODE || 'live', // Make sure this is correct
     'client_id': process.env.PAYPAL_CLIENT_ID,
     'client_secret': process.env.PAYPAL_CLIENT_SECRET
-  });
+});
 
 
 const app = express();
@@ -353,7 +354,7 @@ app.get("/business-services", (req, res) => {
 });
 
 
-app.get("/product-shoot" , (req, res)=>{
+app.get("/product-shoot", (req, res) => {
     res.render("photography", {
         title: "Product Shoot and Model Shoot Page | Shashi Sales And Marketing",
         description: "Shashi Sales offers Product and Model Shoot to entites across India, U.S. Contact Us today to discover how our services can boost your growth"
@@ -563,7 +564,7 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
 
 
 //   const recipients = ['suryakantgupta678@gmail.com', 'bgmilelomujhse@gmail.com'];
-const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com' ];
+const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com'];
 
 
 
@@ -1137,7 +1138,7 @@ app.post("/status/:txnId", async (req, res) => {
 </html>
           `
 
-             Templatesender(email, htmlTemplate, "Thank you from shashi sales and marketing");
+            Templatesender(email, htmlTemplate, "Thank you from shashi sales and marketing");
 
 
             const htmlTemplate2 = `
@@ -1310,9 +1311,10 @@ app.post("/status/:txnId", async (req, res) => {
 </body>
 </html>
           `
-             Templatesender("info@shashisales.com", htmlTemplate2, "Payment INfo")
+            Templatesender("info@shashisales.com", htmlTemplate2, "Payment INfo")
 
-            return res.redirect(`/payment-successful?amount=${amount}`);
+            // If payment is successful, redirect to payment-successful page with additional query parameters
+            return res.redirect(`/payment-successful?amount=${amount}&email=${email}&number=${number}`);
         } else {
             console.log("Payment unsuccessful, redirecting to form");
 
@@ -1330,11 +1332,19 @@ app.post("/status/:txnId", async (req, res) => {
 
 app.get("/payment-successful", (req, res) => {
     const amount = req.query.amount || 'N/A';
-    res.render("paymentsucess.ejs", { amount: amount , title: "hello",
-    description: "hello" });
-
-
+    const email = req.query.email || 'N/A';
+    const number = req.query.number || 'N/A';
+    
+    res.render("paymentsucess.ejs", {
+        amount: amount,
+        email: email,
+        number: number,
+        title: "Payment Successful",
+        description: "Your payment was successful"
+    });
 });
+
+
 app.get("/payment-failed", (req, res) => {
     res.render("paymentfail.ejs", {
         title: " ",
@@ -1343,15 +1353,14 @@ app.get("/payment-failed", (req, res) => {
 })
 
 
-app.get("/pay-via-paypal" , (req, res) => {
-    res.render("paypalPaymentForm" , {
+app.get("/pay-via-paypal", (req, res) => {
+    res.render("paypalPaymentForm", {
         title: " ",
         description: " "
-    } );
+    });
 })
 
-console.log('PayPal Client ID:', process.env.PAYPAL_CLIENT_ID);
-console.log('PayPal Client Secret:', process.env.PAYPAL_CLIENT_SECRET);
+
 
 
 app.post('/create-payment', (req, res) => {
@@ -1391,7 +1400,7 @@ app.post('/create-payment', (req, res) => {
             console.error('Error Response:', error.response);
             console.error('HTTP Status Code:', error.httpStatusCode);
             return res.status(500).send('An error occurred with PayPal');
-          } else {
+        } else {
             for (let i = 0; i < payment.links.length; i++) {
                 if (payment.links[i].rel === 'approval_url') {
                     res.redirect(payment.links[i].href);
@@ -1403,6 +1412,33 @@ app.post('/create-payment', (req, res) => {
     });
 });
 
+
+// rating system
+
+
+// POST review
+app.post('/submit-review', async (req, res) => {
+    try {
+        const { rating, question1, question2, question3, question4 } = req.body;
+
+        // email = "suryakantgupta678@gmail.com";
+        // number = 8090890890;
+        const newReview = new Review({
+            rating,
+            question1,
+            question2,
+            question3,
+            question4,
+            // email,
+            // number
+        });
+
+        await newReview.save();
+        res.status(200).send({ success: true, message: 'Review submitted successfully' });
+    } catch (error) {
+        res.status(500).send({ success: false, message: 'Failed to submit review', error: error.message });
+    }
+});
 
 
 
