@@ -79,7 +79,7 @@
             justify-content: center;
             flex-direction: column;
             margin-top: -2rem;
-            
+
         }
 
 
@@ -113,14 +113,30 @@
             margin-top: 1rem;
         }
 
-        .form-label{
+        .form-label {
             font-size: 1.2rem;
             font-weight: bold;
             margin-bottom: .5rem;
         }
+
+        @media screen and (max-width : 500px) {
+            #ratingForm {
+                margin-top: 1rem;
+            }
+        }
+        @media screen and (max-width : 430px) {
+            #ratingForm {
+                margin-top: 5rem;
+            }
+        }
+        @media screen and (max-width : 365px) {
+            #ratingForm {
+                margin-top: 9rem;
+            }
+        }
     </style>
 
-    
+
 
     <div class="main-page">
         <div class="container">
@@ -141,10 +157,10 @@
 
         <div class="rating-sec">
             <form id="ratingForm">
-                
+
                 <input type="hidden" name="email" value="<%= email %>">
                 <input type="hidden" name="number" value="<%= number %>">
-                <label class="form-label" for="rating" >Please Leave Your Review</label>
+                <label class="form-label" for="rating">Please Leave Your Review</label>
                 <fieldset class="starability-fade">
                     <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked
                         aria-label="No rating." />
