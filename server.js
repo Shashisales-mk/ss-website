@@ -1373,7 +1373,7 @@ app.post('/create-payment', (req, res) => {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": `https://www.shashisales.com/payment-sucessful?amount=${amount}`,
+            "return_url": `https://www.shashisales.com/payment-sucessful?amount=${amount}&email=${email}&number=${number}`,
             "cancel_url": "https://www.shashisales.com/payment-failed"
         },
         "transactions": [{
