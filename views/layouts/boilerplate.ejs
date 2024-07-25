@@ -1,62 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-    <meta name="title" content="<%= title %>">
-    <meta name="google-site-verification" content="GI5NQo4gO9wmNj3_u653Won-jzDQxLuT2oWfWnAnbas" />
-    <meta name="description" content="<%= description %>">
+    <meta name="title" content="<%= title %>" />
+    <meta name="description" content="<%= description %>" />
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="/assets/images/abo-img-2.webp" as="image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/css/intlTelInput.css">
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/css/intlTelInput.css"
+    />
 
-    <link rel="stylesheet" href="/css/rating.css">
-    <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/aboutus.css">
-    <link rel="stylesheet" href="/css/advertisement.css">
-    <link rel="stylesheet" href="/css/contact.css">
-    <link rel="stylesheet" href="/css/webdevelopment.css">
-    <link rel="stylesheet" href="/css/design.css">
-    <link rel="stylesheet" href="/css/blog.css">
-    <link rel="stylesheet" href="/css/responsive.css">
+    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/aboutus.css" />
+    <link rel="stylesheet" href="/css/advertisement.css" />
+    <link rel="stylesheet" href="/css/contact.css" />
+    <link rel="stylesheet" href="/css/webdevelopment.css" />
+    <link rel="stylesheet" href="/css/design.css" />
+    <link rel="stylesheet" href="/css/blog.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script>
+    // Define dataLayer and the gtag function.
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
 
-</head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"></script>
-<script>
+    // Set default consent to 'denied' as a placeholder
+    // Determine actual values based on your own requirements
+    gtag("consent", "default", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "denied",
+      functionality_storage: "granted",
+      personalization_storage: "granted",
+      security_storage: "granted",
+    });
+
+    var allGranted = {
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+      analytics_storage: "granted",
+      functionality_storage: "granted",
+      personalization_storage: "granted",
+      security_storage: "granted",
+    };
+
+    var essentialOnlyGranted = {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "denied",
+      functionality_storage: "granted",
+      personalization_storage: "granted",
+      security_storage: "granted",
+    };
+
+    if (readCookie("google-consent") != null)
+      gtag("consent", "update", allGranted);
+  </script>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"
+  ></script>
+  <!-- Create one update function for each consent parameter -->
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-FZVQLLDS0B");
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-FZVQLLDS0B');
-</script>
 
-<body>
-  
+</script> -->
 
-    <%- include("../includes/navbar") %>
-        <%- body %>
-            <%- include("../includes/footer") %>
+  <body>
+    <%- include("../includes/navbar") %> <%- body %> <%-
+    include("../includes/footer") %>
 
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
 
-                <script src="/js/new.js"></script>
-                <script src="/js/script.js"></script>
-                <script src="/js/script2.js"></script>
-                <script src="/js/other.js"></script>
-
-
-</body>
-
+    <script src="/js/new.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/script2.js"></script>
+    <script src="/js/other.js"></script>
+  </body>
 </html>

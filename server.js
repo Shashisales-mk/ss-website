@@ -1353,11 +1353,11 @@ app.get("/payment-failed", (req, res) => {
 })
 
 
-app.get("/pay-via-paypal", (req, res) => {
-    res.render("paypalPaymentForm", {
-        title: " ",
-        description: " "
-    });
+app.get("/pay-via-paypal" , (req, res) => {
+    res.render("paypalPaymentForm" , {
+        title: "Pay via paypal | Shashi Sales And Marketing",
+        description: "Shashi Sales and Marketing offers innovative solutions to transform your business, boost customer loyalty, and stay ahead of the competition."
+    } );
 })
 
 
