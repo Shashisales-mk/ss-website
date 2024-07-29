@@ -9,6 +9,82 @@
         integrity="sha512-ggYQiYwuFFyThzEv6Eo6g/uPLis4oUynsE88ovEde5b2swycOh9SlAI8FL/cL2AkGGNnWADPXcX2UnPIJS2ozw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/blog.css">
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1007318860933777');
+        fbq('track', 'PageView');
+        </script>
+      
+          <!-- Google tag (gtag.js) -->
+          <script>
+            // Define dataLayer and the gtag function.
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+      
+            // Set default consent to 'denied' as a placeholder
+            // Determine actual values based on your own requirements
+            gtag("consent", "default", {
+              ad_storage: "denied",
+              ad_user_data: "denied",
+              ad_personalization: "denied",
+              analytics_storage: "denied",
+              functionality_storage: "granted",
+              personalization_storage: "granted",
+              security_storage: "granted",
+            });
+      
+            var allGranted = {
+              ad_storage: "granted",
+              ad_user_data: "granted",
+              ad_personalization: "granted",
+              analytics_storage: "granted",
+              functionality_storage: "granted",
+              personalization_storage: "granted",
+              security_storage: "granted",
+            };
+      
+            var essentialOnlyGranted = {
+              ad_storage: "denied",
+              ad_user_data: "denied",
+              ad_personalization: "denied",
+              analytics_storage: "denied",
+              functionality_storage: "granted",
+              personalization_storage: "granted",
+              security_storage: "granted",
+            };
+      
+            if (readCookie("google-consent") != null)
+              gtag("consent", "update", allGranted);
+          </script>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"
+          ></script>
+          <!-- Create one update function for each consent parameter -->
+      
+          <!-- Google Tag Manager -->
+          <script>
+            (function (w, d, s, l, i) {
+              w[l] = w[l] || [];
+              w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+              var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != "dataLayer" ? "&l=" + l : "";
+              j.async = true;
+              j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+              f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "dataLayer", "GTM-FZVQLLDS0B");
+          </script>
+          <!-- End Google Tag Manager -->
     <style>
         #editor-container {
             height: 200px;
