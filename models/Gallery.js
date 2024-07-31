@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const gallerySchema = new mongoose.Schema({
@@ -24,10 +23,6 @@ const gallerySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    aspectRatio: {
-        type: Number,
-        required: false
-    }
 });
 
 const Gallery = mongoose.model('Gallery', gallerySchema);

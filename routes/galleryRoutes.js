@@ -5,7 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const Gallery = require('../models/Gallery');
 const Blog = require('../models/Blog');
-const sharp = require('sharp');
+// const sharp = require('sharp');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/uploads/');
@@ -72,20 +72,20 @@ router.post('/add', upload.single('file'), async (req, res) => {
 
         let aspectRatio = null;
 
-        if (type === 'image') {
-            const image = sharp(req.file.path);
-            const metadata = await image.metadata();
+        // if (type === 'image') {
+        //     const image = sharp(req.file.path);
+        //     const metadata = await image.metadata();
             
-            if (!metadata.format) {
-                throw new Error('Unsupported image format.');
-            }
+        //     if (!metadata.format) {
+        //         throw new Error('Unsupported image format.');
+        //     }
 
-            aspectRatio = metadata.width / metadata.height;
-        } else if (type === 'video') {
-            aspectRatio = null;
-        } else {
-            throw new Error('Unsupported file type.');
-        }
+        //     aspectRatio = metadata.width / metadata.height;
+        // } else if (type === 'video') {
+        //     aspectRatio = null;
+        // } else {
+        //     throw new Error('Unsupported file type.');
+        // }
 
         const newGalleryItem = new Gallery({
             type,
@@ -93,7 +93,7 @@ router.post('/add', upload.single('file'), async (req, res) => {
             category,
             tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
             section,
-            aspectRatio
+            // aspectRatio
         });
 
         await newGalleryItem.save();

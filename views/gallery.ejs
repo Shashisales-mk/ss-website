@@ -1,4 +1,3 @@
-
 <% layout("/layouts/boilerplate") %>
 
 <style>
@@ -204,23 +203,22 @@
             <% if (gal.section === 'section1') { %>
                 <div id="show-<%= gal.category %>">
                     <% if (gal.type === 'image') { %>
-                        <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                        <!-- <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: 100%; overflow: hidden;"> -->
                             <img
                                 class="clickable"
                                 loading="lazy"
                                 src="<%= gal.src %>"
                                 alt="Image"
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
                             >
-                        </div>
+                        <!-- </div> -->
                     <% } else if (gal.type === 'video') { %>
                         <div class="middle-video">
-                            <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
-                                <video class="clickable" loading="lazy" autoplay loop muted id="heroVideo">
+                            <!-- <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: 100%; overflow: hidden;"> -->
+                                <video class="clickable" loading="lazy" loop muted id="heroVideo">
                                     <source src="<%= gal.src %>" type="video/webm">
                                     Your browser does not support the video tag.
                                 </video>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     <% } %>
                     <ul>
@@ -239,23 +237,22 @@
             <% if (gal.section === 'section2') { %>
                 <div id="show-<%= gal.category %>">
                     <% if (gal.type === 'image') { %>
-                        <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                        <!-- <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: 100%; overflow: hidden;"> -->
                             <img
                                 class="clickable"
                                 loading="lazy"
                                 src="<%= gal.src %>"
                                 alt="Image"
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
                             >
-                        </div>
+                        <!-- </div> -->
                     <% } else if (gal.type === 'video') { %>
                         <div class="middle-video">
-                            <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                            <!-- <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: 100%; overflow: hidden;"> -->
                                 <video class="clickable" loading="lazy" autoplay loop muted id="heroVideo">
                                     <source src="<%= gal.src %>" type="video/webm">
                                     Your browser does not support the video tag.
                                 </video>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     <% } %>
                     <ul>
@@ -274,23 +271,22 @@
             <% if (gal.section === 'section3') { %>
                 <div id="show-<%= gal.category %>">
                     <% if (gal.type === 'image') { %>
-                        <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                        <!-- <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: 100%; overflow: hidden;"> -->
                             <img
                                 class="clickable"
                                 loading="lazy"
                                 src="<%= gal.src %>"
                                 alt="Image"
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
                             >
-                        </div>
+                        <!-- </div> -->
                     <% } else if (gal.type === 'video') { %>
                         <div class="middle-video">
-                            <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                            <!-- <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: 100%; overflow: hidden;"> -->
                                 <video class="clickable" loading="lazy" autoplay loop muted id="heroVideo">
                                     <source src="<%= gal.src %>" type="video/webm">
                                     Your browser does not support the video tag.
                                 </video>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     <% } %>
                     <ul>
@@ -429,4 +425,3 @@
     }
     document.addEventListener('DOMContentLoaded', fetchGalleryItems);
 </script>
-
