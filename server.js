@@ -19,6 +19,8 @@ const fs = require('fs');
 const User = require("./models/User");
 const Blog = require('./models/Blog');
 const Review = require('./models/Review');
+const Gallery = require('./models/Gallery');
+
 const PaymentDetails = require('./models/PaymentDetails');
 
 const passport = require('./config/passport');
@@ -26,6 +28,12 @@ const passport = require('./config/passport');
 const { google } = require('googleapis');
 
 const paypal = require('paypal-rest-sdk');
+const galleryRoutes = require('./routes/galleryRoutes');
+
+
+
+
+
 
 // Configure PayPal SDK
 paypal.configure({
@@ -70,6 +78,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+// Routes
+app.use('/', galleryRoutes);
 
 
 // Multer setup (only for file uploads)
@@ -430,7 +441,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : [];
 
         if (!bannerImage) {
-            throw new Error('Blog banner image is required');
+            throw new Error('B-blog-listlog banner image is required');
         }
 
         const content = [];
@@ -472,8 +483,13 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 
 app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const AllBlogs = await Blog.find();
+    const galleryItems = await Gallery.find();
+    const category = await Gallery.find();
+       
     // console.log(AllBlogs);
     res.render("allBlogs", {
+        galleryItems,
+        category,
         AllBlogs,
         title: "All Blog List - how to create a website - Shashi Sales",
         description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch."

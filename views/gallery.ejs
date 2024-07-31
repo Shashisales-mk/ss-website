@@ -1,0 +1,432 @@
+
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .bl{
+        background-color: #000;
+    }
+    .gallery-cont {
+        padding: 0 3vw 3vw 3vw;
+        display: grid;
+        grid-column-gap: var(--column-gutter);
+        align-items: start;
+        grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    }
+    .gal-in {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: var(--row-gutter);
+    }
+    .gal-in img, .gal-in video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+        unicode-bidi: isolate;
+    }
+    /* Popup */
+    .popup {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        overflow: auto;
+    }
+
+    .popup-content {
+        margin: auto;
+        margin-top: 5vw;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    .popup-close {
+        z-index: 5;
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .popup-close:hover,
+    .popup-close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .gal-fil{
+        padding: 0 3vw;
+    }
+    .gal-fil ul, .gal-in ul{
+        font-size: 1.2vw;
+    }
+    .gal-in ul{
+        justify-content: start;
+        display: flex;
+        gap: 2vw;
+        margin: 1vw 0;
+        gap: 1vw;
+    }
+    .gal-fil li, .gal-in li{
+        border: 1px solid #bbb;
+        list-style: none;
+        color: #767676;
+    }
+    .gal-in li{
+        padding: 0.6vw 1vw;
+        border-radius: 0.7vw;
+        background: #bbb;
+        color: #000;
+    }
+    .gal-in li:hover{
+        background: #000;
+        color: #bbb;
+        cursor: pointer;
+    }
+    .gal-fil li:hover{
+        cursor: pointer;
+        border: 1px solid #000;
+        color: #000;
+    }
+    .middle-vedio {
+        z-index: 2;
+        position:static !important;
+        width: auto !important;
+    }
+    .over {
+        position: relative;
+        display: inline-block;
+    }
+
+    .over .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.20);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .over:hover .overlay {
+        opacity: 1;
+    }
+    .horizontal-scroll {
+        display: flex !important;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px 0 !important;
+        margin: 0 !important;
+        list-style: none;
+    }
+    .horizontal-scroll::-webkit-scrollbar {
+        height: 3px;
+        background: #f0f0f0;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+    .horizontal-scroll::-webkit-scrollbar {
+        display: none;
+    }
+    .horizontal-scroll:hover::-webkit-scrollbar {
+        display: block;
+    }
+    .horizontal-scroll li {
+        display: inline-block !important;
+        padding: 10px 20px !important;
+        margin-right: 10px !important;
+        background: #f0f0f0;
+        border-radius: 5px !important;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .horizontal-scroll li:last-child {
+        margin-right: 0 !important;
+    }
+    .galh{
+        margin-top: 10vw;
+    }
+    @media screen and (max-width: 768px){
+        .gal-fil ul, .gal-in ul {
+            font-size: 1.5vw !important;
+        }
+        .popup-content {
+            margin-top: 20vw;
+        }
+    }
+    @media screen and (max-width: 600px){
+        .galh{
+            margin-top: 20vw;
+            font-size: 3.5vw;
+        }
+        .gal-fil ul, .gal-in ul {
+            font-size: 2.5vw !important;
+        }
+        .horizontal-scroll li {
+            padding: 3px 10px !important;
+        }
+    }
+</style>
+<h1 class="galh">GALLERY</h1>
+<div class="gal-fil">
+    <ul class="horizontal-scroll">
+        <li id="all">All</li>
+        <li id="pro-sho">Product Shoot</li>
+        <li id="mod-sho">Model Shoot</li>
+        <li id="grph-dsgn">Graphic Designs</li>
+        <li id="motion-posture">Motion Posture</li>
+        <li id="promotional-videos">Promotional Videos</li>
+        <li id="creative-shoot">Creative Shoot</li>
+        <li id="banners">Banners</li>
+        <li id="Office">Office</li>
+    </ul>
+</div>
+<div class="gallery-cont" style="--column-gutter: 24px;--columns: 3;margin-top: 2vw;">
+    <div class="gal-in" style="--row-gutter: 24px;">
+        <% galleryItems.reverse().forEach(gal => { %>
+            <% if (gal.section === 'section1') { %>
+                <div id="show-<%= gal.category %>">
+                    <% if (gal.type === 'image') { %>
+                        <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                            <img
+                                class="clickable"
+                                loading="lazy"
+                                src="<%= gal.src %>"
+                                alt="Image"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+                            >
+                        </div>
+                    <% } else if (gal.type === 'video') { %>
+                        <div class="middle-video">
+                            <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                                <video class="clickable" loading="lazy" autoplay loop muted id="heroVideo">
+                                    <source src="<%= gal.src %>" type="video/webm">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    <% } %>
+                    <ul>
+                        <% gal.tags.forEach(tag => { %>
+                            <li id="<%= tag %>"><%= tag %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            <% } %>
+        <% }) %>              
+    </div>
+    
+
+    <div class="gal-in" style="--row-gutter: 24px;">
+        <% galleryItems.reverse().forEach(gal => { %>
+            <% if (gal.section === 'section2') { %>
+                <div id="show-<%= gal.category %>">
+                    <% if (gal.type === 'image') { %>
+                        <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                            <img
+                                class="clickable"
+                                loading="lazy"
+                                src="<%= gal.src %>"
+                                alt="Image"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+                            >
+                        </div>
+                    <% } else if (gal.type === 'video') { %>
+                        <div class="middle-video">
+                            <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                                <video class="clickable" loading="lazy" autoplay loop muted id="heroVideo">
+                                    <source src="<%= gal.src %>" type="video/webm">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    <% } %>
+                    <ul>
+                        <% gal.tags.forEach(tag => { %>
+                            <li id="<%= tag %>"><%= tag %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            <% } %>
+        <% }) %>              
+    </div>
+    
+
+    <div class="gal-in" style="--row-gutter: 24px;">
+        <% galleryItems.reverse().forEach(gal => { %>
+            <% if (gal.section === 'section3') { %>
+                <div id="show-<%= gal.category %>">
+                    <% if (gal.type === 'image') { %>
+                        <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                            <img
+                                class="clickable"
+                                loading="lazy"
+                                src="<%= gal.src %>"
+                                alt="Image"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+                            >
+                        </div>
+                    <% } else if (gal.type === 'video') { %>
+                        <div class="middle-video">
+                            <div style="background: #d4c3c3; position: relative; width: 100%; padding-top: <%= gal.aspectRatio ? (100 / gal.aspectRatio) + '%' : '0%' %>; overflow: hidden;">
+                                <video class="clickable" loading="lazy" autoplay loop muted id="heroVideo">
+                                    <source src="<%= gal.src %>" type="video/webm">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    <% } %>
+                    <ul>
+                        <% gal.tags.forEach(tag => { %>
+                            <li id="<%= tag %>"><%= tag %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            <% } %>
+        <% }) %>              
+    </div>
+    
+</div>
+<!-- Pop-up Container -->
+<div id="popup" class="popup">
+    <span class="popup-close">&times;</span>
+    <img class="popup-content" id="popup-img">
+    <video class="popup-content" id="popup-video"></video>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById("popup");
+            const popupImg = document.getElementById("popup-img");
+            const popupVideo = document.getElementById("popup-video");
+        
+            const mediaElements = document.querySelectorAll(".clickable");
+        
+            const blElement = document.querySelector(".bl");
+        
+            mediaElements.forEach(el => {
+                el.addEventListener("click", () => {
+                    popup.style.display = "block";
+                    if (el.tagName === 'IMG') {
+                        popupImg.style.display = "block";
+                        popupVideo.style.display = "none";
+                        popupImg.src = el.src;
+                    } else if (el.tagName === 'VIDEO') {
+                        popupImg.style.display = "none";
+                        popupVideo.style.display = "block";
+                        popupVideo.src = el.querySelector('source').src;
+                        popupVideo.play();
+                    }
+                    if (blElement) {
+                        blElement.style.display = "none";
+                    }
+                });
+            });
+        
+            const span = document.getElementsByClassName("popup-close")[0];
+        
+            span.addEventListener("click", () => {
+                popup.style.display = "none";
+                popupVideo.pause();
+                if (blElement) {
+                    blElement.style.display = "block";
+                }
+            });
+        
+            window.addEventListener("click", (event) => {
+                if (event.target === popup) {
+                    popup.style.display = "none";
+                    popupVideo.pause();
+                    if (blElement) {
+                        blElement.style.display = "block";
+                    }
+                }
+            });
+        });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const categories = [...document.querySelectorAll('.gal-fil ul li')].map(li => li.id);
+
+        categories.forEach(categoryId => {
+            document.getElementById(categoryId).addEventListener("click", () => {
+                filterGallery(categoryId);
+            });
+        });
+
+        // filter gallery
+        function filterGallery(filter) {
+            var allItems = document.querySelectorAll(".gal-in > div");
+            allItems.forEach(item => {
+                item.style.display = "none";
+            });
+
+            if (filter === "all") {
+                allItems.forEach(item => {
+                    item.style.display = "block";
+                });
+            } else {
+                var filteredItems = document.querySelectorAll(`#show-${filter}`);
+                filteredItems.forEach(item => {
+                    item.style.display = "block";
+                });
+            }
+        }
+    });
+</script>
+<script>
+    async function fetchGalleryItems() {
+        const response = await fetch('/gallery');
+        const galleryItems = await response.json();
+        const galleryContainer = document.getElementById('galleryContainer');
+
+        galleryItems.forEach(item => {
+            const galIn = document.createElement('div');
+            galIn.classList.add('gal-in');
+
+            const mediaElement = document.createElement(item.type === 'image' ? 'img' : 'video');
+            if (item.type === 'video') {
+                const source = document.createElement('source');
+                source.src = item.src;
+                source.type = 'video/webm';
+                mediaElement.appendChild(source);
+                mediaElement.autoplay = true;
+                mediaElement.loop = true;
+                mediaElement.muted = true;
+            } else {
+                mediaElement.src = item.src;
+            }
+            mediaElement.classList.add('clickable');
+            galIn.appendChild(mediaElement);
+
+            const ul = document.createElement('ul');
+            item.tags.forEach(tag => {
+                const li = document.createElement('li');
+                li.textContent = tag;
+                ul.appendChild(li);
+            });
+            galIn.appendChild(ul);
+
+            galleryContainer.appendChild(galIn);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', fetchGalleryItems);
+</script>
+

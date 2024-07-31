@@ -5,8 +5,9 @@
         background-color: black;
     }
     .main-page{
-        margin-top: 8rem;
-        margin-bottom: 3rem;
+        margin-top: 5rem;
+        margin-bottom: 0rem;
+        display: flex;
     }
     .bt{
         width: 100%;
@@ -15,7 +16,6 @@
         place-items: center;
         border-bottom: 1px solid black;
         padding-block: 1rem;
-        /* margin-inline: 5vw; */
     }
     
     .blog-table-body button{
@@ -37,45 +37,399 @@
         color: #11b911;
     } 
 
-    .action-btns{
+    .action-btns {
         width: 100%;
-        padding: 1rem 5vw;
+        padding: 2vw 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
     .action-btns a{
-        background: transparent;
-        padding: .5rem 1.3rem;
+        background: #C4C800;
+        padding: .5vw 1vw;
         border: 2px solid #C4C800;
-        border-radius: 20px;
-        font-weight: bold;
-        font-size: 1rem;
+        border-radius: 2vw;
+        font-weight: 500;
+        font-size: 1.2vw;
         color: #000;
     }
-    
+    .sideNavBar, .main-page-in{
+        padding-top: 1vw;
+    }
+    .active{
+        background: #C4C800;
+    }
+    .sideNavBar{
+        border-right: 0.1vw solid grey;
+        width: 20%;
+        background: #f3eeee;
+    }
+    .sideNavBar li{
+        text-align: center;
+        padding: 2vw;
+        border-bottom: 1px solid grey;
+        font-size: 1.2vw;
+        font-weight: 700;
+    }
+    .sideNavBar li:hover{
+        cursor: pointer;
+        background: #C4C800;
+    }
+    .sideNavBar li.active {
+            background-color: #C4C800;
+    }
+    .main-page-in{
+        width: 80%;
+        padding: 3vw 3vw;
+    }
+    .main-page-in h1{
+        justify-content: start !important;
+    }
+    .sideNavBar p a, .gallery-section form button{
+        display: flex;
+        justify-content: center;
+        margin: 2vw 4vw;
+        padding: 0.6vw 1vw;
+        background: transparent;
+        color: #979a05;
+        border: 1px solid #979a05;
+        border-radius: 2vw;
+    }
+    .gallery-section form button{
+        margin: 2vw 0 0 0;
+    }
+    .sideNavBar p a:hover{
+        background: #C4C800;
+        color: #000;
+        border: 1px solid #C4C800;
+    }
+    table{
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1.3vw;
+    }
+    th,td{
+        border: 2px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+    th{
+        background-color: #f2f2f2;
+        text-align: center;
+    }
+    .edit-btn{
+        padding: 0.3vw 2vw;
+        border-radius: 3vw;
+        background: transparent;
+        border: 1px solid orange;
+        color: orange;
+    }
+    .del-btn {
+    margin: 0 !important;
+    padding: 0.3vw 2vw !important;
+    border-radius: 3vw !important;
+    background: transparent !important;
+    border: 1px solid red !important;
+    color: red !important;
+}
+    .del-btn:hover{
+        cursor: pointer;
+    }
+    .gallery-cont {
+    padding-top: 2vw;
+    display: grid;
+    grid-column-gap: var(--column-gutter);
+    align-items: start;
+    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+}
+
+.gal-in {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--row-gutter);
+}
+
+.gal-in img, .gal-in video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    unicode-bidi: isolate;
+}
+.secr{
+    display: flex;
+    gap: 2vw;
+    padding: 2vw 0 0.1vw 0;
+    font-size: 1.2vw;
+}
+.gallery-section input, .gallery-section select{
+    border: 0;
+    background: #ced5d5;
+    outline: none;
+    padding: 0.5vw;
+    font-size: 1.2vw;
+    border-radius: 0.4vw;
+}
+.gallery-cont table img, .gallery-cont table video{
+    height: 5vw;
+    width: 5vw;
+}
+.gallery-cont table li{
+    list-style: none;
+    padding: 0.5vw 1vw;
+    background: #4e4949;
+    color: white;
+    border-radius: 2vw;
+}
+.gallery-cont table ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    flex-wrap: wrap;
+}
+.gallery-section p{
+    display: grid;
+    width: 50%;
+}
+.secr label{
+    display: flex;
+    align-items: center;
+}
 </style>
 
 <div class="main-page">
-    <div class="action-btns">
-        <a href="/blog-form">Create New Blog</a>
-    <a href="/logout">Logout</a>
+    <div class="sideNavBar">
+        <ul>
+            <li id="sec1" class="active">Blogs</li>
+            <li id="sec2">Gallery</li>
+            <p><a href="/logout">Logout</a></p>
+        </ul>
     </div>
-    <hr>
-    <div class="bt blog-table-head">
-        <h3>Blog Title</h3>
-        <h3>Edit Blog</h3>
-        <h3>Delete Blog</p>
-    </div>
-    <% AllBlogs.forEach(blog => { %>
-    <div class="bt blog-table-body">
-           
-                <h3><%= blog.title %></h3>
-                <a href="/edit-blog/<%= blog.canonical %>">Edit</a>
-                <form method="POST" action="/delete-blog/<%= blog._id %>?_method=DELETE">
-                    <button type="submit">Delete</button>
-                </form>
-           
+    <div class="main-page-in">
+        <!-- Blog Section -->
+        <div class="blog-section">
+            <h1 style="padding: 2vw;text-align: start;">Blog Section</h1>
+            <div class="action-btns">
+                <a href="/blog-form">Create New Blog</a>
             </div>
-            <% }); %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>BLOG TITLE</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% AllBlogs.forEach(blog => { %>
+                        <tr>
+                            <td><%= blog.title %></td>
+                            <td>
+                                <p>
+                                    <a class="edit-btn" href="/edit-blog/<%= blog.canonical %>">Edit</a>
+                                </p>
+                            </td>
+                            <td>
+                                <form method="POST" action="/delete-blog/<%= blog._id %>?_method=DELETE">
+                                    <button class="del-btn" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Gallery Section -->
+        <div class="gallery-section" style="display: none;">
+            <h1>Gallery Section</h1>
+            <form action="/add" method="POST" enctype="multipart/form-data">
+                <div class="secr">
+                    <p>
+                        <select name="type" id="type">
+                            <option value="image">Image</option>
+                            <option value="video">Video</option>
+                        </select>
+                    </p>
+                    <p><input type="file" name="file" id="file" required></p>
+                </div>
+                <div class="secr">
+                    <p><input type="text" name="tags" id="tags" placeholder="Tags (comma-separated)"></p>
+                    <p>
+                        <select name="category" id="category">
+                            <option value="pro-sho">Product Shoot</option>
+                            <option value="mod-sho">Model Shoot</option>
+                            <option value="oth">Others</option>
+                            <option value="grph-dsgn">Graphic Designs</option>
+                            <option value="motion-posture">Motion Posture</option>
+                            <option value="promotional-videos">Promotional Videos</option>
+                            <option value="creative-shoot">Creative Shoot</option>
+                            <option value="banners">Banners</option>
+                            <option value="Office">Office</option>
+                        </select>
+                    </p>
+                    <p>
+                        <select name="section" id="section">
+                            <option value="section1">Row 1</option>
+                            <option value="section2">Row 2</option>
+                            <option value="section3">Row 3</option>
+                        </select>
+                    </p>
+                </div>
+                <button type="submit">Upload</button>
+            </form>
+            <div class="gallery-cont">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>IMAGE</th>
+                            <th>TAGS</th>
+                            <th>DELETE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% ['section1', 'section2', 'section3'].forEach(section => { %> 
+                            <% galleryItems.forEach(gal => { %>
+                                <% if (gal.section === section) { %>
+                                    <tr>
+                                        <td>
+                                            <% if (gal.type === 'image') { %>
+                                                <img loading="lazy" src="<%= gal.src %>" alt="Image" class="clickable">
+                                            <% } else if (gal.type === 'video') { %>
+                                                <video autoplay loop muted id="heroVideo">
+                                                    <source src="<%= gal.src %>" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                <% gal.tags.forEach(tag => { %>
+                                                    <li id="<%= tag %>"><%= tag %></li>
+                                                <% }) %>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <form action="/delete/<%= gal._id %>" method="POST" style="display:flex;justify-content: center;">
+                                                <button type="submit" class="delete-button del-btn">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        <% }) %>
+                    </tbody>
+                </table>
+                
+            </div>
+            
+        </div>
+    </div>
 </div>
+<script>
+    const menuItems = document.querySelectorAll('.sideNavBar li');
+
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            menuItems.forEach(item => item.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
+</script>
+<script>
+    function hideAllSections() {
+        document.querySelector('.blog-section').style.display = 'none';
+        document.querySelector('.gallery-section').style.display = 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        hideAllSections();
+        document.querySelector('.blog-section').style.display = 'block';
+    });
+    document.getElementById('sec1').addEventListener('click', function () {
+        hideAllSections();
+        document.querySelector('.blog-section').style.display = 'block';
+    });
+    document.getElementById('sec2').addEventListener('click', function () {
+        hideAllSections();
+        document.querySelector('.gallery-section').style.display = 'block';
+    });
+</script>
+<script>
+    async function fetchGalleryItems() {
+        const response = await fetch('/gallery');
+        const galleryItems = await response.json();
+        const galleryContainer = document.getElementById('galleryContainer');
+
+        galleryItems.forEach(item => {
+            const galIn = document.createElement('div');
+            galIn.classList.add('gal-in');
+
+            const mediaElement = document.createElement(item.type === 'image' ? 'img' : 'video');
+            if (item.type === 'video') {
+                const source = document.createElement('source');
+                source.src = item.src;
+                source.type = 'video/webm';
+                mediaElement.appendChild(source);
+                mediaElement.autoplay = true;
+                mediaElement.loop = true;
+                mediaElement.muted = true;
+            } else {
+                mediaElement.src = item.src;
+            }
+            mediaElement.classList.add('clickable');
+            galIn.appendChild(mediaElement);
+
+            const ul = document.createElement('ul');
+            item.tags.forEach(tag => {
+                const li = document.createElement('li');
+                li.textContent = tag;
+                ul.appendChild(li);
+            });
+            galIn.appendChild(ul);
+
+            galleryContainer.appendChild(galIn);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchGalleryItems);
+</script>
+<script>
+    async function fetchGalleryItems() {
+        const response = await fetch('/allBlogs');
+        const galleryItems = await response.json();
+        const galleryContainer = document.getElementById('galleryContainer');
+
+        galleryItems.forEach(item => {
+            const galIn = document.createElement('div');
+            galIn.classList.add('gal-in');
+
+            const mediaElement = document.createElement(item.type === 'image' ? 'img' : 'video');
+            if (item.type === 'video') {
+                const source = document.createElement('source');
+                source.src = item.src;
+                source.type = 'video/webm';
+                mediaElement.appendChild(source);
+                mediaElement.autoplay = true;
+                mediaElement.loop = true;
+                mediaElement.muted = true;
+            } else {
+                mediaElement.src = item.src;
+            }
+            mediaElement.classList.add('clickable');
+            galIn.appendChild(mediaElement);
+
+            const ul = document.createElement('ul');
+            item.tags.forEach(tag => {
+                const li = document.createElement('li');
+                li.textContent = tag;
+                ul.appendChild(li);
+            });
+            galIn.appendChild(ul);
+
+            galleryContainer.appendChild(galIn);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', fetchGalleryItems);
+</script>
