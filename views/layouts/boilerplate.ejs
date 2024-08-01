@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <meta name="title" content="<%= title %>" />
-    <meta name="description" content="<%= description %>" />
-    <link rel="icon" href="/assets/images/favicon.png" type="image/png">
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-    <link rel="preload" href="/assets/images/abo-img-2.webp" as="image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/css/intlTelInput.css"
-    />
 
-    <link rel="stylesheet" href="/css/home.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/aboutus.css" />
-    <link rel="stylesheet" href="/css/advertisement.css" />
-    <link rel="stylesheet" href="/css/contact.css" />
-    <link rel="stylesheet" href="/css/webdevelopment.css" />
-    <link rel="stylesheet" href="/css/design.css" />
-    <link rel="stylesheet" href="/css/blog.css" />
-    <link rel="stylesheet" href="/css/responsive.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= title %>
+  </title>
+  <meta name="title" content="<%= title %>" />
+  <meta name="description" content="<%= description %>" />
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+  <link rel="preload" href="/assets/images/abo-img-2.webp" as="image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/css/intlTelInput.css" />
+
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/aboutus.css" />
+  <link rel="stylesheet" href="/css/advertisement.css" />
+  <link rel="stylesheet" href="/css/contact.css" />
+  <link rel="stylesheet" href="/css/webdevelopment.css" />
+  <link rel="stylesheet" href="/css/design.css" />
+  <link rel="stylesheet" href="/css/blog.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
   <!-- Google tag (gtag.js) -->
   <script>
     // Define dataLayer and the gtag function.
@@ -52,7 +50,7 @@
       personalization_storage: "granted",
       security_storage: "granted",
     });
-    
+
 
     var allGranted = {
       ad_storage: "granted",
@@ -77,10 +75,8 @@
     if (readCookie("google-consent") != null)
       gtag("consent", "update", allGranted);
   </script>
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"
-  ></script>
+
+
   <!-- Create one update function for each consent parameter -->
 
   <!-- Google Tag Manager -->
@@ -98,95 +94,96 @@
   </script>
   <!-- End Google Tag Manager -->
 
-  <!-- <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-FZVQLLDS0B');
-
-</script> -->
+ 
 
 
-<!-- Meta Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1007318860933777');
-  fbq('track', 'PageView');
+  <!-- Meta Pixel Code -->
+  <script>
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1007318860933777');
+    fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1007318860933777&ev=PageView&noscript=1"
-  /></noscript>
+      src="https://www.facebook.com/tr?id=1007318860933777&ev=PageView&noscript=1" /></noscript>
   <!-- End Meta Pixel Code -->
 
 
- 
-</script>
 
+  <!-- </script> -->
+
+  <script>
+    function consentAll() {
+      gtag('consent', 'update', allGranted);
+      createCookie('google-consent', true, 30);
+      document.getElementById('consent-banner').style = 'display: none;';
+      dataLayer.push({ 'event': 'consent-updated' });
+    }
+    function essentialOnly() {
+      gtag('consent', 'update', essentialOnlyGranted);
+      createCookie('google-consent', true, 30);
+      document.getElementById('consent-banner').style = 'display: none;';
+      dataLayer.push({ 'event': 'consent-updated' });
+    }
+
+    function createCookie(name, value, days) {
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+      }
+      else var expires = "";
+
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function readCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      if (readCookie('google-consent') == null)
+        document.getElementById('consent-banner').style = '';
+    });
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"></script>
 <script>
-  function consentAll()
-{
-gtag('consent', 'update', allGranted);
-createCookie('google-consent', true, 30);
-document.getElementById('consent-banner').style = 'display: none;';
-dataLayer.push({'event': 'consent-updated'});
-}
-function essentialOnly() {
-    gtag('consent', 'update', essentialOnlyGranted);
-    createCookie('google-consent', true, 30);
-    document.getElementById('consent-banner').style = 'display: none;';
-    dataLayer.push({'event': 'consent-updated'});
-  }
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-function createCookie(name, value, days) {
-  if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      var expires = "; expires=" + date.toGMTString();
-  }
-  else var expires = "";               
-
-  document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function readCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-if(readCookie('google-consent') == null)
-  document.getElementById('consent-banner').style = '';
-});
+  gtag('config', 'G-FZVQLLDS0B');
 </script>
-  </head>
+</head>
 
-  <body>
-    <%- include("../includes/navbar") %> <%- body %> <%-
-    include("../includes/footer") %>
+<body>
+  <%- include("../includes/navbar") %> <%- body %> <%- include("../includes/footer") %>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
 
-    <script src="/js/new.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/script2.js"></script>
-    <script src="/js/other.js"></script>
-  </body>
+        <script src="/js/new.js"></script>
+        <script src="/js/script.js"></script>
+        <script src="/js/script2.js"></script>
+        <script src="/js/other.js"></script>
+</body>
+
 </html>
-
-
-
-
