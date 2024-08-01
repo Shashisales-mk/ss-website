@@ -523,8 +523,8 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
         }
 
         res.render('blogEdit', {
-            blog, title: " ",
-            description: " "
+            blog, title: "blog edit  ",
+            description: " blog edit page"
         });
     } catch (err) {
         console.error(err);
@@ -826,8 +826,8 @@ app.get('/logout', (req, res) => {
             console.error('Error during logout:', err);
         }
         res.redirect('/login', {
-            title: " ",
-            description: " "
+            title: " logout page",
+            description: " logout page"
         });
     });
 });
@@ -1363,8 +1363,8 @@ app.get("/payment-successful", (req, res) => {
 
 app.get("/payment-failed", (req, res) => {
     res.render("paymentfail.ejs", {
-        title: " ",
-        description: " "
+        title: "payment failed ",
+        description: " payment failed page"
     })
 })
 
