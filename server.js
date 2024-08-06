@@ -20,6 +20,7 @@ const User = require("./models/User");
 const Blog = require('./models/Blog');
 const Review = require('./models/Review');
 const Gallery = require('./models/Gallery');
+const Testimonial = require('./models/Testimonial');
 
 const PaymentDetails = require('./models/PaymentDetails');
 
@@ -28,7 +29,10 @@ const passport = require('./config/passport');
 const { google } = require('googleapis');
 
 const paypal = require('paypal-rest-sdk');
+
+
 const galleryRoutes = require('./routes/galleryRoutes');
+const testimonialRoutes = require('./routes/testimonialRoutes');
 
 
 
@@ -81,6 +85,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/', galleryRoutes);
+app.use('/', testimonialRoutes);
 
 
 // Multer setup (only for file uploads)
@@ -485,9 +490,11 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const AllBlogs = await Blog.find();
     const galleryItems = await Gallery.find();
     const category = await Gallery.find();
+    const testimonials = await Testimonial.find().populate('page');
        
     // console.log(AllBlogs);
     res.render("allBlogs", {
+        testimonials,
         galleryItems,
         category,
         AllBlogs,
