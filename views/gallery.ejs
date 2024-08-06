@@ -5,6 +5,9 @@
         background-color: #000;
     }
     .gallery-cont {
+        --column-gutter: 24px;
+        --columns: 3;
+        margin-top: 2vw;
         padding: 0 3vw 3vw 3vw;
         display: grid;
         grid-column-gap: var(--column-gutter);
@@ -12,6 +15,7 @@
         grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
     }
     .gal-in {
+        --row-gutter: 24px;
         display: grid;
         grid-template-columns: minmax(0, 1fr);
         row-gap: var(--row-gutter);
@@ -70,14 +74,18 @@
     .gal-in ul{
         justify-content: start;
         display: flex;
+        flex-wrap: wrap;
+        font-size: 1.2vw;
         gap: 2vw;
         margin: 1vw 0;
         gap: 1vw;
     }
+    .gal-in img:hover{
+        cursor: pointer;
+    }
     .gal-fil li, .gal-in li{
         border: 1px solid #bbb;
         list-style: none;
-        color: #767676;
     }
     .gal-in li{
         padding: 0.6vw 1vw;
@@ -93,7 +101,8 @@
     .gal-fil li:hover{
         cursor: pointer;
         border: 1px solid #000;
-        color: #000;
+        background: black !important;
+        color: white;
     }
     .middle-vedio {
         z-index: 2;
@@ -175,12 +184,23 @@
             margin-top: 20vw;
             font-size: 3.5vw;
         }
-        .gal-fil ul, .gal-in ul {
+        .gal-fil ul{
             font-size: 2.5vw !important;
         }
         .horizontal-scroll li {
             padding: 3px 10px !important;
         }
+        .gallery-cont {
+            --column-gutter: 10px;
+            padding-bottom: 20vw;
+        }
+        .gal-in {
+        --row-gutter: 10px;
+    }
+    }
+    .active {
+        background: black !important;
+        color: white;
     }
 </style>
 <h1 class="galh">GALLERY</h1>
@@ -199,7 +219,7 @@
 </div>
 <div class="gallery-cont" style="--column-gutter: 24px;--columns: 3;margin-top: 2vw;">
     <div class="gal-in" style="--row-gutter: 24px;">
-        <% galleryItems.reverse().forEach(gal => { %>
+        <% [...galleryItems].reverse().forEach(gal => { %>
             <% if (gal.section === 'section1') { %>
                 <div id="show-<%= gal.category %>">
                     <% if (gal.type === 'image') { %>
@@ -233,7 +253,7 @@
     
 
     <div class="gal-in" style="--row-gutter: 24px;">
-        <% galleryItems.reverse().forEach(gal => { %>
+        <% [...galleryItems].reverse().forEach(gal => { %>
             <% if (gal.section === 'section2') { %>
                 <div id="show-<%= gal.category %>">
                     <% if (gal.type === 'image') { %>
@@ -267,7 +287,7 @@
     
 
     <div class="gal-in" style="--row-gutter: 24px;">
-        <% galleryItems.reverse().forEach(gal => { %>
+        <% [...galleryItems].reverse().forEach(gal => { %>
             <% if (gal.section === 'section3') { %>
                 <div id="show-<%= gal.category %>">
                     <% if (gal.type === 'image') { %>
@@ -424,4 +444,21 @@
         });
     }
     document.addEventListener('DOMContentLoaded', fetchGalleryItems);
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            let previousElement = null;
+
+            document.querySelectorAll('.horizontal-scroll li').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    if (previousElement) {
+                        previousElement.classList.remove('active');
+                    }
+                    this.classList.add('active');
+                    previousElement = this;
+                });
+            });
+     });
 </script>
