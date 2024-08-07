@@ -1,138 +1,411 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= blog.metaTitle %></title>
+    <title>
+        <%= blog.metaTitle %>
+    </title>
     <meta name="description" content="<%= blog.metaDescription %>">
     <meta name="keywords" content="<%= blog.metaKeywords %>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="canonical" href="https://www.shashisales.com/blog-detail/<%= blog.canonical %>">
     <link rel="stylesheet" href="/css/blog.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/responsive.css">
     <link rel="stylesheet" href="/css/style.css">
+
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '1007318860933777');
         fbq('track', 'PageView');
-        </script>
-      
-          <!-- Google tag (gtag.js) -->
-          <script>
-            // Define dataLayer and the gtag function.
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-      
-            // Set default consent to 'denied' as a placeholder
-            // Determine actual values based on your own requirements
-            gtag("consent", "default", {
-              ad_storage: "denied",
-              ad_user_data: "denied",
-              ad_personalization: "denied",
-              analytics_storage: "denied",
-              functionality_storage: "granted",
-              personalization_storage: "granted",
-              security_storage: "granted",
-            });
-      
-            var allGranted = {
-              ad_storage: "granted",
-              ad_user_data: "granted",
-              ad_personalization: "granted",
-              analytics_storage: "granted",
-              functionality_storage: "granted",
-              personalization_storage: "granted",
-              security_storage: "granted",
-            };
-      
-            var essentialOnlyGranted = {
-              ad_storage: "denied",
-              ad_user_data: "denied",
-              ad_personalization: "denied",
-              analytics_storage: "denied",
-              functionality_storage: "granted",
-              personalization_storage: "granted",
-              security_storage: "granted",
-            };
-      
-            if (readCookie("google-consent") != null)
-              gtag("consent", "update", allGranted);
-          </script>
-          <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"
-          ></script>
-          <!-- Create one update function for each consent parameter -->
-      
-          <!-- Google Tag Manager -->
-          <script>
-            (function (w, d, s, l, i) {
-              w[l] = w[l] || [];
-              w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-              var f = d.getElementsByTagName(s)[0],
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script>
+        // Define dataLayer and the gtag function.
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        // Set default consent to 'denied' as a placeholder
+        // Determine actual values based on your own requirements
+        gtag("consent", "default", {
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+            analytics_storage: "denied",
+            functionality_storage: "granted",
+            personalization_storage: "granted",
+            security_storage: "granted",
+        });
+
+        var allGranted = {
+            ad_storage: "granted",
+            ad_user_data: "granted",
+            ad_personalization: "granted",
+            analytics_storage: "granted",
+            functionality_storage: "granted",
+            personalization_storage: "granted",
+            security_storage: "granted",
+        };
+
+        var essentialOnlyGranted = {
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+            analytics_storage: "denied",
+            functionality_storage: "granted",
+            personalization_storage: "granted",
+            security_storage: "granted",
+        };
+
+        if (readCookie("google-consent") != null)
+            gtag("consent", "update", allGranted);
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"></script>
+    <!-- Create one update function for each consent parameter -->
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+            var f = d.getElementsByTagName(s)[0],
                 j = d.createElement(s),
                 dl = l != "dataLayer" ? "&l=" + l : "";
-              j.async = true;
-              j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-              f.parentNode.insertBefore(j, f);
-            })(window, document, "script", "dataLayer", "GTM-FZVQLLDS0B");
-          </script>
-          <!-- End Google Tag Manager -->
+            j.async = true;
+            j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, "script", "dataLayer", "GTM-FZVQLLDS0B");
+    </script>
+    <!-- End Google Tag Manager -->
     <style>
         .bl {
             background-color: black;
         }
+
         h3 {
             text-transform: uppercase;
         }
+
         h1 {
             text-transform: capitalize;
         }
-        
-    </style>
+
+        #shareButton {
+    position: relative;
+    z-index: 1000;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#shareOptions {
+    position: absolute;
+    display: none;
+}
+
+.share-item {
+    position: absolute;
+    list-style-type: none;
+    transition: all 0.5s ease-out;
+    opacity: 0;
+}
+
+.share-item a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    color: #333;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.share-item a:hover {
+    background-color: #e0e0e0;
+}
+
+</style>
+/* Add Font Awesome for icons */
 </head>
+
 <body>
     <%- include("./includes/navbar") %>
-    <div class="main-page">
-        <div class="header">
-            <div class="banner">
-                <img src="<%= blog.bannerImage %>" alt="Banner Image">
-                <h1><%= blog.title %></h1>
+        <div class="main-page">
+
+            <div class="header">
+                <div class="banner">
+                    <img src="<%= blog.bannerImage %>" alt="Banner Image">
+                    <h1>
+                        <%= blog.title %>
+                    </h1>
+                </div>
             </div>
-        </div>
-        <section class="blog-content">
-            <p><%= blog.shortDescription %></p>
-            <% blog.content.forEach((contentItem, index) => { %>
-                <div class="image-container<%= index % 2 === 0 ? '1' : '2' %> ic <%= !contentItem.image ? 'no-image' : '' %>">
-                    <div class="ic-text">
-                        <h3><%= contentItem.heading %></h3>
-                        <p><%= contentItem.paragraph %></p>
-                    </div>
-                    <% if (contentItem.image) { %>
-                        <div class="ic-img">
-                            <img src="<%= contentItem.image %>" alt="Blog Image">
+
+            <!-- blog share option -->
+            <button id="shareButton">Share</button>
+            <div id="shareOptions" style="display:none;">
+                <!-- Share options will be inserted here -->
+            </div>
+            <!-- blog share option -->
+
+
+            <section class="blog-content">
+                <p>
+                    <%= blog.shortDescription %>
+                </p>
+                <% blog.content.forEach((contentItem, index)=> { %>
+                    <div
+                        class="image-container<%= index % 2 === 0 ? '1' : '2' %> ic <%= !contentItem.image ? 'no-image' : '' %>">
+                        <div class="ic-text">
+                            <h3>
+                                <%= contentItem.heading %>
+                            </h3>
+                            <p>
+                                <%= contentItem.paragraph %>
+                            </p>
                         </div>
-                    <% } %>
-                </div>
+                        <% if (contentItem.image) { %>
+                            <div class="ic-img">
+                                <img src="<%= contentItem.image %>" alt="Blog Image">
+                            </div>
+                            <% } %>
+                    </div>
 
-               
-                <% }) %>
-                <div class="contentText">
-                    <%- blog.contentText %>
-                </div>
-        </section>
-        <%- include("./includes/footer") %>
-    </div>
-    <script src="/js/script.js"></script>
+
+                    <% }) %>
+                        <div class="contentText">
+                            <%- blog.contentText %>
+                        </div>
+            </section>
+
+            <!-- blog share option -->
+            <button id="shareButton">Share</button>
+            <div id="shareOptions" style="display:none;">
+                <!-- Share options will be inserted here -->
+            </div>
+            <!-- blog share option -->
+
+            <section class="comments">
+                <h3>Comments</h3>
+                <% if (comments.length> 0) { %>
+                    <% comments.forEach(comment=> { %>
+                        <div class="comment">
+                            <h4>
+                                <%= comment.name %>
+                            </h4>
+                            <p>
+                                <%= comment.comment %>
+                            </p>
+                            <small>
+                                <%= comment.createdAt.toLocaleDateString() %>
+                            </small>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p>No comments yet.</p>
+                                <% } %>
+            </section>
+
+
+
+
+            
+
+
+            <section class="comment-form">
+                <h3>Leave a Comment</h3>
+                <form action="/blog-detail/<%= blog.canonical %>/comment" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="comment" placeholder="Your Comment" required></textarea>
+                    <button type="submit">Submit Comment</button>
+                </form>
+            </section>
+
+
+            <%- include("./includes/footer") %>
+        </div>
+        <script src="/js/script.js"></script>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const commentForm = document.getElementById('comment-form');
+                const commentsList = document.getElementById('comments-list');
+
+                commentForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const comment = document.getElementById('comment').value;
+
+                    try {
+                        const response = await fetch(`/blog-detail/<%= blog.canonical %>/comment`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ name, email, comment }),
+                        });
+
+                        if (response.ok) {
+                            const newComment = await response.json();
+                            displayComment(newComment);
+                            commentForm.reset();
+                        } else {
+                            console.error('Failed to submit comment');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                });
+
+                function displayComment(comment) {
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    commentElement.innerHTML = `
+            <h4>${escapeHTML(comment.name)}</h4>
+            <p>${escapeHTML(comment.comment)}</p>
+            <small>${new Date(comment.createdAt).toLocaleString()}</small>
+        `;
+                    commentsList.prepend(commentElement);
+                }
+
+                function escapeHTML(str) {
+                    return str.replace(/[&<>'"]/g,
+                        tag => ({
+                            '&': '&amp;',
+                            '<': '&lt;',
+                            '>': '&gt;',
+                            "'": '&#39;',
+                            '"': '&quot;'
+                        }[tag] || tag)
+                    );
+                }
+
+                // Display existing comments
+                eval(`
+    <% if (blog.comments && blog.comments.length > 0) { %>
+        <% blog.comments.forEach(function(comment) { %>
+            displayComment({
+                name: '<%= comment.name %>',
+                comment: '<%= comment.comment %>',
+                createdAt: '<%= comment.createdAt %>'
+            });
+        <% }); %>
+    <% } %>
+`);
+            });
+        </script>
+
+      <script>
+      const shareButton = document.getElementById('shareButton');
+const shareOptions = document.getElementById('shareOptions');
+
+const shareLinks = [
+    { name: 'Facebook', icon: 'fab fa-facebook-f', url: 'https://www.facebook.com/sharer/sharer.php?u=' },
+    { name: 'Twitter', icon: 'fab fa-twitter', url: 'https://twitter.com/intent/tweet?url=' },
+    { name: 'WhatsApp', icon: 'fab fa-whatsapp', url: 'https://wa.me/?text=' },
+    { name: 'Telegram', icon: 'fab fa-telegram-plane', url: 'https://t.me/share/url?url=' },
+    { name: 'LinkedIn', icon: 'fab fa-linkedin-in', url: 'https://www.linkedin.com/shareArticle?mini=true&url=' },
+    { name: 'Email', icon: 'fas fa-envelope', url: 'mailto:?body=' },
+    { name: 'Copy', icon: 'fas fa-copy', action: 'copyLink' },
+     { name: 'Instagram', icon: 'fab fa-instagram', url: 'https://instagram.com/' },
+    { name: 'Copy', icon: 'fas fa-copy', action: 'copyLink' }
+];
+
+let isOpen = false;
+
+function createShareOptions() {
+    shareLinks.forEach((link, index) => {
+        const li = document.createElement('li');
+        li.className = 'share-item';
+        
+        const a = document.createElement('a');
+        a.href = link.url ? link.url + encodeURIComponent(window.location.href) : '#';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.innerHTML = `<i class="${link.icon}"></i>`;
+        
+        if (link.action === 'copyLink') {
+            a.onclick = (e) => {
+                e.preventDefault();
+                copyLink();
+            };
+        } else {
+            a.onclick = (e) => {
+                e.preventDefault();
+                window.open(a.href, '_blank');
+            };
+        }
+        
+        li.appendChild(a);
+        shareOptions.appendChild(li);
+    });
+}
+
+function toggleShareOptions() {
+    const items = document.querySelectorAll('.share-item');
+    const angleBetween = 360 / items.length;
+    const radius = 80; // Adjust this value to change the circle size
+
+    items.forEach((item, index) => {
+        if (isOpen) {
+            item.style.transform = `rotate(0deg) translate(0) rotate(0deg)`;
+            item.style.opacity = '0';
+        } else {
+            const angle = index * angleBetween;
+            const x = radius * Math.cos(angle * Math.PI / 180);
+            const y = radius * Math.sin(angle * Math.PI / 180);
+            item.style.transform = `rotate(${angle}deg) translate(${x}px, ${y}px) rotate(-${angle}deg)`;
+            item.style.opacity = '1';
+        }
+    });
+
+    isOpen = !isOpen;
+    shareOptions.style.display = isOpen ? 'block' : 'none';
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href)
+        .then(() => alert('Link copied to clipboard!'))
+        .catch(err => console.error('Failed to copy: ', err));
+}
+
+shareButton.addEventListener('click', toggleShareOptions);
+
+// Close the share options when clicking outside
+document.addEventListener('click', (event) => {
+    if (isOpen && !shareButton.contains(event.target) && !shareOptions.contains(event.target)) {
+        toggleShareOptions();
+    }
+});
+
+// Create share options on load
+createShareOptions();
+</script>
 </body>
-</html>
 
+</html>

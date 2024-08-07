@@ -23,6 +23,7 @@ const Gallery = require('./models/Gallery');
 const Testimonial = require('./models/Testimonial');
 
 const PaymentDetails = require('./models/PaymentDetails');
+const Comment = require('./models/Comment');
 
 const passport = require('./config/passport');
 
@@ -107,6 +108,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const uploadFields = upload.fields([
     { name: 'blogBannerImage', maxCount: 1 },
+    { name: 'showImg', maxCount: 1 },
     { name: 'images' }
 ]);
 
@@ -412,24 +414,6 @@ app.get("/blogs", async (req, res) => {
     }
 });
 
-
-app.get("/blog-detail/:canonical", async (req, res) => {
-    try {
-        const { canonical } = req.params;
-        const blog = await Blog.findOne({ canonical: canonical });
-
-        if (!blog) {
-            return res.status(404).send("Blog not found");
-        }
-
-        res.render("blogDetails", { blog });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-    }
-});
-
-
 app.get("/blog-form", isAdmin, (req, res) => {
     res.render("uploadForm", {
         title: "Blog Form | Draggan Website: Revolutionizing the Future of AI Technology | Shashi  Sales",
@@ -438,14 +422,42 @@ app.get("/blog-form", isAdmin, (req, res) => {
 });
 
 
+app.get("/blog-detail/:canonical", async (req, res) => {
+    try {
+        const { canonical } = req.params;
+        const blog = await Blog.findOne({ canonical: canonical });
+        
+        if (!blog) {
+            return res.status(404).send("Blog not found");
+        }
+
+        const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
+        
+        res.render("blogDetails", { 
+            blog, 
+            comments: approvedComments, 
+            title: blog.metaTitle, 
+            description: blog.metaDescription 
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
 // Route for handling blog upload
 app.post('/upload-blog', uploadFields, async (req, res) => {
     try {
         const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
         const bannerImage = req.files['blogBannerImage'] ? req.files['blogBannerImage'][0] : null;
+        const showImg = req.files['showImg'] ? req.files['showImg'][0] : null;
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : [];
 
         if (!bannerImage) {
+            throw new Error('B-blog-listlog banner image is required');
+        }
+        if (!showImg) {
             throw new Error('B-blog-listlog banner image is required');
         }
 
@@ -465,12 +477,15 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
             title: blogTitle,
             shortDescription: blogShortDesc,
             bannerImage: `/uploads/${bannerImage.filename}`,
+            showImg: `/uploads/${showImg.filename}`,
             content,
             metaTitle,
             canonical,
             contentText,
             metaDescription,
             metaKeywords: metaKeywords.split(',').map(keyword => keyword.trim()),
+            isLatest: true, 
+            isPopular: false
         });
 
         await blog.save();
@@ -491,7 +506,7 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const galleryItems = await Gallery.find();
     const category = await Gallery.find();
     const testimonials = await Testimonial.find().populate('page');
-       
+
     // console.log(AllBlogs);
     res.render("allBlogs", {
         testimonials,
@@ -542,7 +557,7 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
 app.put('/update-blog/:id', uploadFields, async (req, res) => {
     try {
         const { id } = req.params;
-        const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText } = req.body;
+        const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular } = req.body;
 
         const existingBlog = await Blog.findById(id);
         if (!existingBlog) {
@@ -552,6 +567,10 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
         let bannerImagePath = existingBlog.bannerImage;
         if (req.files['blogBannerImage'] && req.files['blogBannerImage'][0]) {
             bannerImagePath = `/uploads/${req.files['blogBannerImage'][0].filename}`;
+        }
+        let showImgPath = existingBlog.showImg;
+        if (req.files['showImg'] && req.files['showImg'][0]) {
+            showImgPath = `/uploads/${req.files['showImg'][0].filename}`;
         }
 
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : existingBlog.content.map(item => item.image);
@@ -569,18 +588,114 @@ app.put('/update-blog/:id', uploadFields, async (req, res) => {
             title: blogTitle,
             shortDescription: blogShortDesc,
             bannerImage: bannerImagePath,
+            showImg: showImgPath,
             content,
             metaTitle,
             canonical,
             contentText,
             metaDescription,
             metaKeywords: metaKeywords.split(',').map(keyword => keyword.trim()),
+            isLatest: isLatest === 'true',
+            isPopular: isPopular === 'false',
         }, { new: true });
 
         res.redirect("/all-blogs-list");
     } catch (err) {
         console.error('Error updating blog:', err);
         res.status(500).send(`Internal Server Error: ${err.message}`);
+    }
+});
+
+
+// popular button routes
+
+app.post('/toggle-popular/:id', isAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const blog = await Blog.findById(id);
+        
+        if (!blog) {
+            return res.status(404).send('Blog not found');
+        }
+
+        blog.isPopular = !blog.isPopular;
+        await blog.save();
+
+        res.redirect('/all-blogs-list');
+    } catch (err) {
+        console.error('Error toggling popular status:', err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+
+
+// View comments for a specific blog
+app.get('/admin/pending-comments', async (req, res) => {
+    try {
+        const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
+        res.render('admin-comments', { 
+            comments: pendingComments, 
+            title: "Pending Comments", 
+            description: "Approve or delete pending comments" 
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching pending comments');
+    }
+});
+
+// New route to handle comment submission
+app.post("/blog-detail/:canonical/comment", async (req, res) => {
+    try {
+        const { canonical } = req.params;
+        const { name, email, comment } = req.body;
+
+        const blog = await Blog.findOne({ canonical: canonical });
+        
+        if (!blog) {
+            return res.status(404).send("Blog not found");
+        }
+
+        const newComment = new Comment({
+            name,
+            email,
+            comment,
+            blog: blog._id,
+            isApproved: false
+        });
+
+        await newComment.save();
+
+        res.redirect(`/blog-detail/${canonical}`);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+app.post('/admin/approve-comment/:commentId', async (req, res) => {
+    try {
+        await Comment.findByIdAndUpdate(req.params.commentId, { isApproved: true });
+        res.redirect('/admin/pending-comments');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error approving comment');
+    }
+});
+
+app.post('/admin/delete-comment/:commentId', async (req, res) => {
+    try {
+        await Comment.findByIdAndDelete(req.params.commentId);
+        res.redirect('/admin/pending-comments');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error deleting comment');
     }
 });
 
@@ -1357,7 +1472,7 @@ app.get("/payment-successful", (req, res) => {
     const amount = req.query.amount || 'N/A';
     const email = req.query.email || 'N/A';
     const number = req.query.number || 'N/A';
-    
+
     res.render("paymentsucess.ejs", {
         amount: amount,
         email: email,
@@ -1376,11 +1491,11 @@ app.get("/payment-failed", (req, res) => {
 })
 
 
-app.get("/pay-via-paypal" , (req, res) => {
-    res.render("paypalPaymentForm" , {
+app.get("/pay-via-paypal", (req, res) => {
+    res.render("paypalPaymentForm", {
         title: "Pay via paypal | Shashi Sales And Marketing",
         description: "Shashi Sales and Marketing offers innovative solutions to transform your business, boost customer loyalty, and stay ahead of the competition."
-    } );
+    });
 })
 
 
@@ -1442,7 +1557,7 @@ app.post('/create-payment', (req, res) => {
 // POST review
 app.post('/submit-review', async (req, res) => {
     try {
-        const { rating, question1, question2, question3, question4, email, number} = req.body;
+        const { rating, question1, question2, question3, question4, email, number } = req.body;
 
         // email = "suryakantgupta678@gmail.com";
         // number = 8090890890;

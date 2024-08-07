@@ -389,7 +389,7 @@
         <% blogs.forEach(blog => { %>
             <a href="/blog-detail/<%= blog.canonical %>" class="blog-card">
                 <div class="mar-img">
-                    <img class="ad-img" src="<%= blog.bannerImage %>" loading="lazy" alt="<%= blog.title %>">
+                    <img class="ad-img" src="<%= blog.showImg %>" loading="lazy" alt="<%= blog.title %>">
                 </div>
                 <div class="mar-desc">
                     <h3><%= blog.title %></h3>

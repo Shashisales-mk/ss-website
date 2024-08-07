@@ -38,23 +38,110 @@
                 margin-bottom: 4rem;
             }
         }
+
+        .latestBlogs{
+            display: none;
+        }
+        .popularBlogs{
+            display: none;
+        }
+        .allBlogs, .latestBlogs, .popularBlogs {
+        display: none;
+    }
+    .allBlogs {
+        display: flex; /* Show all blogs by default */
+    }
+    .active {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .allBlogbtn, .latestBlogbtn, .popularBlogbtn{
+        border: none;
+        background-color: #C4C800;
+        color: #000;
+        font-weight: bold;
+        padding: .6rem 2rem;
+        border-radius: 8px;
+    }
     </style>
 
 
 <div class="main-page blog-page">
     <div class="blog-page-cont">
         <div class="mar-section">
+            <button class="allBlogbtn active">All Blogs</button>
+            <button class="latestBlogbtn">Latest Blogs</button>
+            <button class="popularBlogbtn">Popular Blogs</button>
+
             <% blogs.forEach(blog => { %>
-                <a href="/blog-detail/<%= blog.canonical %>" class="blog-page-card">
-                    <div class="mar-img">
-                        <img class="ad-img" src="<%= blog.bannerImage %>" alt="<%= blog.title %>">
+                <div class="allBlogs">
+                    <a href="/blog-detail/<%= blog.canonical %>" class="blog-page-card">
+                        <div class="mar-img">
+                            <img class="ad-img" src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                        </div>
+                        <div class="mar-desc">
+                            <h3><%= blog.title %></h3>
+                            <div><%= truncateString(blog.shortDescription) %></div>
+                        </div>
+                    </a>
+                </div>
+
+                <% if(blog.isLatest === true){ %>
+                    <div class="latestBlogs"> 
+                        <a href="/blog-detail/<%= blog.canonical %>" class="blog-page-card">
+                            <div class="mar-img">
+                                <img class="ad-img" src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                            </div>
+                            <div class="mar-desc">
+                                <h3><%= blog.title %></h3>
+                                <div><%= truncateString(blog.shortDescription) %></div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="mar-desc">
-                        <h3><%= blog.title %></h3>
-                        <div><%= truncateString(blog.shortDescription) %></div>
+                <% } %>
+
+                <% if(blog.isPopular === true){ %>
+                    <div class="popularBlogs">
+                        <a href="/blog-detail/<%= blog.canonical %>" class="blog-page-card">
+                            <div class="mar-img">
+                                <img class="ad-img" src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                            </div>
+                            <div class="mar-desc">
+                                <h3><%= blog.title %></h3>
+                                <div><%= truncateString(blog.shortDescription) %></div>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                <% } %>
             <% }) %>
         </div>
     </div>
 </div>
+
+<script>
+    const allBlogBtn = document.querySelector(".allBlogbtn");
+    const popularBlogBtn = document.querySelector(".popularBlogbtn");
+    const latestBlogBtn = document.querySelector(".latestBlogbtn");
+
+    const allBlogs = document.querySelectorAll(".allBlogs");
+    const popularBlogs = document.querySelectorAll(".popularBlogs");
+    const latestBlogs = document.querySelectorAll(".latestBlogs");
+
+    function showBlogs(blogsToShow, activeButton) {
+        [allBlogs, popularBlogs, latestBlogs].forEach(blogs => 
+            blogs.forEach(blog => blog.style.display = "none")
+        );
+        blogsToShow.forEach(blog => blog.style.display = "flex");
+        
+        [allBlogBtn, popularBlogBtn, latestBlogBtn].forEach(btn => btn.classList.remove("active"));
+        activeButton.classList.add("active");
+    }
+
+    allBlogBtn.addEventListener("click", () => showBlogs(allBlogs, allBlogBtn));
+    popularBlogBtn.addEventListener("click", () => showBlogs(popularBlogs, popularBlogBtn));
+    latestBlogBtn.addEventListener("click", () => showBlogs(latestBlogs, latestBlogBtn));
+
+    // Show All Blogs by default
+    showBlogs(allBlogs, allBlogBtn);
+</script>

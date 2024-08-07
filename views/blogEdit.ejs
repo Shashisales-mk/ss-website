@@ -115,9 +115,14 @@
                 <textarea id="blogShortDesc" name="blogShortDesc" required><%= blog.shortDescription %></textarea>
             </div>
             <div>
-                <label for="blogBannerImage">Blog Banner Image:</label>
+                <label for="blogBannerImage">Blog Banner Image: (Banner size: 1920 X 500 px)</label>
                 <input type="file" id="blogBannerImage" name="blogBannerImage" accept="image/*">
                 <img src="<%= blog.bannerImage %>" alt="Banner Image" width="200">
+            </div>
+            <div>
+                <label for="showImg">Image to show</label>
+                <input type="file" id="showImg" name="showImg" accept="image/*">
+                <img src="<%= blog.showImg %>" alt="showImg Image" width="200">
             </div>
             <% blog.content.forEach((content, index) => { %>
             <div>
@@ -125,7 +130,7 @@
                 <input type="text" name="headings" required value="<%= content.heading %>">
             </div>
             <div>
-                <label for="paragraph<%= index + 1 %>">Paragraph <%= index + 1 %>:</label>
+                <label for="paragraph<%= index + 1 %>">Paragraph <%= index + 1 %>: (max word limit: 150 words)</label>
                 <textarea name="paragraphs" required><%= content.paragraph %></textarea>
             </div>
             <div>
@@ -154,6 +159,20 @@
             </div>
             <div id="editor-container"></div>
             <input type="hidden" name="contentText" id="hidden-input" value="<%= blog.contentText %>">
+
+             <!-- New fields for isLatest and isPopular -->
+             <div>
+                <label for="isLatest">Is Latest:</label>
+                <input type="radio" id="isLatestTrue" name="isLatest" value="true" <%= blog.isLatest ? 'checked' : '' %>> Yes
+                <input type="radio" id="isLatestFalse" name="isLatest" value="false" <%= !blog.isLatest ? 'checked' : '' %>> No
+            </div>
+            <div>
+                <label for="isPopular">Is Popular:</label>
+                <input type="radio" id="isPopularTrue" name="isPopular" value="true" <%= blog.isPopular ? 'checked' : '' %>> Yes
+                <input type="radio" id="isPopularFalse" name="isPopular" value="false" <%= !blog.isPopular ? 'checked' : '' %>> No
+            </div>
+
+
             <div class="btndiv"><button type="submit">Update Blog</button></div>
         </form>
     </div>
@@ -183,7 +202,7 @@
                 }
             });
 
-            quill.root.innerHTML = `<%= blog.contentText %>`;
+            quill.root.innerHTML = `<%- blog.contentText %>`;
                         var form = document.getElementById('blogForm');
             form.onsubmit = function () {
                 var contentText = document.querySelector('input[name=contentText]');

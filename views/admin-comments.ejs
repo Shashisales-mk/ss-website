@@ -1,0 +1,33 @@
+<% layout("/layouts/boilerplate") %>
+
+<h1>Pending Comments</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Blog</th>
+            <th>Name</th>
+            <th>Comment</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% comments.forEach(comment => { %>
+            <tr>
+                <td><%= comment.blog.title %></td>
+                <td><%= comment.name %></td>
+                <td><%= comment.comment %></td>
+                <td>
+                    <form method="POST" action="/admin/approve-comment/<%= comment._id %>">
+                        <button type="submit">Approve</button>
+                    </form>
+                    <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<a href="/admin">Back to Admin Panel</a>

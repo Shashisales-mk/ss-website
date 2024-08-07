@@ -115,6 +115,10 @@ nav{
   text-decoration: none;
   color: white;
 }
+.nav-cont div:nth-child(5) a{
+  text-decoration: none;
+  color: white;
+}
 .logo{
   width: 14vw;
   display: -webkit-box;
@@ -1880,7 +1884,7 @@ margin: 2vw !important;
 }
 
 #consent-banner a {
-color: #fff !important;
+color: #000 !important;
 }
 
 .btn {
