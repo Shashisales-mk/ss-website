@@ -507,9 +507,11 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const category = await Gallery.find();
     const testimonials = await Testimonial.find().populate('page');
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
+    const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
 
     // console.log(AllBlogs);
     res.render("allBlogs", {
+        acomments: approvedComments,
         comments: pendingComments, 
         testimonials,
         galleryItems,

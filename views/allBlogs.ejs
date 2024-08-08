@@ -508,6 +508,39 @@
                             <% }) %>
                     </tbody>
                 </table>
+                <br>
+
+                <h1>Approved Comments</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Blog</th>
+                            <th>Name</th>
+                            <th>Comment</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% acomments.forEach(comment=> { %>
+                            <tr>
+                                <td>
+                                    <%= comment.blog.title %>
+                                </td>
+                                <td>
+                                    <%= comment.name %>
+                                </td>
+                                <td>
+                                    <%= comment.comment %>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                                        <button class="del-btn" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
