@@ -20,7 +20,7 @@ const User = require("./models/User");
 const Blog = require('./models/Blog');
 const Review = require('./models/Review');
 const Gallery = require('./models/Gallery');
-
+const Testimonial = require('./models/Testimonial');
 
 const PaymentDetails = require('./models/PaymentDetails');
 const Comment = require('./models/Comment');
@@ -33,7 +33,7 @@ const paypal = require('paypal-rest-sdk');
 
 
 const galleryRoutes = require('./routes/galleryRoutes');
-
+const testimonialRoutes = require('./routes/testimonialRoutes');
 
 
 
@@ -86,7 +86,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/', galleryRoutes);
-
+app.use('/', testimonialRoutes);
 
 
 // Multer setup (only for file uploads)
@@ -414,7 +414,7 @@ app.get("/blogs", async (req, res) => {
     }
 });
 
-app.get("/blog-form", isAdmin, (req, res) => {
+app.get("/blog-form", (req, res) => {
     res.render("uploadForm", {
         title: "Blog Form | Draggan Website: Revolutionizing the Future of AI Technology | Shashi  Sales",
         description: "Visit the Draggan website to learn about groundbreaking AI advancements, tools, and solutions that can transform your business operations and efficiency."
@@ -491,7 +491,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         await blog.save();
         console.log(blog);
         // res.status(200).send('Blog uploaded successfully!');
-        res.redirect("/all-blogs-list")
+        res.redirect("/blogs")
     } catch (error) {
         console.error('Error uploading blog:', error);
         res.status(500).send('Failed to upload blog. Please try again.');
@@ -505,7 +505,7 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const AllBlogs = await Blog.find();
     const galleryItems = await Gallery.find();
     const category = await Gallery.find();
-    
+    const testimonials = await Testimonial.find().populate('page');
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
 
@@ -513,7 +513,7 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     res.render("allBlogs", {
         acomments: approvedComments,
         comments: pendingComments, 
-        
+        testimonials,
         galleryItems,
         category,
         AllBlogs,
@@ -522,7 +522,7 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     })
 })
 
-app.delete('/delete-blog/:id', async (req, res) => {
+app.delete('/delete-blog/:id',isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const deletedBlog = await Blog.findByIdAndDelete(id);
@@ -558,7 +558,7 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
     }
 });
 
-app.put('/update-blog/:id', uploadFields, async (req, res) => {
+app.put('/update-blog/:id', uploadFields,isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular } = req.body;
