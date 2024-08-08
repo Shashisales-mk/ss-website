@@ -12,33 +12,6 @@
         .blog-page-cont {
             margin-top: 2rem;
         }
-        @media screen and (max-width: 768px){
-            .blog-page{
-                margin-top: 6rem;
-                margin-bottom: 4rem;
-            }
-            .blog-page-card {
-                width: 32%;
-                -webkit-box-flex: 0;
-                -ms-flex: 0 0 auto;
-                flex: 0 0 auto;
-                scroll-snap-align: start;
-            }
-        }
-        @media screen and (max-width: 600px){
-            .blog-page {
-                margin-top: 6rem;
-                margin-bottom: 4rem;
-                padding-bottom: 20vw;
-            }
-        }
-        @media screen and (max-width: 350px){
-            .blog-page {
-                margin-top: 5rem;
-                margin-bottom: 4rem;
-            }
-        }
-
         .latestBlogs{
             display: none;
         }
@@ -52,27 +25,141 @@
         display: flex; /* Show all blogs by default */
     }
     .active {
-        background-color: #007bff;
+        background: #000 !important;
         color: white;
     }
 
     .allBlogbtn, .latestBlogbtn, .popularBlogbtn{
-        border: none;
+        /* border: none;
         background-color: #C4C800;
         color: #000;
         font-weight: bold;
         padding: .6rem 2rem;
-        border-radius: 8px;
+        border-radius: 8px; */
+        display: inline-block !important;
+        padding: 10px 20px !important;
+        margin-right: 10px !important;
+        background: #f0f0f0;
+        border-radius: 5px !important;
+        cursor: pointer;
+        white-space: nowrap;
+        border: 0;
+        font-size: 1.5vw;
     }
+    .allBlogs, .latestBlogs, .popularBlogs{
+        width: 24%;
+    }
+    .horizontal-scroll {
+        display: flex !important;
+        justify-content: center;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px 0 !important;
+        margin: 0 !important;
+        list-style: none;
+    }
+    .horizontal-scroll::-webkit-scrollbar {
+        height: 3px;
+        background: #f0f0f0;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+    .horizontal-scroll::-webkit-scrollbar {
+        display: none;
+    }
+    .horizontal-scroll:hover::-webkit-scrollbar {
+        display: block;
+    }
+    /* .horizontal-scroll li {
+        display: inline-block !important;
+        padding: 10px 20px !important;
+        margin-right: 10px !important;
+        background: #f0f0f0;
+        border-radius: 5px !important;
+        cursor: pointer;
+        white-space: nowrap;
+    } */
+
+    .horizontal-scroll li:last-child {
+        margin-right: 0 !important;
+    }
+        @media screen and (max-width: 768px){
+            .blog-page{
+                margin-top: 6rem;
+                margin-bottom: 4rem;
+            }
+            .allBlogs, .latestBlogs, .popularBlogs {
+                width: 32% !important;
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 auto;
+                flex: 0 0 auto;
+                scroll-snap-align: start;
+            }
+        }
+        @media screen and (max-width: 600px){
+            .blog-page {
+                margin-top: 6rem;
+                margin-bottom: 4rem;
+                padding-bottom: 20vw;
+            }
+            .allBlogs, .latestBlogs, .popularBlogs {
+                width: 48% !important;
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 auto;
+                flex: 0 0 auto;
+                scroll-snap-align: start;
+            }
+            .blog-page-cont .mar-section {
+                width: 100%;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                gap: 2vw;
+                flex-wrap: wrap;
+                gap: 2vw;
+            }
+            .allBlogbtn, .latestBlogbtn, .popularBlogbtn {
+                display: inline-block !important;
+                padding: 6px 15px !important;
+                margin-right: 10px !important;
+                background: #f0f0f0;
+                border-radius: 5px !important;
+                cursor: pointer;
+                white-space: nowrap;
+                border: 0;
+                font-size: 2.8vw;
+            }
+        }
+        
+        @media screen and (max-width: 350px){
+            .blog-page {
+                margin-top: 5rem;
+                margin-bottom: 4rem;
+            }
+        }
+
+
     </style>
 
 
 <div class="main-page blog-page">
     <div class="blog-page-cont">
+        <ul class="horizontal-scroll">
+            <li><button class="allBlogbtn active">All Blogs</button></li>
+            <li><button class="latestBlogbtn">Latest Blogs</button></liid=>
+            <li><button class="popularBlogbtn">Popular Blogs</button></lid=>
+        </ul>
+            
+            
+            
         <div class="mar-section">
-            <button class="allBlogbtn active">All Blogs</button>
-            <button class="latestBlogbtn">Latest Blogs</button>
-            <button class="popularBlogbtn">Popular Blogs</button>
+            
 
             <% blogs.forEach(blog => { %>
                 <div class="allBlogs">

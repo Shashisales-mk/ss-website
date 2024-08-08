@@ -1,4 +1,3 @@
-
 .blog-page-cont{
   width: 100%;
   padding: 0 4vw;
@@ -34,7 +33,7 @@
       -ms-flex-direction: column;
           flex-direction: column;
   background-color: #F2F2F2;
-  width: 24%;
+  /* width: 24%; */
  
 }
 .blog-page-cont .clipp-h{
@@ -127,7 +126,7 @@
 
 .blog-content {
   padding-inline: 5vw;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -258,8 +257,8 @@ width: 100%;
       flex-wrap: wrap;
   }
 
-  .blog-page-card {
-      width: 31%;
+  .allBlogs, .latestBlogs, .popularBlogs {
+      width: 32%;
       /* Adjust the width to display two cards per row */
       -webkit-box-flex: 0;
           -ms-flex: 0 0 auto;
@@ -300,9 +299,7 @@ width: 100%;
     width: 100%;
     margin: 20px 0;
   }
-  .contentText{
-    padding-bottom: 7rem;
-  }
+  
   .upformp div:nth-child(even) {
     margin-left: 0;
   }
