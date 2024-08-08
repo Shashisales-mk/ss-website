@@ -244,7 +244,7 @@
             align-items: center;
         }
 
-        .appr-btn{
+        .appr-btn {
             padding: 0.3vw 2vw;
             border-radius: 3vw;
             background: transparent;
@@ -320,7 +320,7 @@
                                 <option value="video">Video</option>
                             </select>
                         </p>
-                        <p><input type="file" name="file" id="file" required></p>
+                        <p><input type="file" name="files" id="files" multiple required></p>
                     </div>
                     <div class="secr">
                         <p><input type="text" name="tags" id="tags" placeholder="Tags (comma-separated)"></p>
@@ -337,13 +337,13 @@
                                 <option value="Office">Office</option>
                             </select>
                         </p>
-                        <p>
+                        <!-- <p>
                             <select name="section" id="section">
                                 <option value="section1">Row 1</option>
                                 <option value="section2">Row 2</option>
                                 <option value="section3">Row 3</option>
                             </select>
-                        </p>
+                        </p> -->
                     </div>
                     <button type="submit">Upload</button>
                 </form>
@@ -397,79 +397,6 @@
                 </div>
 
             </div>
-
-
-            <!-- Testimonial Section -->
-            <div class="testimonial-section" style="display: none;">
-                <h2>Add New Testimonial</h2>
-                <form action="/admin/add-testimonial" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="text" placeholder="Testimonial Text" required>
-                    <input type="text" name="name" placeholder="Client Name" required>
-                    <input type="file" name="image" required>
-                    <button type="submit">Add Testimonial</button>
-                </form>
-
-                <h2>Add Testimonial Page Content</h2>
-                <form action="/admin/add-testimonial-page" method="POST">
-                    <select name="testimonialId" required>
-                        <% if (testimonials && testimonials.length> 0) { %>
-                            <% testimonials.forEach(testimonial=> { %>
-                                <option value="<%= testimonial._id %>">
-                                    <%= testimonial.name %>
-                                </option>
-                                <% }) %>
-                                    <% } else { %>
-                                        <option value="">No testimonials available</option>
-                                        <% } %>
-                    </select>
-                    <textarea name="successStory" placeholder="Success Story"></textarea>
-                    <textarea name="growthStory" placeholder="Growth Story"></textarea>
-                    <textarea name="caseStudy" placeholder="Case Study"></textarea>
-                    <button type="submit">Add Testimonial Page</button>
-                </form>
-
-                <h2>Existing Testimonials</h2>
-                <ul>
-                    <% testimonials.forEach(testimonial=> { %>
-                        <li>
-                            <%= testimonial.name %> - <%= testimonial.text %>
-                                    <button onclick="showEditTestimonialForm('<%= testimonial._id %>')">Edit
-                                        Testimonial</button>
-                                    <% if (testimonial.page) { %>
-                                        <button onclick="showEditTestimonialPageForm('<%= testimonial.page %>')">Edit
-                                            Page</button>
-                                        <% } %>
-                                            <form action="/admin/delete-testimonial/<%= testimonial._id %>"
-                                                method="POST">
-                                                <button type="submit">Delete</button>
-                                            </form>
-                        </li>
-                        <% }) %>
-                </ul>
-
-                <div id="editTestimonialForm" style="display: none;">
-                    <h2>Edit Testimonial</h2>
-                    <form action="/admin/update-testimonial/" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" id="editTestimonialId" name="id">
-                        <input type="text" id="editTestimonialText" name="text" required>
-                        <input type="text" id="editTestimonialName" name="name" required>
-                        <input type="file" name="image">
-                        <button type="submit">Update Testimonial</button>
-                    </form>
-                </div>
-
-                <div id="editTestimonialPageForm" style="display: none;">
-                    <h2>Edit Testimonial Page</h2>
-                    <form action="/admin/update-testimonial-page/" method="POST">
-                        <input type="hidden" id="editTestimonialPageId" name="id">
-                        <textarea id="editSuccessStory" name="successStory"></textarea>
-                        <textarea id="editGrowthStory" name="growthStory"></textarea>
-                        <textarea id="editCaseStudy" name="caseStudy"></textarea>
-                        <button type="submit">Update Testimonial Page</button>
-                    </form>
-                </div>
-            </div>
-
 
             <!-- comment section -->
             <div class="comment-section" style="display: none;">
@@ -547,57 +474,64 @@
 
     <!-- testimonial section -->
     <script>
-        function showEditTestimonialForm(id) {
-            const testimonial = testimonials.find(t => t._id === id);
-            document.getElementById('editTestimonialId').value = id;
-            document.getElementById('editTestimonialText').value = testimonial.text;
-            document.getElementById('editTestimonialName').value = testimonial.name;
-            document.getElementById('editTestimonialForm').style.display = 'block';
-        }
-
-        function showEditTestimonialPageForm(id) {
-            const testimonialPage = testimonialPages.find(tp => tp._id === id);
-            document.getElementById('editTestimonialPageId').value = id;
-            document.getElementById('editSuccessStory').value = testimonialPage.successStory;
-            document.getElementById('editGrowthStory').value = testimonialPage.growthStory;
-            document.getElementById('editCaseStudy').value = testimonialPage.caseStudy;
-            document.getElementById('editTestimonialPageForm').style.display = 'block';
-        }
-
+        // Function to hide all sections
         function hideAllSections() {
             document.querySelector('.blog-section').style.display = 'none';
             document.querySelector('.gallery-section').style.display = 'none';
-            document.querySelector('.testimonial-section').style.display = 'none';
+           
             document.querySelector('.comment-section').style.display = 'none';
+            // Add additional sections here if needed
         }
-
+    
+        // Function to show the selected section and set it as active in the sidebar
+        function showSection(sectionId, navId) {
+            hideAllSections();
+            document.querySelector(`.${sectionId}`).style.display = 'block';
+            document.querySelectorAll('.sideNavBar li').forEach(item => item.classList.remove('active'));
+            document.getElementById(navId).classList.add('active');
+            localStorage.setItem('activeSection', sectionId);
+            localStorage.setItem('activeNav', navId);
+        }
+    
+        // When the document is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
-            hideAllSections();
-            document.querySelector('.blog-section').style.display = 'block';
+            // Check if there's an active section stored in local storage
+            const activeSection = localStorage.getItem('activeSection') || 'blog-section';
+            const activeNav = localStorage.getItem('activeNav') || 'sec1';
+            showSection(activeSection, activeNav);
         });
-
+    
+        // Event listeners for sidebar menu items
         document.getElementById('sec1').addEventListener('click', function () {
-            hideAllSections();
-            document.querySelector('.blog-section').style.display = 'block';
+            showSection('blog-section', 'sec1');
         });
-
+    
         document.getElementById('sec2').addEventListener('click', function () {
-            hideAllSections();
-            document.querySelector('.gallery-section').style.display = 'block';
+            showSection('gallery-section', 'sec2');
         });
-
-        document.getElementById('sec3').addEventListener('click', function () {
-            hideAllSections();
-            document.querySelector('.testimonial-section').style.display = 'block';
-        });
+    
+       
+    
         document.getElementById('sec4').addEventListener('click', function () {
-            hideAllSections();
-            document.querySelector('.comment-section').style.display = 'block';
+            showSection('comment-section', 'sec4');
+        });
+    
+        // Ensure the form submission keeps the section visible
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function() {
+                const activeSection = document.querySelector('.sideNavBar .active').id;
+                const sectionMap = {
+                    'sec1': 'blog-section',
+                    'sec2': 'gallery-section',
+                    
+                    'sec4': 'comment-section',
+                };
+                localStorage.setItem('activeSection', sectionMap[activeSection]);
+            });
         });
     </script>
+    
     <!-- testimonial section -->
-
-
 
     <script>
         const menuItems = document.querySelectorAll('.sideNavBar li');
@@ -610,24 +544,7 @@
         });
 
     </script>
-    <script>
-        function hideAllSections() {
-            document.querySelector('.blog-section').style.display = 'none';
-            document.querySelector('.gallery-section').style.display = 'none';
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            hideAllSections();
-            document.querySelector('.blog-section').style.display = 'block';
-        });
-        document.getElementById('sec1').addEventListener('click', function () {
-            hideAllSections();
-            document.querySelector('.blog-section').style.display = 'block';
-        });
-        document.getElementById('sec2').addEventListener('click', function () {
-            hideAllSections();
-            document.querySelector('.gallery-section').style.display = 'block';
-        });
-    </script>
+
     <script>
         async function fetchGalleryItems() {
             const response = await fetch('/gallery');

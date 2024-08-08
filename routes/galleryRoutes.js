@@ -5,7 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const Gallery = require('../models/Gallery');
 const Blog = require('../models/Blog');
-// const sharp = require('sharp');
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/uploads/');
@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// GET /gallery - Display gallery items
 router.get('/gallery', async (req, res) => {
     try {
         const galleryItems = await Gallery.find();
@@ -30,79 +31,53 @@ router.get('/gallery', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-// router.get('/all-blogs-list', async (req, res) => {
-//     try {
-//         const galleryItems = await Gallery.find();
-//         const category = await Gallery.find();
-//         const AllBlogs = await Blog.find();
 
-//         res.render("allBlogs", { 
-//             AllBlogs,
-//             galleryItems,
-//             category,
-//             title: "All Blog List - how to create a website - Shashi Sales",
-//             description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch."
-//          })
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).send('Server Error');
-//     }
-// });
-
+// GET /add - Render add gallery page
 router.get('/add', (req, res) => {
     res.render('addGallery', {
         title: 'Add Gallery | Shashi Sales And Marketing',
         description: 'Upload images or videos for the gallery.'
     });
 });
-// Add gallery item
-router.post('/add', upload.single('file'), async (req, res) => {
-    const { type, category, tags, section } = req.body;
+
+// POST /add - Add gallery items
+router.post('/add', upload.array('files', 12), async (req, res) => {
+    const { category, tags } = req.body;
 
     if (!category) {
         return res.status(400).json({ error: 'Category is required.' });
     }
 
-    const filePath = `/uploads/${req.file.filename}`;
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ error: 'At least one file must be uploaded.' });
+    }
+
+    const sections = ['section1', 'section2', 'section3'];
+    let currentSectionIndex = 0;
 
     try {
-        if (!req.file || !req.file.path) {
-            throw new Error('File upload failed.');
-        }
+        const galleryItems = req.files.map((file, index) => {
+            const filePath = `/uploads/${file.filename}`;
+            const section = sections[currentSectionIndex];
+            currentSectionIndex = (currentSectionIndex + 1) % sections.length;
 
-        let aspectRatio = null;
-
-        // if (type === 'image') {
-        //     const image = sharp(req.file.path);
-        //     const metadata = await image.metadata();
-            
-        //     if (!metadata.format) {
-        //         throw new Error('Unsupported image format.');
-        //     }
-
-        //     aspectRatio = metadata.width / metadata.height;
-        // } else if (type === 'video') {
-        //     aspectRatio = null;
-        // } else {
-        //     throw new Error('Unsupported file type.');
-        // }
-
-        const newGalleryItem = new Gallery({
-            type,
-            src: filePath,
-            category,
-            tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
-            section,
-            // aspectRatio
+            return {
+                type: file.mimetype.startsWith('image') ? 'image' : 'video',
+                src: filePath,
+                category,
+                tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+                section
+            };
         });
 
-        await newGalleryItem.save();
+        await Gallery.insertMany(galleryItems);
         res.redirect('/all-blogs-list');
     } catch (error) {
         console.error('Error:', error.message);
         res.status(400).json({ error: error.message });
     }
 });
+
 // Delete a gallery item
 router.post('/delete/:id', async (req, res) => {
     try {
