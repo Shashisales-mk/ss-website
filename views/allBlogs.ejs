@@ -146,7 +146,9 @@
             border: 1px solid orange;
             color: orange;
         }
-        .popular , .not-popular {
+
+        .popular,
+        .not-popular {
             padding: 0.3vw 2vw;
             border-radius: 3vw;
             background: transparent;
@@ -241,6 +243,14 @@
             display: flex;
             align-items: center;
         }
+
+        .appr-btn{
+            padding: 0.3vw 2vw;
+            border-radius: 3vw;
+            background: transparent;
+            border: 1px solid green;
+            color: green;
+        }
     </style>
 
     <div class="main-page">
@@ -249,7 +259,7 @@
                 <li id="sec1" class="active">Blogs</li>
                 <li id="sec2">Gallery</li>
                 <li id="sec3">Testimonials</li>
-                <li><a href="/admin/pending-comments">Pending Comments</a></li>
+                <li id="sec4">Pending Comments</li>
                 <p><a href="/logout">Logout</a></p>
             </ul>
         </div>
@@ -292,7 +302,7 @@
                                         </button>
                                     </form>
                                 </td>
-                                
+
                             </tr>
                             <% }) %>
                     </tbody>
@@ -402,19 +412,21 @@
                 <h2>Add Testimonial Page Content</h2>
                 <form action="/admin/add-testimonial-page" method="POST">
                     <select name="testimonialId" required>
-                      <% if (testimonials && testimonials.length > 0) { %>
-                        <% testimonials.forEach(testimonial => { %>
-                          <option value="<%= testimonial._id %>"><%= testimonial.name %></option>
-                        <% }) %>
-                      <% } else { %>
-                        <option value="">No testimonials available</option>
-                      <% } %>
+                        <% if (testimonials && testimonials.length> 0) { %>
+                            <% testimonials.forEach(testimonial=> { %>
+                                <option value="<%= testimonial._id %>">
+                                    <%= testimonial.name %>
+                                </option>
+                                <% }) %>
+                                    <% } else { %>
+                                        <option value="">No testimonials available</option>
+                                        <% } %>
                     </select>
                     <textarea name="successStory" placeholder="Success Story"></textarea>
                     <textarea name="growthStory" placeholder="Growth Story"></textarea>
                     <textarea name="caseStudy" placeholder="Case Study"></textarea>
                     <button type="submit">Add Testimonial Page</button>
-                  </form>
+                </form>
 
                 <h2>Existing Testimonials</h2>
                 <ul>
@@ -457,55 +469,100 @@
                     </form>
                 </div>
             </div>
+
+
+            <!-- comment section -->
+            <div class="comment-section" style="display: none;">
+                <h1>Pending Comments</h1>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Blog</th>
+                            <th>Name</th>
+                            <th>Comment</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% comments.forEach(comment=> { %>
+                            <tr>
+                                <td>
+                                    <%= comment.blog.title %>
+                                </td>
+                                <td>
+                                    <%= comment.name %>
+                                </td>
+                                <td>
+                                    <%= comment.comment %>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/admin/approve-comment/<%= comment._id %>">
+                                        <button class="appr-btn" type="submit">Approve</button>
+                                    </form> <br>
+                                    <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                                        <button class="del-btn" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-<!-- testimonial section -->
-<script>
-    function showEditTestimonialForm(id) {
-    const testimonial = testimonials.find(t => t._id === id);
-    document.getElementById('editTestimonialId').value = id;
-    document.getElementById('editTestimonialText').value = testimonial.text;
-    document.getElementById('editTestimonialName').value = testimonial.name;
-    document.getElementById('editTestimonialForm').style.display = 'block';
-}
+    <!-- testimonial section -->
+    <script>
+        function showEditTestimonialForm(id) {
+            const testimonial = testimonials.find(t => t._id === id);
+            document.getElementById('editTestimonialId').value = id;
+            document.getElementById('editTestimonialText').value = testimonial.text;
+            document.getElementById('editTestimonialName').value = testimonial.name;
+            document.getElementById('editTestimonialForm').style.display = 'block';
+        }
 
-function showEditTestimonialPageForm(id) {
-    const testimonialPage = testimonialPages.find(tp => tp._id === id);
-    document.getElementById('editTestimonialPageId').value = id;
-    document.getElementById('editSuccessStory').value = testimonialPage.successStory;
-    document.getElementById('editGrowthStory').value = testimonialPage.growthStory;
-    document.getElementById('editCaseStudy').value = testimonialPage.caseStudy;
-    document.getElementById('editTestimonialPageForm').style.display = 'block';
-}
+        function showEditTestimonialPageForm(id) {
+            const testimonialPage = testimonialPages.find(tp => tp._id === id);
+            document.getElementById('editTestimonialPageId').value = id;
+            document.getElementById('editSuccessStory').value = testimonialPage.successStory;
+            document.getElementById('editGrowthStory').value = testimonialPage.growthStory;
+            document.getElementById('editCaseStudy').value = testimonialPage.caseStudy;
+            document.getElementById('editTestimonialPageForm').style.display = 'block';
+        }
 
-function hideAllSections() {
-    document.querySelector('.blog-section').style.display = 'none';
-    document.querySelector('.gallery-section').style.display = 'none';
-    document.querySelector('.testimonial-section').style.display = 'none';
-}
+        function hideAllSections() {
+            document.querySelector('.blog-section').style.display = 'none';
+            document.querySelector('.gallery-section').style.display = 'none';
+            document.querySelector('.testimonial-section').style.display = 'none';
+            document.querySelector('.comment-section').style.display = 'none';
+        }
 
-document.addEventListener('DOMContentLoaded', function () {
-    hideAllSections();
-    document.querySelector('.blog-section').style.display = 'block';
-});
+        document.addEventListener('DOMContentLoaded', function () {
+            hideAllSections();
+            document.querySelector('.blog-section').style.display = 'block';
+        });
 
-document.getElementById('sec1').addEventListener('click', function () {
-    hideAllSections();
-    document.querySelector('.blog-section').style.display = 'block';
-});
+        document.getElementById('sec1').addEventListener('click', function () {
+            hideAllSections();
+            document.querySelector('.blog-section').style.display = 'block';
+        });
 
-document.getElementById('sec2').addEventListener('click', function () {
-    hideAllSections();
-    document.querySelector('.gallery-section').style.display = 'block';
-});
+        document.getElementById('sec2').addEventListener('click', function () {
+            hideAllSections();
+            document.querySelector('.gallery-section').style.display = 'block';
+        });
 
-document.getElementById('sec3').addEventListener('click', function () {
-    hideAllSections();
-    document.querySelector('.testimonial-section').style.display = 'block';
-});
-</script>
-<!-- testimonial section -->
+        document.getElementById('sec3').addEventListener('click', function () {
+            hideAllSections();
+            document.querySelector('.testimonial-section').style.display = 'block';
+        });
+        document.getElementById('sec4').addEventListener('click', function () {
+            hideAllSections();
+            document.querySelector('.comment-section').style.display = 'block';
+        });
+    </script>
+    <!-- testimonial section -->
 
 
 

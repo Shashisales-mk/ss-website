@@ -506,9 +506,11 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const galleryItems = await Gallery.find();
     const category = await Gallery.find();
     const testimonials = await Testimonial.find().populate('page');
+    const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
 
     // console.log(AllBlogs);
     res.render("allBlogs", {
+        comments: pendingComments, 
         testimonials,
         galleryItems,
         category,
@@ -634,20 +636,7 @@ app.post('/toggle-popular/:id', isAdmin, async (req, res) => {
 
 
 
-// View comments for a specific blog
-app.get('/admin/pending-comments', async (req, res) => {
-    try {
-        const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
-        res.render('admin-comments', { 
-            comments: pendingComments, 
-            title: "Pending Comments", 
-            description: "Approve or delete pending comments" 
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error fetching pending comments');
-    }
-});
+
 
 // New route to handle comment submission
 app.post("/blog-detail/:canonical/comment", async (req, res) => {
@@ -682,7 +671,7 @@ app.post("/blog-detail/:canonical/comment", async (req, res) => {
 app.post('/admin/approve-comment/:commentId', async (req, res) => {
     try {
         await Comment.findByIdAndUpdate(req.params.commentId, { isApproved: true });
-        res.redirect('/admin/pending-comments');
+        res.redirect('/all-blogs-list');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error approving comment');
@@ -692,7 +681,7 @@ app.post('/admin/approve-comment/:commentId', async (req, res) => {
 app.post('/admin/delete-comment/:commentId', async (req, res) => {
     try {
         await Comment.findByIdAndDelete(req.params.commentId);
-        res.redirect('/admin/pending-comments');
+        res.redirect('/all-blogs-list');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error deleting comment');
