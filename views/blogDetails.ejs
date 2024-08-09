@@ -500,18 +500,19 @@ function createShareOptions(container) {
 
 function handleShare(link) {
     const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(document.title);
     switch(link.name) {
         case 'Facebook':
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 'facebook-share-dialog', 'width=626,height=436');
+            window.open(`https://www.facebook.com/dialog/send?link=${url}&app_id=YOUR_FACEBOOK_APP_ID&redirect_uri=${url}`, 'facebook-share-dialog', 'width=626,height=436');
             break;
         case 'Twitter':
-            window.open(`https://twitter.com/intent/tweet?url=${url}`, 'twitter-share-dialog', 'width=626,height=436');
+            window.open(`https://twitter.com/messages/compose?text=${title}%20${url}`, 'twitter-share-dialog', 'width=626,height=436');
             break;
         case 'LinkedIn':
-            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url}`, 'linkedin-share-dialog', 'width=626,height=436');
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, 'linkedin-share-dialog', 'width=626,height=436');
             break;
         case 'Instagram':
-            alert('Instagram does not support direct sharing. You can copy the link and share it manually on Instagram.');
+            alert('Instagram does not support direct message sharing via web. You can copy the link and share it manually on Instagram.');
             break;
         case 'Copy Link':
             copyLink();
@@ -520,6 +521,8 @@ function handleShare(link) {
             window.open(link.url + url, '_blank');
     }
 }
+
+
 
 function toggleShareOptions(event) {
     const button = event.currentTarget;
