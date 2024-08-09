@@ -21,11 +21,11 @@ router.post('/admin/add-testimonial', upload.single('image'), async (req, res) =
 });
 
 
-router.post('/admin/add-testimonial-page/:testimonialId', async (req, res) => {
+router.post('/admin/add-testimonial-page/', async (req, res) => {
   console.log('Received request body:', req.body);
   try {
-    const testimonialId = req.params.testimonialId;
-    const { successStory, growthStory, caseStudy } = req.body;
+    // const testimonialId = req.params.testimonialId;
+    const { successStory, growthStory, caseStudy, testimonialId } = req.body;
     console.log(req.body , "noting");
 
     if (!testimonialId) {

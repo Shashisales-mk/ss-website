@@ -84,9 +84,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// Routes
-app.use('/', galleryRoutes);
-app.use('/', testimonialRoutes);
+
 
 
 // Multer setup (only for file uploads)
@@ -134,7 +132,9 @@ dotenv.config();
 
 
 
-
+// Routes
+app.use('/', galleryRoutes);
+app.use('/', testimonialRoutes);
 
 
 // Authentication middleware

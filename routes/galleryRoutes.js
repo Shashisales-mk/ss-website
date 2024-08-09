@@ -103,33 +103,40 @@ router.post('/delete/:id', async (req, res) => {
 
 
 router.post('/delete-multiple', async (req, res) => {
+    console.log("Received request body:", req.body);
+    console.log("Received request query:", req.query);
+    console.log("Received request params:", req.params);
+
     try {
-        const selectedItems = req.body.selectedItems || [];
-        
+        let selectedItems = [];
+
+        if (req.body && req.body.selectedItems) {
+            selectedItems = Array.isArray(req.body.selectedItems) ? req.body.selectedItems : [req.body.selectedItems];
+        }
+
+        console.log("Selected items:", selectedItems);
+
         if (selectedItems.length === 0) {
             return res.status(400).send('No items selected for deletion');
         }
 
-        const itemsToDelete = Array.isArray(selectedItems) ? selectedItems : [selectedItems];
-
-        for (const itemId of itemstoDelete) {
+        for (const itemId of selectedItems) {
+            console.log("Attempting to delete item:", itemId);
             const galleryItem = await Gallery.findById(itemId);
             if (galleryItem) {
                 const filePath = path.join(__dirname, '..', 'public', galleryItem.src);
                 fs.unlink(filePath, (err) => {
-                    if (err) {
-                        console.error(err);
-                    }
+                    if (err) console.error("Error deleting file:", err);
                 });
                 await Gallery.findByIdAndDelete(itemId);
+                console.log("Deleted item:", itemId);
             }
         }
 
         res.redirect('/all-blogs-list');
     } catch (error) {
-        console.error('Error deleting multiple gallery items:', error);
-        res.status(500).send('Server Error');
+        console.error('Error in delete-multiple route:', error);
+        res.status(500).send('Server Error: ' + error.message);
     }
 });
-
 module.exports = router;

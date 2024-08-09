@@ -367,9 +367,9 @@
                                     <% galleryItems.forEach(gal=> { %>
                                         <% if (gal.section===section) { %>
                                             <tr>
-                                                <td>
-                                                    <input type="checkbox" name="selectedItems[]" value="<%= gal._id %>">
-                                                </td>
+                                               
+                                                    <td><input type="checkbox" name="selectedItems" value="<%= gal._id %>"></td>
+                                                
                                                 <td>
                                                     <% if (gal.type==='image' ) { %>
                                                         <img loading="lazy" src="<%= gal.src %>" alt="Image"
@@ -420,8 +420,8 @@
                 </form>
 
                 <h2>Add Testimonial Page Content</h2>
-                <% testimonials.forEach(testimonial=> { %>
-                    <form action="/admin/add-testimonial-page/<%= testimonial._id %>" method="POST">
+               
+                    <form action="/admin/add-testimonial-page" method="POST">
                         <select name="testimonialId" required>
                             <% if (testimonials && testimonials.length> 0) { %>
                                 <% testimonials.forEach(testimonial=> { %>
@@ -438,7 +438,7 @@
                         <textarea name="caseStudy" placeholder="Case Study"></textarea>
                         <button type="submit">Add Testimonial Page</button>
                     </form>
-                    <% }) %>
+                   
 
                         <h2>Existing Testimonials</h2>
                         <ul>
@@ -653,31 +653,31 @@
 
 
     <!-- new -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const deleteMultipleForm = document.getElementById('delete-multiple-form');
-            const deleteMultipleButton = document.getElementById('delete-multiple-button');
-    
-            document.querySelectorAll('input[name="selectedItems[]"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const checkedBoxes = document.querySelectorAll('input[name="selectedItems[]"]:checked');
-                    deleteMultipleButton.style.display = checkedBoxes.length > 0 ? 'block' : 'none';
-                });
-            });
-    
-            deleteMultipleForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const checkedBoxes = document.querySelectorAll('input[name="selectedItems[]"]:checked');
-                if (checkedBoxes.length === 0) {
-                    alert('Please select at least one item to delete.');
-                    return;
-                }
-                if (confirm('Are you sure you want to delete the selected items?')) {
-                    this.submit();
-                }
-            });
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('delete-multiple-form');
+    const deleteButton = document.getElementById('delete-multiple-button');
+    const checkboxes = document.querySelectorAll('input[name="selectedItems"]');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            deleteButton.style.display = 
+                [...checkboxes].some(cb => cb.checked) ? 'block' : 'none';
         });
-    </script>
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if ([...checkboxes].some(cb => cb.checked)) {
+            if (confirm('Are you sure you want to delete these items?')) {
+                this.submit();
+            }
+        } else {
+            alert('Please select items to delete');
+        }
+    });
+});
+   </script>
     <!-- new -->
 
     <script>
