@@ -101,4 +101,35 @@ router.post('/delete/:id', async (req, res) => {
     }
 });
 
+
+router.post('/delete-multiple', async (req, res) => {
+    try {
+        const selectedItems = req.body.selectedItems || [];
+        
+        if (selectedItems.length === 0) {
+            return res.status(400).send('No items selected for deletion');
+        }
+
+        const itemsToDelete = Array.isArray(selectedItems) ? selectedItems : [selectedItems];
+
+        for (const itemId of itemstoDelete) {
+            const galleryItem = await Gallery.findById(itemId);
+            if (galleryItem) {
+                const filePath = path.join(__dirname, '..', 'public', galleryItem.src);
+                fs.unlink(filePath, (err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
+                await Gallery.findByIdAndDelete(itemId);
+            }
+        }
+
+        res.redirect('/all-blogs-list');
+    } catch (error) {
+        console.error('Error deleting multiple gallery items:', error);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;

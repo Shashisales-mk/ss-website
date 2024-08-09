@@ -347,54 +347,64 @@
                     </div>
                     <button type="submit">Upload</button>
                 </form>
-                <div class="gallery-cont">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>IMAGE</th>
-                                <th>TAGS</th>
-                                <th>DELETE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% ['section1', 'section2' , 'section3' ].forEach(section=> { %>
-                                <% galleryItems.forEach(gal=> { %>
-                                    <% if (gal.section===section) { %>
-                                        <tr>
-                                            <td>
-                                                <% if (gal.type==='image' ) { %>
-                                                    <img loading="lazy" src="<%= gal.src %>" alt="Image"
-                                                        class="clickable">
-                                                    <% } else if (gal.type==='video' ) { %>
-                                                        <video autoplay loop muted id="heroVideo">
-                                                            <source src="<%= gal.src %>" type="video/mp4">
-                                                            Your browser does not support the video tag.
-                                                        </video>
-                                                        <% } %>
-                                            </td>
-                                            <td>
-                                                <ul>
-                                                    <% gal.tags.forEach(tag=> { %>
-                                                        <li id="<%= tag %>">
-                                                            <%= tag %>
-                                                        </li>
-                                                        <% }) %>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <form action="/delete/<%= gal._id %>" method="POST"
-                                                    style="display:flex;justify-content: center;">
-                                                    <button type="submit" class="delete-button del-btn">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        <% } %>
-                                            <% }) %>
-                                                <% }) %>
-                        </tbody>
-                    </table>
+                <!-- New multi-delete form -->
+                <form id="delete-multiple-form" action="/delete-multiple" method="POST">
+                    <button type="submit" id="delete-multiple-button" class="delete-multiple-button"
+                      >Delete Selected Items</button>
 
-                </div>
+                    <div class="gallery-cont">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SELECT</th>
+                                    <th>IMAGE</th>
+                                    <th>TAGS</th>
+                                    <th>DELETE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% ['section1', 'section2' , 'section3' ].forEach(section=> { %>
+                                    <% galleryItems.forEach(gal=> { %>
+                                        <% if (gal.section===section) { %>
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="selectedItems[]" value="<%= gal._id %>">
+                                                </td>
+                                                <td>
+                                                    <% if (gal.type==='image' ) { %>
+                                                        <img loading="lazy" src="<%= gal.src %>" alt="Image"
+                                                            class="clickable">
+                                                        <% } else if (gal.type==='video' ) { %>
+                                                            <video autoplay loop muted id="heroVideo">
+                                                                <source src="<%= gal.src %>" type="video/mp4">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                            <% } %>
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <% gal.tags.forEach(tag=> { %>
+                                                            <li id="<%= tag %>">
+                                                                <%= tag %>
+                                                            </li>
+                                                            <% }) %>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <form action="/delete/<%= gal._id %>" method="POST"
+                                                        style="display:flex;justify-content: center;">
+                                                        <button type="submit"
+                                                            class="delete-button del-btn">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                                <% }) %>
+                                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
 
             </div>
 
@@ -410,64 +420,67 @@
                 </form>
 
                 <h2>Add Testimonial Page Content</h2>
-                <% testimonials.forEach(testimonial => { %>
-                <form action="/admin/add-testimonial-page/<%= testimonial._id %>" method="POST">
-                    <select name="testimonialId" required>
-                      <% if (testimonials && testimonials.length > 0) { %>
-                        <% testimonials.forEach(testimonial => { %>
-                          <option value="<%= testimonial._id %>"><%= testimonial.name %></option>
-                        <% }) %>
-                      <% } else { %>
-                        <option value="">No testimonials available</option>
-                      <% } %>
-                    </select>
-                    <textarea name="successStory" placeholder="Success Story"></textarea>
-                    <textarea name="growthStory" placeholder="Growth Story"></textarea>
-                    <textarea name="caseStudy" placeholder="Case Study"></textarea>
-                    <button type="submit">Add Testimonial Page</button>
-                  </form>
-                  <% }) %>
-
-                <h2>Existing Testimonials</h2>
-                <ul>
-                    <% testimonials.forEach(testimonial=> { %>
-                        <li>
-                            <%= testimonial.name %> - <%= testimonial.text %>
-                                    <button onclick="showEditTestimonialForm('<%= testimonial._id %>')">Edit
-                                        Testimonial</button>
-                                    <% if (testimonial.page) { %>
-                                        <button onclick="showEditTestimonialPageForm('<%= testimonial.page %>')">Edit
-                                            Page</button>
-                                        <% } %>
-                                            <form action="/admin/delete-testimonial/<%= testimonial._id %>"
-                                                method="POST">
-                                                <button type="submit">Delete</button>
-                                            </form>
-                        </li>
-                        <% }) %>
-                </ul>
-
-                <div id="editTestimonialForm" style="display: none;">
-                    <h2>Edit Testimonial</h2>
-                    <form action="/admin/update-testimonial/" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" id="editTestimonialId" name="id">
-                        <input type="text" id="editTestimonialText" name="text" required>
-                        <input type="text" id="editTestimonialName" name="name" required>
-                        <input type="file" name="image">
-                        <button type="submit">Update Testimonial</button>
+                <% testimonials.forEach(testimonial=> { %>
+                    <form action="/admin/add-testimonial-page/<%= testimonial._id %>" method="POST">
+                        <select name="testimonialId" required>
+                            <% if (testimonials && testimonials.length> 0) { %>
+                                <% testimonials.forEach(testimonial=> { %>
+                                    <option value="<%= testimonial._id %>">
+                                        <%= testimonial.name %>
+                                    </option>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <option value="">No testimonials available</option>
+                                            <% } %>
+                        </select>
+                        <textarea name="successStory" placeholder="Success Story"></textarea>
+                        <textarea name="growthStory" placeholder="Growth Story"></textarea>
+                        <textarea name="caseStudy" placeholder="Case Study"></textarea>
+                        <button type="submit">Add Testimonial Page</button>
                     </form>
-                </div>
+                    <% }) %>
 
-                <div id="editTestimonialPageForm" style="display: none;">
-                    <h2>Edit Testimonial Page</h2>
-                    <form action="/admin/update-testimonial-page/" method="POST">
-                        <input type="hidden" id="editTestimonialPageId" name="id">
-                        <textarea id="editSuccessStory" name="successStory"></textarea>
-                        <textarea id="editGrowthStory" name="growthStory"></textarea>
-                        <textarea id="editCaseStudy" name="caseStudy"></textarea>
-                        <button type="submit">Update Testimonial Page</button>
-                    </form>
-                </div>
+                        <h2>Existing Testimonials</h2>
+                        <ul>
+                            <% testimonials.forEach(testimonial=> { %>
+                                <li>
+                                    <%= testimonial.name %> - <%= testimonial.text %>
+                                            <button onclick="showEditTestimonialForm('<%= testimonial._id %>')">Edit
+                                                Testimonial</button>
+                                            <% if (testimonial.page) { %>
+                                                <button
+                                                    onclick="showEditTestimonialPageForm('<%= testimonial.page %>')">Edit
+                                                    Page</button>
+                                                <% } %>
+                                                    <form action="/admin/delete-testimonial/<%= testimonial._id %>"
+                                                        method="POST">
+                                                        <button type="submit">Delete</button>
+                                                    </form>
+                                </li>
+                                <% }) %>
+                        </ul>
+
+                        <div id="editTestimonialForm" style="display: none;">
+                            <h2>Edit Testimonial</h2>
+                            <form action="/admin/update-testimonial/" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" id="editTestimonialId" name="id">
+                                <input type="text" id="editTestimonialText" name="text" required>
+                                <input type="text" id="editTestimonialName" name="name" required>
+                                <input type="file" name="image">
+                                <button type="submit">Update Testimonial</button>
+                            </form>
+                        </div>
+
+                        <div id="editTestimonialPageForm" style="display: none;">
+                            <h2>Edit Testimonial Page</h2>
+                            <form action="/admin/update-testimonial-page/" method="POST">
+                                <input type="hidden" id="editTestimonialPageId" name="id">
+                                <textarea id="editSuccessStory" name="successStory"></textarea>
+                                <textarea id="editGrowthStory" name="growthStory"></textarea>
+                                <textarea id="editCaseStudy" name="caseStudy"></textarea>
+                                <button type="submit">Update Testimonial Page</button>
+                            </form>
+                        </div>
             </div>
 
 
@@ -564,63 +577,63 @@
             document.getElementById('editTestimonialPageForm').style.display = 'block';
         }
 
-       // Function to hide all sections
-    function hideAllSections() {
-        document.querySelector('.blog-section').style.display = 'none';
-        document.querySelector('.gallery-section').style.display = 'none';
-        document.querySelector('.testimonial-section').style.display = 'none';
-        document.querySelector('.comment-section').style.display = 'none';
-        // Add additional sections here if needed
-    }
+        // Function to hide all sections
+        function hideAllSections() {
+            document.querySelector('.blog-section').style.display = 'none';
+            document.querySelector('.gallery-section').style.display = 'none';
+            document.querySelector('.testimonial-section').style.display = 'none';
+            document.querySelector('.comment-section').style.display = 'none';
+            // Add additional sections here if needed
+        }
 
-    // Function to show the selected section and set it as active in the sidebar
-    function showSection(sectionId, navId) {
-        hideAllSections();
-        document.querySelector(`.${sectionId}`).style.display = 'block';
-        document.querySelectorAll('.sideNavBar li').forEach(item => item.classList.remove('active'));
-        document.getElementById(navId).classList.add('active');
-        localStorage.setItem('activeSection', sectionId);
-        localStorage.setItem('activeNav', navId);
-    }
+        // Function to show the selected section and set it as active in the sidebar
+        function showSection(sectionId, navId) {
+            hideAllSections();
+            document.querySelector(`.${sectionId}`).style.display = 'block';
+            document.querySelectorAll('.sideNavBar li').forEach(item => item.classList.remove('active'));
+            document.getElementById(navId).classList.add('active');
+            localStorage.setItem('activeSection', sectionId);
+            localStorage.setItem('activeNav', navId);
+        }
 
-    // When the document is fully loaded
-    document.addEventListener('DOMContentLoaded', function () {
-        // Check if there's an active section stored in local storage
-        const activeSection = localStorage.getItem('activeSection') || 'blog-section';
-        const activeNav = localStorage.getItem('activeNav') || 'sec1';
-        showSection(activeSection, activeNav);
-    });
-
-    // Event listeners for sidebar menu items
-    document.getElementById('sec1').addEventListener('click', function () {
-        showSection('blog-section', 'sec1');
-    });
-
-    document.getElementById('sec2').addEventListener('click', function () {
-        showSection('gallery-section', 'sec2');
-    });
-
-    document.getElementById('sec3').addEventListener('click', function () {
-        showSection('testimonial-section', 'sec3');
-    });
-
-    document.getElementById('sec4').addEventListener('click', function () {
-        showSection('comment-section', 'sec4');
-    });
-
-    // Ensure the form submission keeps the section visible
-    document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function() {
-            const activeSection = document.querySelector('.sideNavBar .active').id;
-            const sectionMap = {
-                'sec1': 'blog-section',
-                'sec2': 'gallery-section',
-                'sec3': 'testimonial-section',
-                'sec4': 'comment-section',
-            };
-            localStorage.setItem('activeSection', sectionMap[activeSection]);
+        // When the document is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if there's an active section stored in local storage
+            const activeSection = localStorage.getItem('activeSection') || 'blog-section';
+            const activeNav = localStorage.getItem('activeNav') || 'sec1';
+            showSection(activeSection, activeNav);
         });
-    });
+
+        // Event listeners for sidebar menu items
+        document.getElementById('sec1').addEventListener('click', function () {
+            showSection('blog-section', 'sec1');
+        });
+
+        document.getElementById('sec2').addEventListener('click', function () {
+            showSection('gallery-section', 'sec2');
+        });
+
+        document.getElementById('sec3').addEventListener('click', function () {
+            showSection('testimonial-section', 'sec3');
+        });
+
+        document.getElementById('sec4').addEventListener('click', function () {
+            showSection('comment-section', 'sec4');
+        });
+
+        // Ensure the form submission keeps the section visible
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function () {
+                const activeSection = document.querySelector('.sideNavBar .active').id;
+                const sectionMap = {
+                    'sec1': 'blog-section',
+                    'sec2': 'gallery-section',
+                    'sec3': 'testimonial-section',
+                    'sec4': 'comment-section',
+                };
+                localStorage.setItem('activeSection', sectionMap[activeSection]);
+            });
+        });
     </script>
     <!-- testimonial section -->
 
@@ -637,6 +650,35 @@
         });
 
     </script>
+
+
+    <!-- new -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteMultipleForm = document.getElementById('delete-multiple-form');
+            const deleteMultipleButton = document.getElementById('delete-multiple-button');
+    
+            document.querySelectorAll('input[name="selectedItems[]"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const checkedBoxes = document.querySelectorAll('input[name="selectedItems[]"]:checked');
+                    deleteMultipleButton.style.display = checkedBoxes.length > 0 ? 'block' : 'none';
+                });
+            });
+    
+            deleteMultipleForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const checkedBoxes = document.querySelectorAll('input[name="selectedItems[]"]:checked');
+                if (checkedBoxes.length === 0) {
+                    alert('Please select at least one item to delete.');
+                    return;
+                }
+                if (confirm('Are you sure you want to delete the selected items?')) {
+                    this.submit();
+                }
+            });
+        });
+    </script>
+    <!-- new -->
 
     <script>
         async function fetchGalleryItems() {
