@@ -511,8 +511,18 @@ function handleShare(link) {
         case 'LinkedIn':
             window.open(`https://www.linkedin.com/messaging/`, 'linkedin-share-dialog', 'width=626,height=436');
             break;
-        case 'Instagram':
-            window.location.href = `instagram://message?text=${url}`;
+            case 'Instagram':
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch(console.error);
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                window.open('https://www.instagram.com/', '_blank');
+            }
             break;
         case 'Copy Link':
             copyLink();
