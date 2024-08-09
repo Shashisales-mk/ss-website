@@ -251,7 +251,7 @@ function parsePhoneNumber(phoneNumber) {
 
 
 app.get("/", async (req, res) => {
-    const blogs = await Blog.find().sort({ createdAt: -1 });
+    const blogs = await Blog.find({isApprove: true}).sort({ createdAt: -1 });
     const successMessage = req.session.successMessage || null;
     const errorMessage = req.session.errorMessage || null;
     console.log('successMessage:', successMessage); // Log the value of successMessage
@@ -400,7 +400,7 @@ function truncateString(str, length = 200) {
 
 app.get("/blogs", async (req, res) => {
     try {
-        const blogs = await Blog.find().sort({ createdAt: -1 });
+        const blogs = await Blog.find({isApprove: true}).sort({ createdAt: -1 });
         console.log(blogs.canonical);
         res.render("blog", {
             blogs,

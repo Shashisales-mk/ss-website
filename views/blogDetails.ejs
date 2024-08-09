@@ -106,15 +106,16 @@
         }
 
         .shareButton {
-    position: relative;
-    z-index: 1000;
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+            position: relative;
+            z-index: 1000;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 1vw;
+        }
 
 .shareOptions {
     position: absolute;
@@ -136,7 +137,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    /* background-color: #f0f0f0; */
+    background-color: #f0f0f0;
     color: #333;
     text-decoration: none;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -163,7 +164,7 @@
     border: 3px solid grey;
 }
 .comments h3{
-    font-size: 1.7vw;
+    font-size: 2vw;
 }
 .comment{
     border: 5px solid #c0b9b963;
@@ -226,6 +227,82 @@
 .comment-form form button:hover{
     cursor: pointer;
 }
+/* style="display: flex;justify-content: space-between;align-items: center; */
+.cmnts{
+    display: flex;
+    justify-content:space-between;
+}
+@media screen and (max-width: 1024px){
+    .share-item a {
+        width: 30px;
+        height: 30px;
+    }
+    .shareOptions li:nth-child(1){
+        transform: rotate(0deg) translate(70px, 0px) rotate(0deg) !important;
+    }
+    .shareOptions li:nth-child(2){
+        transform: rotate(40deg) translate(51.2836px, 41.423px) rotate(-40deg) !important;
+    }
+    .shareOptions li:nth-child(3){
+        transform: rotate(80deg) translate(12.8919px, 68.7846px) rotate(-80deg) !important;
+    }
+    .shareOptions li:nth-child(4){
+        transform: rotate(120deg) translate(-30px, 59.282px) rotate(-120deg) !important;
+    }
+    .shareOptions li:nth-child(5){
+        transform: rotate(160deg) translate(-65.1754px, 26.3616px) rotate(-160deg) !important;
+    }
+    .shareOptions li:nth-child(6){
+        transform: rotate(200deg) translate(-65.1754px, -17.3616px) rotate(-200deg) !important;
+    }
+    .shareOptions li:nth-child(7){
+        transform: rotate(240deg) translate(-31px, -65.282px) rotate(-240deg) !important;
+    }
+    .shareOptions li:nth-child(8){
+        transform: rotate(280deg) translate(7.8919px, -68.7846px) rotate(-280deg) !important;
+    }
+    .shareOptions li:nth-child(9){
+        transform: rotate(320deg) translate(43.2836px, -37.423px) rotate(-320deg) !important;
+    }
+}
+@media screen and (max-width: 768px) {
+    .share-item a {
+        width: 22px;
+        height: 22px;
+    }
+    .shareOptions {
+        position: absolute;
+        right: 11%;
+        display: none;
+    }
+    .shareOptions li:nth-child(1){
+        transform: rotate(0deg) translate(60px, 0px) rotate(0deg) !important;
+    }
+    .shareOptions li:nth-child(2){
+        transform: rotate(40deg) translate(44.2836px, 34.423px) rotate(-40deg) !important;
+    }
+    .shareOptions li:nth-child(3){
+        transform: rotate(80deg) translate(12.8919px, 58.7846px) rotate(-80deg) !important;
+    }
+    .shareOptions li:nth-child(4){
+        transform: rotate(120deg) translate(-21px, 40.282px) rotate(-120deg) !important;
+    }
+    .shareOptions li:nth-child(5){
+        transform: rotate(160deg) translate(-47.1754px, 16.3616px) rotate(-160deg) !important;
+    }
+    .shareOptions li:nth-child(6){
+        transform: rotate(200deg) translate(-57.1754px, -15.3616px) rotate(-200deg) !important;
+    }
+    .shareOptions li:nth-child(7){
+        transform: rotate(240deg) translate(-31px, -46.282px) rotate(-240deg) !important;
+    }
+    .shareOptions li:nth-child(8){
+        transform: rotate(280deg) translate(4.8919px, -55.7846px) rotate(-280deg) !important;
+    }
+    .shareOptions li:nth-child(9){
+        transform: rotate(320deg) translate(34.2836px, -28.423px) rotate(-320deg) !important;
+    }
+}
 @media screen and (max-width: 600px){
     .comment {
         border: 5px solid #c0b9b963;
@@ -265,7 +342,7 @@
         border-radius: 0.3vw;
     }
     .comment-form {
-        padding-bottom: 3vw;
+        padding: 3vw 0;
         width: 80%;
     }
     .comment-form form button {
@@ -276,6 +353,57 @@
         padding: 2vw 3vw;
         border: 0;
         border-radius: 4vw;
+    }
+    .comments h3, .comment-form h3{
+        font-size: 5vw !important;
+    }
+    .shareButton {
+        position: relative;
+        z-index: 1000;
+        padding: 2vw;
+        font-size: 3vw;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-right: 8vw;
+    }
+    .shareOptions {
+        position: absolute;
+        right: 22%;
+        display: none;
+    }
+    .share-item a {
+        width: 18px;
+        height: 18px;
+    }
+    .shareOptions li:nth-child(1){
+        transform: rotate(0deg) translate(50px, 0px) rotate(0deg) !important;
+    }
+    .shareOptions li:nth-child(2){
+        transform: rotate(40deg) translate(36.2836px, 25.423px) rotate(-40deg) !important;
+    }
+    .shareOptions li:nth-child(3){
+        transform: rotate(80deg) translate(11.8919px, 42.7846px) rotate(-80deg) !important;
+    }
+    .shareOptions li:nth-child(4){
+        transform: rotate(120deg) translate(-15px, 35.282px) rotate(-120deg) !important;
+    }
+    .shareOptions li:nth-child(5){
+        transform: rotate(160deg) translate(-38.1754px, 14.3616px) rotate(-160deg) !important;
+    }
+    .shareOptions li:nth-child(6){
+        transform: rotate(200deg) translate(-49.1754px, -11.3616px) rotate(-200deg) !important;
+    }
+    .shareOptions li:nth-child(7){
+        transform: rotate(240deg) translate(-25px, -39.282px) rotate(-240deg) !important;
+    }
+    .shareOptions li:nth-child(8){
+        transform: rotate(280deg) translate(1.8919px, -42.7846px) rotate(-280deg) !important;
+    }
+    .shareOptions li:nth-child(9){
+        transform: rotate(320deg) translate(25.2836px, -23.423px) rotate(-320deg) !important;
     }
 }
 </style>
@@ -296,7 +424,7 @@
             </div>
 
             <!-- blog share option -->
-            <div style="display: flex;justify-content: end;padding-inline: 6vw;">
+            <div style="display: flex;justify-content: end;padding-inline: 5vw;">
                 <button class="shareButton">Share</button>
                 <div class="shareOptions" style="display:none;">
                     <!-- Share options will be inserted here -->
@@ -338,9 +466,9 @@
             
             <div class="comments-sec">
                 <section class="comments">
-                    <div style="display: flex;justify-content: space-between;align-items: center;">
+                    <div class="cmnts">
                         <h3>Comments</h3>
-                        <button style="margin-right: 1vw;" class="shareButton">Share</button>
+                        <button class="shareButton">Share</button>
                         <div class="shareOptions" style="display:none;">
                             <!-- Share options will be inserted here -->
                         </div>
@@ -461,6 +589,7 @@
 `);
             });
         </script>
+
 <script>
     const shareButtons = document.querySelectorAll('.shareButton');
 const shareOptionsContainers = document.querySelectorAll('.shareOptions');
@@ -587,4 +716,4 @@ document.addEventListener('click', (event) => {
 </script>
 </body>
 
-</html>
+</html> 

@@ -157,6 +157,16 @@
             font-weight: bold;
         }
 
+        .approve,
+        .not-approve {
+            padding: 0.3vw 2vw;
+            border-radius: 3vw;
+            background: transparent;
+            border: 1px solid green;
+            color: green;
+            font-weight: bold;
+        }
+
 
 
         .del-btn {
@@ -251,6 +261,8 @@
             border: 1px solid green;
             color: green;
         }
+
+
     </style>
 
     <div class="main-page">
@@ -357,8 +369,8 @@
                 </form>
                 <!-- New multi-delete form -->
                 <form id="delete-multiple-form" action="/delete-multiple" method="POST">
-                    <button type="submit" id="delete-multiple-button" class="delete-multiple-button"
-                      >Delete Selected Items</button>
+                    <button type="submit" id="delete-multiple-button" class="delete-multiple-button">Delete Selected
+                        Items</button>
 
                     <div class="gallery-cont">
                         <table>
@@ -375,9 +387,10 @@
                                     <% galleryItems.forEach(gal=> { %>
                                         <% if (gal.section===section) { %>
                                             <tr>
-                                               
-                                                    <td><input type="checkbox" name="selectedItems" value="<%= gal._id %>"></td>
-                                                
+
+                                                <td><input type="checkbox" name="selectedItems" value="<%= gal._id %>">
+                                                </td>
+
                                                 <td>
                                                     <% if (gal.type==='image' ) { %>
                                                         <img loading="lazy" src="<%= gal.src %>" alt="Image"
@@ -417,79 +430,111 @@
             </div>
 
 
+           
             <!-- Testimonial Section -->
             <div class="testimonial-section" style="display: none;">
                 <h2>Add New Testimonial</h2>
-                <form action="/admin/add-testimonial" method="POST" enctype="multipart/form-data">
-                    <input type="text" name="text" placeholder="Testimonial Text" required>
+                <form action="/admin/add-testimonial" method="POST" enctype="multipart/form-data" class="testi-form">
                     <input type="text" name="name" placeholder="Client Name" required>
-                    <input type="file" name="image" required>
+                    <input type="file" name="image" >
+                    <input type="text" name="text" placeholder="Testimonial Text" required >
                     <button type="submit">Add Testimonial</button>
                 </form>
 
                 <h2>Add Testimonial Page Content</h2>
-               
-                    <form action="/admin/add-testimonial-page" method="POST">
-                        <select name="testimonialId" required>
-                            <% if (testimonials && testimonials.length> 0) { %>
-                                <% testimonials.forEach(testimonial=> { %>
-                                    <option value="<%= testimonial._id %>">
-                                        <%= testimonial.name %>
-                                    </option>
-                                    <% }) %>
-                                        <% } else { %>
-                                            <option value="">No testimonials available</option>
-                                            <% } %>
-                        </select>
-                        <textarea name="successStory" placeholder="Success Story"></textarea>
-                        <textarea name="growthStory" placeholder="Growth Story"></textarea>
-                        <textarea name="caseStudy" placeholder="Case Study"></textarea>
-                        <button type="submit">Add Testimonial Page</button>
-                    </form>
-                   
-
-                        <h2>Existing Testimonials</h2>
-                        <ul>
+                <form action="/admin/add-testimonial-page" method="POST">
+                    <select name="testimonialId" required>
+                        <% if (testimonials && testimonials.length> 0) { %>
                             <% testimonials.forEach(testimonial=> { %>
-                                <li>
-                                    <%= testimonial.name %> - <%= testimonial.text %>
-                                            <button onclick="showEditTestimonialForm('<%= testimonial._id %>')">Edit
-                                                Testimonial</button>
-                                            <% if (testimonial.page) { %>
-                                                <button
-                                                    onclick="showEditTestimonialPageForm('<%= testimonial.page %>')">Edit
-                                                    Page</button>
-                                                <% } %>
-                                                    <form action="/admin/delete-testimonial/<%= testimonial._id %>"
-                                                        method="POST">
-                                                        <button type="submit">Delete</button>
-                                                    </form>
-                                </li>
+                                <option value="<%= testimonial._id %>">
+                                    <%= testimonial.name %>
+                                </option>
                                 <% }) %>
-                        </ul>
+                                    <% } else { %>
+                                        <option value="">No testimonials available</option>
+                                        <% } %>
+                    </select>
+                    <textarea name="successStory" placeholder="Success Story"></textarea>
+                    <textarea name="growthStory" placeholder="Growth Story"></textarea>
+                    <textarea name="caseStudy" placeholder="Case Study"></textarea>
+                    <textarea name="problemStatement" placeholder="Problem Statement"></textarea>
+                    <textarea name="clientOverview" placeholder="Client Overview"></textarea>
+                    <textarea name="challenges" placeholder="Challenges"></textarea>
+                    <textarea name="objectives" placeholder="Objectives"></textarea>
+                    <textarea name="solution" placeholder="Solution"></textarea>
+                    <textarea name="result" placeholder="Result"></textarea>
+                    <textarea name="conclusion" placeholder="Conclusion"></textarea>
+                    <button type="submit">Add Testimonial Page</button>
+                </form>
 
-                        <div id="editTestimonialForm" style="display: none;">
-                            <h2>Edit Testimonial</h2>
-                            <form action="/admin/update-testimonial/" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" id="editTestimonialId" name="id">
-                                <input type="text" id="editTestimonialText" name="text" required>
-                                <input type="text" id="editTestimonialName" name="name" required>
-                                <input type="file" name="image">
-                                <button type="submit">Update Testimonial</button>
-                            </form>
-                        </div>
+                <h2>Existing Testimonials</h2>
+                <ul>
+                    <% testimonials.forEach(testimonial=> { %>
+                        <li>
+                            <%= testimonial.name %> - <%= testimonial.text %> -  <img src="<%= testimonial.image %>" alt="" width="90px" height="90px">
+                                    <button onclick="toggleEditForm('editTestimonial<%= testimonial._id %>')">Edit
+                                        Testimonial</button>
+                                    <% if (testimonial.page) { %>
+                                        <button
+                                            onclick="toggleEditForm('editTestimonialPage<%= testimonial.page._id %>')">Edit
+                                            Page</button>
+                                        <% } %>
+                                            <form action="/admin/delete-testimonial/<%= testimonial._id %>"
+                                                method="POST">
+                                                <button type="submit">Delete</button>
+                                            </form>
 
-                        <div id="editTestimonialPageForm" style="display: none;">
-                            <h2>Edit Testimonial Page</h2>
-                            <form action="/admin/update-testimonial-page/" method="POST">
-                                <input type="hidden" id="editTestimonialPageId" name="id">
-                                <textarea id="editSuccessStory" name="successStory"></textarea>
-                                <textarea id="editGrowthStory" name="growthStory"></textarea>
-                                <textarea id="editCaseStudy" name="caseStudy"></textarea>
-                                <button type="submit">Update Testimonial Page</button>
-                            </form>
-                        </div>
+                                            <div id="editTestimonial<%= testimonial._id %>" style="display: none;">
+                                                <h3>Edit Testimonial</h3>
+                                                <form action="/admin/update-testimonial/<%= testimonial._id %>"
+                                                    method="POST" enctype="multipart/form-data">
+                                                    <input type="text" name="text" value="<%= testimonial.text %>"
+                                                        required>
+                                                    <input type="text" name="name" value="<%= testimonial.name %>"
+                                                        required>
+                                                    <input type="file" name="image"> 
+                                                    <img src="<%= testimonial.image %>" alt="" width="90px" height="90px">
+                                                    <button type="submit">Update Testimonial</button>
+                                                </form>
+                                            </div>
+
+                                            <% if (testimonial.page) { %>
+                                                <div id="editTestimonialPage<%= testimonial.page._id %>"
+                                                    style="display: none;">
+                                                    <h3>Edit Testimonial Page</h3>
+                                                    <form
+                                                        action="/admin/update-testimonial-page/<%= testimonial.page._id %>"
+                                                        method="POST">
+                                                        <textarea
+                                                            name="successStory"><%= testimonial.page.successStory %></textarea>
+                                                        <textarea
+                                                            name="growthStory"><%= testimonial.page.growthStory %></textarea>
+                                                        <textarea
+                                                            name="caseStudy"><%= testimonial.page.caseStudy %></textarea>
+                                                        <textarea
+                                                            name="problemStatement"><%= testimonial.page.problemStatement %></textarea>
+                                                        <textarea
+                                                            name="clientOverview"><%= testimonial.page.clientOverview %></textarea>
+                                                        <textarea
+                                                            name="challenges"><%= testimonial.page.challenges %></textarea>
+                                                        <textarea
+                                                            name="objectives"><%= testimonial.page.objectives %></textarea>
+                                                        <textarea
+                                                            name="solution"><%= testimonial.page.solution %></textarea>
+                                                        <textarea
+                                                            name="result"><%= testimonial.page.result %></textarea>
+                                                        <textarea
+                                                            name="conclusion"><%= testimonial.page.conclusion %></textarea>
+                                                        <button type="submit">Update Testimonial Page</button>
+                                                    </form>
+                                                </div>
+                                                <% } %>
+                        </li>
+                        <% }) %>
+                </ul>
             </div>
+
+
 
 
             <!-- comment section -->
@@ -568,6 +613,17 @@
 
     <!-- testimonial section -->
     <script>
+
+        function toggleEditForm(formId) {
+            const form = document.getElementById(formId);
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+
+
         function showEditTestimonialForm(id) {
             const testimonial = testimonials.find(t => t._id === id);
             document.getElementById('editTestimonialId').value = id;
@@ -661,31 +717,31 @@
 
 
     <!-- new -->
-   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('delete-multiple-form');
-    const deleteButton = document.getElementById('delete-multiple-button');
-    const checkboxes = document.querySelectorAll('input[name="selectedItems"]');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('delete-multiple-form');
+            const deleteButton = document.getElementById('delete-multiple-button');
+            const checkboxes = document.querySelectorAll('input[name="selectedItems"]');
 
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            deleteButton.style.display = 
-                [...checkboxes].some(cb => cb.checked) ? 'block' : 'none';
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    deleteButton.style.display =
+                        [...checkboxes].some(cb => cb.checked) ? 'block' : 'none';
+                });
+            });
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if ([...checkboxes].some(cb => cb.checked)) {
+                    if (confirm('Are you sure you want to delete these items?')) {
+                        this.submit();
+                    }
+                } else {
+                    alert('Please select items to delete');
+                }
+            });
         });
-    });
-
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if ([...checkboxes].some(cb => cb.checked)) {
-            if (confirm('Are you sure you want to delete these items?')) {
-                this.submit();
-            }
-        } else {
-            alert('Please select items to delete');
-        }
-    });
-});
-   </script>
+    </script>
     <!-- new -->
 
     <script>
