@@ -18,6 +18,7 @@ const blogSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     isLatest: { type: Boolean, default: true }, 
     isPopular: { type: Boolean, default: false } ,
+    isApprove: { type: Boolean, default: false } ,
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 });
 

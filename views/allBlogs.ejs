@@ -277,6 +277,7 @@
                             <th>EDIT</th>
                             <th>DELETE</th>
                             <th>TOGGLE POPULAR</th>
+                            <th>TOGGLE APPROVE</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -299,6 +300,13 @@
                                     <form method="POST" action="/toggle-popular/<%= blog._id %>">
                                         <button type="submit" class="<%= blog.isPopular ? 'popular' : 'not-popular' %>">
                                             <%= blog.isPopular ? 'Popular' : 'Not Popular' %>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/toggle-approve/<%= blog._id %>">
+                                        <button type="submit" class="<%= blog.isApprove ? 'approve' : 'not-approve' %>">
+                                            <%= blog.isApprove ? 'Approve' : 'Not Approve' %>
                                         </button>
                                     </form>
                                 </td>

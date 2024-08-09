@@ -485,7 +485,8 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
             metaDescription,
             metaKeywords: metaKeywords.split(',').map(keyword => keyword.trim()),
             isLatest: true, 
-            isPopular: false
+            isPopular: false,
+            isApprove: false
         });
 
         await blog.save();
@@ -561,7 +562,7 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
 app.put('/update-blog/:id', uploadFields,isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular } = req.body;
+        const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
 
         const existingBlog = await Blog.findById(id);
         if (!existingBlog) {
@@ -601,6 +602,7 @@ app.put('/update-blog/:id', uploadFields,isAdmin, async (req, res) => {
             metaKeywords: metaKeywords.split(',').map(keyword => keyword.trim()),
             isLatest: isLatest === 'true',
             isPopular: isPopular === 'false',
+            isApprove: isApprove === 'false',
         }, { new: true });
 
         res.redirect("/all-blogs-list");
@@ -632,10 +634,26 @@ app.post('/toggle-popular/:id', isAdmin, async (req, res) => {
     }
 });
 
+// Approve button routes
 
+app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const blog = await Blog.findById(id);
+        
+        if (!blog) {
+            return res.status(404).send('Blog not found');
+        }
 
+        blog.isApprove = !blog.isApprove;
+        await blog.save();
 
-
+        res.redirect('/all-blogs-list');
+    } catch (err) {
+        console.error('Error toggling popular status:', err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 
