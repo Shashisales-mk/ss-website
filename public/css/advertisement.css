@@ -609,7 +609,7 @@ footer{
 }
 .vertical-icons{
     background-color: #d4d804;
-    display: flex;
+    display: none;
     align-items: center; 
     justify-content: center;
     flex-direction: column;
@@ -628,6 +628,7 @@ footer{
 
 
 .vertical-icons.show {
+    display: flex;
     bottom:70px; /* Adjust this value as needed */
   }
 

@@ -507,7 +507,9 @@
                             <input type="text" name="name" placeholder="Your Name" required>
                             <input type="email" name="email" placeholder="Your Email" required>
                         </p>
-                        <p><textarea name="comment" placeholder="Your Comment" required></textarea></p>
+                        <p><textarea name="comment" placeholder="Your Comment" required maxlength="160"
+                            oninput="updateCharCount(this)"></textarea></p>
+                            <span id="charCount">0 / 160 characters</span>
                         <p><button type="submit">Submit Comment</button></p>
                     </form>
                 </section>
@@ -517,6 +519,14 @@
             <%- include("./includes/footer") %>
         </div>
         <script src="/js/script.js"></script>
+
+        <script>
+            function updateCharCount(textarea) {
+                const maxLength = textarea.getAttribute("maxlength");
+                const currentLength = textarea.value.length;
+                document.getElementById("charCount").innerText = `${currentLength} / ${maxLength} characters`;
+            }
+        </script>
 
         
 

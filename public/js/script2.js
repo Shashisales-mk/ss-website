@@ -37,58 +37,63 @@ tiles2.forEach(tile2 => {
 });
 
 
-// Change
-document.addEventListener("DOMContentLoaded", function() {
+// testimonials section.
+document.addEventListener("DOMContentLoaded", function () {
   const testimonialLeft = document.querySelector(".testimonial.left");
   const testimonialCenter = document.querySelector(".testimonial.center");
   const testimonialRight = document.querySelector(".testimonial.right");
-
   const showName = (testimonial) => {
-      const name = testimonial.querySelector(".name");
-      if (name) {
-          name.style.display = "block";
-      }
+   const name = testimonial.querySelector(".name");
+    if (name) {
+      name.style.display = "block";
+    }
+
   };
 
   const hideName = (testimonial) => {
-      const name = testimonial.querySelector(".name");
-      if (name) {
-          name.style.display = "none";
-      }
+    const name = testimonial.querySelector(".name");
+    if (name) {
+      name.style.display = "none";
+    }
+
   };
 
   if (testimonialLeft && testimonialCenter && testimonialRight) {
-      testimonialLeft.addEventListener("click", () => {
-          const centerContent = testimonialCenter.innerHTML;
-          testimonialCenter.innerHTML = testimonialLeft.innerHTML;
-          testimonialLeft.innerHTML = testimonialRight.innerHTML;
-          testimonialRight.innerHTML = centerContent;
 
-          showName(testimonialCenter);
-          hideName(testimonialLeft);
-          hideName(testimonialRight);
-      });
-
-      testimonialRight.addEventListener("click", () => {
-          const centerContent = testimonialCenter.innerHTML;
-          testimonialCenter.innerHTML = testimonialRight.innerHTML;
-          testimonialRight.innerHTML = testimonialLeft.innerHTML;
-          testimonialLeft.innerHTML = centerContent;
-
-          showName(testimonialCenter);
-          hideName(testimonialLeft);
-          hideName(testimonialRight);
-      });
-
-      // Show the name for the initial center testimonial
+    testimonialLeft.addEventListener("click", () => {
+      const centerContent = testimonialCenter.innerHTML;
+      testimonialCenter.innerHTML = testimonialLeft.innerHTML;
+      testimonialLeft.innerHTML = testimonialRight.innerHTML;
+      testimonialRight.innerHTML = centerContent;
       showName(testimonialCenter);
+      hideName(testimonialLeft);
+      hideName(testimonialRight);
+
+    });
+
+    testimonialRight.addEventListener("click", () => {
+      const centerContent = testimonialCenter.innerHTML;
+      testimonialCenter.innerHTML = testimonialRight.innerHTML;
+      testimonialRight.innerHTML = testimonialLeft.innerHTML;
+      testimonialLeft.innerHTML = centerContent;
+      showName(testimonialCenter);
+      hideName(testimonialLeft);
+      hideName(testimonialRight);
+
+    });
+
+    // Show the name for the initial center testimonial
+
+    showName(testimonialCenter);
+
   }
+
 });
 
 
 
-
-document.addEventListener("DOMContentLoaded", function() {
+// mobile header
+document.addEventListener("DOMContentLoaded", function () {
   var mobileHeader = document.querySelector('.hide-mobile-header-cont');
   var mobileHeaderPopup = document.getElementById('display-mobile-header-cont');
   var serviceHeader = document.querySelector('.hide-service-header-cont');
@@ -97,33 +102,33 @@ document.addEventListener("DOMContentLoaded", function() {
   var hideServiceHeaderCont = document.querySelector('.hide-service-header-cont');
   var serviceBack = document.getElementById('service-back');
 
-  mobileHeaderPopup.addEventListener("click", function(event) {
-      event.stopPropagation();
-      mobileHeader.style.display = mobileHeader.style.display === 'none' ? 'block' : 'none';
+  mobileHeaderPopup.addEventListener("click", function (event) {
+    event.stopPropagation();
+    mobileHeader.style.display = mobileHeader.style.display === 'none' ? 'block' : 'none';
   });
 
-  serviceHeaderPopup.forEach(function(serviceHeaderPopupItem) {
-    serviceHeaderPopupItem.addEventListener("click", function(event) {
-        hideMobileHeaderCont.style.display = "none";
-        event.stopPropagation();
-        serviceHeader.style.display = serviceHeader.style.display === 'none' ? 'block' : 'none';
+  serviceHeaderPopup.forEach(function (serviceHeaderPopupItem) {
+    serviceHeaderPopupItem.addEventListener("click", function (event) {
+      hideMobileHeaderCont.style.display = "none";
+      event.stopPropagation();
+      serviceHeader.style.display = serviceHeader.style.display === 'none' ? 'block' : 'none';
     });
   });
 
-  serviceBack.addEventListener("click", function(event) {
-      hideServiceHeaderCont.style.display = 'none';
-      hideMobileHeaderCont.style.display = 'block';
-      event.stopPropagation();
+  serviceBack.addEventListener("click", function (event) {
+    hideServiceHeaderCont.style.display = 'none';
+    hideMobileHeaderCont.style.display = 'block';
+    event.stopPropagation();
   });
 
   // Close mobile header and service header popup when clicking outside
-  document.addEventListener("click", function(event) {
-      if (!hideMobileHeaderCont.contains(event.target) && !mobileHeaderPopup.contains(event.target)) {
-          mobileHeader.style.display = 'none';
-      }
-      if (!hideServiceHeaderCont.contains(event.target) && !Array.from(serviceHeaderPopup).some(item => item.contains(event.target))) {
-          serviceHeader.style.display = 'none';
-      }
+  document.addEventListener("click", function (event) {
+    if (!hideMobileHeaderCont.contains(event.target) && !mobileHeaderPopup.contains(event.target)) {
+      mobileHeader.style.display = 'none';
+    }
+    if (!hideServiceHeaderCont.contains(event.target) && !Array.from(serviceHeaderPopup).some(item => item.contains(event.target))) {
+      serviceHeader.style.display = 'none';
+    }
   });
 });
 

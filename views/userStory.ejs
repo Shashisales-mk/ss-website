@@ -1,0 +1,91 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f4f4f4;
+    }
+    .bl{
+        background-color: black;
+    }
+    .main-page {
+        max-width: 850px;
+        margin: 6rem auto 2rem;
+        padding: 2rem;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+    .main-page h1 {
+        text-align: center;
+        /* color: #2c3e50; */
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #C4C800;
+        padding-bottom: 1rem;
+    }
+    .main-page h3 {
+        color: #000;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #C4C800;
+        padding-left: 1rem;
+    }
+    .storyLine {
+        background-color: #ecf0f1;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    .storyLine:hover {
+        background-color: #e8f6f3;
+        transform: translateY(-5px) scale(1.06);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+
+    <div class="main-page">
+        <h1>User Story</h1>
+        <h3>successStory</h3>
+        <div class="successStory storyLine">
+            <%=story.successStory%>
+        </div>
+        <h3>growthStory</h3>
+        <div class="growthStory storyLine">
+            <%=story.growthStory%>
+        </div>
+        <h3>caseStudy</h3>
+        <div class="caseStudy storyLine">
+            <%=story.caseStudy%>
+        </div>
+        <h3>problemStatement</h3>
+        <div class="problemStatement storyLine">
+            <%=story.problemStatement%>
+        </div>
+        <h3>clientOverview</h3>
+        <div class="clientOverview storyLine">
+            <%=story.clientOverview%>
+        </div>
+        <h3>challenges</h3>
+        <div class="challenges storyLine">
+            <%=story.challenges%>
+        </div>
+        <h3>objectives</h3>
+        <div class="objectives storyLine">
+            <%=story.objectives%>
+        </div>
+        <h3>solution</h3>
+        <div class="solution storyLine">
+            <%=story.solution%>
+        </div>
+        <h3>result</h3>
+        <div class="result storyLine">
+            <%=story.result%>
+        </div>
+        <h3>conclusion</h3>
+        <div class="conclusion storyLine">
+            <%=story.conclusion%>
+        </div>
+    </div>

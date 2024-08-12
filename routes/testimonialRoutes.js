@@ -5,7 +5,7 @@ const TestimonialPage = require('../models/TestimonialPage');
 const multer = require('multer');
 const upload = multer({ dest: 'public/uploads/' });
 
-// Add new testimonial
+// Admin route
 router.post('/admin/add-testimonial', upload.single('image'), async (req, res) => {
   try {
     const newTestimonial = new Testimonial({
@@ -20,12 +20,31 @@ router.post('/admin/add-testimonial', upload.single('image'), async (req, res) =
   }
 });
 
+// User route
+router.post('/user/add-testimonial', upload.single('image'), async (req, res) => {
+  try {
+    const newTestimonial = new Testimonial({
+      text: req.body.text,
+      name: req.body.name,
+      image: `/uploads/${req.file.filename}`
+    });
+    await newTestimonial.save();
+    res.redirect('/');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 router.post('/admin/add-testimonial-page/', async (req, res) => {
 
   try {
     // const testimonialId = req.params.testimonialId;
-    const { successStory, growthStory, caseStudy, testimonialId, problemStatement,
+    const { 
+      testimonialId, 
+      successStory, 
+      growthStory, 
+      caseStudy, 
+      problemStatement,
       clientOverview,
       challenges,
       objectives,

@@ -21,6 +21,7 @@ const Blog = require('./models/Blog');
 const Review = require('./models/Review');
 const Gallery = require('./models/Gallery');
 const Testimonial = require('./models/Testimonial');
+const Story = require('./models/TestimonialPage');
 
 const PaymentDetails = require('./models/PaymentDetails');
 const Comment = require('./models/Comment');
@@ -390,6 +391,49 @@ app.get("/hidden-img", (req, res) => {
 app.get("/hidden-img2", (req, res) => {
     res.render("hidden2")
 })
+
+app.get("/review-form", (req, res) => {
+    res.render("userTestiForm" , {
+        title : "",
+        description : ""
+    })
+})
+
+app.get("/user-story/:id", async (req, res) => {
+    try {
+      const testimonial = await Testimonial.findById(req.params.id);
+      if (!testimonial) {
+        return res.status(404).send('Testimonial not found');
+      }
+  
+      const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
+      if (!testimonialPage) {
+        return res.status(404).send('Testimonial page details not found');
+      }
+  
+      const story = {
+        successStory: testimonialPage.successStory,
+        growthStory: testimonialPage.growthStory,
+        caseStudy: testimonialPage.caseStudy,
+        problemStatement: testimonialPage.problemStatement,
+        clientOverview: testimonialPage.clientOverview,
+        challenges: testimonialPage.challenges,
+        objectives: testimonialPage.objectives,
+        solution: testimonialPage.solution,
+        result: testimonialPage.result,
+        conclusion: testimonialPage.conclusion
+      };
+  
+      res.render("userStory", {
+        story,
+        title: testimonial.title || "",
+        description: testimonial.description || ""
+      });
+    } catch (error) {
+      console.error('Error fetching user story:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
 function truncateString(str, length = 200) {
     if (str.length > length) {
