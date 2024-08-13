@@ -1121,7 +1121,7 @@ font-weight: bold;
   width: 30.5% !important;
 }
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 450px) {
   .testimonial {
       width: 28.2% !important;
   }
