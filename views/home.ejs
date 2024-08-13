@@ -229,11 +229,7 @@
                             <div class="swiper-slide testimonial">
                               <p><%= testimonial.text %></p>
                                 <p class="name"><%= testimonial.name %></p>
-                                <img
-                                  src="<%= testimonial.image %>"
-                                  loading="lazy"
-                                  alt="<%= testimonial.name %>"
-                                />
+                                <img src="<%= testimonial.image ? testimonial.image : '/assets/images/prof.png' %>" alt="<%= testimonial.name %>">
                             </div>
                             <% }); %>
                           </div>

@@ -11,7 +11,7 @@ router.post('/admin/add-testimonial', upload.single('image'), async (req, res) =
     const newTestimonial = new Testimonial({
       text: req.body.text,
       name: req.body.name,
-      image: `/uploads/${req.file.filename}`
+      image: req.file ? `/uploads/${req.file.filename}` : undefined
     });
     await newTestimonial.save();
     res.redirect('/all-blogs-list');
@@ -26,7 +26,7 @@ router.post('/user/add-testimonial', upload.single('image'), async (req, res) =>
     const newTestimonial = new Testimonial({
       text: req.body.text,
       name: req.body.name,
-      image: `/uploads/${req.file.filename}`
+      image: req.file ? `/uploads/${req.file.filename}` : undefined
     });
     await newTestimonial.save();
     res.redirect('/');
