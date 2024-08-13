@@ -253,6 +253,7 @@ function parsePhoneNumber(phoneNumber) {
 
 app.get("/", async (req, res) => {
     const blogs = await Blog.find({isApprove: true}).sort({ createdAt: -1 });
+    const testimonials = await Testimonial.find().populate('page');
     const successMessage = req.session.successMessage || null;
     const errorMessage = req.session.errorMessage || null;
     console.log('successMessage:', successMessage); // Log the value of successMessage
@@ -263,6 +264,7 @@ app.get("/", async (req, res) => {
         successMessage,
         errorMessage,
         blogs,
+        testimonials,
         truncateString,
         title: "Leading Website Development & Digital Marketing Services | Shashi Sales",
         description: "Shashi Sales and Marketing provides integrated digital business solutions including website development, advertising, Digital Marketing Services, UI/UX design, graphic and video design, product shoots, branding and PR."
@@ -299,8 +301,10 @@ app.get("/contact-us", (req, res) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/fusion-marketing", (req, res) => {
+app.get("/fusion-marketing", async(req, res) => {
+    const testimonials = await Testimonial.find().populate('page');
     res.render("advertisement", {
+        testimonials,
         title: "Affiliate Marketing and off-page seo techniques-Fusion Marketing",
         description: "Shashi Sales and Marketing's fusion funnel approach is a comprehensive marketing strategy that integrates affiliate marketing, and SEO techniques."
     })

@@ -38,56 +38,35 @@ tiles2.forEach(tile2 => {
 
 
 // testimonials section.
+
 document.addEventListener("DOMContentLoaded", function () {
-  const testimonialLeft = document.querySelector(".testimonial.left");
-  const testimonialCenter = document.querySelector(".testimonial.center");
-  const testimonialRight = document.querySelector(".testimonial.right");
-  const showName = (testimonial) => {
-   const name = testimonial.querySelector(".name");
-    if (name) {
-      name.style.display = "block";
-    }
+  const swiper = new Swiper('.testimonial-swiper', {
+      slidesPerView: 3,
+      centeredSlides: true,
+      spaceBetween: 30,
+      loop: true,
+      speed: 500,
+      effect: 'coverflow',
+      coverflowEffect: {
+          rotate: 0,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+      },
+      allowTouchMove: false, // Disable swiping
+  });
 
-  };
-
-  const hideName = (testimonial) => {
-    const name = testimonial.querySelector(".name");
-    if (name) {
-      name.style.display = "none";
-    }
-
-  };
-
-  if (testimonialLeft && testimonialCenter && testimonialRight) {
-
-    testimonialLeft.addEventListener("click", () => {
-      const centerContent = testimonialCenter.innerHTML;
-      testimonialCenter.innerHTML = testimonialLeft.innerHTML;
-      testimonialLeft.innerHTML = testimonialRight.innerHTML;
-      testimonialRight.innerHTML = centerContent;
-      showName(testimonialCenter);
-      hideName(testimonialLeft);
-      hideName(testimonialRight);
-
-    });
-
-    testimonialRight.addEventListener("click", () => {
-      const centerContent = testimonialCenter.innerHTML;
-      testimonialCenter.innerHTML = testimonialRight.innerHTML;
-      testimonialRight.innerHTML = testimonialLeft.innerHTML;
-      testimonialLeft.innerHTML = centerContent;
-      showName(testimonialCenter);
-      hideName(testimonialLeft);
-      hideName(testimonialRight);
-
-    });
-
-    // Show the name for the initial center testimonial
-
-    showName(testimonialCenter);
-
-  }
-
+  // Add click event listeners to slides
+  swiper.slides.forEach((slide, index) => {
+      slide.addEventListener('click', () => {
+          if (slide.classList.contains('swiper-slide-prev')) {
+              swiper.slidePrev();
+          } else if (slide.classList.contains('swiper-slide-next')) {
+              swiper.slideNext();
+          }
+      });
+  });
 });
 
 

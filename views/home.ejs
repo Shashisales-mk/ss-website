@@ -1,321 +1,361 @@
 <% layout("/layouts/boilerplate") %>
 
-<% if (successMessage) { %>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <%= successMessage %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<% } %>
-
-<% if (errorMessage) { %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <%= errorMessage %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<% } %>
-
-<section class="page1">
-    <div class="hero-left">
-        <img src="/assets/images/hero-l1.webp" alt="herol1">
-        <img src="/assets/images/herp-l2.webp" alt="herol2">
-    </div>
-    <div class="middle-vedio">
-        <video  autoplay loop muted  id="heroVideo">
-            <source src="/assets/images/hero-vid.webm" type="video/webm">
-            
-        </video>
-    </div>
-    <div class="clients-bar">
-
-       
-        <p>Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding</p>
-        <p>Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding</p>
-    </div>
-    <div class="hero-right">
-        <img src="/assets/images/human1.webp" alt="hero">
-    </div>
-</section>
-
-<section class="page2">
-    <div class="divider">
-        <img src="/assets/images/page2.webp" alt="">
-    </div>
-
-    <div class="logo-box1">
-        <div class="bar">
-          <div class="inner-bar">
-            <img height="8vw" width="5vw" src="/assets/images/l1.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l2.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l3.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l4.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l5.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l6.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l7.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l8.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l9.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l10.webp" alt="Hello">
-            <!-- duplicate the images to create the infinite effect -->
-            <img height="8vw" width="5vw" src="/assets/images/l1.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l2.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l3.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l4.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l5.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l6.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l7.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l8.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l9.webp" alt="Hello">
-            <img height="8vw" width="5vw" src="/assets/images/l10.webp" alt="Hello">
-          </div>
+    <% if (successMessage) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= successMessage %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
         </div>
-      </div>
-    <div class="logo-box2">
-        <div class="img"><img height="201" width="162.5" src="/assets/images/BF1.webp" alt="BF1"></div>
-        <div class="img"><img height="201" width="162.5" src="/assets/images/BF2.webp" alt="BF2"></div>
-        <div class="img"><img height="201" width="162.5" src="/assets/images/BF3.webp" alt="BF3"></div>
-    </div>
+        <% } %>
 
-</section>
+            <% if (errorMessage) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <%= errorMessage %>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <% } %>
 
+                    <section class="page1">
+                        <div class="hero-left">
+                            <img src="/assets/images/hero-l1.webp" alt="herol1">
+                            <img src="/assets/images/herp-l2.webp" alt="herol2">
+                        </div>
+                        <div class="middle-vedio">
+                            <video autoplay loop muted id="heroVideo">
+                                <source src="/assets/images/hero-vid.webm" type="video/webm">
 
-<div class="leads">
-    <p>Require Digital Marketing ?</p>
-    <div class="form-container">
-     <form action="/submit-quote-lead" method="post">
-        <input type="text" name="number" id="numberInput" placeholder="Enter Your Number" required>
-        <button class="spaos">Get Started</button>
-     </form>
-    </div>
-  </div>
-  <p class="soson" style="display: none; width: 70%; text-align: center; margin: auto; font-size: 1.5vw; margin-bottom: 1rem; font-weight: bold;">Thank you for your interest in our company, we appreciate your efforts in shashi sales and marketing. You will get a call soon from our sales team.</p>
-
-
-
-
-  <h1 class="all-heading">OUR SERVICES</h1>
-
-  <div class="container">
-      <div class="first-part">
-          <div class="tile">
-              <img src="/assets/images/marketing.webp " height="100%" width="100%" alt="Marketing">
-              <div class="text">
-                  <h2>Marketing</h2>
-                  <p>Digital Marketing, Advertising, SEO, Branding & PR</p>
-                  <div><a href="/fusion-marketing" class="tile-link hidden">Read More</a></div>
-              </div>
-          </div>
-          <div class="tile">
-              <img src="/assets/images/devlopment.webp" height="100%" width="100%" alt="Development">
-              <div class="text">
-                  <h2>Development</h2>
-                  <p>Website Development, ERP Development</p>
-                  <div><a href="/web-development" class="tile-link hidden">Read More</a></div>
-              </div>
-          </div>
-          <div class="tile tile-img1">
-              <img  src="/assets/images/managment.webp" height="100%" width="100%" alt="Management">
-              <div class="text">
-                  <h2>Management</h2>
-                  <p>Seller Account Management, Social Media</p>
-                  <div><a href="/fusion-marketing" class="tile-link hidden">Read More</a></div>
-              </div>
-          </div>
-      </div>
-  
-  
-      <div class="main-view">
-          <img src="/assets/images/Rectangle 11.webp" height="100%" width="100%" alt="Design Service">
-          <div class="text">
-              <h2>Design Service</h2>
-              <p>UI/UX Design, Video Design, Graphic Design</p>
-              <div style="display: flex; justify-content: center;"><a href="/graphic-design" class="tile-link hidden">Read More</a></div>
-          </div>
-      </div>
-  
-  
-  
-      <div class="last-part">
-          <div class="tile">
-              <img src="/assets/images/Rectangle 12.webp" height="100%" width="100%" alt="Photography">
-              <div class="text">
-                  <h2>Photography</h2>
-                  <p>Product Shoot, Model Shoot, Creative Shoot</p>
-                  <div><a href="/graphic-design" class="tile-link hidden">Read More</a></div>
-              </div>
-          </div>
-          <div class="tile">
-              <img src="/assets/images/Rectangle 13.webp" height="100%" width="100%" alt="Business Services">
-              <div class="text">
-                  <h2>Business Services</h2>
-                  <p>Network Support, LI Support, Technical Support</p>
-                  <div><a href="/business-services" class="tile-link hidden">Read More</a></div>
-              </div>
-          </div>
-          <div class="tile tile-img2">
-              <img  src="/assets/images/Rectangle 16.webp"height="100%" width="100%" alt="Training">
-              <div class="text ">
-                  <h2>Training</h2>
-                  <p>Soft Skill, Customer Service</p>
-                  <div><a href="/business-services" class="tile-link hidden">Read More</a></div>
-              </div>
-          </div>
-  
-      </div>
-  
-  </div>
+                            </video>
+                        </div>
+                        <div class="clients-bar">
 
 
-<h1 class="all-heading sp">PR / BRANDING / INFLUENCER</h1>
+                            <p>Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing
+                                * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website
+                                Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR *
+                                Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design
+                                * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding *
+                                Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing
+                                * SEO * Advertising & PR * Product Shoot * Branding</p>
+                            <p>Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing
+                                * SEO * Advertising & PR * Product Shoot * Branding * Infrastructure Solution * Website
+                                Development * UI/UX Design * Graphic & Video Designing * SEO * Advertising & PR *
+                                Product Shoot * Branding * Infrastructure Solution * Website Development * UI/UX Design
+                                * Graphic & Video Designing * SEO * Advertising & PR * Product Shoot * Branding *
+                                Infrastructure Solution * Website Development * UI/UX Design * Graphic & Video Designing
+                                * SEO * Advertising & PR * Product Shoot * Branding</p>
+                        </div>
+                        <div class="hero-right">
+                            <img src="/assets/images/human1.webp" alt="hero">
+                        </div>
+                    </section>
 
-<section class="page3">
-    <div class="left-part-text sec-text">
-        <h3>Creators Fuel True Influence: </h3>
-        <h3>Unleash Your Power!</h3>
-        <p>Shashi Sales and Marketing leverages influencer marketing to enhance customer engagement and brand visibility.</p>
-    </div>
-    <div class="right-part-img">
-        <img src="/assets/images/Group 35091.webp" loading="lazy" alt="Group 35091">
-    </div>
-</section>
+                    <section class="page2">
+                        <div class="divider">
+                            <img src="/assets/images/page2.webp" alt="">
+                        </div>
+
+                        <div class="logo-box1">
+                            <div class="bar">
+                                <div class="inner-bar">
+                                    <img height="8vw" width="5vw" src="/assets/images/l1.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l2.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l3.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l4.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l5.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l6.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l7.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l8.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l9.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l10.webp" alt="Hello">
+                                    <!-- duplicate the images to create the infinite effect -->
+                                    <img height="8vw" width="5vw" src="/assets/images/l1.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l2.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l3.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l4.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l5.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l6.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l7.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l8.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l9.webp" alt="Hello">
+                                    <img height="8vw" width="5vw" src="/assets/images/l10.webp" alt="Hello">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="logo-box2">
+                            <div class="img"><img height="201" width="162.5" src="/assets/images/BF1.webp" alt="BF1">
+                            </div>
+                            <div class="img"><img height="201" width="162.5" src="/assets/images/BF2.webp" alt="BF2">
+                            </div>
+                            <div class="img"><img height="201" width="162.5" src="/assets/images/BF3.webp" alt="BF3">
+                            </div>
+                        </div>
+
+                    </section>
 
 
-
-<section class="page4">
-    <div class="left-part-img">
-        <img src="/assets/images/Group 35092.webp" loading="lazy" alt="Group 35092">
-    </div>
-    <div class="right-part-text sec-text">
-        <h3>Growth From Data</h3>
-        <p>In recent years, the industry has experienced remarkable growth thanks to influencer marketing. By collaborating with influential individuals, brands have successfully expanded their reach, built trust, and driven sales. Influencer marketing has become a powerful catalyst for business success.</p>
-    </div>
-</section>
-
-
-<h1 class="all-heading">Client Testimonials</h1>
-
-<div class="testimonial-section">
-    <div class="testimonial-container">
-        <div class="testimonial left">
-            <p>Fresh & eye-catching graphic designs for meetings. Plan videos were the best. Thank you
-            </p>
-            <p class="name" style="display: none;">- Rajiv</p>
-          <img src="/assets/images/t3.webp" loading="lazy" alt="Person 3">
-        </div>
-
-        <div class="testimonial center">
-            <p>They are serious and truly care about their clients. They always accept the customer's complaint and input</p>
-            <p class="name">- Pragati Jain</p>
-            <img src="/assets/images/t2.webp" loading="lazy" alt="Person 2">
-        </div>
-
-        <div class="testimonial right">
-          <p>Closed 4 clients for interior design in 2 months at every cheap investment. Shashi Sales has been helping a lot.</p>
-            <p class="name" style="display: none;">- V V Pandey</p>
-            <img src="/assets/images/t1.webp" loading="lazy" alt="Person 1">
-        </div>
-       
-
-    </div>
-
-    <div class="testimonial-buttons">
-        <button class="susses-story">Susses Story</button>
-        <button class="growth">Growth</button>
-        <button class="case-study">Case Study</button>
-
-    </div>
-
-</div>
+                    <div class="leads">
+                        <p>Require Digital Marketing ?</p>
+                        <div class="form-container">
+                            <form action="/submit-quote-lead" method="post">
+                                <input type="text" name="number" id="numberInput" placeholder="Enter Your Number"
+                                    required>
+                                <button class="spaos">Get Started</button>
+                            </form>
+                        </div>
+                    </div>
+                    <p class="soson"
+                        style="display: none; width: 70%; text-align: center; margin: auto; font-size: 1.5vw; margin-bottom: 1rem; font-weight: bold;">
+                        Thank you for your interest in our company, we appreciate your efforts in shashi sales and
+                        marketing. You will get a call soon from our sales team.</p>
 
 
 
 
+                    <h1 class="all-heading">OUR SERVICES</h1>
 
-<h1 id="faqs" class="all-heading">Frequently Asked Questions</h1>
-<div class="faq-container">
-    <div class="faq-column">
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-How to choose the best SEO agency effectively?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                A-Choose the best SEO agency by evaluating their experience, client reviews, and off-page SEO company services like backlink building and reputation management.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-How to find the best website development company?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                Find the best website development company by checking their experience in e-commerce website development, client reviews, and portfolio of dark black website designs. Choose a versatile website development company for optimal results.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-How to choose the right digital marketing agency?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                Choose the right digital marketing agency by evaluating their expertise in sales & marketing, client testimonials, and success stories. A reputable digital marketing company will deliver tailored strategies for your business.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-What’s the difference between sales & marketing and digital marketing?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                Sales & marketing focus on overall strategies to drive sales, while a digital marketing agency or company specializes in online channels to boost visibility and engagement.
-            </div>
-        </div>
-    </div>
-    <div class="faq-column">
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-What are the essential steps in the SEO process?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                The SEO process includes using a free keyword research tool, optimizing content, advertising on Google Ads, and managing your Google GMB profile for local SEO success.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-What services combine SEO, web development, and digital marketing?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                Combining the best SEO agency, off-page SEO company, e-commerce website development, digital marketing agency, and tools like Google GMB ensures comprehensive online growth and visibility.
-                
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-How authentic are these SEO keyword suggestions for rankings?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                To check the authenticity of SEO keywords, use tools like Ahrefs Backlink Checker and SEMrush SEO Tool. These tools provide accurate data for effective SEO strategies.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Q-Does Shashi Sales and Marketing offer studio rentals?
-                <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy" width="20px" alt=""></span>
-            </div>
-            <div class="faq-answer">
-                Yes, Shashi Sales and Marketing offers studio rentals for product shoots, photo shoots, and podcasts. They are a top production house in Delhi NCR, providing studio rental for photoshoots.
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="container">
+                        <div class="first-part">
+                            <div class="tile">
+                                <img src="/assets/images/marketing.webp " height="100%" width="100%" alt="Marketing">
+                                <div class="text">
+                                    <h2>Marketing</h2>
+                                    <p>Digital Marketing, Advertising, SEO, Branding & PR</p>
+                                    <div><a href="/fusion-marketing" class="tile-link hidden">Read More</a></div>
+                                </div>
+                            </div>
+                            <div class="tile">
+                                <img src="/assets/images/devlopment.webp" height="100%" width="100%" alt="Development">
+                                <div class="text">
+                                    <h2>Development</h2>
+                                    <p>Website Development, ERP Development</p>
+                                    <div><a href="/web-development" class="tile-link hidden">Read More</a></div>
+                                </div>
+                            </div>
+                            <div class="tile tile-img1">
+                                <img src="/assets/images/managment.webp" height="100%" width="100%" alt="Management">
+                                <div class="text">
+                                    <h2>Management</h2>
+                                    <p>Seller Account Management, Social Media</p>
+                                    <div><a href="/fusion-marketing" class="tile-link hidden">Read More</a></div>
+                                </div>
+                            </div>
+                        </div>
 
 
-<!-- <div class="leads search-container">
+                        <div class="main-view">
+                            <img src="/assets/images/Rectangle 11.webp" height="100%" width="100%" alt="Design Service">
+                            <div class="text">
+                                <h2>Design Service</h2>
+                                <p>UI/UX Design, Video Design, Graphic Design</p>
+                                <div style="display: flex; justify-content: center;"><a href="/graphic-design"
+                                        class="tile-link hidden">Read More</a></div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="last-part">
+                            <div class="tile">
+                                <img src="/assets/images/Rectangle 12.webp" height="100%" width="100%"
+                                    alt="Photography">
+                                <div class="text">
+                                    <h2>Photography</h2>
+                                    <p>Product Shoot, Model Shoot, Creative Shoot</p>
+                                    <div><a href="/graphic-design" class="tile-link hidden">Read More</a></div>
+                                </div>
+                            </div>
+                            <div class="tile">
+                                <img src="/assets/images/Rectangle 13.webp" height="100%" width="100%"
+                                    alt="Business Services">
+                                <div class="text">
+                                    <h2>Business Services</h2>
+                                    <p>Network Support, LI Support, Technical Support</p>
+                                    <div><a href="/business-services" class="tile-link hidden">Read More</a></div>
+                                </div>
+                            </div>
+                            <div class="tile tile-img2">
+                                <img src="/assets/images/Rectangle 16.webp" height="100%" width="100%" alt="Training">
+                                <div class="text ">
+                                    <h2>Training</h2>
+                                    <p>Soft Skill, Customer Service</p>
+                                    <div><a href="/business-services" class="tile-link hidden">Read More</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <h1 class="all-heading sp">PR / BRANDING / INFLUENCER</h1>
+
+                    <section class="page3">
+                        <div class="left-part-text sec-text">
+                            <h3>Creators Fuel True Influence: </h3>
+                            <h3>Unleash Your Power!</h3>
+                            <p>Shashi Sales and Marketing leverages influencer marketing to enhance customer engagement
+                                and brand visibility.</p>
+                        </div>
+                        <div class="right-part-img">
+                            <img src="/assets/images/Group 35091.webp" loading="lazy" alt="Group 35091">
+                        </div>
+                    </section>
+
+
+
+                    <section class="page4">
+                        <div class="left-part-img">
+                            <img src="/assets/images/Group 35092.webp" loading="lazy" alt="Group 35092">
+                        </div>
+                        <div class="right-part-text sec-text">
+                            <h3>Growth From Data</h3>
+                            <p>In recent years, the industry has experienced remarkable growth thanks to influencer
+                                marketing. By collaborating with influential individuals, brands have successfully
+                                expanded their reach, built trust, and driven sales. Influencer marketing has become a
+                                powerful catalyst for business success.</p>
+                        </div>
+                    </section>
+
+
+                    <h1 class="all-heading">Client Testimonials</h1>
+
+                    <div class="testimonial-section">
+                        <div class="swiper testimonial-swiper">
+                          <div class="swiper-wrapper">
+                            <% testimonials.forEach(function(testimonial) { %>
+                            <div class="swiper-slide testimonial">
+                              <p><%= testimonial.text %></p>
+                                <p class="name"><%= testimonial.name %></p>
+                                <img
+                                  src="<%= testimonial.image %>"
+                                  loading="lazy"
+                                  alt="<%= testimonial.name %>"
+                                />
+                            </div>
+                            <% }); %>
+                          </div>
+                        </div>
+                      
+                        <div class="testimonial-buttons">
+                          <button class="susses-story">Susses Story</button>
+                          <button class="growth">Growth</button>
+                          <button class="case-study">Case Study</button>
+                        </div>
+                      </div>
+
+
+
+
+
+                    <h1 id="faqs" class="all-heading">Frequently Asked Questions</h1>
+                    <div class="faq-container">
+                        <div class="faq-column">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-How to choose the best SEO agency effectively?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    A-Choose the best SEO agency by evaluating their experience, client reviews, and
+                                    off-page SEO company services like backlink building and reputation management.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-How to find the best website development company?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    Find the best website development company by checking their experience in e-commerce
+                                    website development, client reviews, and portfolio of dark black website designs.
+                                    Choose a versatile website development company for optimal results.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-How to choose the right digital marketing agency?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    Choose the right digital marketing agency by evaluating their expertise in sales &
+                                    marketing, client testimonials, and success stories. A reputable digital marketing
+                                    company will deliver tailored strategies for your business.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-What’s the difference between sales & marketing and digital marketing?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    Sales & marketing focus on overall strategies to drive sales, while a digital
+                                    marketing agency or company specializes in online channels to boost visibility and
+                                    engagement.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-column">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-What are the essential steps in the SEO process?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    The SEO process includes using a free keyword research tool, optimizing content,
+                                    advertising on Google Ads, and managing your Google GMB profile for local SEO
+                                    success.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-What services combine SEO, web development, and digital marketing?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    Combining the best SEO agency, off-page SEO company, e-commerce website development,
+                                    digital marketing agency, and tools like Google GMB ensures comprehensive online
+                                    growth and visibility.
+
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-How authentic are these SEO keyword suggestions for rankings?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    To check the authenticity of SEO keywords, use tools like Ahrefs Backlink Checker
+                                    and SEMrush SEO Tool. These tools provide accurate data for effective SEO
+                                    strategies.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    Q-Does Shashi Sales and Marketing offer studio rentals?
+                                    <span class="expand-icon"><img src="/assets/images/down angle.webp" loading="lazy"
+                                            width="20px" alt=""></span>
+                                </div>
+                                <div class="faq-answer">
+                                    Yes, Shashi Sales and Marketing offers studio rentals for product shoots, photo
+                                    shoots, and podcasts. They are a top production house in Delhi NCR, providing studio
+                                    rental for photoshoots.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="leads search-container">
    
     <form action="">
         <div class="form-field">
@@ -325,32 +365,36 @@
     </form>
 </div> -->
 
-<!-- About Founder -->
-<h1 class="all-heading">About Founder</h1>
-<div class="founder-container">
-    <div class="founder-container-left video-container">
-        <video  autoplay loop muted   id="founderVideo">
-            <source src="/assets/images/hero-vid.webm" type="video/mp4">
-            
-        </video>
-    </div>
-    <div class="founder-container-right">
-        <div class="founder-container-right-in">
-            <h3>Ajay Tiwari : Founder & CEO
-            </h3>
-            <p>Mr. Ajay Tiwari, with over 37 years of business experience, has played a pivotal role across multiple industries. His entrepreneurial journey began in Allahabad and expanded to Noida and Orlando through strategic partnerships.</p>
-            <div class="fou-img">
-                <img height="201" width="162.5" src="/assets/images/BF2.webp" loading="lazy" alt="BF2">
-                <img height="201" width="162.5" src="/assets/images/BF3.webp" loading="lazy" alt="BF3">
-            </div>
-            <!-- <div class="fftfb"><button>Fix A Face-2-Face</button></div> -->
-        </div>
-    </div>
-</div>
+                    <!-- About Founder -->
+                    <h1 class="all-heading">About Founder</h1>
+                    <div class="founder-container">
+                        <div class="founder-container-left video-container">
+                            <video autoplay loop muted id="founderVideo">
+                                <source src="/assets/images/hero-vid.webm" type="video/mp4">
+
+                            </video>
+                        </div>
+                        <div class="founder-container-right">
+                            <div class="founder-container-right-in">
+                                <h3>Ajay Tiwari : Founder & CEO
+                                </h3>
+                                <p>Mr. Ajay Tiwari, with over 37 years of business experience, has played a pivotal role
+                                    across multiple industries. His entrepreneurial journey began in Allahabad and
+                                    expanded to Noida and Orlando through strategic partnerships.</p>
+                                <div class="fou-img">
+                                    <img height="201" width="162.5" src="/assets/images/BF2.webp" loading="lazy"
+                                        alt="BF2">
+                                    <img height="201" width="162.5" src="/assets/images/BF3.webp" loading="lazy"
+                                        alt="BF3">
+                                </div>
+                                <!-- <div class="fftfb"><button>Fix A Face-2-Face</button></div> -->
+                            </div>
+                        </div>
+                    </div>
 
 
-<h1 class="all-heading">our blogs</h1>
-<!-- <div class="blog-cont">
+                    <h1 class="all-heading">our blogs</h1>
+                    <!-- <div class="blog-cont">
         <div class="mar-section">
             <div class="blog-card clipp-h">
 
@@ -392,131 +436,148 @@
 
 
 
-<div class="blog-cont">
-    <div class="mark-section">
-        <% blogs.forEach(blog => { %>
-            <a href="/blog-detail/<%= blog.canonical %>" class="blog-card">
-                <div class="mar-img">
-                    <img class="ad-img" src="<%= blog.showImg %>" loading="lazy" alt="<%= blog.title %>">
-                </div>
-                <div class="mar-desc">
-                    <h3><%= blog.title %></h3>
-                    <div><%= truncateString(blog.shortDescription) %></div>
-                    <small style="color: #000; position: absolute; bottom: 10px; right: 10px; font-size: 1vw;">Published on <%= blog.createdAt.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }) %></small>  
-                </div>
-            </a>
-        <% }) %>
-    </div>
-</div>
+                    <div class="blog-cont">
+                        <div class="mark-section">
+                            <% blogs.forEach(blog=> { %>
+                                <a href="/blog-detail/<%= blog.canonical %>" class="blog-card">
+                                    <div class="mar-img">
+                                        <img class="ad-img" src="<%= blog.showImg %>" loading="lazy"
+                                            alt="<%= blog.title %>">
+                                    </div>
+                                    <div class="mar-desc">
+                                        <h3>
+                                            <%= blog.title %>
+                                        </h3>
+                                        <div>
+                                            <%= truncateString(blog.shortDescription) %>
+                                        </div>
+                                        <small
+                                            style="color: #000; position: absolute; bottom: 10px; right: 10px; font-size: 1vw;">Published
+                                            on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                }) %></small>
+                                    </div>
+                                </a>
+                                <% }) %>
+                        </div>
+                    </div>
 
-<!-- consent banner -->
-<div id="consent-banner" style="display: none;">
-    <h2 style="margin: 2vw 2vw 0 2vw;">We care about your privacy</h2>
-    <div>
-       <p style="color: #ccc;">
-            We use cookies to ensure that we give you the best experience on our website. By clicking "Accept All", you agree to the storing of cookies on your device to give you the most optimal experience using our website.<a style="color: #C4C800" href="/privacy-policy" target="_blank"> See our Privacy Policy for more info.</a>
-        </p>
-        <p style="display: flex; gap: 3vw;">
-            <a id="consent-button" class="btn" href="javascript:consentAll();">Accept all cookies</a>
-            <a id="consent-button-essential" class="btn" href="javascript:essentialOnly();">Essential only</a>
-        </p>
-    </div>
-</div>
+                    <!-- consent banner -->
+                    <div id="consent-banner" style="display: none;">
+                        <h2 style="margin: 2vw 2vw 0 2vw;">We care about your privacy</h2>
+                        <div>
+                            <p style="color: #ccc;">
+                                We use cookies to ensure that we give you the best experience on our website. By
+                                clicking "Accept All", you agree to the storing of cookies on your device to give you
+                                the most optimal experience using our website.<a style="color: #C4C800"
+                                    href="/privacy-policy" target="_blank"> See our Privacy Policy for more info.</a>
+                            </p>
+                            <p style="display: flex; gap: 3vw;">
+                                <a id="consent-button" class="btn" href="javascript:consentAll();">Accept all
+                                    cookies</a>
+                                <a id="consent-button-essential" class="btn"
+                                    href="javascript:essentialOnly();">Essential only</a>
+                            </p>
+                        </div>
+                    </div>
 
-<!-- contact-bar -->
+                    <!-- contact-bar -->
 
-<div class="contact-bar">
-    <div class="number">
-        <img src="/assets/images/call.png" loading="lazy" alt="">
-        <div class="cn">
-            <a href="tel:18005710605">1800-571-0605</a>
-            <a href="tel:+13211255890">+1321-125-5890</a>
-        </div>
-    </div>
-    <div class="chat">
-        <img src="/assets/images/chat.png" loading="lazy" alt="">
-        <a href="https://wa.me/9457979134?text=Let%27s%20Talk%20Web%20And%20Marketing%20%5B5%25%20Off%5D">Chat With Us</a>
-    </div>
-    <div class="face chat">
-        <a href="https://calendly.com/shashisales">Fix A Face-2-Face</a>
-    </div>
-    <div class="mail">
-        <img src="/assets/images/mail.png" loading="lazy" alt="">
-        <a href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!"> info@shashisales.com</a>
-    </div>
-</div>
+                    <div class="contact-bar">
+                        <div class="number">
+                            <img src="/assets/images/call.png" loading="lazy" alt="">
+                            <div class="cn">
+                                <a href="tel:18005710605">1800-571-0605</a>
+                                <a href="tel:+13211255890">+1321-125-5890</a>
+                            </div>
+                        </div>
+                        <div class="chat">
+                            <img src="/assets/images/chat.png" loading="lazy" alt="">
+                            <a
+                                href="https://wa.me/9457979134?text=Let%27s%20Talk%20Web%20And%20Marketing%20%5B5%25%20Off%5D">Chat
+                                With Us</a>
+                        </div>
+                        <div class="face chat">
+                            <a href="https://calendly.com/shashisales">Fix A Face-2-Face</a>
+                        </div>
+                        <div class="mail">
+                            <img src="/assets/images/mail.png" loading="lazy" alt="">
+                            <a
+                                href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!">
+                                info@shashisales.com</a>
+                        </div>
+                    </div>
 
 
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const successMessage = document.querySelector('.alert-success');
-        const errorMessage = document.querySelector('.alert-danger');
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const successMessage = document.querySelector('.alert-success');
+                            const errorMessage = document.querySelector('.alert-danger');
 
-        // Function to hide success message after 2 seconds
-        const hideSuccessMessage = () => {
-            if (successMessage) {
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 3000); // 2 seconds delay
-            }
-        };
+                            // Function to hide success message after 2 seconds
+                            const hideSuccessMessage = () => {
+                                if (successMessage) {
+                                    setTimeout(() => {
+                                        successMessage.style.display = 'none';
+                                    }, 3000); // 2 seconds delay
+                                }
+                            };
 
-        // Function to hide error message after 2 seconds
-        const hideErrorMessage = () => {
-            if (errorMessage) {
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000); // 2 seconds delay
-            }
-        };
+                            // Function to hide error message after 2 seconds
+                            const hideErrorMessage = () => {
+                                if (errorMessage) {
+                                    setTimeout(() => {
+                                        errorMessage.style.display = 'none';
+                                    }, 3000); // 2 seconds delay
+                                }
+                            };
 
-        // Call functions to hide messages
-        hideSuccessMessage();
-        hideErrorMessage();
-    });
-</script>
+                            // Call functions to hide messages
+                            hideSuccessMessage();
+                            hideErrorMessage();
+                        });
+                    </script>
 
-<script>
-    function consentAll()
-{
-  gtag('consent', 'update', allGranted);
-  createCookie('google-consent', true, 30);
-  document.getElementById('consent-banner').style = 'display: none;';
-  dataLayer.push({'event': 'consent-updated'});
-}
-function essentialOnly() {
-      gtag('consent', 'update', essentialOnlyGranted);
-      createCookie('google-consent', true, 30);
-      document.getElementById('consent-banner').style = 'display: none;';
-      dataLayer.push({'event': 'consent-updated'});
-    }
+                    <script>
+                        function consentAll() {
+                            gtag('consent', 'update', allGranted);
+                            createCookie('google-consent', true, 30);
+                            document.getElementById('consent-banner').style = 'display: none;';
+                            dataLayer.push({ 'event': 'consent-updated' });
+                        }
+                        function essentialOnly() {
+                            gtag('consent', 'update', essentialOnlyGranted);
+                            createCookie('google-consent', true, 30);
+                            document.getElementById('consent-banner').style = 'display: none;';
+                            dataLayer.push({ 'event': 'consent-updated' });
+                        }
 
-function createCookie(name, value, days) {
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toGMTString();
-    }
-    else var expires = "";               
+                        function createCookie(name, value, days) {
+                            if (days) {
+                                var date = new Date();
+                                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                                var expires = "; expires=" + date.toGMTString();
+                            }
+                            else var expires = "";
 
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
+                            document.cookie = name + "=" + value + expires + "; path=/";
+                        }
 
-function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
+                        function readCookie(name) {
+                            var nameEQ = name + "=";
+                            var ca = document.cookie.split(';');
+                            for (var i = 0; i < ca.length; i++) {
+                                var c = ca[i];
+                                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                            }
+                            return null;
+                        }
 
-document.addEventListener("DOMContentLoaded", function() {
-  if(readCookie('google-consent') == null)
-    document.getElementById('consent-banner').style = '';
-});
-</script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            if (readCookie('google-consent') == null)
+                                document.getElementById('consent-banner').style = '';
+                        });
+                    </script>
