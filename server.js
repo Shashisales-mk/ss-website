@@ -204,7 +204,7 @@ async function appendToSheet(auth, data) {
             `${data.firstName} ${data.lastName}`,
             data.email,
             data.service,
-            countryCode
+            countryCode.replace('+','')
         ];
     }
 
@@ -233,7 +233,7 @@ function parsePhoneNumber(phoneNumber) {
     const match = phoneNumber.match(/^\+(\d{1,3})\s(\d{4}\s\d{3}\s\d{3}|\d{10})$/);
     if (match) {
         return {
-            countryCode: match[1],
+            countryCode: `+${match[1]}`,
             phoneNumber: match[2].replace(/\s/g, '')
         };
     }
