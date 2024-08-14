@@ -180,56 +180,159 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.js"
         integrity="sha512-xI6PxAo086hcXuoe6wbMclXWZmpALq7bnMJGt8inaK17s4dyhCrzKvXNq/je7vc5hfmovWZGYlYPxSui6opB1g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var quill = new Quill('#editor-container', {
-                theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        ['bold', 'italic', 'underline'],
-                        ['blockquote', 'code-block'],
-                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                        [{ 'script': 'sub' }, { 'script': 'super' }],
-                        [{ 'indent': '-1' }, { 'indent': '+1' }],
-                        [{ 'direction': 'rtl' }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'font': [] }],
-                        [{ 'align': [] }],
-                        ['link', 'image', 'video'],
-                        ['clean']
-                    ]
-                }
-            });
-
-            quill.root.innerHTML = `<%- blog.contentText %>`;
-                        var form = document.getElementById('blogForm');
-            form.onsubmit = function () {
-                var contentText = document.querySelector('input[name=contentText]');
-                contentText.value = quill.root.innerHTML;
-                return true;
-            };
-
-            const paragraphTextareas = document.querySelectorAll('textarea[name="paragraphs"]');
-            const maxWords = 150;
-
-            paragraphTextareas.forEach((textarea) => {
-                textarea.addEventListener('input', () => {
-                    enforceWordLimit(textarea, maxWords);
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var quill = new Quill('#editor-container', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            ['bold', 'italic', 'underline'],
+                            ['blockquote', 'code-block'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }],
+                            [{ 'indent': '-1' }, { 'indent': '+1' }],
+                            [{ 'direction': 'rtl' }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'font': [] }],
+                            [{ 'align': [] }],
+                            ['link', 'image', 'video'],
+                            ['clean']
+                        ],
+                        clipboard: {
+                            matchVisual: false
+                        }
+                    }
                 });
-            });
-
-            function enforceWordLimit(textarea, maxWords) {
-                const value = textarea.value.trim().replace(/\s+/g, ' ');
-                const words = value.split(' ').filter(word => word !== '');
-
-                if (words.length > maxWords) {
-                    const allowedWords = words.slice(0, maxWords).join(' ');
-                    textarea.value = allowedWords;
+        
+                // Custom link handler
+                var linkHandler = function(value) {
+                    if (value) {
+                        var href = prompt('Enter the URL');
+                        if (href) {
+                            // Ensure the URL is absolute
+                            if (!href.match(/^https?:\/\//i)) {
+                                if (href.startsWith('www.')) {
+                                    href = 'https://' + href;
+                                } else {
+                                    href = 'https://' + href;
+                                }
+                            }
+                            
+                            this.quill.format('link', href, 'user');
+                            
+                            // Set the link to open in a new tab
+                            var selection = this.quill.getSelection();
+                            if (selection) {
+                                this.quill.formatText(selection.index, selection.length, {
+                                    'link': href,
+                                    'target': '_blank'
+                                });
+                            }
+                        }
+                    } else {
+                        this.quill.format('link', false);
+                    }
+                };
+        
+                // Override Quill's default link handler
+                quill.getModule('toolbar').addHandler('link', linkHandler);
+        
+                quill.root.innerHTML = `<%- blog.contentText %>`;
+        
+                function processQuillContent(content) {
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = content;
+                    
+                    // Process all links
+                    var links = tempDiv.getElementsByTagName('a');
+                    for (var i = 0; i < links.length; i++) {
+                        links[i].setAttribute('target', '_blank');
+                        links[i].setAttribute('rel', 'noopener noreferrer');
+                        
+                        // Extract the href
+                        var href = links[i].getAttribute('href');
+                        
+                        // Check if it's a relative URL (doesn't start with http:// or https://)
+                        if (href && !href.match(/^https?:\/\//i)) {
+                            // If it's www, add https://
+                            if (href.startsWith('www.')) {
+                                href = 'https://' + href;
+                            } else {
+                                // For other cases, you might want to handle differently
+                                // For now, we'll assume it's meant to be an absolute URL
+                                href = 'https://' + href;
+                            }
+                            
+                            // Set the corrected href
+                            links[i].setAttribute('href', href);
+                        }
+                    }
+                    
+                    return tempDiv.innerHTML;
                 }
+        
+                var form = document.getElementById('blogForm');
+                form.onsubmit = function (e) {
+                    e.preventDefault();  // Prevent default form submission
+                    var contentText = document.querySelector('input[name=contentText]');
+                    var processedContent = processQuillContent(quill.root.innerHTML);
+                    contentText.value = processedContent;
+                    this.submit();  // Submit the form
+                };
+        
+                const paragraphTextareas = document.querySelectorAll('textarea[name="paragraphs"]');
+                const maxWords = 150;
+        
+                paragraphTextareas.forEach((textarea) => {
+                    textarea.addEventListener('input', () => {
+                        enforceWordLimit(textarea, maxWords);
+                    });
+                });
+
+                function processQuillContent(content) {
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = content;
+
+                // Process all links
+                var links = tempDiv.getElementsByTagName('a');
+                for (var i = 0; i < links.length; i++) {
+                    links[i].setAttribute('target', '_blank');
+                    links[i].setAttribute('rel', 'noopener noreferrer');
+
+                    // Extract the href
+                    var href = links[i].getAttribute('href');
+
+                    // Check if it's a relative URL (doesn't start with http:// or https://)
+                    if (href && !href.match(/^https?:\/\//i)) {
+                        // If it's www, add https://
+                        if (href.startsWith('www.')) {
+                            href = 'https://' + href;
+                        } else {
+                            // For other cases, you might want to handle differently
+                            // For now, we'll assume it's meant to be an absolute URL
+                            href = 'https://' + href;
+                        }
+
+                        // Set the corrected href
+                        links[i].setAttribute('href', href);
+                    }
+                }
+
+                return tempDiv.innerHTML;
             }
-        });
-    </script>
+        
+                function enforceWordLimit(textarea, maxWords) {
+                    const value = textarea.value.trim().replace(/\s+/g, ' ');
+                    const words = value.split(' ').filter(word => word !== '');
+        
+                    if (words.length > maxWords) {
+                        const allowedWords = words.slice(0, maxWords).join(' ');
+                        textarea.value = allowedWords;
+                    }
+                }
+            });
+        </script>
 </body>
 
 </html>
