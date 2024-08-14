@@ -114,6 +114,10 @@
     h3 {
         font-size: 3vw !important;
     }
+    h2 {
+        font-size: 3vw !important;
+    }
+
     .sec-text:first-child span {
         font-size: 1.2vw;
     }
