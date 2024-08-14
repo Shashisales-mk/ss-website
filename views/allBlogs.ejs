@@ -352,7 +352,7 @@
                         <% AllBlogs.forEach(blog=> { %>
                             <tr>
                                 <td>
-                                    <%= blog.title %>
+                                    <a href="/blog-detail/<%= blog.canonical %>" style="color: black;"><%= blog.title %></a>
                                 </td>
                                 <td>
                                     <p>
@@ -541,7 +541,7 @@
                             <th>Image</th>
                             <th>Edit Testimonial</th>
                             <th>Edit Page</th>
-                            <th>Toggle Approve</th>
+                           
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -564,14 +564,7 @@
                                             onclick="toggleEditForm('editTestimonialPage<%= testimonial.page._id %>')">Edit</button>
                                         <% } %>
                                 </td>
-                                <td>
-                                    <form method="POST" action="/toggle-approve/<%= testimonial._id %>">
-                                        <button type="submit"
-                                            class="<%= testimonial.isApprove ? 'approve' : 'not-approve' %>">
-                                            <%= testimonial.isApprove ? 'A' : 'N/A' %>
-                                        </button>
-                                    </form>
-                                </td>
+                                
                                 <td>
                                     <form action="/admin/delete-testimonial/<%= testimonial._id %>" method="POST">
                                         <button class="del-btn" type="submit">Delete</button>

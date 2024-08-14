@@ -226,19 +226,19 @@
                         <div class="swiper testimonial-swiper">
                           <div class="swiper-wrapper">
                             <% testimonials.forEach(function(testimonial) { %>
-                            <div class="swiper-slide testimonial">
+                            <div class="swiper-slide testimonial" data-id="<%= testimonial._id %>">
                               <p><%= testimonial.text %></p>
-                                <p class="name"><%= testimonial.name %></p>
-                                <img src="<%= testimonial.image ? testimonial.image : '/assets/images/prof.png' %>" alt="<%= testimonial.name %>">
+                              <p class="name"><%= testimonial.name %></p>
+                              <img src="<%= testimonial.image ? testimonial.image : '/assets/images/prof.png' %>" alt="<%= testimonial.name %>">
                             </div>
                             <% }); %>
                           </div>
                         </div>
-                      
+                        
                         <div class="testimonial-buttons">
-                          <button class="susses-story">Susses Story</button>
-                          <button class="growth">Growth</button>
-                          <button class="case-study">Case Study</button>
+                          <button class="susses-story" onclick="openUserStory()">Success Story</button>
+                          <button class="growth" onclick="openUserStory()">Growth</button>
+                          <button class="case-study" onclick="openUserStory()">Case Study</button>
                         </div>
                       </div>
 

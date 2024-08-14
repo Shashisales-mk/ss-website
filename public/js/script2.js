@@ -67,7 +67,29 @@ document.addEventListener("DOMContentLoaded", function () {
           }
       });
   });
+
+  
 });
+
+async function openUserStory() {
+  const activeSlide = document.querySelector('.swiper-slide-active');
+  if (activeSlide) {
+    const testimonialId = activeSlide.dataset.id;
+    try {
+      const response = await fetch(`/check-user-story/${testimonialId}`);
+      const data = await response.json();
+      
+      if (data.hasStory) {
+        window.location.href = `/user-story/${testimonialId}`;
+      } else {
+        alert('User story page is not available for this testimonial.');
+      }
+    } catch (error) {
+      console.error('Error checking user story availability:', error);
+      alert('An error occurred while checking the user story availability.');
+    }
+  }
+}
 
 
 

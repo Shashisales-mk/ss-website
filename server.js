@@ -233,7 +233,7 @@ function parsePhoneNumber(phoneNumber) {
     const match = phoneNumber.match(/^\+(\d{1,3})\s(\d{4}\s\d{3}\s\d{3}|\d{10})$/);
     if (match) {
         return {
-            countryCode: `+${match[1]}`,
+            countryCode: `${match[1]}`,
             phoneNumber: match[2].replace(/\s/g, '')
         };
     }
@@ -403,16 +403,33 @@ app.get("/review-form", (req, res) => {
     })
 })
 
-app.get("/user-story/:id", async (req, res) => {
+
+app.get("/check-user-story/:id", async (req, res) => {
     try {
       const testimonial = await Testimonial.findById(req.params.id);
       if (!testimonial) {
-        return res.status(404).send('Testimonial not found');
+        return res.json({ hasStory: false });
+      }
+  
+      const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
+      res.json({ hasStory: !!testimonialPage });
+    } catch (error) {
+      console.error('Error checking user story:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+
+
+  app.get("/user-story/:id", async (req, res) => {
+    try {
+      const testimonial = await Testimonial.findById(req.params.id);
+      if (!testimonial) {
+        return res.status(404).render('error', { message: 'Testimonial not found' });
       }
   
       const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
       if (!testimonialPage) {
-        return res.status(404).send('Testimonial page details not found');
+        return res.status(404).render('error', { message: 'Testimonial page details not found' });
       }
   
       const story = {
@@ -435,9 +452,10 @@ app.get("/user-story/:id", async (req, res) => {
       });
     } catch (error) {
       console.error('Error fetching user story:', error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).render('error', { message: 'Internal Server Error' });
     }
   });
+
 
 function truncateString(str, length = 200) {
     if (str.length > length) {
