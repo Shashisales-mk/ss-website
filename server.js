@@ -179,7 +179,7 @@ async function authenticate() {
 async function appendToSheet(auth, data) {
     const sheets = google.sheets({ version: 'v4', auth });
     const spreadsheetId = '1sAGLiARDBiDy-1a7PqNaCphH0SjppsTCJ1zC4ktVGyI';
-    const range = 'Website Leads!A:E'; // Adjust range as needed
+    const range = 'Website Leads!A:F'; // Adjust range as needed
     const valueInputOption = 'RAW';
 
     let values = [];
@@ -223,23 +223,16 @@ async function appendToSheet(auth, data) {
 
 
 function parsePhoneNumber(phoneNumber) {
-    // Remove all non-digit characters except the leading '+'
-    const cleaned = phoneNumber.replace(/(?!^\+)\D/g, '');
+    // Remove all non-digit characters
+    const cleaned = phoneNumber.replace(/\D/g, '');
     
-    // Check if the number starts with a country code
-    const match = cleaned.match(/^\+(\d{1,3})(\d+)$/);
-    
-    if (match) {
-        return {
-            countryCode: match[1],
-            phoneNumber: match[2]
-        };
-    }
-    
-    // If no clear country code, assume it's all the phone number
+    // Always take the first two digits as the country code
+    const countryCode = cleaned.slice(0, 2);
+    const number = cleaned.slice(2);
+
     return {
-        countryCode: '',
-        phoneNumber: cleaned.replace(/^\+/, '') // Remove leading '+' if present
+        countryCode: countryCode,
+        phoneNumber: number
     };
 }
 
