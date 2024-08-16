@@ -355,7 +355,7 @@ app.get("/email-marketing", (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/search-engine-optimization", (req, res) => {
+app.get("/seo", (req, res) => {
     res.render("seo", {
         title: "Leading SEO Company in Delhi-NCR & Best SEO Agency in Hyderabad | Shashi Sales",
         description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic."
@@ -457,7 +457,7 @@ function truncateString(str, length = 200) {
     return str;
 }
 
-app.get("/blogs", async (req, res) => {
+app.get("/blog", async (req, res) => {
     try {
         const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
         console.log(blogs.canonical);
@@ -551,7 +551,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         await blog.save();
         console.log(blog);
         // res.status(200).send('Blog uploaded successfully!');
-        res.redirect("/blogs")
+        res.redirect("/blog")
     } catch (error) {
         console.error('Error uploading blog:', error);
         res.status(500).send('Failed to upload blog. Please try again.');
@@ -1080,7 +1080,7 @@ app.get('/logout', (req, res) => {
 
 
 
-app.get("/phonepe-form", async (req, res) => {
+app.get("/phonepe-payment-page", async (req, res) => {
     res.render("phonepayForm", {
         title: "Digital marketing companies kochi - Shashi Sales And Marketing ",
         description: "Shashi Sales, Access the best digital marketing services tailored for businesses in Kochi to maximize their online potential. Call Call 1800-571-0605 today!"
@@ -1187,7 +1187,7 @@ app.post("/status/:txnId", async (req, res) => {
 
         if (!paymentDetails) {
             console.error("Payment details not found for transaction:", merchantTransactionId);
-            return res.redirect("/phonepe-form");
+            return res.redirect("/phonepe-payment-page");
         }
 
         const { name, number, amount, email } = paymentDetails;
@@ -1581,7 +1581,7 @@ app.post("/status/:txnId", async (req, res) => {
         }
     } catch (error) {
         console.error("Error in PhonePe status check:", error);
-        return res.redirect("/phonepe-form");
+        return res.redirect("/phonepe-payment-page");
     }
 });
 
