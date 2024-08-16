@@ -475,9 +475,9 @@ app.get("/blogs", async (req, res) => {
 
 app.get("/blog-form", (req, res) => {
     res.render("uploadForm", {
-        title: "Blog Form | Draggan Website: Revolutionizing the Future of AI Technology | Shashi  Sales",
-        description: "Visit the Draggan website to learn about groundbreaking AI advancements, tools, and solutions that can transform your business operations and efficiency."
-    });
+        title: "Blog Form - Seo Company in Delhi-NCR India - Shashi Sales",
+        description: "Boost your online presence with Shashi Sales and Marketing, the top SEO company in Delhi-NCR India. Drive traffic and enhance your brand visibility today!"
+    });
 });
 
 
