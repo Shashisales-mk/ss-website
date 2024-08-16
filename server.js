@@ -477,7 +477,7 @@ app.get("/blog-form", (req, res) => {
     res.render("uploadForm", {
         title: "Blog Form - Seo Company in Delhi-NCR India - Shashi Sales",
         description: "Boost your online presence with Shashi Sales and Marketing, the top SEO company in Delhi-NCR India. Drive traffic and enhance your brand visibility today!"
-    });
+ });
 });
 
 
