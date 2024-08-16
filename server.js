@@ -221,13 +221,13 @@ async function appendToSheet(auth, data) {
 }
 
 
-// Helper function to parse the phone number into country code and phone number
+
 function parsePhoneNumber(phoneNumber) {
-    // Remove all non-digit characters
-    const cleaned = phoneNumber.replace(/\D/g, '');
+    // Remove all non-digit characters except the leading '+'
+    const cleaned = phoneNumber.replace(/(?!^\+)\D/g, '');
     
-    // Check if the number starts with a country code (assuming 1-3 digits)
-    const match = cleaned.match(/^(\d{1,3})(\d+)$/);
+    // Check if the number starts with a country code
+    const match = cleaned.match(/^\+(\d{1,3})(\d+)$/);
     
     if (match) {
         return {
@@ -239,7 +239,7 @@ function parsePhoneNumber(phoneNumber) {
     // If no clear country code, assume it's all the phone number
     return {
         countryCode: '',
-        phoneNumber: cleaned
+        phoneNumber: cleaned.replace(/^\+/, '') // Remove leading '+' if present
     };
 }
 
@@ -801,15 +801,15 @@ app.post('/submit-quote', async (req, res) => {
     }
 
         // Remove non-digit characters for length check
-        const phoneDigits = formData.tel.replace(/\D/g, '');
+        const phoneDigits = formData.tel.replace(/[^\d+]/g, '');
 
-        if (phoneDigits.length < 7) {
+        if (phoneDigits.length < 8) {
             req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
             return res.redirect(referrerUrl);
         }
     
         // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-        if (!/^[\d\s\-()]+$/.test(formData.tel)) {
+        if (!/^\+[\d\s\-()]+$/.test(formData.tel)) {
             req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
             return res.redirect(referrerUrl);
         }

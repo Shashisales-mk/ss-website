@@ -6,9 +6,9 @@ function validateForm() {
   var service = document.getElementById('service').value;
 
   // Remove non-digit characters for length check
-  var phoneDigits = phone.replace(/\D/g, '');
+  var phoneDigits = phone.replace(/[^\d+]/g, '');
 
-  if (phoneDigits.length < 7) {
+  if (phoneDigits.length < 8) {
       alert('Please enter a valid phone number with valid format of your country');
       return false;
   }
@@ -25,7 +25,7 @@ function validateForm() {
   
 
   // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-  if (!/^[\d\s\-()]+$/.test(phone)) {
+  if (!/^\+[\d\s\-()]+$/.test(phone)) {
       alert('Phone number should only contain digits, spaces, hyphens, or parentheses');
       return false;
   }
