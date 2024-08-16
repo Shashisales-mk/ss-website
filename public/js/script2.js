@@ -126,11 +126,11 @@ async function openUserStory() {
       if (data.hasStory) {
         window.location.href = `/user-story/${testimonialId}`;
       } else {
-        alert('User story page is not available for this testimonial.');
+        alert('Case Study is not available for this client.');
       }
     } catch (error) {
-      console.error('Error checking user story availability:', error);
-      alert('An error occurred while checking the user story availability.');
+      console.error('Error checking Case Study availability:', error);
+      alert('An error occurred while checking the Case Study availability.');
     }
   }
 }

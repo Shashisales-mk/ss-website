@@ -407,7 +407,7 @@ app.get("/check-user-story/:id", async (req, res) => {
         const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
         res.json({ hasStory: !!testimonialPage });
     } catch (error) {
-        console.error('Error checking user story:', error);
+        console.error('Error checking case study:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
@@ -444,7 +444,7 @@ app.get("/user-story/:id", async (req, res) => {
             description: testimonial.description || ""
         });
     } catch (error) {
-        console.error('Error fetching user story:', error);
+        console.error('Error fetching case study:', error);
         res.status(500).render('error', { message: 'Internal Server Error' });
     }
 });

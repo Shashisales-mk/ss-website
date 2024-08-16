@@ -518,9 +518,9 @@
                                         <% } %>
                     </select>
                     <div class="tarea">
-                        <textarea name="successStory" placeholder="Success Story"></textarea>
+                        
                         <textarea name="growthStory" placeholder="Growth Story"></textarea>
-                        <textarea name="caseStudy" placeholder="Case Study"></textarea>
+                        
                         <textarea name="problemStatement" placeholder="Problem Statement"></textarea>
                         <textarea name="clientOverview" placeholder="Client Overview"></textarea>
                         <textarea name="challenges" placeholder="Challenges"></textarea>
@@ -627,33 +627,30 @@
                                     <tbody class="tarea">
                                         <tr>
                                             <td>
-                                                <label for="successStory">Success Story:</label>
-                                                <textarea
-                                                    name="successStory"><%= testimonial.page.successStory %></textarea>
+                                               
                                                 <label for="growthStory">Growth Story:</label>
                                                 <textarea
-                                                    name="growthStory"><%= testimonial.page.growthStory %></textarea>
-                                                <label for="caseStudy">Case Study:</label>
-                                                <textarea name="caseStudy"><%= testimonial.page.caseStudy %></textarea>
+                                                    name="growthStory"><%- testimonial.page.growthStory %></textarea>
+                                                
                                                 <label for="problemStatement">Problem Statement:</label>
                                                 <textarea
-                                                    name="problemStatement"><%= testimonial.page.problemStatement %></textarea>
+                                                    name="problemStatement"><%- testimonial.page.problemStatement %></textarea>
                                                 <label for="clientOverview">Client Overview:</label>
                                                 <textarea
-                                                    name="clientOverview"><%= testimonial.page.clientOverview %></textarea>
+                                                    name="clientOverview"><%- testimonial.page.clientOverview %></textarea>
                                                 <label for="challenges">Challenges:</label>
                                                 <textarea
-                                                    name="challenges"><%= testimonial.page.challenges %></textarea>
+                                                    name="challenges"><%- testimonial.page.challenges %></textarea>
                                                 <label for="objectives">Objectives:</label>
                                                 <textarea
-                                                    name="objectives"><%= testimonial.page.objectives %></textarea>
+                                                    name="objectives"><%- testimonial.page.objectives %></textarea>
                                                 <label for="solution">Solution:</label>
-                                                <textarea name="solution"><%= testimonial.page.solution %></textarea>
+                                                <textarea name="solution"><%- testimonial.page.solution %></textarea>
                                                 <label for="result">Result:</label>
-                                                <textarea name="result"><%= testimonial.page.result %></textarea>
+                                                <textarea name="result"><%- testimonial.page.result %></textarea>
                                                 <label for="conclusion">Conclusion:</label>
                                                 <textarea
-                                                    name="conclusion"><%= testimonial.page.conclusion %></textarea>
+                                                    name="conclusion"><%- testimonial.page.conclusion %></textarea>
                                             </td>
                                         </tr>
                                         <tr><button style="margin: 1vw 0;" type="submit">Update</button></tr>
@@ -780,9 +777,9 @@
         function showEditTestimonialPageForm(id) {
             const testimonialPage = testimonialPages.find(tp => tp._id === id);
             document.getElementById('editTestimonialPageId').value = id;
-            document.getElementById('editSuccessStory').value = testimonialPage.successStory;
+            
             document.getElementById('editGrowthStory').value = testimonialPage.growthStory;
-            document.getElementById('editCaseStudy').value = testimonialPage.caseStudy;
+            
             document.getElementById('editTestimonialPageForm').style.display = 'block';
         }
 

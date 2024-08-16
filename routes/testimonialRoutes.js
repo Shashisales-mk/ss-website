@@ -41,9 +41,9 @@ router.post('/admin/add-testimonial-page/', async (req, res) => {
     // const testimonialId = req.params.testimonialId;
     const { 
       testimonialId, 
-      successStory, 
+      
       growthStory, 
-      caseStudy, 
+      
       problemStatement,
       clientOverview,
       challenges,
@@ -57,18 +57,19 @@ router.post('/admin/add-testimonial-page/', async (req, res) => {
       return res.status(400).send('Testimonial ID is required');
     }
 
+    // Replace newlines with <br> tags
+    const replaceNewlines = (text) => text.replace(/\r\n|\r|\n/g, '<br>');
+
     const newTestimonialPage = new TestimonialPage({
       testimonial: testimonialId,
-      successStory,
-      growthStory,
-      caseStudy,
-      problemStatement,
-      clientOverview,
-      challenges,
-      objectives,
-      solution,
-      result,
-      conclusion
+      growthStory: replaceNewlines(growthStory),
+      problemStatement: replaceNewlines(problemStatement),
+      clientOverview: replaceNewlines(clientOverview),
+      challenges: replaceNewlines(challenges),
+      objectives: replaceNewlines(objectives),
+      solution: replaceNewlines(solution),
+      result: replaceNewlines(result),
+      conclusion: replaceNewlines(conclusion)
     });
 
     const savedPage = await newTestimonialPage.save();
@@ -130,9 +131,9 @@ router.post('/admin/update-testimonial/:id', upload.single('image'), async (req,
 router.post('/admin/update-testimonial-page/:id', async (req, res) => {
   try {
     const {
-      successStory,
+      
       growthStory,
-      caseStudy,
+      
       problemStatement,
       clientOverview,
       challenges,
@@ -142,17 +143,17 @@ router.post('/admin/update-testimonial-page/:id', async (req, res) => {
       conclusion
     } = req.body;
 
+    const replaceNewlines = (text) => text.replace(/\r\n|\r|\n/g, '<br>');
+
     const updatedFields = {
-      successStory,
-      growthStory,
-      caseStudy,
-      problemStatement,
-      clientOverview,
-      challenges,
-      objectives,
-      solution,
-      result,
-      conclusion
+      growthStory: replaceNewlines(growthStory),
+      problemStatement: replaceNewlines(problemStatement),
+      clientOverview: replaceNewlines(clientOverview),
+      challenges: replaceNewlines(challenges),
+      objectives: replaceNewlines(objectives),
+      solution: replaceNewlines(solution),
+      result: replaceNewlines(result),
+      conclusion: replaceNewlines(conclusion)
     };
 
     // Remove undefined fields
