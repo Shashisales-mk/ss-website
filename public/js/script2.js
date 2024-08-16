@@ -1,3 +1,47 @@
+function validateForm() {
+  var firstName = document.getElementById('firstName').value;
+  var lastName = document.getElementById('lastName').value;
+  var phone = document.getElementById('phone').value;
+  var email = document.getElementById('email').value;
+  var service = document.getElementById('service').value;
+
+  // Remove non-digit characters for length check
+  var phoneDigits = phone.replace(/\D/g, '');
+
+  if (phoneDigits.length < 7) {
+      alert('Please enter a valid phone number with valid format of your country');
+      return false;
+  }
+
+  if (firstName.trim() === '' || lastName.trim() === '' || phone.trim() === '' || email.trim() === '' || service.trim() === '') {
+      alert('All fields are required');
+      return false;
+  }
+
+  if (!/^[A-Za-z ]+$/.test(firstName) || !/^[A-Za-z ]+$/.test(lastName)) {
+      alert('Names should only contain letters and spaces');
+      return false;
+  }
+  
+
+  // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+  if (!/^[\d\s\-()]+$/.test(phone)) {
+      alert('Phone number should only contain digits, spaces, hyphens, or parentheses');
+      return false;
+  }
+
+  // Simple email validation
+  if (!/\S+@\S+\.\S+/.test(email)) {
+      alert('Please enter a valid email address');
+      return false;
+  }
+
+
+  return true;
+}
+
+
+
 const tiles = document.querySelectorAll('.tile');
 const mainView = document.querySelector('.main-view');
 

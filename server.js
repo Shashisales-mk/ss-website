@@ -112,14 +112,7 @@ const uploadFields = upload.fields([
 ]);
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use((req, res, next) => {
-//     console.log('Request Method:', req.method);
-//     console.log('Request URL:', req.url);
-//     console.log('Content-Type:', req.headers['content-type']);
-//     console.log('Request Body:', req.body);
-//     console.log('Request Files:', req.files);
-//     next();
-//   });
+
 app.use(express.json());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -184,7 +177,6 @@ async function authenticate() {
 }
 
 async function appendToSheet(auth, data) {
-    const authClient = await authenticate();
     const sheets = google.sheets({ version: 'v4', auth });
     const spreadsheetId = '1sAGLiARDBiDy-1a7PqNaCphH0SjppsTCJ1zC4ktVGyI';
     const range = 'Website Leads!A:E'; // Adjust range as needed
@@ -194,7 +186,7 @@ async function appendToSheet(auth, data) {
     if (data.number) {
         // For /submit-quote-lead route
         const { countryCode, phoneNumber } = parsePhoneNumber(data.number);
-        values = [countryCode, phoneNumber, new Date().toISOString()];
+        values = [phoneNumber, new Date().toISOString(), '', '', '', countryCode];
     } else if (data.tel) {
         // For /submit-quote route
         const { countryCode, phoneNumber } = parsePhoneNumber(data.tel);
@@ -204,7 +196,7 @@ async function appendToSheet(auth, data) {
             `${data.firstName} ${data.lastName}`,
             data.email,
             data.service,
-            countryCode.replace('+','')
+            countryCode
         ];
     }
 
@@ -228,18 +220,26 @@ async function appendToSheet(auth, data) {
     }
 }
 
+
 // Helper function to parse the phone number into country code and phone number
 function parsePhoneNumber(phoneNumber) {
-    const match = phoneNumber.match(/^\+(\d{1,3})\s(\d{4}\s\d{3}\s\d{3}|\d{10})$/);
+    // Remove all non-digit characters
+    const cleaned = phoneNumber.replace(/\D/g, '');
+    
+    // Check if the number starts with a country code (assuming 1-3 digits)
+    const match = cleaned.match(/^(\d{1,3})(\d+)$/);
+    
     if (match) {
         return {
-            countryCode: `+${match[1]}`,
-            phoneNumber: match[2].replace(/\s/g, '')
+            countryCode: match[1],
+            phoneNumber: match[2]
         };
     }
+    
+    // If no clear country code, assume it's all the phone number
     return {
         countryCode: '',
-        phoneNumber: phoneNumber.replace(/\s/g, '')
+        phoneNumber: cleaned
     };
 }
 
@@ -252,7 +252,7 @@ function parsePhoneNumber(phoneNumber) {
 
 
 app.get("/", async (req, res) => {
-    const blogs = await Blog.find({isApprove: true}).sort({ createdAt: -1 });
+    const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
     const testimonials = await Testimonial.find().populate('page');
     const successMessage = req.session.successMessage || null;
     const errorMessage = req.session.errorMessage || null;
@@ -301,7 +301,7 @@ app.get("/contact-us", (req, res) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/fusion-marketing", async(req, res) => {
+app.get("/fusion-marketing", async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
     res.render("advertisement", {
         testimonials,
@@ -397,64 +397,64 @@ app.get("/hidden-img2", (req, res) => {
 })
 
 app.get("/review-form", (req, res) => {
-    res.render("userTestiForm" , {
-        title : "",
-        description : ""
+    res.render("userTestiForm", {
+        title: "",
+        description: ""
     })
 })
 
 
 app.get("/check-user-story/:id", async (req, res) => {
     try {
-      const testimonial = await Testimonial.findById(req.params.id);
-      if (!testimonial) {
-        return res.json({ hasStory: false });
-      }
-  
-      const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
-      res.json({ hasStory: !!testimonialPage });
+        const testimonial = await Testimonial.findById(req.params.id);
+        if (!testimonial) {
+            return res.json({ hasStory: false });
+        }
+
+        const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
+        res.json({ hasStory: !!testimonialPage });
     } catch (error) {
-      console.error('Error checking user story:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error checking user story:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  });
+});
 
 
-  app.get("/user-story/:id", async (req, res) => {
+app.get("/user-story/:id", async (req, res) => {
     try {
-      const testimonial = await Testimonial.findById(req.params.id);
-      if (!testimonial) {
-        return res.status(404).render('error', { message: 'Testimonial not found' });
-      }
-  
-      const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
-      if (!testimonialPage) {
-        return res.status(404).render('error', { message: 'Testimonial page details not found' });
-      }
-  
-      const story = {
-        successStory: testimonialPage.successStory,
-        growthStory: testimonialPage.growthStory,
-        caseStudy: testimonialPage.caseStudy,
-        problemStatement: testimonialPage.problemStatement,
-        clientOverview: testimonialPage.clientOverview,
-        challenges: testimonialPage.challenges,
-        objectives: testimonialPage.objectives,
-        solution: testimonialPage.solution,
-        result: testimonialPage.result,
-        conclusion: testimonialPage.conclusion
-      };
-  
-      res.render("userStory", {
-        story,
-        title: testimonial.title || "",
-        description: testimonial.description || ""
-      });
+        const testimonial = await Testimonial.findById(req.params.id);
+        if (!testimonial) {
+            return res.status(404).render('error', { message: 'Testimonial not found' });
+        }
+
+        const testimonialPage = await Story.findOne({ testimonial: testimonial._id });
+        if (!testimonialPage) {
+            return res.status(404).render('error', { message: 'Testimonial page details not found' });
+        }
+
+        const story = {
+            successStory: testimonialPage.successStory,
+            growthStory: testimonialPage.growthStory,
+            caseStudy: testimonialPage.caseStudy,
+            problemStatement: testimonialPage.problemStatement,
+            clientOverview: testimonialPage.clientOverview,
+            challenges: testimonialPage.challenges,
+            objectives: testimonialPage.objectives,
+            solution: testimonialPage.solution,
+            result: testimonialPage.result,
+            conclusion: testimonialPage.conclusion
+        };
+
+        res.render("userStory", {
+            story,
+            title: testimonial.title || "",
+            description: testimonial.description || ""
+        });
     } catch (error) {
-      console.error('Error fetching user story:', error);
-      res.status(500).render('error', { message: 'Internal Server Error' });
+        console.error('Error fetching user story:', error);
+        res.status(500).render('error', { message: 'Internal Server Error' });
     }
-  });
+});
 
 
 function truncateString(str, length = 200) {
@@ -466,7 +466,7 @@ function truncateString(str, length = 200) {
 
 app.get("/blogs", async (req, res) => {
     try {
-        const blogs = await Blog.find({isApprove: true}).sort({ createdAt: -1 });
+        const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
         console.log(blogs.canonical);
         res.render("blog", {
             blogs,
@@ -492,18 +492,18 @@ app.get("/blog-detail/:canonical", async (req, res) => {
     try {
         const { canonical } = req.params;
         const blog = await Blog.findOne({ canonical: canonical });
-        
+
         if (!blog) {
             return res.status(404).send("Blog not found");
         }
 
         const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
-        
-        res.render("blogDetails", { 
-            blog, 
-            comments: approvedComments, 
-            title: blog.metaTitle, 
-            description: blog.metaDescription 
+
+        res.render("blogDetails", {
+            blog,
+            comments: approvedComments,
+            title: blog.metaTitle,
+            description: blog.metaDescription
         });
     } catch (err) {
         console.error(err);
@@ -550,7 +550,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
             contentText,
             metaDescription,
             metaKeywords: metaKeywords.split(',').map(keyword => keyword.trim()),
-            isLatest: true, 
+            isLatest: true,
             isPopular: false,
             isApprove: false
         });
@@ -579,7 +579,7 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     // console.log(AllBlogs);
     res.render("allBlogs", {
         acomments: approvedComments,
-        comments: pendingComments, 
+        comments: pendingComments,
         testimonials,
         galleryItems,
         category,
@@ -589,7 +589,7 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     })
 })
 
-app.delete('/delete-blog/:id',isAdmin, async (req, res) => {
+app.delete('/delete-blog/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const deletedBlog = await Blog.findByIdAndDelete(id);
@@ -625,7 +625,7 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
     }
 });
 
-app.put('/update-blog/:id', uploadFields,isAdmin, async (req, res) => {
+app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
@@ -685,7 +685,7 @@ app.post('/toggle-popular/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const blog = await Blog.findById(id);
-        
+
         if (!blog) {
             return res.status(404).send('Blog not found');
         }
@@ -706,7 +706,7 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const blog = await Blog.findById(id);
-        
+
         if (!blog) {
             return res.status(404).send('Blog not found');
         }
@@ -731,7 +731,7 @@ app.post("/blog-detail/:canonical/comment", async (req, res) => {
         const { name, email, comment } = req.body;
 
         const blog = await Blog.findOne({ canonical: canonical });
-        
+
         if (!blog) {
             return res.status(404).send("Blog not found");
         }
@@ -787,6 +787,40 @@ const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com'];
 
 app.post('/submit-quote', async (req, res) => {
     const formData = req.body;
+    const referrerUrl = req.get('Referrer') || '/';
+
+    // Server-side validation
+    if (!formData.firstName || !formData.lastName || !formData.tel || !formData.email || !formData.service) {
+        req.session.errorMessage = 'All fields are required';
+        return res.redirect(referrerUrl);
+    }
+
+    if (!/^[A-Za-z ]+$/.test(formData.firstName) || !/^[A-Za-z ]+$/.test(formData.lastName)) {
+        req.session.errorMessage = 'Names should only contain letters and spaces';
+        return res.redirect(referrerUrl);
+    }
+
+        // Remove non-digit characters for length check
+        const phoneDigits = formData.tel.replace(/\D/g, '');
+
+        if (phoneDigits.length < 7) {
+            req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
+            return res.redirect(referrerUrl);
+        }
+    
+        // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+        if (!/^[\d\s\-()]+$/.test(formData.tel)) {
+            req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
+            return res.redirect(referrerUrl);
+        }
+    
+
+    // Simple email validation
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        req.session.errorMessage = 'Please enter a valid email address';
+        return res.redirect(referrerUrl);
+    }
+
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
     
@@ -840,7 +874,7 @@ app.post('/submit-quote', async (req, res) => {
     
     </html>`
 
-    const referrerUrl = req.get('Referrer') || '/';
+
 
     try {
         console.log('Received form data:', formData);
@@ -863,6 +897,21 @@ app.post('/submit-quote', async (req, res) => {
 app.post('/submit-quote-lead', async (req, res) => {
     const formData = req.body;
     const referrerUrl = req.get('Referrer') || '/';
+
+     // Remove non-digit characters for length check
+     const phoneDigits = formData.number.replace(/\D/g, '');
+
+     if (phoneDigits.length < 7) {
+         req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
+         return res.redirect(referrerUrl);
+     }
+ 
+     // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+     if (!/^[\d\s\-()]+$/.test(formData.number)) {
+         req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
+         return res.redirect(referrerUrl);
+     }
+
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
     

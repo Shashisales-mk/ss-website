@@ -4,24 +4,29 @@
         <div class="nav-cont">
             <div class="logo"><a href="/"><img src="/assets/images/logo.png" alt='logo'></a></div>
             <div><a href="tel:1800-571-0605">1800-571-0605</a></div>
-            <div class="service b"><p>Services</p></div>
+            <div class="service b">
+                <p>Services</p>
+            </div>
             <div><a href="/assets/images/ssm.pdf" target="_blank" class="portfolio">Portfolio</a></div>
             <div class="gallery b"><a href="/gallery">Gallery</a></div>
             <!-- <div class="search b"><img src="/assets/images/search.png" alt='searchIcon'></img></div> -->
-            <div class="hamburger b"><img src="/assets/images/hamburger.png" alt='dropdown' height="30" width="30"></img></div>
+            <div class="hamburger b"><img src="/assets/images/hamburger.png" alt='dropdown' height="30"
+                    width="30"></img></div>
             <div class="get-quote b"><button>Get Quote</button></div>
         </div>
 
         <!-- Header for mobile view -->
         <div class="mobile-header">
             <div class="logo"><a href="/"><img src="/assets/images/logo.png" alt='logo'></a></div>
-            <div id="display-mobile-header-cont" class="hamburger b"><img height="30" width="30" src="/assets/images/hamburger.png" alt='dropdown'></img></div>
+            <div id="display-mobile-header-cont" class="hamburger b"><img height="30" width="30"
+                    src="/assets/images/hamburger.png" alt='dropdown'></img></div>
         </div>
 
         <div class="hide-mobile-header-cont" style="display: none;">
             <div id="mobile-header-popup" class="mobile-header-popup">
                 <div class="mobile-header-popup-in">
-                    <div class="mobile-service display-service-header-cont"><img src="/assets/images/back-tick.svg" alt="back-tick"></div>
+                    <div class="mobile-service display-service-header-cont"><img src="/assets/images/back-tick.svg"
+                            alt="back-tick"></div>
                     <p class="display-service-header-cont">Services</p>
                     <p><a href="/">Portfolio</a></p>
                     <p><a href="/about-us">About Us</a></p>
@@ -55,11 +60,11 @@
     </nav>
     <div class="service-menu a">
         <ul>
-            <li class="bb"><a href="/fusion-marketing">Advertising & Marketing            </a></li>
+            <li class="bb"><a href="/fusion-marketing">Advertising & Marketing </a></li>
             <li class="bb"><a href="/web-development">Development</a></li>
             <li class="bb"><a href="/graphic-design">UI/UX & Graphic Design</a></li>
-       
-       
+
+
             <li class="bb"><a href="/product-shoot">Product Shoot & Photography</a></li>
             <li class="bb"><a href="/business-services">Business Services</a></li>
             <li><a href="/search-engine-optimization">Search Engine Optimization</a></li>
@@ -101,21 +106,19 @@
     <div class="get-quote-menu a">
         <div class="contact-left">
             <div class="contact-left-in">
-                <form id="quoteForm" action="/submit-quote" method="post">
+                <form id="quoteForm" action="/submit-quote" method="post" onsubmit="return validateForm()">
                     <div class="fila">
                         <div><input type="text" id="firstName" placeholder="First Name" name="firstName" required></div>
                         <div><input type="text" id="lastName" placeholder="Last Name" name="lastName" required></div>
                     </div>
                     <div class="ph-num">
-                        <input type="tel" class="phone" id="phone" placeholder="Phone Number" name="tel" required>
+                        <input type="tel" class="phone" id="phone" placeholder="Phone Number (e.g. 123-456-7890)"
+                            name="tel" required>
                     </div>
-                    
-                    <div class="fila"><input type="email" id="email" placeholder="Email Address" name="email" required></div>
+                    <div class="fila"><input type="email" id="email" placeholder="Email Address" name="email" required>
+                    </div>
                     <div class="ser-h"><textarea id="service" name="service" placeholder="Service" required></textarea>
-                    </input></div>
-                    
-                
-                    
+                    </div>
                     <div class="form-submit"><input type="submit" value="Submit"></div>
                 </form>
             </div>
@@ -123,3 +126,49 @@
     </div>
 
 </header>
+
+
+
+<!-- <script>
+    function validateForm() {
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+        var phone = document.getElementById('phone').value;
+        var email = document.getElementById('email').value;
+        var service = document.getElementById('service').value;
+
+        // Remove non-digit characters for length check
+        var phoneDigits = phone.replace(/\D/g, '');
+
+        if (phoneDigits.length < 7) {
+            alert('Please enter a valid phone number with valid format of your country');
+            return false;
+        }
+
+        if (firstName.trim() === '' || lastName.trim() === '' || phone.trim() === '' || email.trim() === '' || service.trim() === '') {
+            alert('All fields are required');
+            return false;
+        }
+
+        if (!/^[A-Za-z ]+$/.test(firstName) || !/^[A-Za-z ]+$/.test(lastName)) {
+            alert('Names should only contain letters and spaces');
+            return false;
+        }
+        
+
+        // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+        if (!/^[\d\s\-()]+$/.test(phone)) {
+            alert('Phone number should only contain digits, spaces, hyphens, or parentheses');
+            return false;
+        }
+
+        // Simple email validation
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            alert('Please enter a valid email address');
+            return false;
+        }
+
+
+        return true;
+    }
+</script> -->
