@@ -128,15 +128,15 @@ dotenv.config();
 
 
 
-// Routes
-app.use('/', galleryRoutes);
-app.use('/', testimonialRoutes);
 
+
+
+app.set('trust proxy', true); // Ensure Express trusts the proxy
 
 app.use((req, res, next) => {
-    // Determine the protocol based on the request headers
-    const protocol = req.secure ? 'https' : 'http';
-    
+    // Determine the protocol based on X-Forwarded-Proto header or req.secure
+    const protocol = req.get('X-Forwarded-Proto') || (req.secure ? 'https' : 'http');
+
     // Create the canonical URL
     const canonicalUrl = `${protocol}://${req.get('host')}${req.originalUrl}`;
     console.log(canonicalUrl);
@@ -147,6 +147,10 @@ app.use((req, res, next) => {
     next();
 });
 
+
+// Routes
+app.use('/', galleryRoutes);
+app.use('/', testimonialRoutes);
 
 
 // Authentication middleware
