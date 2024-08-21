@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 60px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .floral-decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+        }
+
+        .top-left { top: 10px; left: 10px; transform: rotate(-45deg); }
+        .top-right { top: 10px; right: 10px; transform: rotate(45deg); }
+        .bottom-left { bottom: 10px; left: 10px; transform: rotate(-135deg); }
+        .bottom-right { bottom: 10px; right: 10px; transform: rotate(135deg); }
+
+        .thank-you {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            padding: 20px 40px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .thank-you::before,
+        .thank-you::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-radius: 10px;
+        }
+
+        .thank-you::before {
+            top: -10px;
+            left: -10px;
+            border-top-color: #ff6b6b;
+            border-left-color: #ff6b6b;
+            animation: border-dance 3s linear infinite;
+        }
+
+        .thank-you::after {
+            bottom: -10px;
+            right: -10px;
+            border-bottom-color: #4ecdc4;
+            border-right-color: #4ecdc4;
+            animation: border-dance 3s linear infinite reverse;
+        }
+
+        @keyframes border-dance {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            font-size: 18px;
+            color: #666;
+            margin: 30px 0;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floral-decoration top-left" style="background-image: url('https://images.unsplash.com/photo-1719937206255-cc337bccfc7d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8');"></div>
+        <div class="floral-decoration top-right" style="background-image: url('https://images.unsplash.com/photo-1724048271477-bd70def43a60?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8');"></div>
+        <div class="floral-decoration bottom-left" style="background-image: url('https://images.unsplash.com/photo-1723930304379-fba0357b878c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxM3x8fGVufDB8fHx8fA%3D%3D');"></div>
+        <div class="floral-decoration bottom-right" style="background-image: url('https://images.unsplash.com/photo-1723038386693-b121090524b3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNXx8fGVufDB8fHx8fA%3D%3D');"></div>
+        
+        <h1 class="thank-you">THANK YOU</h1>
+        <p class="message">Thanks for reaching out!<br>Your message just showed up in my inbox. Talk to you soon!</p>
+        <a href="#" class="btn">Back to Home</a>
+    </div>
+</body>
+</html>

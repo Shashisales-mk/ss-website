@@ -24,7 +24,8 @@ router.get('/gallery', async (req, res) => {
         res.render('gallery', {
             galleryItems,
             title: "Gallery | Shashi Sales And Marketing",
-            description: "Gallery Shoot to entities across India, U.S. Contact Us today to discover how our services can boost your growth"
+            description: "Gallery Shoot to entities across India, U.S. Contact Us today to discover how our services can boost your growth",
+            keywords: "Web Application development"
         });
     } catch (error) {
         console.error(error);

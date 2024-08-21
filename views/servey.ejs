@@ -1,0 +1,87 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .bl{
+        background-color: black;
+    }
+    #main-page {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    margin-top: 1rem;
+}
+
+#survey-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+#navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+</style>
+<body>
+    <div id="main-page">
+    <div id="survey-container">
+        <h1>Survey</h1>
+        <form action="/submit" method="POST">
+            <h2>Question <%= questionNumber %></h2>
+            <p><%= question.text %></p>
+            
+            <% if (question.type === 'text') { %>
+                <textarea name="answer" rows="4" cols="50" required></textarea>
+            <% } else if (question.type === 'mcq') { %>
+                <% question.options.forEach((option, index) => { %>
+                    <div>
+                        <input type="radio" id="option<%= index %>" name="answer" value="<%= option %>" required>
+                        <label for="option<%= index %>"><%= option %></label>
+                    </div>
+                <% }) %>
+            <% } %>
+            
+            <input type="hidden" name="questionId" value="<%= question._id %>">
+            <input type="hidden" name="questionNumber" value="<%= questionNumber %>">
+            
+            <div id="navigation">
+                <% if (questionNumber > 1) { %>
+                    <a href="/?q=<%= questionNumber - 1 %>" class="btn">Previous</a>
+                <% } %>
+                
+                <button type="submit" class="btn">
+                    <%= questionNumber === totalQuestions ? 'Submit' : 'Next' %>
+                </button>
+            </div>
+        </form>
+        <p><%= questionNumber %> of <%= totalQuestions %></p>
+    </div>
+</div>
+</body>

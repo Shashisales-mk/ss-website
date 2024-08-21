@@ -20,6 +20,8 @@ const User = require("./models/User");
 const Blog = require('./models/Blog');
 const Review = require('./models/Review');
 const Gallery = require('./models/Gallery');
+const Survey = require('./models/Servey');
+const Question = require('./models/Question');
 const Testimonial = require('./models/Testimonial');
 const Story = require('./models/TestimonialPage');
 
@@ -129,6 +131,17 @@ dotenv.config();
 // Routes
 app.use('/', galleryRoutes);
 app.use('/', testimonialRoutes);
+
+
+app.use((req, res, next) => {
+    // Create the canonical URL
+    const canonicalUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+
+    // Pass the canonical URL to all templates
+    res.locals.canonicalUrl = canonicalUrl;
+
+    next();
+});
 
 
 // Authentication middleware
@@ -260,7 +273,8 @@ app.get("/", async (req, res) => {
         testimonials,
         truncateString,
         title: "Leading Website Development & Digital Marketing Services | Shashi Sales",
-        description: "Shashi Sales and Marketing provides integrated digital business solutions including website development, advertising, Digital Marketing Services, UI/UX design, graphic and video design, product shoots, branding and PR."
+        description: "Shashi Sales and Marketing provides integrated digital business solutions including website development, advertising, Digital Marketing Services, UI/UX design, graphic and video design, product shoots, branding and PR.",
+        keywords: "web development company, website design company, web design and development company, web design and development services, advertising, SEO, Web Development Company in India, web development India, Website desinger, web developer"
     });
 });
 
@@ -270,7 +284,8 @@ app.get("/", async (req, res) => {
 app.get("/about-us", (req, res) => {
     res.render("aboutUs", {
         title: 'About us | Digital Marketing Agency | Shashi Sales ',
-        description: 'Shashi Sales and Marketing offers expert digital marketing services to enhance online presence, boost engagement, and drive business growth.'
+        description: 'Shashi Sales and Marketing offers expert digital marketing services to enhance online presence, boost engagement, and drive business growth.',
+        keywords: 'Digital Marketing Agency'
     });
 });
 
@@ -279,7 +294,8 @@ app.get("/about-us", (req, res) => {
 app.get("/web-development", (req, res) => {
     res.render("webDevelopment", {
         title: "Leading Website Development Companies - Shashi Sales ",
-        description: "Get to know the top website development companies of 2024 and their innovative approaches to web development."
+        description: "Get to know the top website development companies of 2024 and their innovative approaches to web development.",
+        keywords: 'Website Development Companies'
     })
 })
 
@@ -288,7 +304,8 @@ app.get("/web-development", (req, res) => {
 app.get("/contact-us", (req, res) => {
     res.render("contact", {
         title: 'Contact us - Shashi Sales contact information',
-        description: 'Reach out to Shashi Sales And Marketing to discuss your Integrated Digital Business Solutions needs. Discover the IT solutions tailored for your business.'
+        description: 'Reach out to Shashi Sales And Marketing to discuss your Integrated Digital Business Solutions needs. Discover the IT solutions tailored for your business.',
+        keywords: 'Shashi Sales And Marketing'
     })
 })
 
@@ -299,20 +316,23 @@ app.get("/fusion-marketing", async (req, res) => {
     res.render("advertisement", {
         testimonials,
         title: "Affiliate Marketing and off-page seo techniques-Fusion Marketing",
-        description: "Shashi Sales and Marketing's fusion funnel approach is a comprehensive marketing strategy that integrates affiliate marketing, and SEO techniques."
+        description: "Shashi Sales and Marketing's fusion funnel approach is a comprehensive marketing strategy that integrates affiliate marketing, and SEO techniques.",
+        keywords: 'Affiliate Marketing, off-page seo techniques'
     })
 })
 
 app.get("/cookie-policy", (req, res) => {
     res.render("cookiePolicy", {
         title: "Cookie Policy - Shashi Sales - Website Developer near me",
-        description: "Find your local web development expert now. Get customized, professional website solutions that boost your online presence and growth. Call 1800-571-0605"
+        description: "Find your local web development expert now. Get customized, professional website solutions that boost your online presence and growth. Call 1800-571-0605",
+        keywords: 'Website Developer near me'
     })
 })
 app.get("/refund-policy", (req, res) => {
     res.render("refundPolicy", {
         title: "Refund Policy - Shashi Sales - Web Designers near me",
-        description: "Local web designers can enhance your online presence with custom website designs tailored to your business. Discover experts, Call 1800-571-0605  today!"
+        description: "Local web designers can enhance your online presence with custom website designs tailored to your business. Discover experts, Call 1800-571-0605  today!",
+        keywords: 'Web Designers near me'
     })
 })
 
@@ -321,7 +341,8 @@ app.get("/refund-policy", (req, res) => {
 app.get("/terms-of-use", (req, res) => {
     res.render("terms", {
         title: "Term of Use - Shashi Sales - Website Development Company",
-        description: "Choose the top e-commerce website development company in Delhi for powerful, scalable online stores."
+        description: "Choose the top e-commerce website development company in Delhi for powerful, scalable online stores.",
+        keywords: 'Website Development Company'
     })
 })
 
@@ -331,7 +352,8 @@ app.get("/terms-of-use", (req, res) => {
 app.get("/privacy-policy", (req, res) => {
     res.render("privacyPolicy", {
         title: "Privacy Policy - Shashi Sales - website development company",
-        description: "Consult with Delhi’s best e-commerce website development experts for customized and effective online solutions."
+        description: "Consult with Delhi’s best e-commerce website development experts for customized and effective online solutions.",
+        keywords: 'Website Development Company'
     })
 })
 
@@ -340,7 +362,8 @@ app.get("/privacy-policy", (req, res) => {
 app.get("/graphic-design", (req, res) => {
     res.render("design", {
         title: "Top-Rated Web Design Company in Delhi - Shashi Sales ",
-        description: "Get Your Online Website In Just 7 Days Rank Your Website Amongst The Top website design Delhi Unlimited Graphic Designing and Video Designing."
+        description: "Get Your Online Website In Just 7 Days Rank Your Website Amongst The Top website design Delhi Unlimited Graphic Designing and Video Designing.",
+        keywords: 'Web Design Company in Delhi'
     })
 })
 
@@ -349,7 +372,8 @@ app.get("/graphic-design", (req, res) => {
 app.get("/email-marketing", (req, res) => {
     res.render("emailMarketing", {
         title: "Email Marketing Services in Delhi - Shashi Sales And Marketing",
-        description: "Shashi Sales, Delhi's trusted email marketing company, offers affordable campaigns to boost your brand, sales, and conversions. Call 1800-571-0605 today!"
+        description: "Shashi Sales, Delhi's trusted email marketing company, offers affordable campaigns to boost your brand, sales, and conversions. Call 1800-571-0605 today!",
+        keywords: 'Email Marketing Services in Delhi'
     })
 })
 
@@ -358,14 +382,16 @@ app.get("/email-marketing", (req, res) => {
 app.get("/seo", (req, res) => {
     res.render("seo", {
         title: "Leading SEO Company in Delhi-NCR & Best SEO Agency in Hyderabad | Shashi Sales",
-        description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic."
+        description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic.",
+        keywords: 'Best SEO Agency in Delhi-NCR & Hyderabad'
     })
 });
 
 app.get("/business-services", (req, res) => {
     res.render("businessServices", {
         title: "Digital Marketing Services in Delhi | Shashi Sales And Marketing ",
-        description: "Shashi Sales offers digital marketing solutions to businesses across India, U.S. Contact us today to discover how our services can boost your business growth."
+        description: "Shashi Sales offers digital marketing solutions to businesses across India, U.S. Contact us today to discover how our services can boost your business growth.",
+        keywords: 'Digital Marketing Services in Delhi'
     })
 });
 
@@ -373,7 +399,8 @@ app.get("/business-services", (req, res) => {
 app.get("/product-shoot", (req, res) => {
     res.render("photography", {
         title: "Product Shoot and Model Shoot Page | Shashi Sales And Marketing",
-        description: "Shashi Sales offers Product and Model Shoot to entites across India, U.S. Contact Us today to discover how our services can boost your growth"
+        description: "Shashi Sales offers Product and Model Shoot to entites across India, U.S. Contact Us today to discover how our services can boost your growth",
+        keywords: 'Best Photography Service in Delhi'
     })
 });
 
@@ -392,7 +419,8 @@ app.get("/hidden-img2", (req, res) => {
 app.get("/review-form", (req, res) => {
     res.render("userTestiForm", {
         title: "",
-        description: ""
+        description: "",
+        keywords: " "
     })
 })
 
@@ -441,7 +469,8 @@ app.get("/user-story/:id", async (req, res) => {
         res.render("userStory", {
             story,
             title: testimonial.title || "",
-            description: testimonial.description || ""
+            description: testimonial.description || "",
+            keywords : " "
         });
     } catch (error) {
         console.error('Error fetching case study:', error);
@@ -465,7 +494,8 @@ app.get("/blog", async (req, res) => {
             blogs,
             truncateString,
             title: "Draggan AI  Revolutionizing Workflow Optimization - Shashi Sales",
-            description: "Discover how Draggan AI is revolutionizing workflow optimization. Explore its powerful capabilities in automating tasks and enhancing efficiency across projects."
+            description: "Discover how Draggan AI is revolutionizing workflow optimization. Explore its powerful capabilities in automating tasks and enhancing efficiency across projects.",
+            keywords: 'Draggan AI'
         });
     } catch (err) {
         console.error(err);
@@ -476,7 +506,8 @@ app.get("/blog", async (req, res) => {
 app.get("/blog-form", (req, res) => {
     res.render("uploadForm", {
         title: "Blog Form - Seo Company in Delhi-NCR India - Shashi Sales",
-        description: "Boost your online presence with Shashi Sales and Marketing, the top SEO company in Delhi-NCR India. Drive traffic and enhance your brand visibility today!"
+        description: "Boost your online presence with Shashi Sales and Marketing, the top SEO company in Delhi-NCR India. Drive traffic and enhance your brand visibility today!",
+        keywords: 'Draggan Website'
  });
 });
 
@@ -578,7 +609,8 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
         category,
         AllBlogs,
         title: "All Blog List - how to create a website - Shashi Sales",
-        description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch."
+        description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch.",
+        keywords: 'how to create a website'
     })
 })
 
@@ -985,7 +1017,67 @@ app.post('/submit-quote-lead', async (req, res) => {
 
 
 
+// servey code
 
+  
+  app.get('/survey', async(req, res) => {
+    try {
+        const questions = await Question.find();
+        const questionNumber = parseInt(req.query.q) || 1;
+        const question = questions[questionNumber - 1];
+    
+        res.render('servey', { 
+          questionNumber, 
+          question,
+          totalQuestions: questions.length,
+          title: " ",
+          description : " ",
+          keywords : " "
+        });
+      } catch (error) {
+        res.status(500).send('An error occurred while fetching questions');
+      }
+  });
+  
+  app.post('/submit', async (req, res) => {
+    const { questionId, answer } = req.body;
+    const questionNumber = parseInt(req.body.questionNumber);
+  
+    try {
+      const questions = await Question.find();
+      let survey = await Survey.findOne({ _id: req.session.surveyId });
+      
+      if (!survey) {
+        survey = new Survey({ 
+          answers: [],
+          serialBias: Math.floor(Math.random() * questions.length) + 1
+        });
+        req.session.surveyId = survey._id;
+      }
+  
+      const existingAnswerIndex = survey.answers.findIndex(a => a.question.toString() === questionId);
+      if (existingAnswerIndex > -1) {
+        survey.answers[existingAnswerIndex].answer = answer;
+      } else {
+        survey.answers.push({ question: questionId, answer });
+      }
+  
+      await survey.save();
+  
+      if (questionNumber < questions.length) {
+        res.redirect(`/survey?q=${questionNumber + 1}`);
+      } else {
+        res.redirect('/thank-you');
+      }
+    } catch (error) {
+      res.status(500).send('An error occurred while saving the survey');
+    }
+  });
+  
+  app.get('/thank-you', (req, res) => {
+    res.render('thank-you');
+  });
+// servey code
 
 
 
@@ -1038,7 +1130,8 @@ app.get('/login', (req, res) => {
         successMessage,
         errorMessage,
         title: "Login | Top Companies in Digital Marketing: Boost Your Online Presence | Shashi Sales",
-        description: "Discover the top companies in digital marketing that can help elevate your online presence, drive traffic, and increase your business's success in the digital age."
+        description: "Discover the top companies in digital marketing that can help elevate your online presence, drive traffic, and increase your business's success in the digital age.",
+        keywords: 'Top Companies in Digital Marketing'
     });
 });
 
@@ -1083,7 +1176,8 @@ app.get('/logout', (req, res) => {
 app.get("/phonepe-payment-page", async (req, res) => {
     res.render("phonepayForm", {
         title: "Digital marketing companies kochi - Shashi Sales And Marketing ",
-        description: "Shashi Sales, Access the best digital marketing services tailored for businesses in Kochi to maximize their online potential. Call Call 1800-571-0605 today!"
+        description: "Shashi Sales, Access the best digital marketing services tailored for businesses in Kochi to maximize their online potential. Call Call 1800-571-0605 today!",
+        keywords: 'Digital marketing companies kochi'
     })
 })
 
@@ -1595,7 +1689,8 @@ app.get("/payment-successful", (req, res) => {
         email: email,
         number: number,
         title: "Payment Successful",
-        description: "Your payment was successful"
+        description: "Your payment was successful",
+        keywords: 'Digital marketing companies'
     });
 });
 
@@ -1603,7 +1698,8 @@ app.get("/payment-successful", (req, res) => {
 app.get("/payment-failed", (req, res) => {
     res.render("paymentfail.ejs", {
         title: "payment failed ",
-        description: " payment failed page"
+        description: " payment failed page",
+        keywords: 'Digital marketing companies'
     })
 })
 
@@ -1611,7 +1707,8 @@ app.get("/payment-failed", (req, res) => {
 app.get("/pay-via-paypal", (req, res) => {
     res.render("paypalPaymentForm", {
         title: "Pay via paypal | Shashi Sales And Marketing",
-        description: "Shashi Sales and Marketing offers innovative solutions to transform your business, boost customer loyalty, and stay ahead of the competition."
+        description: "Shashi Sales and Marketing offers innovative solutions to transform your business, boost customer loyalty, and stay ahead of the competition.",
+        keywords: 'Digital marketing companies kochi'
     });
 })
 

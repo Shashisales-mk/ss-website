@@ -1,0 +1,69 @@
+[
+    {
+      "text": "We are pleased to meet you! What's your first name?*",
+      "type": "text"
+    },
+    {
+      "text": "And, {firstname} what is you last name?*",
+      "type": "text"
+    },
+    {
+      "text": "What is the name of your company?*",
+      "type": "text"
+    },
+    {
+      "text": "What is your role at {company given in previous answer}?*",
+      "type": "text"
+    },
+    {
+      "text": "What is the website of {company given in previous answer}?*",
+      "type": "text"
+    },
+    {
+      "text": "Where is  {company given in previous answer} headquarters?*",
+      "type": "text"
+    },
+    {
+      "text": "What industry does  {company given in previous answer} claim?*",
+      "type": "text"
+    },
+    {
+      "text": "What does  {company given in previous answer} do/provide?*",
+      "type": "text"
+    },
+   
+    {
+      "text": "How did you find Shashi sales and marketing*",
+      "type": "mcq",
+      "options": ["Search", "Refferal", "Blog/publication", "Social Media" ,"Advertisement" , "Other"]
+    },
+    {
+      "text": "What made you reach out to Shashi sales and marketing?*",
+      "type": "mcq",
+      "options": ["I need a growth marketing agency", "I am wandering if an agency is right for my business", "I'd like to discuss the partnership opportunity", "I want to offer you my service/product" ,"I want to explore career opportunities" , "Other"]
+    },
+    {
+      "text": "Which stage best describes {company given in previous answer}*",
+      "type": "mcq",
+      "options": ["Pre launch", "Early Stage", "Growing", "Well established/mature" ]
+    },
+    {
+      "text": "What is {company given in previous answer}'s primary finance source?*",
+      "type": "mcq",
+      "options": ["Self/ bootstraped/ friends & family/ Crowdsource", "Venture Capital", "Private Equity"]
+    },
+    {
+      "text": "Which of the following best describes your project?*",
+      "type": "mcq",
+      "options": ["Launching the new product/service", "Scale / optimize campaigns", "Singular specific need"]
+    },
+    {
+      "text": "What is you target monthly paid media budget?*",
+      "type": "mcq",
+      "options": ["<$5K", "$5K - $10K", "$10K - $15K" , "$15K - $25K" , "$25K - $50K" , "$50K - $100K" , "$100K +"]
+    },
+    {
+      "text": "Please provide a little background on you project and what you are looking for in a growth partner:*",
+      "type": "text"
+    }
+  ]
