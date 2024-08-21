@@ -208,17 +208,17 @@ async function appendToSheet(auth, data) {
     if (data.number) {
         // For /submit-quote-lead route
         const { countryCode, phoneNumber } = parsePhoneNumber(data.number);
-        values = [phoneNumber, new Date().toISOString(), '', '', '', countryCode];
+        values = [Number(phoneNumber), new Date().toISOString(), '', '', '', Number(countryCode)];
     } else if (data.tel) {
         // For /submit-quote route
         const { countryCode, phoneNumber } = parsePhoneNumber(data.tel);
         values = [
-            phoneNumber,
+            Number(phoneNumber),
             new Date().toISOString(),
             `${data.firstName} ${data.lastName}`,
             data.email,
             data.service,
-            countryCode
+            Number(countryCode)
         ];
     }
 
@@ -246,7 +246,7 @@ async function appendToSheet(auth, data) {
 
 function parsePhoneNumber(phoneNumber) {
     // Remove all non-digit characters
-    const cleaned = phoneNumber.replace(/\D/g, '');
+    const cleaned = phoneNumber.replace(/\D/g,'');
     
     // Always take the first two digits as the country code
     const countryCode = cleaned.slice(0, 2);
