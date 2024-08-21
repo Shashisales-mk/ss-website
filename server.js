@@ -134,14 +134,19 @@ app.use('/', testimonialRoutes);
 
 
 app.use((req, res, next) => {
+    // Determine the protocol based on the request headers
+    const protocol = req.secure ? 'https' : 'http';
+    
     // Create the canonical URL
-    const canonicalUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+    const canonicalUrl = `${protocol}://${req.get('host')}${req.originalUrl}`;
+    console.log(canonicalUrl);
 
     // Pass the canonical URL to all templates
     res.locals.canonicalUrl = canonicalUrl;
 
-    next();
+    next();
 });
+
 
 
 // Authentication middleware
