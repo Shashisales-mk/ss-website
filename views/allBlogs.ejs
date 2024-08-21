@@ -554,7 +554,7 @@
                                 <td>
                                     <%= testimonial.text %>
                                 </td>
-                                <td><img src="<%= testimonial.image %>" alt="" width="70px" height="70px"></td>
+                                <td><img src="<%= testimonial.image %>" alt="Shashi sales and marketing" width="70px" height="70px"></td>
                                 <td><button
                                         onclick="toggleEditForm('editTestimonial<%= testimonial._id %>')">Edit</button>
                                 </td>
@@ -598,7 +598,7 @@
                                         <td><input type="text" name="text" value="<%= testimonial.text %>" required>
                                         </td>
                                         <td><input style="font-size: 0.5vw;" type="file" name="image"></td>
-                                        <td><img src="<%= testimonial.image %>" alt="" width="70px" height="70px"></td>
+                                        <td><img src="<%= testimonial.image %>" alt="Shashi sales and marketing" width="70px" height="70px"></td>
                                         <td>
                                             <form method="POST" action="/toggle-approve/<%= testimonial._id %>">
                                                 <button type="submit"
