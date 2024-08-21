@@ -139,7 +139,7 @@ app.use((req, res, next) => {
 
     // Create the canonical URL
     const canonicalUrl = `${protocol}://${req.get('host')}${req.originalUrl}`;
-    console.log(canonicalUrl);
+    
 
     // Pass the canonical URL to all templates
     res.locals.canonicalUrl = canonicalUrl;
