@@ -738,11 +738,10 @@
                     <tbody>
                         <% acomments.forEach(comment=> { %>
                             <tr>
-                                <% AllBlogs.forEach(blog=> { %>
-                                    <td>
-                                        <%= blog.email %>
-                                    </td>
-                                    <% }) %>
+                                
+                                        <td>
+                                            <%= comment.email %>
+                                        </td>
                                         <td>
                                             <%= comment.blog.title %>
                                         </td>

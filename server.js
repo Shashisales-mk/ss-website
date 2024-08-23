@@ -38,6 +38,7 @@ const paypal = require('paypal-rest-sdk');
 
 const galleryRoutes = require('./routes/galleryRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
+const { gmail } = require("googleapis/build/src/apis/gmail");
 
 
 
@@ -1292,6 +1293,8 @@ app.get('/survey', async(req, res) => {
   app.post('/submit', async (req, res) => {
     const { questionId, answer } = req.body;
     const questionNumber = parseInt(req.body.questionNumber);
+
+   
   
     try {
       const questions = await Question.find();
@@ -1324,6 +1327,65 @@ app.get('/survey', async(req, res) => {
       if (questionNumber < questions.length) {
         res.redirect(`/survey?q=${questionNumber + 1}`);
       } else {
+
+        const htmlTemplate = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Survey Submission</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              line-height: 1.6;
+              color: #333;
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+            }
+            h1 {
+              color: #2c3e50;
+              border-bottom: 2px solid #3498db;
+              padding-bottom: 10px;
+            }
+            .survey-info {
+              background-color: #f9f9f9;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              padding: 15px;
+              margin-top: 20px;
+            }
+            .question {
+              margin-bottom: 15px;
+            }
+            .question-text {
+              font-weight: bold;
+              color: #2980b9;
+            }
+            .answer {
+              margin-top: 5px;
+            }
+            
+          </style>
+        </head>
+        <body>
+          <h1>New Survey Submission</h1>
+          <p>A client has submitted a new survey. Here are the details:</p>
+          <div class="survey-info">
+            ${survey.answers.map(a => `
+              <div class="question">
+                <div class="question-text">Q - ${questions.find(q => q._id.toString() === a.question.toString()).text}</div>
+                <div class="answer">A - ${a.answer}</div>
+                <br>
+              </div>
+            `).join('')}
+          </div>
+        </body>
+        </html>
+      `;
+
+        Templatesender(recipients, htmlTemplate, "A client has submitted the survey");
         res.redirect('/thank-you');
       }
     } catch (error) {
