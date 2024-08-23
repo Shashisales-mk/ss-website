@@ -159,15 +159,19 @@ popupTriggers.forEach((trigger, index) => {
   const popup = popups[index];
   let hideMenuTimer;
 
+  let isFormFocused = false;
+
   trigger.addEventListener('mouseenter', () => {
     popup.style.display = 'block';
     clearTimeout(hideMenuTimer);
   });
 
   trigger.addEventListener('mouseleave', () => {
-    hideMenuTimer = setTimeout(() => {
-      popup.style.display = 'none';
-    }, 500);
+    if (!isFormFocused) {
+      hideMenuTimer = setTimeout(() => {
+        popup.style.display = 'none';
+      }, 500);
+    }
   });
 
   popup.addEventListener('mouseenter', () => {
@@ -175,9 +179,31 @@ popupTriggers.forEach((trigger, index) => {
   });
 
   popup.addEventListener('mouseleave', () => {
-    hideMenuTimer = setTimeout(() => {
-      popup.style.display = 'none';
-    }, 500);
+    if (!isFormFocused) {
+      hideMenuTimer = setTimeout(() => {
+        popup.style.display = 'none';
+      }, 500);
+    }
+  });
+
+  const formInputs = popup.querySelectorAll('input, textarea');
+  
+  formInputs.forEach(input => {
+    input.addEventListener('focus', () => {
+      isFormFocused = true;
+      clearTimeout(hideMenuTimer);
+    });
+
+    input.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (!popup.contains(document.activeElement)) {
+          isFormFocused = false;
+          hideMenuTimer = setTimeout(() => {
+            popup.style.display = 'none';
+          }, 500);
+        }
+      }, 200);
+    });
   });
 });
 

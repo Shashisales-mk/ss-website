@@ -275,7 +275,7 @@
             height: 8vw;
         }
 
-        .tarea textarea::placeholder{
+        .tarea textarea::placeholder {
             font-size: 1.2rem;
         }
 
@@ -305,6 +305,7 @@
             margin-top: 0.5rem;
             display: block;
         }
+
         .comment {
             margin-top: 1rem;
             width: 100%;
@@ -312,13 +313,14 @@
             border: 1px solid black;
             font-size: 1rem;
         }
-        .testi-sec input:first-child{
+
+        .testi-sec input:first-child {
             width: 68%;
         }
-        .testi-sec input:last-child{
+
+        .testi-sec input:last-child {
             width: 30%;
         }
-
     </style>
 
     <div class="main-page">
@@ -328,6 +330,7 @@
                 <li id="sec2">Gallery</li>
                 <li id="sec3">Testimonials</li>
                 <li id="sec4">Pending Comments</li>
+                <li id="sec5">Subscribers</li>
                 <p><a href="/logout">Logout</a></p>
             </ul>
         </div>
@@ -341,6 +344,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>AUTHOR</th>
                             <th>BLOG TITLE</th>
                             <th>EDIT</th>
                             <th>DELETE</th>
@@ -352,7 +356,14 @@
                         <% AllBlogs.forEach(blog=> { %>
                             <tr>
                                 <td>
-                                    <a href="/blog-detail/<%= blog.canonical %>" style="color: black;"><%= blog.title %></a>
+                                    <a href="/blog-detail/<%= blog.canonical %>" style="color: black;">
+                                        <%= blog.email %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="/blog-detail/<%= blog.canonical %>" style="color: black;">
+                                        <%= blog.title %>
+                                    </a>
                                 </td>
                                 <td>
                                     <p>
@@ -496,8 +507,8 @@
                         <input type="text" name="name" placeholder="Client Name" required>
                         <input type="file" name="image">
                     </div>
-                    <textarea  name="text" class="comment" placeholder="Testimonial Text" required maxlength="250"
-                    oninput="updateCharCount(this)"></textarea>
+                    <textarea name="text" class="comment" placeholder="Testimonial Text" required maxlength="250"
+                        oninput="updateCharCount(this)"></textarea>
                     <span id="charCount">0 / 250 characters</span>
                     <div style="margin-top: 1vw;">
                         <button type="submit">Add Testimonial</button>
@@ -518,9 +529,9 @@
                                         <% } %>
                     </select>
                     <div class="tarea">
-                        
+
                         <textarea name="growthStory" placeholder="Growth Story"></textarea>
-                        
+
                         <textarea name="problemStatement" placeholder="Problem Statement"></textarea>
                         <textarea name="clientOverview" placeholder="Client Overview"></textarea>
                         <textarea name="challenges" placeholder="Challenges"></textarea>
@@ -541,7 +552,7 @@
                             <th>Image</th>
                             <th>Edit Testimonial</th>
                             <th>Edit Page</th>
-                           
+
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -554,7 +565,8 @@
                                 <td>
                                     <%= testimonial.text %>
                                 </td>
-                                <td><img src="<%= testimonial.image %>" alt="Shashi sales and marketing" width="70px" height="70px"></td>
+                                <td><img src="<%= testimonial.image %>" alt="Shashi sales and marketing" width="70px"
+                                        height="70px"></td>
                                 <td><button
                                         onclick="toggleEditForm('editTestimonial<%= testimonial._id %>')">Edit</button>
                                 </td>
@@ -564,7 +576,7 @@
                                             onclick="toggleEditForm('editTestimonialPage<%= testimonial.page._id %>')">Edit</button>
                                         <% } %>
                                 </td>
-                                
+
                                 <td>
                                     <form action="/admin/delete-testimonial/<%= testimonial._id %>" method="POST">
                                         <button class="del-btn" type="submit">Delete</button>
@@ -598,7 +610,8 @@
                                         <td><input type="text" name="text" value="<%= testimonial.text %>" required>
                                         </td>
                                         <td><input style="font-size: 0.5vw;" type="file" name="image"></td>
-                                        <td><img src="<%= testimonial.image %>" alt="Shashi sales and marketing" width="70px" height="70px"></td>
+                                        <td><img src="<%= testimonial.image %>" alt="Shashi sales and marketing"
+                                                width="70px" height="70px"></td>
                                         <td>
                                             <form method="POST" action="/toggle-approve/<%= testimonial._id %>">
                                                 <button type="submit"
@@ -627,11 +640,11 @@
                                     <tbody class="tarea">
                                         <tr>
                                             <td>
-                                               
+
                                                 <label for="growthStory">Growth Story:</label>
                                                 <textarea
                                                     name="growthStory"><%- testimonial.page.growthStory %></textarea>
-                                                
+
                                                 <label for="problemStatement">Problem Statement:</label>
                                                 <textarea
                                                     name="problemStatement"><%- testimonial.page.problemStatement %></textarea>
@@ -673,6 +686,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Author Email</th>
                             <th>Blog</th>
                             <th>Name</th>
                             <th>Comment</th>
@@ -682,23 +696,28 @@
                     <tbody>
                         <% comments.forEach(comment=> { %>
                             <tr>
-                                <td>
-                                    <%= comment.blog.title %>
-                                </td>
-                                <td>
-                                    <%= comment.name %>
-                                </td>
-                                <td>
-                                    <%= comment.comment %>
-                                </td>
-                                <td>
-                                    <form method="POST" action="/admin/approve-comment/<%= comment._id %>">
-                                        <button class="appr-btn" type="submit">Approve</button>
-                                    </form> <br>
-                                    <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
-                                        <button class="del-btn" type="submit">Delete</button>
-                                    </form>
-                                </td>
+                                <% AllBlogs.forEach(blog=> { %>
+                                    <td>
+                                        <%= blog.email %>
+                                    </td>
+                                    <% }) %>
+                                        <td>
+                                            <%= comment.blog.title %>
+                                        </td>
+                                        <td>
+                                            <%= comment.name %>
+                                        </td>
+                                        <td>
+                                            <%= comment.comment %>
+                                        </td>
+                                        <td>
+                                            <form method="POST" action="/admin/approve-comment/<%= comment._id %>">
+                                                <button class="appr-btn" type="submit">Approve</button>
+                                            </form> <br>
+                                            <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                                                <button class="del-btn" type="submit">Delete</button>
+                                            </form>
+                                        </td>
                             </tr>
                             <% }) %>
                     </tbody>
@@ -709,6 +728,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Author Email</th>
                             <th>Blog</th>
                             <th>Name</th>
                             <th>Comment</th>
@@ -718,17 +738,64 @@
                     <tbody>
                         <% acomments.forEach(comment=> { %>
                             <tr>
+                                <% AllBlogs.forEach(blog=> { %>
+                                    <td>
+                                        <%= blog.email %>
+                                    </td>
+                                    <% }) %>
+                                        <td>
+                                            <%= comment.blog.title %>
+                                        </td>
+                                        <td>
+                                            <%= comment.name %>
+                                        </td>
+                                        <td>
+                                            <%= comment.comment %>
+                                        </td>
+                                        <td>
+                                            <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                                                <button class="del-btn" type="submit">Delete</button>
+                                            </form>
+                                        </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+
+             <!-- subscriber section -->
+
+             <div class="subscriber-section" style="display: none;">
+
+                <!-- existing subscribers -->
+
+                <div class="action-btns">
+                    <a href="" class="open-create-subscriber">Create New Subscriber</a>
+                </div>
+
+                <h2>Existing Subscibers</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% subscribers.forEach(subscriber=> { %>
+                            <tr>
                                 <td>
-                                    <%= comment.blog.title %>
+                                    <%= subscriber.name %>
                                 </td>
                                 <td>
-                                    <%= comment.name %>
+                                    <%= subscriber.email %>
                                 </td>
+                               
                                 <td>
-                                    <%= comment.comment %>
-                                </td>
-                                <td>
-                                    <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                                    <form method="POST" action="/delete-subscriber/<%= subscriber._id %>?_method=DELETE" >
                                         <button class="del-btn" type="submit">Delete</button>
                                     </form>
                                 </td>
@@ -736,20 +803,56 @@
                             <% }) %>
                     </tbody>
                 </table>
+
+                <div class="create-new" style="display: none;">
+                    <h2>Create new subsciber</h2>
+
+                    <form action="/subscribe" method="POST" >
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="hidden" name="redirectUrl" value="/all-blogs-list">
+                        <button type="submit">Create</button>
+                      </form>
+                </div>
+
+                <!-- create new subscriber -->
             </div>
         </div>
+
     </div>
 
 
-<!-- character limit -->
-<script>
-    function updateCharCount(textarea) {
-        const maxLength = textarea.getAttribute("maxlength");
-        const currentLength = textarea.value.length;
-        document.getElementById("charCount").innerText = `${currentLength} / ${maxLength} characters`;
-    }
-</script>
-<!-- character limit -->
+    <!-- subscriber script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const openCreateSubscriberLink = document.querySelector('.open-create-subscriber');
+            const createNewDiv = document.querySelector('.create-new');
+
+            openCreateSubscriberLink.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent the default link behavior
+
+                if (createNewDiv.style.display === 'none' || createNewDiv.style.display === '') {
+                    createNewDiv.style.display = 'block';
+                    this.textContent = ' Create New Subscriber';
+                } else {
+                    createNewDiv.style.display = 'none';
+                    this.textContent = 'Create New Subscriber';
+                }
+            });
+        });
+    </script>
+    <!-- subscriber script -->
+
+
+    <!-- character limit -->
+    <script>
+        function updateCharCount(textarea) {
+            const maxLength = textarea.getAttribute("maxlength");
+            const currentLength = textarea.value.length;
+            document.getElementById("charCount").innerText = `${currentLength} / ${maxLength} characters`;
+        }
+    </script>
+    <!-- character limit -->
 
 
 
@@ -777,9 +880,9 @@
         function showEditTestimonialPageForm(id) {
             const testimonialPage = testimonialPages.find(tp => tp._id === id);
             document.getElementById('editTestimonialPageId').value = id;
-            
+
             document.getElementById('editGrowthStory').value = testimonialPage.growthStory;
-            
+
             document.getElementById('editTestimonialPageForm').style.display = 'block';
         }
 
@@ -789,6 +892,7 @@
             document.querySelector('.gallery-section').style.display = 'none';
             document.querySelector('.testimonial-section').style.display = 'none';
             document.querySelector('.comment-section').style.display = 'none';
+            document.querySelector('.subscriber-section').style.display = 'none';
             // Add additional sections here if needed
         }
 
@@ -826,6 +930,9 @@
         document.getElementById('sec4').addEventListener('click', function () {
             showSection('comment-section', 'sec4');
         });
+        document.getElementById('sec5').addEventListener('click', function () {
+            showSection('subscriber-section', 'sec5');
+        });
 
         // Ensure the form submission keeps the section visible
         document.querySelectorAll('form').forEach(form => {
@@ -836,6 +943,7 @@
                     'sec2': 'gallery-section',
                     'sec3': 'testimonial-section',
                     'sec4': 'comment-section',
+                    'sec5': 'subcriber-section',
                 };
                 localStorage.setItem('activeSection', sectionMap[activeSection]);
             });

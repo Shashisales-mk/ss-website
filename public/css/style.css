@@ -1423,6 +1423,9 @@ th {
 
 /* SEO page */
 
+
+/* SEO page */
+
 .seo-hed{
     position: sticky;
     top: 2%;
@@ -1673,7 +1676,7 @@ th {
 }
 .moy2 h3{
     text-align: center;
-    padding: 4vw 4vw 2vw 4vw;
+    padding: 0vw 4vw 2vw 4vw;
 }
 .moy2-in{
     padding: 0 4vw;
@@ -1745,6 +1748,49 @@ th {
     color: grey;
     margin-top: 0.6vw;
     padding: 0 3vw;
+}
+.scre{
+    text-align: center;
+    color: #aaad02;
+    font-size: 5vw;
+    font-weight: 700;
+}
+.paybtn{
+    padding: 3vw;
+    display: flex;
+    justify-content: center;
+}
+.paybtn a{
+    padding: 0.8vw 4vw;
+    background: #C4C800;
+    color: #000;
+    border-radius: 5vw;
+}
+.paybtn a:hover{
+    background: #c4c800bd;
+}
+.pre-logo{
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    padding: 2vw;
+}
+#borr1, #borr2, #borr3{
+    display: grid;
+    justify-content: center;
+}
+#borr1:hover, #borr2:hover, #borr3:hover{
+    cursor: pointer;
+}
+#borr1 div, #borr2 div, #borr3 div{
+    font-size: 1vw;
+    text-align: center;
+}
+.pre-logo img{
+    margin: auto;
+}
+.pre-logo img:hover{
+    transform: scale(1.1);
 }
 @media screen and (max-width: 768px){
     .per {
@@ -1905,24 +1951,28 @@ th {
         padding: 1.3vw 5vw !important;
         font-size: 3vw;
     }
+    .pre-logo img {
+        height: 8vw;
+        width: auto;
+    }
+    #borr1 div, #borr2 div, #borr3 div {
+        font-size: 3vw;
+    }
+    .pre-logo {
+        gap: 5vw;
+        padding: 5vw;
+    }
 }
-.scre{
-    text-align: center;
-    color: #aaad02;
-    font-size: 5vw;
-    font-weight: 700;
-}
-.paybtn{
-    padding: 3vw;
-    display: flex;
-    justify-content: center;
-}
-.paybtn a{
-    padding: 0.8vw 4vw;
-    background: #C4C800;
-    color: #000;
-    border-radius: 5vw;
-}
-.paybtn a:hover{
-    background: #c4c800bd;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+

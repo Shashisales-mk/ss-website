@@ -22,6 +22,7 @@ const Review = require('./models/Review');
 const Gallery = require('./models/Gallery');
 const Survey = require('./models/Servey');
 const Question = require('./models/Question');
+const Subscriber = require('./models/Subscribers');
 const Testimonial = require('./models/Testimonial');
 const Story = require('./models/TestimonialPage');
 
@@ -525,6 +526,7 @@ app.get("/blog-detail/:canonical", async (req, res) => {
     try {
         const { canonical } = req.params;
         const blog = await Blog.findOne({ canonical: canonical });
+        const subscriptionMessage = req.query.subscriptionMessage || null;
 
         if (!blog) {
             return res.status(404).send("Blog not found");
@@ -533,10 +535,14 @@ app.get("/blog-detail/:canonical", async (req, res) => {
         const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
 
         res.render("blogDetails", {
-            blog,
+            blog,subscriptionMessage, 
             comments: approvedComments,
             title: blog.metaTitle,
-            description: blog.metaDescription
+            description: blog.metaDescription,
+            messages: {
+                success: req.flash('success'),
+                error: req.flash('error')
+              }
         });
     } catch (err) {
         console.error(err);
@@ -545,13 +551,60 @@ app.get("/blog-detail/:canonical", async (req, res) => {
 });
 
 
+app.post('/subscribe', async (req, res) => {
+    try {
+      const { name, email, redirectUrl } = req.body;
+      
+      // Check if the email already exists
+      const existingSubscriber = await Subscriber.findOne({ email });
+      if (existingSubscriber) {
+        req.flash('error', 'This email is already subscribed.');
+        return res.redirect(redirectUrl);
+      }
+  
+      // Create a new subscriber
+      const newSubscriber = new Subscriber({ name, email });
+      await newSubscriber.save();
+  
+      req.flash('success', 'Subscription successful!');
+      res.redirect(redirectUrl);
+    } catch (error) {
+      console.error('Error subscribing:', error);
+      req.flash('error', 'Failed to subscribe. Please try again.');
+      res.redirect(redirectUrl);
+    }
+  });
+
+
+  app.delete('/delete-subscriber/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedSubscriber = await Subscriber.findByIdAndDelete(id);
+
+        if (!deletedSubscriber) {
+            return res.status(404).json({ message: 'Subscriber not found' });
+        }
+
+        res.redirect("/all-blogs-list");
+    } catch (err) {
+        console.error('Error deleting subscriber:', err);
+        if (err.name === 'CastError') {
+            return res.status(400).json({ message: 'Invalid subscriber ID' });
+        }
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
+
 // Route for handling blog upload
 app.post('/upload-blog', uploadFields, async (req, res) => {
     try {
-        const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
+        const {authorName, authorEmail,  blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
         const bannerImage = req.files['blogBannerImage'] ? req.files['blogBannerImage'][0] : null;
         const showImg = req.files['showImg'] ? req.files['showImg'][0] : null;
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : [];
+        const subscribers = await Subscriber.find();
 
         if (!bannerImage) {
             throw new Error('B-blog-listlog banner image is required');
@@ -573,6 +626,8 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 
 
         const blog = new Blog({
+            name: authorName,
+            email: authorEmail,
             title: blogTitle,
             shortDescription: blogShortDesc,
             bannerImage: `/uploads/${bannerImage.filename}`,
@@ -589,6 +644,92 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         });
 
         await blog.save();
+        
+
+         // Fetch 3 suggested blog posts
+    const suggestedBlogs = await Blog.find({ _id: { $ne: blog._id } })
+    .sort({ createdAt: -1 })
+    .limit(3);
+
+  for (const subscriber of subscribers) {
+    const imageUrl = blog.bannerImage.startsWith('https' || 'http') 
+      ? blog.bannerImage 
+      : `https://shashisales.com${blog.bannerImage}`;
+
+    const htmlTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Blog Post: ${blog.title}</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  h1, h2 {
+    color: #2c3e50;
+  }
+  a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+  }
+  .suggested-blogs {
+    margin-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+  }
+  .suggested-blog {
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+<img src="${imageUrl}" alt="Banner Image">
+<h1>${blog.title}</h1>
+<p>${blog.shortDescription}</p>
+<a href="https://shashisales.com/blog-detail/${blog.canonical}" class="cta-button">Read More</a>
+
+<div class="suggested-blogs">
+  <h2>Suggested Posts</h2>
+  ${suggestedBlogs.map(suggestedBlog => `
+    <div class="suggested-blog">
+      <h3><a href="https://shashisales.com/blog-detail/${suggestedBlog.canonical}">${suggestedBlog.title}</a></h3>
+      <p>${suggestedBlog.shortDescription.substring(0, 100)}...</p>
+    </div>
+  `).join('')}
+</div>
+</body>
+</html>
+    `;
+
+    await Templatesender(
+        [subscriber.email], 
+        htmlTemplate, 
+        "New Blog Post: " + blog.title
+      );
+}
+
+
+
         console.log(blog);
         // res.status(200).send('Blog uploaded successfully!');
         res.redirect("/blog")
@@ -608,6 +749,7 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
+    const subscribers = await Subscriber.find();
 
     // console.log(AllBlogs);
     res.render("allBlogs", {
@@ -619,7 +761,8 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
         AllBlogs,
         title: "All Blog List - how to create a website - Shashi Sales",
         description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch.",
-        keywords: 'how to create a website'
+        keywords: 'how to create a website',
+        subscribers
     })
 })
 
@@ -644,13 +787,14 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
     try {
         const { canonical } = req.params;
         const blog = await Blog.findOne({ canonical: canonical });
+       
 
         if (!blog) {
             return res.status(404).send('Blog not found');
         }
 
         res.render('blogEdit', {
-            blog, title: "blog edit  ",
+            blog,title: "blog edit  ",
             description: " blog edit page"
         });
     } catch (err) {
@@ -659,10 +803,15 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
     }
 });
 
+
+
+
 app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        const { blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
+        const {authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
+
+        const subscribers = await Subscriber.find();
 
         const existingBlog = await Blog.findById(id);
         if (!existingBlog) {
@@ -690,6 +839,8 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
         }
 
         const updatedBlog = await Blog.findByIdAndUpdate(id, {
+            name: authorName,
+            email: authorEmail,
             title: blogTitle,
             shortDescription: blogShortDesc,
             bannerImage: bannerImagePath,
@@ -705,6 +856,87 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
             isApprove: isApprove === 'false',
         }, { new: true });
 
+                 // Fetch 3 suggested blog posts
+    const suggestedBlogs = await Blog.find({ _id: { $ne: updatedBlog._id } })
+    .sort({ createdAt: -1 })
+    .limit(3);
+
+  for (const subscriber of subscribers) {
+    const imageUrl = updatedBlog.bannerImage.startsWith('https' || 'http') 
+      ? updatedBlog.bannerImage 
+      : `https://shashisales.com${updatedBlog.bannerImage}`;
+
+    const htmlTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Blog Post: ${updatedBlog.title}</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  h1, h2 {
+    color: #2c3e50;
+  }
+  a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+  }
+  .suggested-blogs {
+    margin-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+  }
+  .suggested-blog {
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+<img src="${imageUrl}" alt="Banner Image">
+<h1>${updatedBlog.title}</h1>
+<p>${updatedBlog.shortDescription}</p>
+<a href="https://shashisales.com/blog-detail/${updatedBlog.canonical}" class="cta-button">Read More</a>
+
+<div class="suggested-blogs">
+  <h2>Suggested Posts</h2>
+  ${suggestedBlogs.map(suggestedBlog => `
+    <div class="suggested-blog">
+      <h3><a href="https://shashisales.com/blog-detail/${suggestedBlog.canonical}">${suggestedBlog.title}</a></h3>
+      <p>${suggestedBlog.shortDescription.substring(0, 100)}...</p>
+    </div>
+  `).join('')}
+</div>
+</body>
+</html>
+    `;
+
+    await Templatesender(
+        [subscriber.email], 
+        htmlTemplate, 
+        "Updated Blog Post: " + updatedBlog.title
+      );
+}
         res.redirect("/all-blogs-list");
     } catch (err) {
         console.error('Error updating blog:', err);
@@ -1029,23 +1261,32 @@ app.post('/submit-quote-lead', async (req, res) => {
 // servey code
 
   
-  app.get('/survey', async(req, res) => {
+app.get('/survey', async(req, res) => {
     try {
-        const questions = await Question.find();
-        const questionNumber = parseInt(req.query.q) || 1;
-        const question = questions[questionNumber - 1];
-    
-        res.render('servey', { 
-          questionNumber, 
-          question,
-          totalQuestions: questions.length,
-          title: " ",
-          description : " ",
-          keywords : " "
+      const questions = await Question.find();
+      const questionNumber = parseInt(req.query.q) || 1;
+      const question = questions[questionNumber - 1];
+  
+      // Replace placeholders with actual values
+      let questionText = question.text;
+      if (question.placeholders && question.placeholders.length > 0) {
+        question.placeholders.forEach(placeholder => {
+          const value = req.session[placeholder] || `{${placeholder}}`;
+          questionText = questionText.replace(new RegExp(`{${placeholder}}`, 'g'), value);
         });
-      } catch (error) {
-        res.status(500).send('An error occurred while fetching questions');
       }
+  
+      res.render('servey', {
+        questionNumber,
+        question: { ...question.toObject(), text: questionText },
+        totalQuestions: questions.length,
+        title: " ",
+        description: " ",
+        keywords: " "
+      });
+    } catch (error) {
+      res.status(500).send('An error occurred while fetching questions');
+    }
   });
   
   app.post('/submit', async (req, res) => {
@@ -1055,9 +1296,9 @@ app.post('/submit-quote-lead', async (req, res) => {
     try {
       const questions = await Question.find();
       let survey = await Survey.findOne({ _id: req.session.surveyId });
-      
+  
       if (!survey) {
-        survey = new Survey({ 
+        survey = new Survey({
           answers: [],
           serialBias: Math.floor(Math.random() * questions.length) + 1
         });
@@ -1073,6 +1314,13 @@ app.post('/submit-quote-lead', async (req, res) => {
   
       await survey.save();
   
+      // Store only firstname and company in the session
+      if (questionNumber === 1) {
+        req.session.firstname = answer;
+      } else if (questionNumber === 3) {
+        req.session.company = answer;
+      }
+  
       if (questionNumber < questions.length) {
         res.redirect(`/survey?q=${questionNumber + 1}`);
       } else {
@@ -1084,7 +1332,12 @@ app.post('/submit-quote-lead', async (req, res) => {
   });
   
   app.get('/thank-you', (req, res) => {
-    res.render('thank-you');
+    
+    res.render('thank-you' , {
+        redirectUrl: "/"
+    });
+
+   
   });
 // servey code
 

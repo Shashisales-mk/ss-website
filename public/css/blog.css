@@ -60,17 +60,17 @@
   display: -ms-grid;
   display: grid;
 }
-.blog-page-cont .mar-desc h3{
+.blog-page-cont .mar-desc h2 {
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   font-size: 1.3vw;
   font-weight: bold;
-  color: black;
+  color: black;
 }
 .blog-page-cont .mar-desc div:nth-child(2){
   font-size: 1vw;

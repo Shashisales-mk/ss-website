@@ -8,6 +8,7 @@ const QuestionSchema = new mongoose.Schema({
     default: 'text'
   },
   options: [String], // For MCQ questions
+  placeholders: [String]
   
 });
 
