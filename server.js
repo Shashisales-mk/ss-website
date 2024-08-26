@@ -749,7 +749,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 
 
 
-// Route to update all blog banner images
+// Route to update all blog banner 
 app.post('/update-all-blog-banners', uploadSingleBanner, isAdmin, async (req, res) => {
     try {
         if (!req.file) {
