@@ -58,6 +58,17 @@
             color: #000;
         }
 
+        .dieb{
+            background: #C4C800;
+            padding: .5vw 1vw;
+            border: 2px solid #C4C800;
+            border-radius: 2vw;
+            font-weight: 500;
+            font-size: 1.2vw;
+            color: #000;
+            margin-top: 1rem;
+            
+        }
         .sideNavBar,
         .main-page-in {
             padding-top: 1vw;
@@ -338,6 +349,10 @@
             <!-- Blog Section -->
             <div class="blog-section">
                 <h1 style="padding: 2vw;text-align: start;">Blog Section</h1>
+                <form action="/update-all-blog-banners" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="newBanner" accept="image/*" required>
+                    <button type="submit">Update All Blog Banners</button>
+                </form>
                 <div class="action-btns">
                     <a href="/blog-form">Create New Blog</a>
                 </div>
@@ -696,28 +711,26 @@
                     <tbody>
                         <% comments.forEach(comment=> { %>
                             <tr>
-                                <% AllBlogs.forEach(blog=> { %>
-                                    <td>
-                                        <%= blog.email %>
-                                    </td>
-                                    <% }) %>
-                                        <td>
-                                            <%= comment.blog.title %>
-                                        </td>
-                                        <td>
-                                            <%= comment.name %>
-                                        </td>
-                                        <td>
-                                            <%= comment.comment %>
-                                        </td>
-                                        <td>
-                                            <form method="POST" action="/admin/approve-comment/<%= comment._id %>">
-                                                <button class="appr-btn" type="submit">Approve</button>
-                                            </form> <br>
-                                            <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
-                                                <button class="del-btn" type="submit">Delete</button>
-                                            </form>
-                                        </td>
+                                <td>
+                                    <%= comment.email %>
+                                </td>
+                                <td>
+                                    <%= comment.blog.title %>
+                                </td>
+                                <td>
+                                    <%= comment.name %>
+                                </td>
+                                <td>
+                                    <%= comment.comment %>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/admin/approve-comment/<%= comment._id %>">
+                                        <button class="appr-btn" type="submit">Approve</button>
+                                    </form> <br>
+                                    <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                                        <button class="del-btn" type="submit">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                             <% }) %>
                     </tbody>
@@ -738,24 +751,24 @@
                     <tbody>
                         <% acomments.forEach(comment=> { %>
                             <tr>
-                                
-                                        <td>
-                                            <%= comment.email %>
-                                        </td>
-                                        <td>
-                                            <%= comment.blog.title %>
-                                        </td>
-                                        <td>
-                                            <%= comment.name %>
-                                        </td>
-                                        <td>
-                                            <%= comment.comment %>
-                                        </td>
-                                        <td>
-                                            <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
-                                                <button class="del-btn" type="submit">Delete</button>
-                                            </form>
-                                        </td>
+
+                                <td>
+                                    <%= comment.email %>
+                                </td>
+                                <td>
+                                    <%= comment.blog.title %>
+                                </td>
+                                <td>
+                                    <%= comment.name %>
+                                </td>
+                                <td>
+                                    <%= comment.comment %>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                                        <button class="del-btn" type="submit">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                             <% }) %>
                     </tbody>
@@ -763,9 +776,9 @@
             </div>
 
 
-             <!-- subscriber section -->
+            <!-- subscriber section -->
 
-             <div class="subscriber-section" style="display: none;">
+            <div class="subscriber-section" style="display: none;">
 
                 <!-- existing subscribers -->
 
@@ -774,13 +787,13 @@
                 </div>
 
                 <h2>Existing Subscibers</h2>
-                <table>
+                <table id="subscriberTable">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Action</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -792,9 +805,10 @@
                                 <td>
                                     <%= subscriber.email %>
                                 </td>
-                               
+
                                 <td>
-                                    <form method="POST" action="/delete-subscriber/<%= subscriber._id %>?_method=DELETE" >
+                                    <form method="POST"
+                                        action="/delete-subscriber/<%= subscriber._id %>?_method=DELETE">
                                         <button class="del-btn" type="submit">Delete</button>
                                     </form>
                                 </td>
@@ -806,15 +820,19 @@
                 <div class="create-new" style="display: none;">
                     <h2>Create new subsciber</h2>
 
-                    <form action="/subscribe" method="POST" >
+                    <form action="/subscribe" method="POST">
                         <input type="text" name="name" placeholder="Your Name" required>
                         <input type="email" name="email" placeholder="Your Email" required>
                         <input type="hidden" name="redirectUrl" value="/all-blogs-list">
                         <button type="submit">Create</button>
-                      </form>
+                    </form>
                 </div>
 
                 <!-- create new subscriber -->
+
+                <div class="spb">
+                    <button class="dieb" onclick="downloadTableAsCSV('subscriberTable')">Download as CSV</button>
+                  </div>
             </div>
         </div>
 
@@ -1070,3 +1088,57 @@
         }
         document.addEventListener('DOMContentLoaded', fetchGalleryItems);
     </script>
+
+
+
+<!-- download in excel scritp -->
+<script>
+    function downloadTableAsCSV(tableId) {
+      // Get the table element using the provided tableId
+      const table = document.getElementById(tableId);
+      
+      // Check if the table exists
+      if (!table) {
+        console.error('No table found with ID:', tableId);
+        return;
+      }
+  
+      // Create an array to hold the CSV data
+      const csvData = [];
+  
+      // Get the table headers (only 'Name' and 'Email')
+      const headers = Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim());
+      // Filter the headers to keep only 'Name' and 'Email'
+      const filteredHeaders = headers.filter(header => header === 'Name' || header === 'Email');
+      csvData.push(filteredHeaders.join(','));
+  
+      // Get the table rows
+      const rows = Array.from(table.querySelectorAll('tbody tr'));
+  
+      // Convert each row to a CSV row, but only for 'Name' and 'Email'
+      rows.forEach(row => {
+        // Get the 'Name' and 'Email' cells only
+        const cells = Array.from(row.querySelectorAll('td'));
+        const nameEmailData = [cells[0].textContent.trim(), cells[1].textContent.trim()];
+        csvData.push(nameEmailData.join(','));
+      });
+  
+      // Create a CSV string from the data array
+      const csvString = csvData.join('\n');
+  
+      // Create a temporary anchor element to trigger the download
+      const a = document.createElement('a');
+      a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvString);
+      a.download = 'subscriber_data.csv';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+  
+      // Trigger the download
+      a.click();
+  
+      // Remove the temporary anchor element
+      document.body.removeChild(a);
+    }
+  </script>
+  
+<!-- download in excel scritp -->

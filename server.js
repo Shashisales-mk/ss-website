@@ -115,6 +115,11 @@ const uploadFields = upload.fields([
     { name: 'images' }
 ]);
 
+// New middleware for single banner upload
+const uploadSingleBanner = upload.single('newBanner');
+
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.json());
@@ -526,7 +531,7 @@ app.get("/blog-form", (req, res) => {
 app.get("/blog-detail/:canonical", async (req, res) => {
     try {
         const { canonical } = req.params;
-        const blog = await Blog.findOne({ canonical: canonical });
+        const blog = await Blog.findOne({ canonical: canonical.trim() });
         const subscriptionMessage = req.query.subscriptionMessage || null;
 
         if (!blog) {
@@ -737,6 +742,36 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
     } catch (error) {
         console.error('Error uploading blog:', error);
         res.status(500).send('Failed to upload blog. Please try again.');
+    }
+});
+
+
+
+
+
+// Route to update all blog banner images
+app.post('/update-all-blog-banners', uploadSingleBanner, isAdmin, async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).send('No banner image uploaded.');
+        }
+
+        const newBannerPath = `/uploads/${req.file.filename}`;
+
+        // Update all blog documents
+        const updateResult = await Blog.updateMany(
+            {}, // Empty filter to match all documents
+            { $set: { bannerImage: newBannerPath } }
+        );
+
+        res.json({
+            message: 'All blog banner images updated successfully',
+            newBannerPath: newBannerPath,
+            updatedCount: updateResult.modifiedCount
+        });
+    } catch (error) {
+        console.error('Error updating blog banners:', error);
+        res.status(500).send('An error occurred while updating blog banners');
     }
 });
 

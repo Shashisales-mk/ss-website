@@ -14,7 +14,8 @@ const blogSchema = new mongoose.Schema({
         image: String
     }],
     metaTitle: { type: String, required: true },
-    canonical: { type: String, required: true },
+    canonical: { type: String, required: true, unique: true,
+        trim: true },
     contentText: { type: Object, required: true },
     metaDescription: { type: String, required: true },
     metaKeywords: { type: [String], required: true },
@@ -26,5 +27,12 @@ const blogSchema = new mongoose.Schema({
 });
 
 const Blog = mongoose.model('Blog', blogSchema);
+
+blogSchema.pre('save', function(next) {
+    if (this.canonical) {
+        this.canonical = this.canonical.trim();
+    }
+    next();
+});
 
 module.exports = Blog;
