@@ -108,11 +108,11 @@
         <form id="blogForm" action="/update-blog/<%= blog._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
             <div>
                 <label for="authorName">Author Name:</label>
-                <input type="text" id="authorName" name="authorName" required>
+                <input type="text" id="authorName" name="authorName" required value="<%= blog.name %>">
             </div>
             <div>
                 <label for="authorEmail">Author Email:</label>
-                <input style="height: 2.5vw;width: 100%;" type="email" id="authorEmail" name="authorEmail" required>
+                <input style="height: 2.5vw;width: 100%;" type="email" id="authorEmail" value="<%= blog.email %>" name="authorEmail" required>
             </div>
             <div>
                 <label for="blogTitle">Blog Title:</label>
