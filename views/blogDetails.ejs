@@ -864,6 +864,22 @@ document.addEventListener('click', (event) => {
     });
 });
 </script>
+
+<script>
+    const Cross = document.getElementById('crss');
+    if (Cross) {
+      Cross.addEventListener('click', (event) => {
+        document.getElementById('cii').style.display = 'none';
+        document.getElementById('ci2').style.display = 'none';
+      });
+    }
+    const Empt = document.getElementById('ci2');
+    const Touch = document.getElementById('touch');
+
+    if (Empt.innerHTML.trim() === "") {
+      Touch.style.display = 'none';
+    }
+  </script>
 </body>
 
 </html> 

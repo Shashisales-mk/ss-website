@@ -182,21 +182,7 @@
 
 <body>
   <%- include("../includes/navbar") %> <%- body %> <%- include("../includes/footer") %>
-        <script>
-          const Cross = document.getElementById('crss');
-          if (Cross) {
-            Cross.addEventListener('click', (event) => {
-              document.getElementById('cii').style.display = 'none';
-              document.getElementById('ci2').style.display = 'none';
-            });
-          }
-          const Empt = document.getElementById('ci2');
-          const Touch = document.getElementById('touch');
-
-          if (Empt.innerHTML.trim() === "") {
-            Touch.style.display = 'none';
-          }
-        </script>
+       
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

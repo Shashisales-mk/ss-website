@@ -762,11 +762,7 @@ app.post('/update-all-blog-banners', uploadSingleBanner, isAdmin, async (req, re
             { $set: { bannerImage: newBannerPath } }
         );
 
-        res.json({
-            message: 'All blog banner images updated successfully',
-            newBannerPath: newBannerPath,
-            updatedCount: updateResult.modifiedCount
-        });
+        res.redirect("/all-blogs-list");
     } catch (error) {
         console.error('Error updating blog banners:', error);
         res.status(500).send('An error occurred while updating blog banners');
