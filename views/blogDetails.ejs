@@ -519,32 +519,66 @@
 
 
             <section class="blog-content">
-                <p>
-                    <%= blog.shortDescription %>
-                </p>
-                <% blog.content.forEach((contentItem, index)=> { %>
-                    <div
-                        class="image-container<%= index % 2 === 0 ? '1' : '2' %> ic <%= !contentItem.image ? 'no-image' : '' %>">
-                        <div class="ic-text">
-                            <h3>
-                                <%= contentItem.heading %>
-                            </h3>
-                            <p>
-                                <%= contentItem.paragraph %>
-                            </p>
-                        </div>
-                        <% if (contentItem.image) { %>
-                            <div class="ic-img">
-                                <img src="<%= contentItem.image %>" alt="Blog Image">
+                <p><%= blog.shortDescription %></p>
+                <div class="upk">
+                    <div class="ipk">
+                        <% blog.content.forEach((contentItem, index) => { %>
+                            <div class="image-container<%= index % 2 === 0 ? '1' : '2' %> ic <%= (!contentItem.image && !contentItem.media) ? 'no-media' : '' %>">
+                                <div class="ic-text">
+                                    <h3><%= contentItem.heading %></h3>
+                                    <p><%= contentItem.paragraph %></p>
+                                </div>
+                                
+                                <% if (contentItem.image) { %>
+                                    <!-- Old format with direct image path -->
+                                    <div class="ic-media">
+                                        <img src="<%= contentItem.image %>" alt="Blog Image">
+                                    </div>
+                                <% } else if (contentItem.media) { %>
+                                    <!-- New format with media object -->
+                                    <div class="ic-media">
+                                        <% if (contentItem.media.mediaType === 'image') { %>
+                                            <img src="<%= contentItem.media.type %>" alt="Blog Image">
+                                        <% } else if (contentItem.media.mediaType === 'video') { %>
+                                            <video controls>
+                                                <source src="<%= contentItem.media.type %>" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        <% } %>
+                                    </div>
+                                <% } %>
                             </div>
-                            <% } %>
+                        <% }) %>
                     </div>
-
-
-                    <% }) %>
-                        <div class="contentText">
-                            <%- blog.contentText %>
+                    
+                    <div id="touch" class="ad-frame">
+                        <div id="cii" class="ci">
+                            <div id="show-ad-title" style="display: flex;">
+                                <% ads.forEach(ad => { %>
+                                    <span id="ad-title"><%= ad.title %></span>
+                                <% }) %>
+                                <span>i</span>
+                            </div>
+                            <span id="crss">&times;</span>
                         </div>
+                        <div id="ci2" class="ad-frame-in">
+                            <% ads.forEach(ad => { %>
+                                <% if (ad.filePath.endsWith('.mp4')) { %>
+                                    <video controls width="300">
+                                        <source src="<%= ad.filePath %>" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                <% } else { %>
+                                    <img style="width: 100%;" src="<%= ad.filePath %>" width="300" alt="Ad Image">
+                                <% } %>
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contentText">
+                    <%- blog.contentText %>
+                </div>
             </section>
 
             
@@ -605,12 +639,7 @@
                 <div class="newsletter-container">
                   <h3>Subscribe to Our Newsletter</h3>
                   <p>Stay updated with our latest blog posts and news!</p>
-                  <% if (messages.success) { %>
-                    <p class="success-message"><%= messages.success %></p>
-                  <% } %>
-                  <% if (messages.error) { %>
-                    <p class="error-message"><%= messages.error %></p>
-                  <% } %>
+                  
                   <form action="/subscribe" method="POST">
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="email" name="email" placeholder="Your Email" required>

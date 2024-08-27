@@ -332,6 +332,37 @@
         .testi-sec input:last-child {
             width: 30%;
         }
+        /* Ads section */
+        .admin-ads{
+            margin-top: 2vw;
+            display: grid;
+            gap: 1vw;
+        }
+        .admin-ads input{
+            outline: none;
+            background: rgb(241, 243, 244);
+            padding: 1vw;
+            border: 0;
+            border-radius: 0.3vw;
+        }
+        .admin-ads button{
+            padding: 2vw;
+            font-weight: 700;
+            padding: 0.5vw 2vw;
+            color: green;
+            border: 1px solid green;
+            background: transparent;
+            border-radius: 1vw;
+        }
+        .ads-del-btn{
+            margin: 2vw 0;
+            padding: 0.5vw 1vw;
+            background: transparent;
+            border: 1px solid red;
+            color: red;
+            border-radius: 0.3vw;
+        }
+
     </style>
 
     <div class="main-page">
@@ -348,6 +379,64 @@
         <div class="main-page-in">
             <!-- Blog Section -->
             <div class="blog-section">
+                <!-- Ads Section -->
+            <h2>Upload New Ad</h2>
+            <form action="/uploadAd" method="POST" enctype="multipart/form-data">
+                <div class="admin-ads">
+                    <div>
+                        <input type="text" id="title" name="title" placeholder="Enter Ad Title" required>
+                    </div>
+                
+                    <div>
+                        <input type="file" name="ad" accept="image/*,video/*" required>
+                        <button type="submit">Upload</button>
+                    </div>
+                </div>
+                </form>
+          
+            <!-- Display Existing Ads Section -->
+            <h2 style="margin-top: 2vw;">Uploaded Ads</h2>
+            <% if (ads.length > 0) { %>
+                <form action="/delete-ads" method="POST">
+                    <button class="ads-del-btn" type="submit">Delete Selected Ads</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Ad Title</th>
+                                <th>Image/Video</th>
+                            </tr>
+                        </thead>
+                        <% ads.forEach(ad => { %>
+                            <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="adIds" value="<%= ad._id %>">
+                                        </td>
+                                        <td>
+                                            <h3><%= ad.title %></h3>
+                                        </td>
+                                        <td>
+                                            <% if (ad.filePath.endsWith('.mp4')) { %>
+                                                <video controls width="300">
+                                                  <source src="<%= ad.filePath %>" type="video/mp4">
+                                                  Your browser does not support the video tag.
+                                                </video>
+                                              <% } else { %>
+                                                <img height="50" width="50" src="<%= ad.filePath %>" width="300" alt="Ad Image">
+                                              <% } %>
+                                        </td>
+                                    </tr>
+                        
+                            </tbody>
+                        <% }) %>
+                    </table>
+                    
+                </form>
+            <% } else { %>
+              <p>No ads uploaded yet.</p>
+            <% } %>
+
                 <h1 style="padding: 2vw;text-align: start;">Blog Section</h1>
                 <form action="/update-all-blog-banners" method="POST" enctype="multipart/form-data">
                     <input type="file" name="newBanner" accept="image/*" required>
