@@ -25,7 +25,6 @@ const Question = require('./models/Question');
 const Subscriber = require('./models/Subscribers');
 const Testimonial = require('./models/Testimonial');
 const Story = require('./models/TestimonialPage');
-const Ad = require('./models/Ad');
 
 const PaymentDetails = require('./models/PaymentDetails');
 const Comment = require('./models/Comment');
@@ -91,10 +90,14 @@ app.use(passport.session());
 
 
 
-// Define the uploads directory
-const uploadsDir = path.join(__dirname, 'public', 'uploads');
+
 
 // Multer setup (only for file uploads)
+const uploadsDir = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, uploadsDir);
@@ -105,24 +108,13 @@ const storage = multer.diskStorage({
     }
 });
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('video/')) {
-        cb(null, true);
-    } else {
-        cb(new Error('Unsupported file type'), false);
-    }
-};
-
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter
-});
-
+const upload = multer({ storage: storage });
 const uploadFields = upload.fields([
     { name: 'blogBannerImage', maxCount: 1 },
     { name: 'showImg', maxCount: 1 },
-    { name: 'contentMedia', maxCount: 2 } // Allow up to 2 media files for content
+    { name: 'images' }
 ]);
+
 // New middleware for single banner upload
 const uploadSingleBanner = upload.single('newBanner');
 
@@ -154,7 +146,7 @@ app.use((req, res, next) => {
 
     // Create the canonical URL
     const canonicalUrl = `${protocol}://${req.get('host')}${req.originalUrl}`;
-
+    
 
     // Pass the canonical URL to all templates
     res.locals.canonicalUrl = canonicalUrl;
@@ -261,8 +253,8 @@ async function appendToSheet(auth, data) {
 
 function parsePhoneNumber(phoneNumber) {
     // Remove all non-digit characters
-    const cleaned = phoneNumber.replace(/\D/g, '');
-
+    const cleaned = phoneNumber.replace(/\D/g,'');
+    
     // Always take the first two digits as the country code
     const countryCode = cleaned.slice(0, 2);
     const number = cleaned.slice(2);
@@ -281,19 +273,16 @@ function parsePhoneNumber(phoneNumber) {
 
 
 
-
 app.get("/", async (req, res) => {
     const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
     const testimonials = await Testimonial.find().populate('page');
     const successMessage = req.session.successMessage || null;
     const errorMessage = req.session.errorMessage || null;
-    const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
     console.log('successMessage:', successMessage); // Log the value of successMessage
     console.log('errorMessage:', errorMessage); // Log the value of errorMessage
     req.session.successMessage = null; // Clear the success message after displaying it
     req.session.errorMessage = null; // Clear the error message after displaying it
     res.render("home", {
-        ads,
         successMessage,
         errorMessage,
         blogs,
@@ -497,7 +486,7 @@ app.get("/user-story/:id", async (req, res) => {
             story,
             title: testimonial.title || "",
             description: testimonial.description || "",
-            keywords: " "
+            keywords : " "
         });
     } catch (error) {
         console.error('Error fetching case study:', error);
@@ -535,9 +524,8 @@ app.get("/blog-form", (req, res) => {
         title: "Blog Form - Seo Company in Delhi-NCR India - Shashi Sales",
         description: "Boost your online presence with Shashi Sales and Marketing, the top SEO company in Delhi-NCR India. Drive traffic and enhance your brand visibility today!",
         keywords: 'Draggan Website'
-    });
+ });
 });
-
 
 
 app.get("/blog-detail/:canonical", async (req, res) => {
@@ -551,17 +539,16 @@ app.get("/blog-detail/:canonical", async (req, res) => {
         }
 
         const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
-        const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
+
         res.render("blogDetails", {
-            ads,
-            blog, subscriptionMessage,
+            blog,subscriptionMessage, 
             comments: approvedComments,
             title: blog.metaTitle,
             description: blog.metaDescription,
             messages: {
                 success: req.flash('success'),
                 error: req.flash('error')
-            }
+              }
         });
     } catch (err) {
         console.error(err);
@@ -572,30 +559,30 @@ app.get("/blog-detail/:canonical", async (req, res) => {
 
 app.post('/subscribe', async (req, res) => {
     try {
-        const { name, email, redirectUrl } = req.body;
-
-        // Check if the email already exists
-        const existingSubscriber = await Subscriber.findOne({ email });
-        if (existingSubscriber) {
-            req.flash('error', 'This email is already subscribed.');
-            return res.redirect(redirectUrl);
-        }
-
-        // Create a new subscriber
-        const newSubscriber = new Subscriber({ name, email });
-        await newSubscriber.save();
-
-        req.flash('success', 'Subscription successful!');
-        res.redirect(redirectUrl);
+      const { name, email, redirectUrl } = req.body;
+      
+      // Check if the email already exists
+      const existingSubscriber = await Subscriber.findOne({ email });
+      if (existingSubscriber) {
+        req.flash('error', 'This email is already subscribed.');
+        return res.redirect(redirectUrl);
+      }
+  
+      // Create a new subscriber
+      const newSubscriber = new Subscriber({ name, email });
+      await newSubscriber.save();
+  
+      req.flash('success', 'Subscription successful!');
+      res.redirect(redirectUrl);
     } catch (error) {
-        console.error('Error subscribing:', error);
-        req.flash('error', 'Failed to subscribe. Please try again.');
-        res.redirect(redirectUrl);
+      console.error('Error subscribing:', error);
+      req.flash('error', 'Failed to subscribe. Please try again.');
+      res.redirect(redirectUrl);
     }
-});
+  });
 
 
-app.delete('/delete-subscriber/:id', async (req, res) => {
+  app.delete('/delete-subscriber/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const deletedSubscriber = await Subscriber.findByIdAndDelete(id);
@@ -619,12 +606,11 @@ app.delete('/delete-subscriber/:id', async (req, res) => {
 // Route for handling blog upload
 app.post('/upload-blog', uploadFields, async (req, res) => {
     try {
-        const { authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
+        const {authorName, authorEmail,  blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
         const bannerImage = req.files['blogBannerImage'] ? req.files['blogBannerImage'][0] : null;
         const showImg = req.files['showImg'] ? req.files['showImg'][0] : null;
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : [];
         const subscribers = await Subscriber.find();
-        const contentMedia = req.files['contentMedia'] || [];
 
         if (!bannerImage) {
             throw new Error('B-blog-listlog banner image is required');
@@ -634,18 +620,11 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         }
 
         const content = [];
-        const headingsArray = Array.isArray(headings) ? headings : [headings];
-        const paragraphsArray = Array.isArray(paragraphs) ? paragraphs : [paragraphs];
-
-        for (let i = 0; i < headingsArray.length; i++) {
-            const mediaFile = contentMedia[i];
+        for (let i = 0; i < headings.length; i++) {
             content.push({
-                heading: headingsArray[i],
-                paragraph: paragraphsArray[i],
-                media: mediaFile ? {
-                    type: `/uploads/${mediaFile.filename}`,
-                    mediaType: mediaFile.mimetype.startsWith('image/') ? 'image' : 'video'
-                } : null
+                heading: headings[i],
+                paragraph: paragraphs[i],
+                image: images[i] || null
             });
         }
 
@@ -671,19 +650,19 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         });
 
         await blog.save();
+        
 
+         // Fetch 3 suggested blog posts
+    const suggestedBlogs = await Blog.find({ _id: { $ne: blog._id } })
+    .sort({ createdAt: -1 })
+    .limit(3);
 
-        // Fetch 3 suggested blog posts
-        const suggestedBlogs = await Blog.find({ _id: { $ne: blog._id } })
-            .sort({ createdAt: -1 })
-            .limit(3);
+  for (const subscriber of subscribers) {
+    const imageUrl = blog.bannerImage.startsWith('https' || 'http') 
+      ? blog.bannerImage 
+      : `https://shashisales.com${blog.bannerImage}`;
 
-        for (const subscriber of subscribers) {
-            const imageUrl = blog.bannerImage.startsWith('https' || 'http')
-                ? blog.bannerImage
-                : `https://shashisales.com${blog.bannerImage}`;
-
-            const htmlTemplate = `
+    const htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -748,12 +727,12 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 </html>
     `;
 
-            await Templatesender(
-                [subscriber.email],
-                htmlTemplate,
-                "New Blog Post: " + blog.title
-            );
-        }
+    await Templatesender(
+        [subscriber.email], 
+        htmlTemplate, 
+        "New Blog Post: " + blog.title
+      );
+}
 
 
 
@@ -806,12 +785,10 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
-    const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
     const subscribers = await Subscriber.find();
 
     // console.log(AllBlogs);
     res.render("allBlogs", {
-        ads,
         acomments: approvedComments,
         comments: pendingComments,
         testimonials,
@@ -846,14 +823,14 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
     try {
         const { canonical } = req.params;
         const blog = await Blog.findOne({ canonical: canonical });
-
+       
 
         if (!blog) {
             return res.status(404).send('Blog not found');
         }
 
         res.render('blogEdit', {
-            blog, title: "blog edit  ",
+            blog,title: "blog edit  ",
             description: " blog edit page"
         });
     } catch (err) {
@@ -868,7 +845,7 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
 app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        const { authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
+        const {authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
 
         const subscribers = await Subscriber.find();
 
@@ -915,17 +892,17 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
             isApprove: isApprove === 'false',
         }, { new: true });
 
-        // Fetch 3 suggested blog posts
-        const suggestedBlogs = await Blog.find({ _id: { $ne: updatedBlog._id } })
-            .sort({ createdAt: -1 })
-            .limit(3);
+                 // Fetch 3 suggested blog posts
+    const suggestedBlogs = await Blog.find({ _id: { $ne: updatedBlog._id } })
+    .sort({ createdAt: -1 })
+    .limit(3);
 
-        for (const subscriber of subscribers) {
-            const imageUrl = updatedBlog.bannerImage.startsWith('https' || 'http')
-                ? updatedBlog.bannerImage
-                : `https://shashisales.com${updatedBlog.bannerImage}`;
+  for (const subscriber of subscribers) {
+    const imageUrl = updatedBlog.bannerImage.startsWith('https' || 'http') 
+      ? updatedBlog.bannerImage 
+      : `https://shashisales.com${updatedBlog.bannerImage}`;
 
-            const htmlTemplate = `
+    const htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -990,12 +967,12 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
 </html>
     `;
 
-            await Templatesender(
-                [subscriber.email],
-                htmlTemplate,
-                "Updated Blog Post: " + updatedBlog.title
-            );
-        }
+    await Templatesender(
+        [subscriber.email], 
+        htmlTemplate, 
+        "Updated Blog Post: " + updatedBlog.title
+      );
+}
         res.redirect("/all-blogs-list");
     } catch (err) {
         console.error('Error updating blog:', err);
@@ -1047,47 +1024,6 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
 });
 
 
-// Route for handling ads upload
-app.post('/uploadAd', upload.single('ad'), async (req, res) => {
-    const { title } = req.body;
-    const newAd = new Ad({
-        filePath: `/uploads/${req.file.filename}`,
-        title
-    });
-
-    try {
-        await newAd.save();
-        res.redirect('/all-blogs-list');
-    } catch (err) {
-        res.status(500).send('Error saving ad');
-    }
-});
-app.post('/delete-ads', async (req, res) => {
-    const adIds = req.body.adIds;
-
-    if (!adIds || adIds.length === 0) {
-        return res.redirect('/admin');
-    }
-
-    try {
-        const adsToDelete = await Ad.find({ _id: { $in: adIds } });
-
-        adsToDelete.forEach(ad => {
-            const filePath = `./public${ad.filePath}`;
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-            }
-        });
-
-        await Ad.deleteMany({ _id: { $in: adIds } });
-
-        res.redirect('/all-blogs-list');
-    } catch (err) {
-        console.error('Error deleting ads:', err);
-        res.status(500).send('Error deleting ads');
-    }
-});
-
 
 
 // New route to handle comment submission
@@ -1100,10 +1036,6 @@ app.post("/blog-detail/:canonical/comment", async (req, res) => {
 
         if (!blog) {
             return res.status(404).send("Blog not found");
-        }
-
-        if (!name || !email || !comment) {
-            return res.status(404).send("please fill all the details")
         }
 
         const newComment = new Comment({
@@ -1170,20 +1102,20 @@ app.post('/submit-quote', async (req, res) => {
         return res.redirect(referrerUrl);
     }
 
-    // Remove non-digit characters for length check
-    const phoneDigits = formData.tel.replace(/[^\d+]/g, '');
+        // Remove non-digit characters for length check
+        const phoneDigits = formData.tel.replace(/[^\d+]/g, '');
 
-    if (phoneDigits.length < 8) {
-        req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
-        return res.redirect(referrerUrl);
-    }
-
-    // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-    if (!/^\+[\d\s\-()]+$/.test(formData.tel)) {
-        req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
-        return res.redirect(referrerUrl);
-    }
-
+        if (phoneDigits.length < 8) {
+            req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
+            return res.redirect(referrerUrl);
+        }
+    
+        // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+        if (!/^\+[\d\s\-()]+$/.test(formData.tel)) {
+            req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
+            return res.redirect(referrerUrl);
+        }
+    
 
     // Simple email validation
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -1268,19 +1200,19 @@ app.post('/submit-quote-lead', async (req, res) => {
     const formData = req.body;
     const referrerUrl = req.get('Referrer') || '/';
 
-    // Remove non-digit characters for length check
-    const phoneDigits = formData.number.replace(/\D/g, '');
+     // Remove non-digit characters for length check
+     const phoneDigits = formData.number.replace(/\D/g, '');
 
-    if (phoneDigits.length < 7) {
-        req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
-        return res.redirect(referrerUrl);
-    }
-
-    // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-    if (!/^[\d\s\-()]+$/.test(formData.number)) {
-        req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
-        return res.redirect(referrerUrl);
-    }
+     if (phoneDigits.length < 7) {
+         req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
+         return res.redirect(referrerUrl);
+     }
+ 
+     // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+     if (!/^[\d\s\-()]+$/.test(formData.number)) {
+         req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
+         return res.redirect(referrerUrl);
+     }
 
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
@@ -1364,74 +1296,74 @@ app.post('/submit-quote-lead', async (req, res) => {
 
 // servey code
 
-
-app.get('/survey', async (req, res) => {
+  
+app.get('/survey', async(req, res) => {
     try {
-        const questions = await Question.find();
-        const questionNumber = parseInt(req.query.q) || 1;
-        const question = questions[questionNumber - 1];
-
-        // Replace placeholders with actual values
-        let questionText = question.text;
-        if (question.placeholders && question.placeholders.length > 0) {
-            question.placeholders.forEach(placeholder => {
-                const value = req.session[placeholder] || `{${placeholder}}`;
-                questionText = questionText.replace(new RegExp(`{${placeholder}}`, 'g'), value);
-            });
-        }
-
-        res.render('servey', {
-            questionNumber,
-            question: { ...question.toObject(), text: questionText },
-            totalQuestions: questions.length,
-            title: " ",
-            description: " ",
-            keywords: " "
+      const questions = await Question.find();
+      const questionNumber = parseInt(req.query.q) || 1;
+      const question = questions[questionNumber - 1];
+  
+      // Replace placeholders with actual values
+      let questionText = question.text;
+      if (question.placeholders && question.placeholders.length > 0) {
+        question.placeholders.forEach(placeholder => {
+          const value = req.session[placeholder] || `{${placeholder}}`;
+          questionText = questionText.replace(new RegExp(`{${placeholder}}`, 'g'), value);
         });
+      }
+  
+      res.render('servey', {
+        questionNumber,
+        question: { ...question.toObject(), text: questionText },
+        totalQuestions: questions.length,
+        title: " ",
+        description: " ",
+        keywords: " "
+      });
     } catch (error) {
-        res.status(500).send('An error occurred while fetching questions');
+      res.status(500).send('An error occurred while fetching questions');
     }
-});
-
-app.post('/submit', async (req, res) => {
+  });
+  
+  app.post('/submit', async (req, res) => {
     const { questionId, answer } = req.body;
     const questionNumber = parseInt(req.body.questionNumber);
 
-
-
+   
+  
     try {
-        const questions = await Question.find();
-        let survey = await Survey.findOne({ _id: req.session.surveyId });
+      const questions = await Question.find();
+      let survey = await Survey.findOne({ _id: req.session.surveyId });
+  
+      if (!survey) {
+        survey = new Survey({
+          answers: [],
+          serialBias: Math.floor(Math.random() * questions.length) + 1
+        });
+        req.session.surveyId = survey._id;
+      }
+  
+      const existingAnswerIndex = survey.answers.findIndex(a => a.question.toString() === questionId);
+      if (existingAnswerIndex > -1) {
+        survey.answers[existingAnswerIndex].answer = answer;
+      } else {
+        survey.answers.push({ question: questionId, answer });
+      }
+  
+      await survey.save();
+  
+      // Store only firstname and company in the session
+      if (questionNumber === 1) {
+        req.session.firstname = answer;
+      } else if (questionNumber === 3) {
+        req.session.company = answer;
+      }
+  
+      if (questionNumber < questions.length) {
+        res.redirect(`/survey?q=${questionNumber + 1}`);
+      } else {
 
-        if (!survey) {
-            survey = new Survey({
-                answers: [],
-                serialBias: Math.floor(Math.random() * questions.length) + 1
-            });
-            req.session.surveyId = survey._id;
-        }
-
-        const existingAnswerIndex = survey.answers.findIndex(a => a.question.toString() === questionId);
-        if (existingAnswerIndex > -1) {
-            survey.answers[existingAnswerIndex].answer = answer;
-        } else {
-            survey.answers.push({ question: questionId, answer });
-        }
-
-        await survey.save();
-
-        // Store only firstname and company in the session
-        if (questionNumber === 1) {
-            req.session.firstname = answer;
-        } else if (questionNumber === 3) {
-            req.session.company = answer;
-        }
-
-        if (questionNumber < questions.length) {
-            res.redirect(`/survey?q=${questionNumber + 1}`);
-        } else {
-
-            const htmlTemplate = `
+        const htmlTemplate = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -1488,22 +1420,22 @@ app.post('/submit', async (req, res) => {
         </html>
       `;
 
-            Templatesender(recipients, htmlTemplate, "A client has submitted the survey");
-            res.redirect('/thank-you');
-        }
+        Templatesender(recipients, htmlTemplate, "A client has submitted the survey");
+        res.redirect('/thank-you');
+      }
     } catch (error) {
-        res.status(500).send('An error occurred while saving the survey');
+      res.status(500).send('An error occurred while saving the survey');
     }
-});
-
-app.get('/thank-you', (req, res) => {
-
-    res.render('thank-you', {
+  });
+  
+  app.get('/thank-you', (req, res) => {
+    
+    res.render('thank-you' , {
         redirectUrl: "/"
     });
 
-
-});
+   
+  });
 // servey code
 
 
