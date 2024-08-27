@@ -515,6 +515,11 @@ nav{
   margin-right: 4vw;
 }
 
+.spc{
+  width: 10vw !important;
+  height: 8vw;
+  margin-right: 4vw;
+}
 @-webkit-keyframes move {
   0% {
     -webkit-transform: translateX(0);
@@ -532,10 +537,11 @@ nav{
             transform: translateX(0);
   }
   100% {
-    -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    -webkit-transform: translateX(-200%);
+            transform: translateX(-200%);
   }
 }
+
 
 
 
