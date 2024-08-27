@@ -636,12 +636,7 @@
                 <div class="newsletter-container">
                   <h3>Subscribe to Our Newsletter</h3>
                   <p>Stay updated with our latest blog posts and news!</p>
-                  <% if (messages.success) { %>
-                    <p class="success-message"><%= messages.success %></p>
-                  <% } %>
-                  <% if (messages.error) { %>
-                    <p class="error-message"><%= messages.error %></p>
-                  <% } %>
+                 
                   <form action="/subscribe" method="POST">
                     <input type="text" name="name" placeholder="Your Name" required>
                     <input type="email" name="email" placeholder="Your Email" required>
