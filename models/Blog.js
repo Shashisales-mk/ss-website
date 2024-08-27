@@ -11,15 +11,7 @@ const blogSchema = new mongoose.Schema({
     content: [{
         heading: String,
         paragraph: String,
-        media: {
-            type: {
-                type: String
-            },
-            mediaType: {
-                type: String,
-                enum: ['image', 'video']
-            }
-        }
+        image: String
     }],
     metaTitle: { type: String, required: true },
     canonical: { type: String, required: true, unique: true,
