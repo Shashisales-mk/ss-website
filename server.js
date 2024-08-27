@@ -543,7 +543,9 @@ app.get("/blog-form", (req, res) => {
 app.get("/blog-detail/:canonical", async (req, res) => {
     try {
         const { canonical } = req.params;
-        const blog = await Blog.findOne({ canonical: canonical });
+        const blog = await Blog.findOne({ canonical: canonical.trim() });
+        const subscriptionMessage = req.query.subscriptionMessage || null;
+
         if (!blog) {
             return res.status(404).send("Blog not found");
         }
@@ -552,10 +554,14 @@ app.get("/blog-detail/:canonical", async (req, res) => {
         const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
         res.render("blogDetails", {
             ads,
-            blog,
+            blog, subscriptionMessage,
             comments: approvedComments,
             title: blog.metaTitle,
-            description: blog.metaDescription
+            description: blog.metaDescription,
+            messages: {
+                success: req.flash('success'),
+                error: req.flash('error')
+            }
         });
     } catch (err) {
         console.error(err);
@@ -1045,42 +1051,42 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
 app.post('/uploadAd', upload.single('ad'), async (req, res) => {
     const { title } = req.body;
     const newAd = new Ad({
-      filePath: `/uploads/${req.file.filename}`,
-      title
+        filePath: `/uploads/${req.file.filename}`,
+        title
     });
-  
+
     try {
-      await newAd.save(); 
-      res.redirect('/all-blogs-list');
+        await newAd.save();
+        res.redirect('/all-blogs-list');
     } catch (err) {
-      res.status(500).send('Error saving ad');
+        res.status(500).send('Error saving ad');
     }
-  });
-  app.post('/delete-ads', async (req, res) => {
+});
+app.post('/delete-ads', async (req, res) => {
     const adIds = req.body.adIds;
-  
+
     if (!adIds || adIds.length === 0) {
-      return res.redirect('/admin');
+        return res.redirect('/admin');
     }
-  
+
     try {
-      const adsToDelete = await Ad.find({ _id: { $in: adIds } });
-  
-      adsToDelete.forEach(ad => {
-        const filePath = `./public${ad.filePath}`;
-        if (fs.existsSync(filePath)) {
-          fs.unlinkSync(filePath); 
-        }
-      });
-  
-      await Ad.deleteMany({ _id: { $in: adIds } });
-  
-      res.redirect('/all-blogs-list'); 
+        const adsToDelete = await Ad.find({ _id: { $in: adIds } });
+
+        adsToDelete.forEach(ad => {
+            const filePath = `./public${ad.filePath}`;
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        });
+
+        await Ad.deleteMany({ _id: { $in: adIds } });
+
+        res.redirect('/all-blogs-list');
     } catch (err) {
-      console.error('Error deleting ads:', err);
-      res.status(500).send('Error deleting ads');
+        console.error('Error deleting ads:', err);
+        res.status(500).send('Error deleting ads');
     }
-  });
+});
 
 
 
