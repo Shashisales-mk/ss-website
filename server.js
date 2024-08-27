@@ -28,6 +28,7 @@ const Story = require('./models/TestimonialPage');
 
 const PaymentDetails = require('./models/PaymentDetails');
 const Comment = require('./models/Comment');
+const Ad = require('./models/Ad');
 
 const passport = require('./config/passport');
 
@@ -278,11 +279,13 @@ app.get("/", async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
     const successMessage = req.session.successMessage || null;
     const errorMessage = req.session.errorMessage || null;
+    const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
     console.log('successMessage:', successMessage); // Log the value of successMessage
     console.log('errorMessage:', errorMessage); // Log the value of errorMessage
     req.session.successMessage = null; // Clear the success message after displaying it
     req.session.errorMessage = null; // Clear the error message after displaying it
     res.render("home", {
+        ads,
         successMessage,
         errorMessage,
         blogs,
@@ -531,24 +534,19 @@ app.get("/blog-form", (req, res) => {
 app.get("/blog-detail/:canonical", async (req, res) => {
     try {
         const { canonical } = req.params;
-        const blog = await Blog.findOne({ canonical: canonical.trim() });
-        const subscriptionMessage = req.query.subscriptionMessage || null;
-
+        const blog = await Blog.findOne({ canonical: canonical });
         if (!blog) {
             return res.status(404).send("Blog not found");
         }
 
         const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
-
+        const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
         res.render("blogDetails", {
-            blog,subscriptionMessage, 
+            ads,
+            blog,
             comments: approvedComments,
             title: blog.metaTitle,
-            description: blog.metaDescription,
-            messages: {
-                success: req.flash('success'),
-                error: req.flash('error')
-              }
+            description: blog.metaDescription
         });
     } catch (err) {
         console.error(err);
@@ -786,9 +784,11 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
     const subscribers = await Subscriber.find();
+    const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
 
     // console.log(AllBlogs);
     res.render("allBlogs", {
+        ads,
         acomments: approvedComments,
         comments: pendingComments,
         testimonials,
@@ -979,6 +979,51 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
         res.status(500).send(`Internal Server Error: ${err.message}`);
     }
 });
+
+
+
+
+// Route for handling ads upload
+app.post('/uploadAd', upload.single('ad'), async (req, res) => {
+    const { title } = req.body;
+    const newAd = new Ad({
+      filePath: `/uploads/${req.file.filename}`,
+      title
+    });
+  
+    try {
+      await newAd.save(); 
+      res.redirect('/all-blogs-list');
+    } catch (err) {
+      res.status(500).send('Error saving ad');
+    }
+  });
+  app.post('/delete-ads', async (req, res) => {
+    const adIds = req.body.adIds;
+  
+    if (!adIds || adIds.length === 0) {
+      return res.redirect('/admin');
+    }
+  
+    try {
+      const adsToDelete = await Ad.find({ _id: { $in: adIds } });
+  
+      adsToDelete.forEach(ad => {
+        const filePath = `./public${ad.filePath}`;
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath); 
+        }
+      });
+  
+      await Ad.deleteMany({ _id: { $in: adIds } });
+  
+      res.redirect('/all-blogs-list'); 
+    } catch (err) {
+      console.error('Error deleting ads:', err);
+      res.status(500).send('Error deleting ads');
+    }
+  });
+
 
 
 // popular button routes
