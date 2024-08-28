@@ -13,6 +13,7 @@ const blogSchema = new mongoose.Schema({
         paragraph: String,
         image: String
     }],
+    videoUrl: { type: String },
     metaTitle: { type: String, required: true },
     canonical: { type: String, required: true, unique: true,
         trim: true },

@@ -9,7 +9,9 @@
     </title>
     <meta name="description" content="<%= blog.metaDescription %>">
     <meta name="keywords" content="<%= blog.metaKeywords %>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="canonical" href="https://www.shashisales.com/blog-detail/<%= blog.canonical %>">
     <link rel="stylesheet" href="/css/blog.css">
     <link rel="stylesheet" href="/css/home.css">
@@ -117,380 +119,450 @@
             margin-right: 1vw;
         }
 
-.shareOptions {
-    position: absolute;
-    right: 10%;
-    display: none;
-}
+        .shareOptions {
+            position: absolute;
+            right: 10%;
+            display: none;
+        }
 
-.share-item {
-    position: absolute;
-    list-style-type: none;
-    transition: all 0.5s ease-out;
-    opacity: 0;
-}
+        .share-item {
+            position: absolute;
+            list-style-type: none;
+            transition: all 0.5s ease-out;
+            opacity: 0;
+        }
 
-.share-item a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    color: #333;
-    text-decoration: none;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
+        .share-item a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
 
-.share-item a:hover {
-    background-color: #e0e0e0;
-}
-.comments-sec{
-    padding-inline: 5vw;
-}
-.user-comments{
-    padding: 2vw 0;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 1vw;
-}
-.user-comments img{
-    /* margin: auto; */
-    height: 4vw;
-    width: 4vw;
-    border-radius: 50%;
-    border: 3px solid grey;
-}
-.comments h3{
-    font-size: 2vw;
-}
-.comment{
-    border: 5px solid #c0b9b963;
-    border-radius: 0vw;
-    padding: 1vw;
-    width: 32%;
-    display: grid;
-    gap: 0.7vw;
-}
-.comment h4{
-    font-size: 1.4vw;
-    text-align: center;
-}
-.com-des{
-    display: grid;
-    gap: 0.7vw;
-}
-.com-des p{
-    font-size: 1.3vw;
-    height: 6vw;
-}
-.comment small{
-    text-align: end;
-    color: #607D8B;
-}
-.comment-form h3{
-    font-size: 2vw;
-    margin-bottom: 1vw;
-}
-.comment-form{
-    padding-bottom: 3vw;
-    width: 50%;
-}
-.comment-form form{
-    display: grid;
-    gap: 1vw;
-}
-.comment-form form input, .comment-form form textarea{
-    outline: none;
-    width: 100%;
-    border: 0;
-    background: #afbabe69;
-    padding: 0.7vw 1vw;
-    font-size: 1vw;
-    border-radius: 0.3vw;
-}
-.comment-form form textarea{
-    width: 100% !important;
-    height: 10vw;
-}
-.comment-form form button{
-    color: black;
-    background: #C4C800;
-    font-size: 1.2vw;
-    font-weight: 600;
-    padding: 1vw 1.2vw;
-    border: 0;
-    border-radius: 3vw;
-}
-.comment-form form button:hover{
-    cursor: pointer;
-}
-/* style="display: flex;justify-content: space-between;align-items: center; */
-.cmnts{
-    display: flex;
-    justify-content:space-between;
-}
-@media screen and (max-width: 1024px){
-    .share-item a {
-        width: 30px;
-        height: 30px;
-    }
-    .shareOptions li:nth-child(1){
-        transform: rotate(0deg) translate(70px, 0px) rotate(0deg) !important;
-    }
-    .shareOptions li:nth-child(2){
-        transform: rotate(40deg) translate(51.2836px, 41.423px) rotate(-40deg) !important;
-    }
-    .shareOptions li:nth-child(3){
-        transform: rotate(80deg) translate(12.8919px, 68.7846px) rotate(-80deg) !important;
-    }
-    .shareOptions li:nth-child(4){
-        transform: rotate(120deg) translate(-30px, 59.282px) rotate(-120deg) !important;
-    }
-    .shareOptions li:nth-child(5){
-        transform: rotate(160deg) translate(-65.1754px, 26.3616px) rotate(-160deg) !important;
-    }
-    .shareOptions li:nth-child(6){
-        transform: rotate(200deg) translate(-65.1754px, -17.3616px) rotate(-200deg) !important;
-    }
-    .shareOptions li:nth-child(7){
-        transform: rotate(240deg) translate(-31px, -65.282px) rotate(-240deg) !important;
-    }
-    .shareOptions li:nth-child(8){
-        transform: rotate(280deg) translate(7.8919px, -68.7846px) rotate(-280deg) !important;
-    }
-    .shareOptions li:nth-child(9){
-        transform: rotate(320deg) translate(43.2836px, -37.423px) rotate(-320deg) !important;
-    }
-}
-@media screen and (max-width: 768px) {
-    .share-item a {
-        width: 22px;
-        height: 22px;
-    }
-    .shareOptions {
-        position: absolute;
-        right: 11%;
-        display: none;
-    }
-    .shareOptions li:nth-child(1){
-        transform: rotate(0deg) translate(60px, 0px) rotate(0deg) !important;
-    }
-    .shareOptions li:nth-child(2){
-        transform: rotate(40deg) translate(44.2836px, 34.423px) rotate(-40deg) !important;
-    }
-    .shareOptions li:nth-child(3){
-        transform: rotate(80deg) translate(12.8919px, 58.7846px) rotate(-80deg) !important;
-    }
-    .shareOptions li:nth-child(4){
-        transform: rotate(120deg) translate(-21px, 40.282px) rotate(-120deg) !important;
-    }
-    .shareOptions li:nth-child(5){
-        transform: rotate(160deg) translate(-47.1754px, 16.3616px) rotate(-160deg) !important;
-    }
-    .shareOptions li:nth-child(6){
-        transform: rotate(200deg) translate(-57.1754px, -15.3616px) rotate(-200deg) !important;
-    }
-    .shareOptions li:nth-child(7){
-        transform: rotate(240deg) translate(-31px, -46.282px) rotate(-240deg) !important;
-    }
-    .shareOptions li:nth-child(8){
-        transform: rotate(280deg) translate(4.8919px, -55.7846px) rotate(-280deg) !important;
-    }
-    .shareOptions li:nth-child(9){
-        transform: rotate(320deg) translate(34.2836px, -28.423px) rotate(-320deg) !important;
-    }
-}
-@media screen and (max-width: 600px){
-    .comment {
-        border: 5px solid #c0b9b963;
-        border-radius: 0vw;
-        padding: 1vw;
-        width: 48%;
-        display: grid;
-        gap: 0.7vw;
-    }
-    .user-comments img {
-        /* margin: auto; */
-        height: 5vw;
-        width: 5vw;
-        border-radius: 50%;
-        border: 3px solid grey;
-    }
-    .comment h4 {
-        font-size: 2.4vw;
-        text-align: center;
-    }
-    .com-des p {
-        font-size: 2vw;
-        height: 11vw;
-    }
-    .comment small {
-        font-size: 1.5vw;
-        text-align: end;
-        color: #607D8B;
-    }
-    .comment-form form input, .comment-form form textarea {
-        outline: none;
-        width: 100%;
-        border: 0;
-        background: #afbabe69;
-        padding: 1.7vw 2vw;
-        font-size: 3vw;
-        border-radius: 0.3vw;
-    }
-    .comment-form {
-        padding: 3vw 0;
-        width: 80%;
-    }
-    .comment-form form button {
-        color: black;
-        background: #C4C800;
-        font-size: 2.8vw;
-        font-weight: 550;
-        padding: 2vw 3vw;
-        border: 0;
-        border-radius: 4vw;
-    }
-    .comments h3, .comment-form h3{
-        font-size: 5vw !important;
-    }
-    .shareButton {
-        position: relative;
-        z-index: 1000;
-        padding: 2vw;
-        font-size: 3vw;
-        border-radius: 50%;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        margin-right: 8vw;
-    }
-    .shareOptions {
-        position: absolute;
-        right: 22%;
-        display: none;
-    }
-    .share-item a {
-        width: 18px;
-        height: 18px;
-    }
-    .shareOptions li:nth-child(1){
-        transform: rotate(0deg) translate(50px, 0px) rotate(0deg) !important;
-    }
-    .shareOptions li:nth-child(2){
-        transform: rotate(40deg) translate(36.2836px, 25.423px) rotate(-40deg) !important;
-    }
-    .shareOptions li:nth-child(3){
-        transform: rotate(80deg) translate(11.8919px, 42.7846px) rotate(-80deg) !important;
-    }
-    .shareOptions li:nth-child(4){
-        transform: rotate(120deg) translate(-15px, 35.282px) rotate(-120deg) !important;
-    }
-    .shareOptions li:nth-child(5){
-        transform: rotate(160deg) translate(-38.1754px, 14.3616px) rotate(-160deg) !important;
-    }
-    .shareOptions li:nth-child(6){
-        transform: rotate(200deg) translate(-49.1754px, -11.3616px) rotate(-200deg) !important;
-    }
-    .shareOptions li:nth-child(7){
-        transform: rotate(240deg) translate(-25px, -39.282px) rotate(-240deg) !important;
-    }
-    .shareOptions li:nth-child(8){
-        transform: rotate(280deg) translate(1.8919px, -42.7846px) rotate(-280deg) !important;
-    }
-    .shareOptions li:nth-child(9){
-        transform: rotate(320deg) translate(25.2836px, -23.423px) rotate(-320deg) !important;
-    }
-}
+        .share-item a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .comments-sec {
+            padding-inline: 5vw;
+        }
+
+        .user-comments {
+            padding: 2vw 0;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 1vw;
+        }
+
+        .user-comments img {
+            /* margin: auto; */
+            height: 4vw;
+            width: 4vw;
+            border-radius: 50%;
+            border: 3px solid grey;
+        }
+
+        .comments h3 {
+            font-size: 2vw;
+        }
+
+        .comment {
+            border: 5px solid #c0b9b963;
+            border-radius: 0vw;
+            padding: 1vw;
+            width: 32%;
+            display: grid;
+            gap: 0.7vw;
+        }
+
+        .comment h4 {
+            font-size: 1.4vw;
+            text-align: center;
+        }
+
+        .com-des {
+            display: grid;
+            gap: 0.7vw;
+        }
+
+        .com-des p {
+            font-size: 1.3vw;
+            height: 6vw;
+        }
+
+        .comment small {
+            text-align: end;
+            color: #607D8B;
+        }
+
+        .comment-form h3 {
+            font-size: 2vw;
+            margin-bottom: 1vw;
+        }
+
+        .comment-form {
+            padding-bottom: 3vw;
+            width: 50%;
+        }
+
+        .comment-form form {
+            display: grid;
+            gap: 1vw;
+        }
+
+        .comment-form form input,
+        .comment-form form textarea {
+            outline: none;
+            width: 100%;
+            border: 0;
+            background: #afbabe69;
+            padding: 0.7vw 1vw;
+            font-size: 1vw;
+            border-radius: 0.3vw;
+        }
+
+        .comment-form form textarea {
+            width: 100% !important;
+            height: 10vw;
+        }
+
+        .comment-form form button {
+            color: black;
+            background: #C4C800;
+            font-size: 1.2vw;
+            font-weight: 600;
+            padding: 1vw 1.2vw;
+            border: 0;
+            border-radius: 3vw;
+        }
+
+        .comment-form form button:hover {
+            cursor: pointer;
+        }
+
+        /* style="display: flex;justify-content: space-between;align-items: center; */
+        .cmnts {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .share-item a {
+                width: 30px;
+                height: 30px;
+            }
+
+            .shareOptions li:nth-child(1) {
+                transform: rotate(0deg) translate(70px, 0px) rotate(0deg) !important;
+            }
+
+            .shareOptions li:nth-child(2) {
+                transform: rotate(40deg) translate(51.2836px, 41.423px) rotate(-40deg) !important;
+            }
+
+            .shareOptions li:nth-child(3) {
+                transform: rotate(80deg) translate(12.8919px, 68.7846px) rotate(-80deg) !important;
+            }
+
+            .shareOptions li:nth-child(4) {
+                transform: rotate(120deg) translate(-30px, 59.282px) rotate(-120deg) !important;
+            }
+
+            .shareOptions li:nth-child(5) {
+                transform: rotate(160deg) translate(-65.1754px, 26.3616px) rotate(-160deg) !important;
+            }
+
+            .shareOptions li:nth-child(6) {
+                transform: rotate(200deg) translate(-65.1754px, -17.3616px) rotate(-200deg) !important;
+            }
+
+            .shareOptions li:nth-child(7) {
+                transform: rotate(240deg) translate(-31px, -65.282px) rotate(-240deg) !important;
+            }
+
+            .shareOptions li:nth-child(8) {
+                transform: rotate(280deg) translate(7.8919px, -68.7846px) rotate(-280deg) !important;
+            }
+
+            .shareOptions li:nth-child(9) {
+                transform: rotate(320deg) translate(43.2836px, -37.423px) rotate(-320deg) !important;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .share-item a {
+                width: 22px;
+                height: 22px;
+            }
+
+            .shareOptions {
+                position: absolute;
+                right: 11%;
+                display: none;
+            }
+
+            .shareOptions li:nth-child(1) {
+                transform: rotate(0deg) translate(60px, 0px) rotate(0deg) !important;
+            }
+
+            .shareOptions li:nth-child(2) {
+                transform: rotate(40deg) translate(44.2836px, 34.423px) rotate(-40deg) !important;
+            }
+
+            .shareOptions li:nth-child(3) {
+                transform: rotate(80deg) translate(12.8919px, 58.7846px) rotate(-80deg) !important;
+            }
+
+            .shareOptions li:nth-child(4) {
+                transform: rotate(120deg) translate(-21px, 40.282px) rotate(-120deg) !important;
+            }
+
+            .shareOptions li:nth-child(5) {
+                transform: rotate(160deg) translate(-47.1754px, 16.3616px) rotate(-160deg) !important;
+            }
+
+            .shareOptions li:nth-child(6) {
+                transform: rotate(200deg) translate(-57.1754px, -15.3616px) rotate(-200deg) !important;
+            }
+
+            .shareOptions li:nth-child(7) {
+                transform: rotate(240deg) translate(-31px, -46.282px) rotate(-240deg) !important;
+            }
+
+            .shareOptions li:nth-child(8) {
+                transform: rotate(280deg) translate(4.8919px, -55.7846px) rotate(-280deg) !important;
+            }
+
+            .shareOptions li:nth-child(9) {
+                transform: rotate(320deg) translate(34.2836px, -28.423px) rotate(-320deg) !important;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .comment {
+                border: 5px solid #c0b9b963;
+                border-radius: 0vw;
+                padding: 1vw;
+                width: 48%;
+                display: grid;
+                gap: 0.7vw;
+            }
+
+            .user-comments img {
+                /* margin: auto; */
+                height: 5vw;
+                width: 5vw;
+                border-radius: 50%;
+                border: 3px solid grey;
+            }
+
+            .comment h4 {
+                font-size: 2.4vw;
+                text-align: center;
+            }
+
+            .com-des p {
+                font-size: 2vw;
+                height: 11vw;
+            }
+
+            .comment small {
+                font-size: 1.5vw;
+                text-align: end;
+                color: #607D8B;
+            }
+
+            .comment-form form input,
+            .comment-form form textarea {
+                outline: none;
+                width: 100%;
+                border: 0;
+                background: #afbabe69;
+                padding: 1.7vw 2vw;
+                font-size: 3vw;
+                border-radius: 0.3vw;
+            }
+
+            .comment-form {
+                padding: 3vw 0;
+                width: 80%;
+            }
+
+            .comment-form form button {
+                color: black;
+                background: #C4C800;
+                font-size: 2.8vw;
+                font-weight: 550;
+                padding: 2vw 3vw;
+                border: 0;
+                border-radius: 4vw;
+            }
+
+            .comments h3,
+            .comment-form h3 {
+                font-size: 5vw !important;
+            }
+
+            .shareButton {
+                position: relative;
+                z-index: 1000;
+                padding: 2vw;
+                font-size: 3vw;
+                border-radius: 50%;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                cursor: pointer;
+                margin-right: 8vw;
+            }
+
+            .shareOptions {
+                position: absolute;
+                right: 22%;
+                display: none;
+            }
+
+            .share-item a {
+                width: 18px;
+                height: 18px;
+            }
+
+            .shareOptions li:nth-child(1) {
+                transform: rotate(0deg) translate(50px, 0px) rotate(0deg) !important;
+            }
+
+            .shareOptions li:nth-child(2) {
+                transform: rotate(40deg) translate(36.2836px, 25.423px) rotate(-40deg) !important;
+            }
+
+            .shareOptions li:nth-child(3) {
+                transform: rotate(80deg) translate(11.8919px, 42.7846px) rotate(-80deg) !important;
+            }
+
+            .shareOptions li:nth-child(4) {
+                transform: rotate(120deg) translate(-15px, 35.282px) rotate(-120deg) !important;
+            }
+
+            .shareOptions li:nth-child(5) {
+                transform: rotate(160deg) translate(-38.1754px, 14.3616px) rotate(-160deg) !important;
+            }
+
+            .shareOptions li:nth-child(6) {
+                transform: rotate(200deg) translate(-49.1754px, -11.3616px) rotate(-200deg) !important;
+            }
+
+            .shareOptions li:nth-child(7) {
+                transform: rotate(240deg) translate(-25px, -39.282px) rotate(-240deg) !important;
+            }
+
+            .shareOptions li:nth-child(8) {
+                transform: rotate(280deg) translate(1.8919px, -42.7846px) rotate(-280deg) !important;
+            }
+
+            .shareOptions li:nth-child(9) {
+                transform: rotate(320deg) translate(25.2836px, -23.423px) rotate(-320deg) !important;
+            }
+        }
 
 
-.newsletter-subscription {
-  background-color: #f8f9fa;
-  padding: 40px 0;
-  margin-top: 40px;
-}
+        .newsletter-subscription {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
 
-.newsletter-container {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
 
-.newsletter-subscription h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
-  color: #333;
-}
+        .newsletter-subscription h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
 
-.newsletter-subscription p {
-  font-size: 16px;
-  margin-bottom: 20px;
-  color: #666;
-}
+        .newsletter-subscription p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #666;
+        }
 
-.newsletter-subscription form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
+        .newsletter-subscription form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
 
-.newsletter-subscription input[type="text"],
-.newsletter-subscription input[type="email"] {
-    width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
+        .newsletter-subscription input[type="text"],
+        .newsletter-subscription input[type="email"] {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
 
-.newsletter-subscription button {
-    width: 150px;
-  padding: 10px 15px;
-  background-color: #C4C800;
-  color: black;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+        .newsletter-subscription button {
+            width: 150px;
+            padding: 10px 15px;
+            background-color: #C4C800;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-.newsletter-subscription button:hover {
-  background-color: #0056b3;
-}
+        .newsletter-subscription button:hover {
+            background-color: #0056b3;
+        }
 
-.success-message,
-.error-message {
-    display: none;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-}
+        .success-message,
+        .error-message {
+            display: none;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
 
-.success-message {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
 
-.error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
 
-@media (max-width: 768px) {
-  .newsletter-container {
-    padding: 0 20px;
-  }
-}
-</style>
+        @media (max-width: 768px) {
+            .newsletter-container {
+                padding: 0 20px;
+            }
+        }
+
+        .video-container{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+    </style>
 
 </head>
 
@@ -514,71 +586,92 @@
                     <!-- Share options will be inserted here -->
                 </div>
             </div>
-            
+
             <!-- blog share option -->
 
 
             <section class="blog-content">
-                <p>
-                    <%= blog.shortDescription %>
-                </p>
+                <p><%= blog.shortDescription %></p>
+                
+                
+            
                 <div class="upk">
                     <div class="ipk">
-                        <% blog.content.forEach((contentItem, index)=> { %>
-                        <div
-                            class="image-container<%= index % 2 === 0 ? '1' : '2' %> ic <%= !contentItem.image ? 'no-image' : '' %>">
-                            <div class="ic-text">
-                                <h3>
-                                    <%= contentItem.heading %>
-                                </h3>
-                                <p>
-                                    <%= contentItem.paragraph %>
-                                </p>
-                            </div>
-                       
-                                <div class="ic-img">
-                                    <img src="<%= contentItem.image %>" alt="Blog Image">
+                        <% blog.content.forEach((contentItem, index) => { %>
+                            <div class="image-container<%= index % 2 === 0 ? '1' : '2' %> ic <%= !contentItem.image ? 'no-image' : '' %>">
+                                <div class="ic-text">
+                                    <h3><%= contentItem.heading %></h3>
+                                    <p><%= contentItem.paragraph %></p>
                                 </div>
-                          
-                        </div>
+                                <% if (contentItem.image) { %>
+                                    <div class="ic-img">
+                                        <img src="<%= contentItem.image %>" alt="Blog Image">
+                                    </div>
+                                <% } %>
+
+                                
+                            </div>
+
+                            <% if (index === 0 && blog.videoUrl) { %>
+                                <div class="video-container">
+                                    <% if (blog.videoUrl.includes('youtube.com') || blog.videoUrl.includes('youtu.be')) { %>
+                                        <iframe width="450px" height="240px" src="https://www.youtube.com/embed/<%= videoHelpers.getYouTubeId(blog.videoUrl) %>"
+                                                frameborder="0" 
+                                                allowfullscreen
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                                        </iframe>
+                                    <% } else { %>
+                                        <iframe width="450px" height="240px" src="<%= blog.videoUrl %>" 
+                                                frameborder="0" 
+                                                allowfullscreen
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                                        </iframe>
+                                    <% } %>
+                                </div>
+                            <% } %>
                         <% }) %>
                     </div>
-                        <div id="touch" class="ad-frame">
-                            <!-- <h1>Ads Display</h1> -->
-                            <div id="cii" class="ci">
-                                <div id="show-ad-title" style="display: flex;">
-                                    <% ads.forEach(ad => { %>
-                                        <span id="ad-title"><%= ad.title %></span>
-                                    <% }) %>
-                                    <span>i</span>
-                                </div>
-                                <span id="crss">&times;</span>
-                            </div>
-                            <div id="ci2" class="ad-frame-in">
-                                <% ads.forEach(ad => { %>
-                          
-                                    <% if (ad.filePath.endsWith('.mp4')) { %>
-                                      <video controls width="300">
-                                        <source src="<%= ad.filePath %>" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                      </video>
-                                    <% } else { %>
-                                      <img style="width: 100%;" src="<%= ad.filePath %>" width="300" alt="Ad Image">
-                                    <% } %>
-                                  <% }) %>
-                            </div>
-                        </div>
+                    
+<div id="touch" class="ad-frame">
+    <!-- <h1>Ads Display</h1> -->
+    <div id="cii" class="ci">
+        <div id="show-ad-title" style="display: flex;">
+            <% ads.forEach(ad => { %>
+                <span id="ad-title"><%= ad.title %></span>
+            <% }) %>
+            <span>i</span>
+        </div>
+        <span id="crss">&times;</span>
+    </div>
+    <div id="ci2" class="ad-frame-in">
+        <% ads.forEach(ad => { %>
+  
+            <% if (ad.filePath.endsWith('.mp4')) { %>
+              <a href="<%= ad.linkPath %>">
+                <video controls width="300">
+                    <source src="<%= ad.filePath %>" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+              </a>
+            <% } else { %>
+              <a href="<%= ad.linkPath %>">
+                <img style="width: 100%;" src="<%= ad.filePath %>" width="300" alt="Ad Image">
+              </a>
+            <% } %>
+          <% }) %>
+    </div>
+</div>
+
                 </div>
-
-
-                        <div class="contentText">
-                            <%- blog.contentText %>
-                        </div>
+            
+                <div class="contentText">
+                    <%- blog.contentText %>
+                </div>
             </section>
 
 
 
-            
+
             <div class="comments-sec">
                 <section class="comments">
                     <div class="cmnts">
@@ -607,11 +700,11 @@
                                         </small>
                                     </div>
                                 </div>
-                            <% }) %>
+                                <% }) %>
                         </div>
-                                <% } else { %>
-                                    <p>No comments yet.</p>
-                                    <% } %>
+                        <% } else { %>
+                            <p>No comments yet.</p>
+                            <% } %>
                 </section>
 
 
@@ -620,12 +713,12 @@
                     <form action="/blog-detail/<%= blog.canonical %>/comment" method="POST">
                         <p style="display: flex;gap: 1vw;">
                             <input type="text" name="name" placeholder="Your Name" required maxlength="25"
-                            oninput="updateCharCount(this)">
+                                oninput="updateCharCount(this)">
                             <input type="email" name="email" placeholder="Your Email" required>
                         </p>
                         <p><textarea name="comment" placeholder="Your Comment" required maxlength="160"
-                            oninput="updateCharCount(this)"></textarea></p>
-                            <span id="charCount">0 / 160 characters</span>
+                                oninput="updateCharCount(this)"></textarea></p>
+                        <span id="charCount">0 / 160 characters</span>
                         <p><button type="submit">Submit Comment</button></p>
                     </form>
                 </section>
@@ -634,17 +727,17 @@
 
             <section class="newsletter-subscription">
                 <div class="newsletter-container">
-                  <h3>Subscribe to Our Newsletter</h3>
-                  <p>Stay updated with our latest blog posts and news!</p>
-                 
-                  <form action="/subscribe" method="POST">
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>">
-                    <button type="submit">Subscribe</button>
-                  </form>
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <p>Stay updated with our latest blog posts and news!</p>
+
+                    <form action="/subscribe" method="POST">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>">
+                        <button type="submit">Subscribe</button>
+                    </form>
                 </div>
-              </section>
+            </section>
 
 
             <%- include("./includes/footer") %>
@@ -666,9 +759,20 @@
                 const currentLength = input.value.length;
                 document.getElementById("charCount").innerText = `${currentLength} / ${maxLength} characters`;
             }
+            function getYouTubeId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            }
+
+            function getVimeoId(url) {
+                const regExp = /vimeo\.com\/(\d+)/;
+                const match = url.match(regExp);
+                return match ? match[1] : null;
+            }
         </script>
 
-        
+
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -740,146 +844,146 @@
             });
         </script>
 
-<script>
-    const shareButtons = document.querySelectorAll('.shareButton');
-const shareOptionsContainers = document.querySelectorAll('.shareOptions');
+        <script>
+            const shareButtons = document.querySelectorAll('.shareButton');
+            const shareOptionsContainers = document.querySelectorAll('.shareOptions');
 
-const shareLinks = [
-    { name: 'Facebook', url: 'https://www.facebook.com/sharer/sharer.php?u=', svg: '<svg viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>' },
-    { name: 'Twitter', url: 'https://twitter.com/messages/compose?text=', svg: '<svg viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/></svg>' },
-    { name: 'WhatsApp', url: 'https://wa.me/?text=', svg: '<svg viewBox="0 0 24 24"><path d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z"/></svg>' },
-    { name: 'Telegram', url: 'https://t.me/share/url?url=', svg: '<svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/messaging/', svg: '<svg viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg>' },
-    { name: 'Email', url: 'mailto:?body=', svg: '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>' },
-    { name: 'SMS', url: 'sms:?body=', svg: '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>' },
-    { name: 'Instagram', url: 'https://www.instagram.com/', svg: '<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>' },
-    { name: 'Copy Link', action: 'copyLink', svg: '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>' }
-];
+            const shareLinks = [
+                { name: 'Facebook', url: 'https://www.facebook.com/sharer/sharer.php?u=', svg: '<svg viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>' },
+                { name: 'Twitter', url: 'https://twitter.com/messages/compose?text=', svg: '<svg viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/></svg>' },
+                { name: 'WhatsApp', url: 'https://wa.me/?text=', svg: '<svg viewBox="0 0 24 24"><path d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z"/></svg>' },
+                { name: 'Telegram', url: 'https://t.me/share/url?url=', svg: '<svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>' },
+                { name: 'LinkedIn', url: 'https://www.linkedin.com/messaging/', svg: '<svg viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg>' },
+                { name: 'Email', url: 'mailto:?body=', svg: '<svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>' },
+                { name: 'SMS', url: 'sms:?body=', svg: '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>' },
+                { name: 'Instagram', url: 'https://www.instagram.com/', svg: '<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>' },
+                { name: 'Copy Link', action: 'copyLink', svg: '<svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>' }
+            ];
 
-function createShareOptions(container) {
-    shareLinks.forEach((link) => {
-        const li = document.createElement('li');
-        li.className = 'share-item';
-        
-        const a = document.createElement('a');
-        a.href = link.url ? link.url + encodeURIComponent(window.location.href) : '#';
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.innerHTML = link.svg;
-        
-        a.onclick = (e) => {
-            e.preventDefault();
-            handleShare(link);
-        };
-        
-        li.appendChild(a);
-        container.appendChild(li);
-    });
-}
+            function createShareOptions(container) {
+                shareLinks.forEach((link) => {
+                    const li = document.createElement('li');
+                    li.className = 'share-item';
 
-// Function to detect if the device is mobile
-function isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-}
+                    const a = document.createElement('a');
+                    a.href = link.url ? link.url + encodeURIComponent(window.location.href) : '#';
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.innerHTML = link.svg;
 
-function handleShare(link) {
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(document.title);
-    switch(link.name) {
-        case 'Facebook':
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 'facebook-share-dialog', 'width=626,height=436');
-            break;
-        case 'Twitter':
-            window.open(`https://twitter.com/messages/compose?text=${title}%20${url}`, 'twitter-share-dialog', 'width=626,height=436');
-            break;
-        case 'LinkedIn':
-            window.open(`https://www.linkedin.com/messaging/`, 'linkedin-share-dialog', 'width=626,height=436');
-            break;
-            case 'Instagram':
-            if (isMobileDevice() && navigator.share) {
-                navigator.share({
-                    title: title,
-                    url: url
-                }).then(() => {
-                    console.log('Thanks for sharing!');
-                }).catch(console.error);
-            } else {
-                alert("Direct sharing to Instagram is not available on this device. Please copy the link and share it manually on Instagram.");
-                copyLink();
+                    a.onclick = (e) => {
+                        e.preventDefault();
+                        handleShare(link);
+                    };
+
+                    li.appendChild(a);
+                    container.appendChild(li);
+                });
             }
-            break;
-        case 'Copy Link':
-            copyLink();
-            break;
-        default:
-            window.open(link.url + url, '_blank');
-    }
-}
 
-function toggleShareOptions(event) {
-    const button = event.currentTarget;
-    const container = button.nextElementSibling;
-    const items = container.querySelectorAll('.share-item');
-    const angleBetween = 360 / items.length;
-    const radius = 80; // Adjust this value to change the circle size
+            // Function to detect if the device is mobile
+            function isMobileDevice() {
+                return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+            }
 
-    const isOpen = container.style.display === 'block';
+            function handleShare(link) {
+                const url = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent(document.title);
+                switch (link.name) {
+                    case 'Facebook':
+                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 'facebook-share-dialog', 'width=626,height=436');
+                        break;
+                    case 'Twitter':
+                        window.open(`https://twitter.com/messages/compose?text=${title}%20${url}`, 'twitter-share-dialog', 'width=626,height=436');
+                        break;
+                    case 'LinkedIn':
+                        window.open(`https://www.linkedin.com/messaging/`, 'linkedin-share-dialog', 'width=626,height=436');
+                        break;
+                    case 'Instagram':
+                        if (isMobileDevice() && navigator.share) {
+                            navigator.share({
+                                title: title,
+                                url: url
+                            }).then(() => {
+                                console.log('Thanks for sharing!');
+                            }).catch(console.error);
+                        } else {
+                            alert("Direct sharing to Instagram is not available on this device. Please copy the link and share it manually on Instagram.");
+                            copyLink();
+                        }
+                        break;
+                    case 'Copy Link':
+                        copyLink();
+                        break;
+                    default:
+                        window.open(link.url + url, '_blank');
+                }
+            }
 
-    items.forEach((item, index) => {
-        if (isOpen) {
-            item.style.transform = `rotate(0deg) translate(0) rotate(0deg)`;
-            item.style.opacity = '0';
-        } else {
-            const angle = index * angleBetween;
-            const x = radius * Math.cos(angle * Math.PI / 180);
-            const y = radius * Math.sin(angle * Math.PI / 180);
-            item.style.transform = `rotate(${angle}deg) translate(${x}px, ${y}px) rotate(-${angle}deg)`;
-            item.style.opacity = '1';
-        }
-    });
+            function toggleShareOptions(event) {
+                const button = event.currentTarget;
+                const container = button.nextElementSibling;
+                const items = container.querySelectorAll('.share-item');
+                const angleBetween = 360 / items.length;
+                const radius = 80; // Adjust this value to change the circle size
 
-    container.style.display = isOpen ? 'none' : 'block';
-}
+                const isOpen = container.style.display === 'block';
 
-function copyLink() {
-    navigator.clipboard.writeText(window.location.href)
-        .then(() => alert('Link copied to clipboard!'))
-        .catch(err => console.error('Failed to copy: ', err));
-}
+                items.forEach((item, index) => {
+                    if (isOpen) {
+                        item.style.transform = `rotate(0deg) translate(0) rotate(0deg)`;
+                        item.style.opacity = '0';
+                    } else {
+                        const angle = index * angleBetween;
+                        const x = radius * Math.cos(angle * Math.PI / 180);
+                        const y = radius * Math.sin(angle * Math.PI / 180);
+                        item.style.transform = `rotate(${angle}deg) translate(${x}px, ${y}px) rotate(-${angle}deg)`;
+                        item.style.opacity = '1';
+                    }
+                });
 
-// Initialize share options for each button
-shareButtons.forEach((button, index) => {
-    createShareOptions(shareOptionsContainers[index]);
-    button.addEventListener('click', toggleShareOptions);
-});
+                container.style.display = isOpen ? 'none' : 'block';
+            }
 
-// Close the share options when clicking outside
-document.addEventListener('click', (event) => {
-    shareOptionsContainers.forEach((container, index) => {
-        if (container.style.display === 'block' && 
-            !shareButtons[index].contains(event.target) && 
-            !container.contains(event.target)) {
-            toggleShareOptions({ currentTarget: shareButtons[index] });
-        }
-    });
-});
-</script>
+            function copyLink() {
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => alert('Link copied to clipboard!'))
+                    .catch(err => console.error('Failed to copy: ', err));
+            }
 
-<script>
-    const Cross = document.getElementById('crss');
-    if (Cross) {
-      Cross.addEventListener('click', (event) => {
-        document.getElementById('cii').style.display = 'none';
-        document.getElementById('ci2').style.display = 'none';
-      });
-    }
-    const Empt = document.getElementById('ci2');
-    const Touch = document.getElementById('touch');
+            // Initialize share options for each button
+            shareButtons.forEach((button, index) => {
+                createShareOptions(shareOptionsContainers[index]);
+                button.addEventListener('click', toggleShareOptions);
+            });
 
-    if (Empt.innerHTML.trim() === "") {
-      Touch.style.display = 'none';
-    }
-  </script>
+            // Close the share options when clicking outside
+            document.addEventListener('click', (event) => {
+                shareOptionsContainers.forEach((container, index) => {
+                    if (container.style.display === 'block' &&
+                        !shareButtons[index].contains(event.target) &&
+                        !container.contains(event.target)) {
+                        toggleShareOptions({ currentTarget: shareButtons[index] });
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            const Cross = document.getElementById('crss');
+            if (Cross) {
+                Cross.addEventListener('click', (event) => {
+                    document.getElementById('cii').style.display = 'none';
+                    document.getElementById('ci2').style.display = 'none';
+                });
+            }
+            const Empt = document.getElementById('ci2');
+            const Touch = document.getElementById('touch');
+
+            if (Empt.innerHTML.trim() === "") {
+                Touch.style.display = 'none';
+            }
+        </script>
 </body>
 
-</html> 
+</html>

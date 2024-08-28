@@ -41,6 +41,8 @@ const galleryRoutes = require('./routes/galleryRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
 const { gmail } = require("googleapis/build/src/apis/gmail");
 
+const videoHelpers = require('./utils/vedioHelpers');
+
 
 
 
@@ -90,7 +92,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
+// Make videoHelpers available to all views
+app.use((req, res, next) => {
+    res.locals.videoHelpers = videoHelpers;
+    next();
+});
 
 
 // Multer setup (only for file uploads)
@@ -604,7 +610,7 @@ app.post('/subscribe', async (req, res) => {
 // Route for handling blog upload
 app.post('/upload-blog', uploadFields, async (req, res) => {
     try {
-        const {authorName, authorEmail,  blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
+        const {authorName, authorEmail,  blogTitle, blogShortDesc,videoUrl, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
         const bannerImage = req.files['blogBannerImage'] ? req.files['blogBannerImage'][0] : null;
         const showImg = req.files['showImg'] ? req.files['showImg'][0] : null;
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : [];
@@ -633,6 +639,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
             name: authorName,
             email: authorEmail,
             title: blogTitle,
+            videoUrl: videoUrl || null,
             shortDescription: blogShortDesc,
             bannerImage: `/uploads/${bannerImage.filename}`,
             showImg: `/uploads/${showImg.filename}`,
@@ -649,88 +656,6 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 
         await blog.save();
         
-
-         // Fetch 3 suggested blog posts
-    const suggestedBlogs = await Blog.find({ _id: { $ne: blog._id } })
-    .sort({ createdAt: -1 })
-    .limit(3);
-
-  for (const subscriber of subscribers) {
-    const imageUrl = blog.bannerImage.startsWith('https' || 'http') 
-      ? blog.bannerImage 
-      : `https://shashisales.com${blog.bannerImage}`;
-
-    const htmlTemplate = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Blog Post: ${blog.title}</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  h1, h2 {
-    color: #2c3e50;
-  }
-  a {
-    color: #3498db;
-    text-decoration: none;
-  }
-  .cta-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #ffffff !important;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 15px;
-  }
-  .suggested-blogs {
-    margin-top: 30px;
-    border-top: 1px solid #e0e0e0;
-    padding-top: 20px;
-  }
-  .suggested-blog {
-    margin-bottom: 20px;
-  }
-</style>
-</head>
-<body>
-<img src="${imageUrl}" alt="Banner Image">
-<h1>${blog.title}</h1>
-<p>${blog.shortDescription}</p>
-<a href="https://shashisales.com/blog-detail/${blog.canonical}" class="cta-button">Read More</a>
-
-<div class="suggested-blogs">
-  <h2>Suggested Posts</h2>
-  ${suggestedBlogs.map(suggestedBlog => `
-    <div class="suggested-blog">
-      <h3><a href="https://shashisales.com/blog-detail/${suggestedBlog.canonical}">${suggestedBlog.title}</a></h3>
-      <p>${suggestedBlog.shortDescription.substring(0, 100)}...</p>
-    </div>
-  `).join('')}
-</div>
-</body>
-</html>
-    `;
-
-    await Templatesender(
-        [subscriber.email], 
-        htmlTemplate, 
-        "New Blog Post: " + blog.title
-      );
-}
 
 
 
@@ -888,87 +813,6 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
             isApprove: isApprove === 'false',
         }, { new: true });
 
-                 // Fetch 3 suggested blog posts
-    const suggestedBlogs = await Blog.find({ _id: { $ne: updatedBlog._id } })
-    .sort({ createdAt: -1 })
-    .limit(3);
-
-  for (const subscriber of subscribers) {
-    const imageUrl = updatedBlog.bannerImage.startsWith('https' || 'http') 
-      ? updatedBlog.bannerImage 
-      : `https://shashisales.com${updatedBlog.bannerImage}`;
-
-    const htmlTemplate = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Blog Post: ${updatedBlog.title}</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  h1, h2 {
-    color: #2c3e50;
-  }
-  a {
-    color: #3498db;
-    text-decoration: none;
-  }
-  .cta-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #ffffff !important;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 15px;
-  }
-  .suggested-blogs {
-    margin-top: 30px;
-    border-top: 1px solid #e0e0e0;
-    padding-top: 20px;
-  }
-  .suggested-blog {
-    margin-bottom: 20px;
-  }
-</style>
-</head>
-<body>
-<img src="${imageUrl}" alt="Banner Image">
-<h1>${updatedBlog.title}</h1>
-<p>${updatedBlog.shortDescription}</p>
-<a href="https://shashisales.com/blog-detail/${updatedBlog.canonical}" class="cta-button">Read More</a>
-
-<div class="suggested-blogs">
-  <h2>Suggested Posts</h2>
-  ${suggestedBlogs.map(suggestedBlog => `
-    <div class="suggested-blog">
-      <h3><a href="https://shashisales.com/blog-detail/${suggestedBlog.canonical}">${suggestedBlog.title}</a></h3>
-      <p>${suggestedBlog.shortDescription.substring(0, 100)}...</p>
-    </div>
-  `).join('')}
-</div>
-</body>
-</html>
-    `;
-
-    await Templatesender(
-        [subscriber.email], 
-        htmlTemplate, 
-        "Updated Blog Post: " + updatedBlog.title
-      );
-}
         res.redirect("/all-blogs-list");
     } catch (err) {
         console.error('Error updating blog:', err);
@@ -981,9 +825,21 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
 
 // Route for handling ads upload
 app.post('/uploadAd', upload.single('ad'), async (req, res) => {
-    const { title } = req.body;
+    const { title, linkPath } = req.body;
+    
+    if (!req.file) {
+        return res.status(400).send('No file uploaded');
+    }
+    
+    const fileType = req.file.mimetype;
+    if (!fileType.startsWith('image/') && !fileType.startsWith('video/')) {
+        return res.status(400).send('Only images and videos are allowed');
+    }
+
+    // Create new ad instance
     const newAd = new Ad({
       filePath: `/uploads/${req.file.filename}`,
+      linkPath,
       title
     });
   
@@ -991,9 +847,12 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
       await newAd.save(); 
       res.redirect('/all-blogs-list');
     } catch (err) {
+      console.error('Error saving ad:', err);
       res.status(500).send('Error saving ad');
     }
-  });
+});
+
+
   app.post('/delete-ads', async (req, res) => {
     const adIds = req.body.adIds;
   
@@ -1049,6 +908,7 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const blog = await Blog.findById(id);
+        const subscribers = await Subscriber.find();
 
         if (!blog) {
             return res.status(404).send('Blog not found');
@@ -1056,6 +916,90 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
 
         blog.isApprove = !blog.isApprove;
         await blog.save();
+
+        
+         // Fetch 3 suggested blog posts
+    const suggestedBlogs = await Blog.find({ _id: { $ne: blog._id } })
+    .sort({ createdAt: -1 })
+    .limit(3);
+
+  for (const subscriber of subscribers) {
+    const imageUrl = blog.bannerImage.startsWith('https' || 'http') 
+      ? blog.bannerImage 
+      : `https://shashisales.com${blog.bannerImage}`;
+
+    const htmlTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Blog Post: ${blog.title}</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  h1, h2 {
+    color: #2c3e50;
+  }
+  a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+  }
+  .suggested-blogs {
+    margin-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+  }
+  .suggested-blog {
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+<img src="${imageUrl}" alt="Banner Image">
+<h1>${blog.title}</h1>
+<p>${blog.shortDescription}</p>
+<a href="https://shashisales.com/blog-detail/${blog.canonical}" class="cta-button">Read More</a>
+
+<div class="suggested-blogs">
+  <h2>Suggested Posts</h2>
+  ${suggestedBlogs.map(suggestedBlog => `
+    <div class="suggested-blog">
+      <h3><a href="https://shashisales.com/blog-detail/${suggestedBlog.canonical}">${suggestedBlog.title}</a></h3>
+      <p>${suggestedBlog.shortDescription.substring(0, 100)}...</p>
+    </div>
+  `).join('')}
+</div>
+</body>
+</html>
+    `;
+
+    await Templatesender(
+        [subscriber.email], 
+        htmlTemplate, 
+        "New Blog Post: " + blog.title
+      );
+}
+
 
         res.redirect('/all-blogs-list');
     } catch (err) {
@@ -1073,6 +1017,11 @@ app.post("/blog-detail/:canonical/comment", async (req, res) => {
         const { canonical } = req.params;
         const { name, email, comment } = req.body;
 
+        // Check if all required fields are present and not empty
+        if (!name || !email || !comment || name.trim() === '' || email.trim() === '' || comment.trim() === '') {
+            return res.status(400).send("All fields are required");
+        }
+
         const blog = await Blog.findOne({ canonical: canonical });
 
         if (!blog) {
@@ -1080,9 +1029,9 @@ app.post("/blog-detail/:canonical/comment", async (req, res) => {
         }
 
         const newComment = new Comment({
-            name,
-            email,
-            comment,
+            name: name.trim(),
+            email: email.trim(),
+            comment: comment.trim(),
             blog: blog._id,
             isApproved: false
         });

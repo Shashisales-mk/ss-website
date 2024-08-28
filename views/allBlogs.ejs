@@ -404,6 +404,7 @@
                             <tr>
                                 <th>Select</th>
                                 <th>Ad Title</th>
+                                <th>Ad Link</th>
                                 <th>Image/Video</th>
                             </tr>
                         </thead>
@@ -417,15 +418,21 @@
                                             <h3><%= ad.title %></h3>
                                         </td>
                                         <td>
-                                            <% if (ad.filePath.endsWith('.mp4')) { %>
-                                                <video controls width="300">
-                                                  <source src="<%= ad.filePath %>" type="video/mp4">
-                                                  Your browser does not support the video tag.
-                                                </video>
-                                              <% } else { %>
-                                                <img height="50" width="50" src="<%= ad.filePath %>" width="300" alt="Ad Image">
-                                              <% } %>
+                                            <a href="<%= ad.linkPath %>"><%= ad.linkPath %></a>
                                         </td>
+                                        <td>
+                                            <% if (ad.filePath.endsWith('.mp4') || ad.filePath.endsWith('.webm') || ad.filePath.endsWith('.ogg')) { %>
+                                                <video controls width="300">
+                                                    <source src="<%= ad.filePath %>" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            <% } else { %>
+                                                <a href="<%= ad.linkPath %>">
+                                                    <img height="50" width="50" src="<%= ad.filePath %>" alt="Ad Image">
+                                                </a>
+                                            <% } %>
+                                        </td>
+                                        
                                     </tr>
                         
                             </tbody>
@@ -436,6 +443,9 @@
             <% } else { %>
               <p>No ads uploaded yet.</p>
             <% } %>
+
+
+
 
                 <h1 style="padding: 2vw;text-align: start;">Blog Section</h1>
                 <form action="/update-all-blog-banners" method="POST" enctype="multipart/form-data">

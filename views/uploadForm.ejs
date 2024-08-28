@@ -144,6 +144,10 @@
                 <input type="file" name="images" accept="image/*">
             </div>
             <div>
+                <label for="videoUrl">Video URL (optional):</label>
+                <input type="url" id="videoUrl" name="videoUrl" placeholder="Enter YouTube or Vimeo URL">
+            </div>
+            <div>
                 <label for="heading2">Heading 2:</label>
                 <input type="text" name="headings" required>
             </div>
@@ -298,6 +302,29 @@
             }
         });
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // ... (existing JavaScript) ...
+
+        // Add validation for video URL
+        const videoUrlInput = document.getElementById('videoUrl');
+        videoUrlInput.addEventListener('change', function() {
+            const url = this.value.trim();
+            if (url && !isValidVideoUrl(url)) {
+                alert('Please enter a valid YouTube or Vimeo URL');
+                this.value = '';
+            }
+        });
+
+        function isValidVideoUrl(url) {
+            // Simple regex for YouTube and Vimeo URLs
+            const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+            const vimeoRegex = /^(https?:\/\/)?(www\.)?(vimeo\.com)\/.+$/;
+            return youtubeRegex.test(url) || vimeoRegex.test(url);
+        }
+    });
+</script>
 
 </body>
 
