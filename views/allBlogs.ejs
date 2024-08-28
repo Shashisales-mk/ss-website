@@ -419,7 +419,7 @@
                                             <h3><%= ad.title %></h3>
                                         </td>
                                         <td>
-                                            <a href="<%= ad.linkPath %>"><%= ad.linkPath %></a>
+                                            <a href="<%= ad.linkPath %>" target="_blank"><%= ad.linkPath %></a>
                                         </td>
                                         <td>
                                             <% if (ad.filePath.endsWith('.mp4') || ad.filePath.endsWith('.webm') || ad.filePath.endsWith('.ogg')) { %>
@@ -428,7 +428,7 @@
                                                     Your browser does not support the video tag.
                                                 </video>
                                             <% } else { %>
-                                                <a href="<%= ad.linkPath %>">
+                                                <a href="<%= ad.linkPath %>" target="_blank">
                                                     <img height="50" width="50" src="<%= ad.filePath %>" alt="Ad Image">
                                                 </a>
                                             <% } %>

@@ -655,14 +655,14 @@
                             <% ads.forEach(ad=> { %>
 
                                 <% if (ad.filePath.endsWith('.mp4')) { %>
-                                    <a href="<%= ad.linkPath %>">
+                                    <a href="<%= ad.linkPath %>" target="_blank">
                                         <video controls width="300">
                                             <source src="<%= ad.filePath %>" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
                                     </a>
                                     <% } else { %>
-                                        <a href="<%= ad.linkPath %>">
+                                        <a href="<%= ad.linkPath %>" target="_blank">
                                             <img style="width: 100%;" src="<%= ad.filePath %>" width="300"
                                                 alt="Ad Image">
                                         </a>
