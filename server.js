@@ -547,7 +547,13 @@ app.get("/blog-detail/:canonical", async (req, res) => {
 
         const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
         const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
+        const blogsRecommend = await Blog.find({
+            _id: { $ne: blog._id },  // Exclude the current blog
+            metaKeywords: { $in: blog.metaKeywords }  // Find blogs with similar tags
+        }).limit(4);
         res.render("blogDetails", {
+            truncateString,
+            blogsRecommend,
             ads,
             blog,
             comments: approvedComments,

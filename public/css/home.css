@@ -1224,7 +1224,21 @@ font-weight: bold;
   overflow-x: auto;
   padding: 10px;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+}
+.mark-section::-webkit-scrollbar {
+  height: 0.5vw;
+}
+.mark-section::-webkit-scrollbar-thumb {
+  background: #d6cfcf; 
+  border-radius: 0;
+}
+.mark-section::-webkit-scrollbar-thumb:hover {
+  background: #b6abab; 
+}
+.mark-section::-webkit-scrollbar-track {
+  background: #f8f6f6; 
+  border-radius: 0;
 }
 
 .blog-card {
@@ -1253,10 +1267,15 @@ font-weight: bold;
   overflow: hidden;
 }
 
-/* Add this section */
 .blog-card .mar-img {
   position: relative;
   width: 100%;
+    aspect-ratio: 390 / 296;
+    overflow: hidden;
+}
+
+.blogs-recommend{
+  padding: 0 0 2vw 0;
 }
 
 .blog-card .mar-img::before {
