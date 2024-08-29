@@ -95,7 +95,7 @@
 
 /* Header styles */
 .header {
-  margin-top: 6rem;
+  margin-top: 5rem;
   width: 100%;
   position: relative;
   margin-bottom: 1rem;
@@ -108,7 +108,7 @@
 
 .banner img {
   width: 100%;
-  height: 40vmax;
+  height: 38vmax;
 }
 
 .banner h1 {
@@ -137,6 +137,9 @@
   gap: 1rem;
 }
 @media screen and (max-width: 768px){
+  .header{
+    margin-top: 4rem;
+  }
   .blog-content {
     font-size: 1.8vw;
     line-height: 1.5;
@@ -243,6 +246,9 @@
 }
 
 @media screen and (max-width: 600px){
+  .header{
+    margin-top: 3rem;
+  }
   .blog-content {
     font-size: 4vw;
     padding-inline: 2rem;
