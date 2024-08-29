@@ -260,20 +260,20 @@
     <a href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!"
         class="mob-ele">
         <div class="up"><img src="/assets/images/star.png" height="30" width="30" alt="mob-call-icon1"></div>
-        <div class="down">get quote</div>
+        <div class="down" >get quote</div>
     </a>
     <!-- HTML -->
     <a href="tel:18005710605" id="callLink" class="mob-ele">
         <div class="up"><img src="/assets/images/mob-call-icon2.png" height="30" width="30" alt="mob-call-icon1"></div>
-        <div class="down">call us</div>
+        <div class="down" >call us</div>
     </a>
     <a href="https://wa.me/9457979134?text=Let%27s%20Talk%20Web%20And%20Marketing%20%5B5%25%20Off%5D" class="mob-ele">
         <div class="up"><img src="/assets/images/mob-call-icon3.png" height="30" width="30" alt="mob-call-icon1"></div>
-        <div class="down">chat with us</div>
+        <div class="down" >chat with us</div>
     </a>
     <div class="mob-ele show-vertical">
         <div class="up"><img height="30" width="30" src="/assets/images/mob-call-icon4.png" alt="mob-call-icon1"></div>
-        <div class="down">Social Handles</div>
+        <div class="down" >Social Handles</div>
     </div>
 
     
@@ -290,13 +290,25 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  const showVerticalButton = document.querySelector('.show-vertical');
-  const verticalIcons = document.querySelector('.vertical-icons');
-  
-  showVerticalButton.addEventListener('click', function() {
+  document.addEventListener('DOMContentLoaded', function() {
+  // Function to initialize social handles button
+  function initializeSocialHandles() {
+    const showVerticalButton = document.querySelector('.show-vertical');
+    const verticalIcons = document.querySelector('.vertical-icons');
     
-    verticalIcons.classList.toggle('show');
-  });
+    if (showVerticalButton && verticalIcons) {
+      showVerticalButton.addEventListener('click', function() {
+        verticalIcons.classList.toggle('show');
+      });
+    } else {
+      console.error('Social handles elements not found');
+    }
+  }
+
+  // Call the initialization function
+  initializeSocialHandles();
+
+  // Re-initialize on dynamic content load (if applicable)
+  document.addEventListener('contentLoaded', initializeSocialHandles);
 });
 </script>

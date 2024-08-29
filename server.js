@@ -559,6 +559,7 @@ app.get("/blog-detail/:canonical", async (req, res) => {
             comments: approvedComments,
             title: blog.metaTitle,
             description: blog.metaDescription
+            
         });
     } catch (err) {
         console.error(err);
