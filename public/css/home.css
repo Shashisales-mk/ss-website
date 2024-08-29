@@ -1978,18 +1978,22 @@ text-decoration: none;
 }
 
 @media only screen and (max-width: 600px){
-#consent-banner {
-z-index: 2;
-position: fixed;
-right: 0;
-bottom: 0;
-width: 100%;
-background: rgba(0, 0, 0, 0.75);
-color: white;
-font-family: system-ui;
-font-size: 2.5vw;
-display: grid;
-justify-content: center;
-align-items: center;
+
+  #consent-banner {
+    z-index: 1001;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    font-family: system-ui;
+    font-size: 2.5vw;
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
+
+
+
 }

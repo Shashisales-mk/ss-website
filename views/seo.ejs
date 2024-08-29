@@ -98,7 +98,7 @@
             <div>
                 <div class="dfjc">
                     <p class="growani">&#9650; </p>
-                    <p class="scre">260%</p>
+                    <p class="scre" data-target="260">0%</p>
                 </div>
                 <p class="otok">Organic Traffic Increase</p>
                 <p class="otokdesc">A significant <span style="color: #aaad02;">260%</span> increase in organic traffic indicates our strategies effectively attract and retain users.</p>
@@ -106,12 +106,13 @@
             <div>
                 <div class="dfjc">
                     <p class="growani">&#9650; </p>
-                    <p class="scre">135%</p>
+                    <p class="scre" data-target="135">0%</p>
                 </div>
                 <p class="otok">Organic Keyword Growth</p>
                 <p class="otokdesc">A <span style="color: #aaad02;">135%</span> rise in ranking keywords shows successful optimization and content relevance, leading to better visibility.</p>
             </div>
         </div>
+
     </div>
     <div class="seo-sidebar">
         <div class="seo-sidebar-left">
@@ -632,3 +633,41 @@
 
     sections.forEach(section => observer.observe(section));
 </script>
+
+<script>
+    function animateNumber(element, target) {
+        let start = 0;
+        let end = parseInt(target);
+        let duration = 2000; 
+        let increment = end / (duration / 30); 
+        let current = start;
+        let interval = setInterval(function() {
+            current += increment;
+            if (current >= end) {
+                current = end;
+                clearInterval(interval);
+            }
+            element.innerHTML = Math.floor(current) + "%";
+        }, 30);
+    }
+    function handleIntersection(entries, observerr) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                let el = entry.target;
+                let target = el.getAttribute('data-target');
+                el.style.opacity = 1;
+                animateNumber(el, target);
+                observerr.unobserve(el);
+            }
+        });
+    }
+    const observerr = new IntersectionObserver(handleIntersection, {
+        root: null,
+        threshold: 0.5
+    });
+    document.querySelectorAll('.scre').forEach(el => {
+        observerr.observe(el);
+    });
+</script>
+
+
