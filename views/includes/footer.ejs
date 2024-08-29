@@ -255,25 +255,48 @@
 </footer>
 
 
+<div id="overlay"></div>
 <!-- Call Section for mobile devices -->
 <div class="mob-call-container">
-    <a href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!"
-        class="mob-ele">
-        <div class="up"><img src="/assets/images/star.png" height="30" width="30" alt="mob-call-icon1"></div>
-        <div class="down" >get quote</div>
-    </a>
+    <div class="show-form">
+        <div id="mob-foot">
+            <div class="contact-left">
+                <div class="contact-left-in">
+                    <form id="quoteForm" action="/submit-quote" method="post" onsubmit="return validateForm()">
+                        <div class="fila">
+                            <div><input type="text" id="firstName" placeholder="First Name" name="firstName" required></div>
+                            <div><input type="text" id="lastName" placeholder="Last Name" name="lastName" required></div>
+                        </div>
+                        <div class="ph-num">
+                            <input type="tel" class="phone" id="phone" placeholder="Phone Number (e.g. 123-456-7890)"
+                                name="tel" required>
+                        </div>
+                        <div class="fila"><input type="email" id="email" placeholder="Email Address" name="email" required>
+                        </div>
+                        <div class="ser-h"><textarea id="service" name="service" placeholder="Service" required></textarea>
+                        </div>
+                        <div class="form-submit"><input type="submit" value="Submit"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="mob-ele" id="getq">
+            <div class="up"><img src="/assets/images/star.png" height="30" width="30" alt="mob-call-icon1"></div>
+            <div class="down">get quote</div>
+        </div>
+    </div>
     <!-- HTML -->
     <a href="tel:18005710605" id="callLink" class="mob-ele">
         <div class="up"><img src="/assets/images/mob-call-icon2.png" height="30" width="30" alt="mob-call-icon1"></div>
-        <div class="down" >call us</div>
+        <div class="down">call us</div>
     </a>
     <a href="https://wa.me/9457979134?text=Let%27s%20Talk%20Web%20And%20Marketing%20%5B5%25%20Off%5D" class="mob-ele">
         <div class="up"><img src="/assets/images/mob-call-icon3.png" height="30" width="30" alt="mob-call-icon1"></div>
-        <div class="down" >chat with us</div>
+        <div class="down">chat with us</div>
     </a>
     <div class="mob-ele show-vertical">
         <div class="up"><img height="30" width="30" src="/assets/images/mob-call-icon4.png" alt="mob-call-icon1"></div>
-        <div class="down" >Social Handles</div>
+        <div class="down">Social Handles</div>
     </div>
 
     
@@ -290,25 +313,35 @@
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-  // Function to initialize social handles button
-  function initializeSocialHandles() {
-    const showVerticalButton = document.querySelector('.show-vertical');
-    const verticalIcons = document.querySelector('.vertical-icons');
+    document.addEventListener('DOMContentLoaded', function() {
+  const showVerticalButton = document.querySelector('.show-vertical');
+  const verticalIcons = document.querySelector('.vertical-icons');
+  
+  showVerticalButton.addEventListener('click', function() {
     
-    if (showVerticalButton && verticalIcons) {
-      showVerticalButton.addEventListener('click', function() {
-        verticalIcons.classList.toggle('show');
-      });
-    } else {
-      console.error('Social handles elements not found');
-    }
-  }
-
-  // Call the initialization function
-  initializeSocialHandles();
-
-  // Re-initialize on dynamic content load (if applicable)
-  document.addEventListener('contentLoaded', initializeSocialHandles);
+    verticalIcons.classList.toggle('show');
+  });
 });
 </script>
+<script>
+    document.getElementById("getq").addEventListener("click", function() {
+        var mobFoot = document.getElementById("mob-foot");
+        var overlay = document.getElementById("overlay");
+
+        if (mobFoot.style.display === "none" || mobFoot.style.display === "") {
+            mobFoot.style.display = "block";
+            overlay.style.display = "block";
+        } else {
+            mobFoot.style.display = "none";
+            overlay.style.display = "none";
+        }
+    });
+
+    document.getElementById("overlay").addEventListener("click", function() {
+        document.getElementById("mob-foot").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    });
+</script> 
+
+
+

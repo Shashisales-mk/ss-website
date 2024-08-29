@@ -388,7 +388,9 @@
         border-top-right-radius: 2vw;
         position: fixed;
         bottom: 0;
+        z-index: 1000;
     }
+
 
     .mob-ele {
         width: 25vw;
