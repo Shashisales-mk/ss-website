@@ -475,7 +475,7 @@
         .newsletter-subscription {
             background-color: #f8f9fa;
             padding: 40px 0;
-            margin-top: 40px;
+            /* margin-top: 40px; */
         }
 
         .newsletter-container {
@@ -681,34 +681,7 @@
 
 
 
-            <div class="blogs-recommend">
-                <h3 style="text-align: center;font-size: 3vw;padding: 2vw 0;">Suggested Blogs</h3>
-                <div class="blog-cont">
-                    <div class="mark-section">
-                        <% blogsRecommend.forEach(blog=> { %>
-                            <a href="/blog-detail/<%= blog.canonical %>" class="blog-card">
-                                <div class="mar-img">
-                                    <img class="ad-img" src="<%= blog.showImg %>" loading="lazy"
-                                        alt="<%= blog.title %>">
-                                </div>
-                                <div class="mar-desc">
-                                    <h2>
-                                        <%= blog.title %>
-                                    </h2>
-                                    <div>
-                                        <%= truncateString(blog.shortDescription) %>
-                                    </div>
-                                    <small
-                                        style="color: #000; position: absolute; bottom: 10px; right: 10px; font-size: 1vw;">Published
-                                        on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
-                                            day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
-                                            }) %></small>
-                                </div>
-                            </a>
-                            <% }) %>
-                    </div>
-                </div>
-            </div>
+           
 
 
 
@@ -765,6 +738,34 @@
                 </section>
             </div>
 
+            <div class="blogs-recommend">
+                <h3 style="text-align: center;font-size: 3vw;padding: 2vw 0;">Suggested Blogs</h3>
+                <div class="blog-cont">
+                    <div class="mark-section">
+                        <% blogsRecommend.forEach(blog=> { %>
+                            <a href="/blog-detail/<%= blog.canonical %>" class="blog-card">
+                                <div class="mar-img">
+                                    <img class="ad-img" src="<%= blog.showImg %>" loading="lazy"
+                                        alt="<%= blog.title %>">
+                                </div>
+                                <div class="mar-desc">
+                                    <h2>
+                                        <%= blog.title %>
+                                    </h2>
+                                    <div>
+                                        <%= truncateString(blog.shortDescription) %>
+                                    </div>
+                                    <small
+                                        style="color: #000; position: absolute; bottom: 10px; right: 10px; font-size: 1vw;">Published
+                                        on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                            day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                            }) %></small>
+                                </div>
+                            </a>
+                            <% }) %>
+                    </div>
+                </div>
+            </div>
 
             <section class="newsletter-subscription">
                 <div class="newsletter-container">
