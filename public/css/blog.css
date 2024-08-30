@@ -211,12 +211,12 @@
     width: 90%;
     height: auto;
 }
-.ci{
+.ci {
   position: inherit;
   display: flex;
   justify-content: end;
   gap: 0px;
-  z-index: 1000;
+  z-index: 997;
 }
 .ci span{
   background: white;
