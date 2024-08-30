@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,17 +99,17 @@
             background-color: black;
         }
 
-        .ic-text h3 {
+        h3 {
             text-transform: uppercase;
         }
 
-        .banner h1 {
+        h1 {
             text-transform: capitalize;
         }
 
         .shareButton {
             position: relative;
-            z-index: 1000;
+            z-index: 900;
             padding: 10px;
             border-radius: 50%;
             background-color: #007bff;
@@ -254,6 +253,42 @@
             justify-content: space-between;
         }
 
+        .seo-hed-in {
+            padding: 0vw 2vw 0 0 !important;
+            background: #C4C800;
+        }
+
+        .seo-hed-in ul {
+            display: flex;
+            align-items: center;
+            gap: 1vw !important;
+        }
+
+        .seo-hed-in input {
+            background: #fafafa;
+            width: 25vw;
+            font-size: 1rem;
+            padding: 0.8vw 2vw;
+            outline: none;
+            border: 0;
+            border-radius: 5vw;
+        }
+
+        .seo-hed-in button {
+            background: transparent;
+            border: 0;
+            color: black;
+            font-size: 1rem;
+        }
+
+        .seo-hed-in button:hover {
+            cursor: pointer;
+        }
+
+        .contentText {
+            padding: 0 5vw;
+        }
+
         @media screen and (max-width: 1024px) {
             .share-item a {
                 width: 30px;
@@ -344,64 +379,9 @@
             .shareOptions li:nth-child(9) {
                 transform: rotate(320deg) translate(34.2836px, -28.423px) rotate(-320deg) !important;
             }
-            .newsletter-container {
-                padding: 0 20px;
-            }
         }
 
         @media screen and (max-width: 600px) {
-            .vertical-icons{
-    background-color: #d4d804;
-    display: none;
-    align-items: center; 
-    justify-content: center;
-    flex-direction: column;
-    gap: 1rem;
-    width: 55px;
-    height: 220px;
-    border-radius: 40px;
-    /* margin-bottom: 20rem; */
-    padding: 1rem 2rem;
-    position: fixed;
-    bottom: -100%;
-    right: 17px;
-    transition: bottom 0.8s ease-in-out;
-   z-index: 999;
-}
-
-
-.vertical-icons.show {
-    display: flex;
-    bottom:70px; /* Adjust this value as needed */
-  }
-
- 
-  
-  .vertical-icons img {
-    width: 40px;
-    filter: invert(100%);
-    height: 40px;
-   
-  }
-  
-  .vertical-icons a {
-    margin-bottom: 10px; /* Add some space between icons */
-    opacity: 0;
-    transform: rotateX(-360deg);
-    transition: opacity 0.9s, transform 0.9s;
-    transition-delay: 0.85; /* Delay to start after container slides up */
-  }
-  
-  .vertical-icons.show a {
-    opacity: 1;
-    transform: rotateX(0);
-  }
-  
-  /* Stagger the animation for each icon */
-  .vertical-icons.show a:nth-child(1) { transition-delay: 0.9s; }
-  .vertical-icons.show a:nth-child(2) { transition-delay: 0.9s; }
-  .vertical-icons.show a:nth-child(3) { transition-delay: 0.9s; }
-
             .comment {
                 border: 5px solid #c0b9b963;
                 border-radius: 0vw;
@@ -479,6 +459,23 @@
                 margin-right: 8vw;
             }
 
+            .seo-hed {
+                padding: 3vw 0;
+                position: sticky;
+                top: 2%;
+                z-index: 1000;
+            }
+
+            .seo-hed-in input {
+                background: #fafafa;
+                width: 100%;
+                font-size: 1rem;
+                padding: 1.3vw 4vw;
+                outline: none;
+                border: 0;
+                border-radius: 5vw;
+            }
+
             .shareOptions {
                 position: absolute;
                 right: 22%;
@@ -531,7 +528,7 @@
         .newsletter-subscription {
             background-color: #f8f9fa;
             padding: 40px 0;
-            /* margin-top: 40px; */
+            margin-top: 40px;
         }
 
         .newsletter-container {
@@ -605,18 +602,20 @@
             border: 1px solid #f5c6cb;
         }
 
-       
+        @media (max-width: 768px) {
+            .newsletter-container {
+                padding: 0 20px;
+            }
+        }
+
         .video-container {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-
-
-
     </style>
+
 
 </head>
 
@@ -642,6 +641,22 @@
             </div>
 
             <!-- blog share option -->
+
+
+            <div class="seo-hed" style="width: 100%;">
+                <div class="seo-hed-in">
+                    <form action="/subscribe" method="POST">
+                        <ul>
+                            <li><input type="email" name="email" placeholder="Your Email" required></li>
+                            <li><input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>"></li>
+                            <li><button type="submit">Subscribe</button></li>
+                        </ul>
+
+
+
+                    </form>
+                </div>
+            </div>
 
 
             <section class="blog-content">
@@ -694,7 +709,7 @@
                     </div>
 
                     <div id="touch" class="ad-frame">
-                       
+
                         <div id="cii" class="ci">
                             <div id="show-ad-title" style="display: flex;">
                                 <% ads.forEach(ad=> { %>
@@ -736,7 +751,7 @@
 
 
 
-           
+
 
 
 
@@ -812,9 +827,8 @@
                                     </div>
                                     <small
                                         style="color: #000; position: absolute; bottom: 10px; right: 10px; font-size: 1vw;">Published
-                                        on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
-                                            day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
-                                            }) %></small>
+                                        on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' , day: 'numeric'
+                                            , year: 'numeric' , hour: 'numeric' , minute: 'numeric' }) %></small>
                                 </div>
                             </a>
                             <% }) %>
@@ -828,7 +842,7 @@
                     <p>Stay updated with our latest blog posts and news!</p>
 
                     <form action="/subscribe" method="POST">
-                        <input type="text" name="name" placeholder="Your Name" required>
+                       
                         <input type="email" name="email" placeholder="Your Email" required>
                         <input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>">
                         <button type="submit">Subscribe</button>
@@ -840,12 +854,13 @@
             <%- include("./includes/footer") %>
         </div>
 
-        
+
 
 
 
 
         <script src="/js/script.js"></script>
+        <script src="/js/script2.js"></script>
 
 
         <script>

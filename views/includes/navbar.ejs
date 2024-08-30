@@ -103,25 +103,27 @@
         <a href="/assets/images/ssm.pdf" target="_blank" class="portfolio">Portfolio</a>
 
     </div>
-
-    <div class="get-quote-menu a">
-        <div class="contact-left">
-            <div class="contact-left-in">
-                <form id="quoteForm" action="/submit-quote" method="post" onsubmit="return validateForm()">
-                    <div class="fila">
-                        <div><input type="text" id="firstName" placeholder="First Name" name="firstName" required></div>
-                        <div><input type="text" id="lastName" placeholder="Last Name" name="lastName" required></div>
-                    </div>
-                    <div class="ph-num">
-                        <input type="tel" class="phone" id="phone" placeholder="Phone Number (e.g. 123-456-7890)"
-                            name="tel" required>
-                    </div>
-                    <div class="fila"><input type="email" id="email" placeholder="Email Address" name="email" required>
-                    </div>
-                    <div class="ser-h"><textarea id="service" name="service" placeholder="Service" required></textarea>
-                    </div>
-                    <div class="form-submit"><input type="submit" value="Submit"></div>
-                </form>
+    
+    <div class="show-form" style="position: relative;">
+        <div class="get-quote-menu a">
+            <div class="contact-left">
+                <div class="contact-left-in show-form" id="mob-foot">
+                    <form id="quoteForm" class="validateForm" action="/submit-quote" method="post" onsubmit="return validateForm()">
+                        <div class="fila">
+                            <div><input type="text" id="firstName" placeholder="First Name" name="firstName" required></div>
+                            <div><input type="text" id="lastName" placeholder="Last Name" name="lastName" required></div>
+                        </div>
+                        <div class="ph-num">
+                            <input type="tel" class="phone" id="phone" placeholder="Phone Number (e.g. 123-456-7890)"
+                                name="tel" required>
+                        </div>
+                        <div class="fila"><input type="email" id="email" placeholder="Email Address" name="email" required>
+                        </div>
+                        <div class="ser-h"><textarea id="service" name="service" placeholder="Service" required></textarea>
+                        </div>
+                        <div class="form-submit"><input type="submit" value="Submit"></div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -130,46 +132,3 @@
 
 
 
-<!-- <script>
-    function validateForm() {
-        var firstName = document.getElementById('firstName').value;
-        var lastName = document.getElementById('lastName').value;
-        var phone = document.getElementById('phone').value;
-        var email = document.getElementById('email').value;
-        var service = document.getElementById('service').value;
-
-        // Remove non-digit characters for length check
-        var phoneDigits = phone.replace(/\D/g, '');
-
-        if (phoneDigits.length < 7) {
-            alert('Please enter a valid phone number with valid format of your country');
-            return false;
-        }
-
-        if (firstName.trim() === '' || lastName.trim() === '' || phone.trim() === '' || email.trim() === '' || service.trim() === '') {
-            alert('All fields are required');
-            return false;
-        }
-
-        if (!/^[A-Za-z ]+$/.test(firstName) || !/^[A-Za-z ]+$/.test(lastName)) {
-            alert('Names should only contain letters and spaces');
-            return false;
-        }
-        
-
-        // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-        if (!/^[\d\s\-()]+$/.test(phone)) {
-            alert('Phone number should only contain digits, spaces, hyphens, or parentheses');
-            return false;
-        }
-
-        // Simple email validation
-        if (!/\S+@\S+\.\S+/.test(email)) {
-            alert('Please enter a valid email address');
-            return false;
-        }
-
-
-        return true;
-    }
-</script> -->

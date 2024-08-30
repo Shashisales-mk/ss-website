@@ -890,7 +890,7 @@
                 <table id="subscriberTable">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                           
                             <th>Email</th>
                             <th>Action</th>
 
@@ -899,9 +899,7 @@
                     <tbody>
                         <% subscribers.forEach(subscriber=> { %>
                             <tr>
-                                <td>
-                                    <%= subscriber.name %>
-                                </td>
+                              
                                 <td>
                                     <%= subscriber.email %>
                                 </td>
@@ -921,7 +919,7 @@
                     <h2>Create new subsciber</h2>
 
                     <form action="/subscribe" method="POST">
-                        <input type="text" name="name" placeholder="Your Name" required>
+                        
                         <input type="email" name="email" placeholder="Your Email" required>
                         <input type="hidden" name="redirectUrl" value="/all-blogs-list">
                         <button type="submit">Create</button>

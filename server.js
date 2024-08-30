@@ -570,7 +570,7 @@ app.get("/blog-detail/:canonical", async (req, res) => {
 
 app.post('/subscribe', async (req, res) => {
     try {
-      const { name, email, redirectUrl } = req.body;
+      const { email, redirectUrl } = req.body;
       
       // Check if the email already exists
       const existingSubscriber = await Subscriber.findOne({ email });
@@ -580,7 +580,7 @@ app.post('/subscribe', async (req, res) => {
       }
   
       // Create a new subscriber
-      const newSubscriber = new Subscriber({ name, email });
+      const newSubscriber = new Subscriber({  email });
       await newSubscriber.save();
   
       req.flash('success', 'Subscription successful!');
@@ -1520,14 +1520,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
-
-
-
-
 //   payment gateway integration
-
-
-
 
 app.get("/phonepe-payment-page", async (req, res) => {
     res.render("phonepayForm", {
