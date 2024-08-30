@@ -49,7 +49,7 @@ document.getElementById("getq").addEventListener("click", function() {
   console.log("Click detected on getq element");
   mobFoot.style.display = 'none';
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // window.scrollTo({ top: 0, behavior: 'smooth' });
 
   if (mobFoot.style.display === "none" || mobFoot.style.display === "") {
       mobFoot.style.display = "block";
