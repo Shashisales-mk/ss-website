@@ -150,6 +150,22 @@
             background-color: #e0e0e0;
         }
 
+        .share-item svg {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
+            fill: currentColor;
+        }
+
+        /* iOS-specific styles */
+        @supports (-webkit-touch-callout: none) {
+            .share-item svg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
         .comments-sec {
             padding-inline: 5vw;
         }
@@ -448,24 +464,24 @@
             }
 
             .shareButton {
-        position: relative;
-        z-index: 997;
-        padding: 2vw;
-        font-size: 3vw;
-        border-radius: 50%;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        margin-right: 8vw;
-    }
+                position: relative;
+                z-index: 997;
+                padding: 2vw;
+                font-size: 3vw;
+                border-radius: 50%;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                cursor: pointer;
+                margin-right: 8vw;
+            }
 
             .seo-hed {
-        padding: 3vw 0;
-        position: sticky;
-        top: 2%;
-        z-index: 998;
-    }
+                padding: 3vw 0;
+                position: sticky;
+                top: 2%;
+                z-index: 998;
+            }
 
 
             .seo-hed-in input {
@@ -844,7 +860,7 @@
                     <p>Stay updated with our latest blog posts and news!</p>
 
                     <form action="/subscribe" method="POST">
-                       
+
                         <input type="email" name="email" placeholder="Your Email" required>
                         <input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>">
                         <button type="submit">Subscribe</button>
@@ -986,8 +1002,12 @@
                     a.href = link.url ? link.url + encodeURIComponent(window.location.href) : '#';
                     a.target = '_blank';
                     a.rel = 'noopener noreferrer';
-                    a.innerHTML = link.svg;
 
+                    // Create a span to hold the SVG content
+                    const span = document.createElement('span');
+                    span.innerHTML = link.svg.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+
+                    a.appendChild(span);
                     a.onclick = (e) => {
                         e.preventDefault();
                         handleShare(link);
