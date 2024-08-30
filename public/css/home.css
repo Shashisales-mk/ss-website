@@ -201,6 +201,10 @@ nav{
   .middle-vedio:hover .custom-cursor {
     opacity: 1; /* Show the cursor when hovering over the video container */
   }
+  .swiper {
+    width: 100%;
+    padding: 30px 0;
+}
 }
 
 
@@ -1035,6 +1039,8 @@ font-weight: bold;
 }
 
 .testimonial {
+  overflow: visible !important;
+  height: 17vw;
   text-align: center;
   font-size: 1.2vw;
   width: 31.5% !important;
@@ -1050,6 +1056,8 @@ font-weight: bold;
   padding-bottom: 4vw;
   transition: all 0.5s ease;
 }
+
+
 
 .testimonial.center {
   width: 40%;
@@ -1120,10 +1128,8 @@ font-weight: bold;
   border-color: transparent transparent #333 transparent;
 }
 @media screen and (max-width: 768px){
-.swiper {
-    width: 100%;
-   
-}
+
+ 
 .testimonial {
   width: 30.5% !important;
 }
@@ -1980,6 +1986,10 @@ text-decoration: none;
     align-items: center;
 }
 
+.swiper {
+  width: 100%;
+  padding: 20px 0;
+}
 
 
 }
