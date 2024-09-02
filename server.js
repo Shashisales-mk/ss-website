@@ -50,7 +50,7 @@ const videoHelpers = require('./utils/vedioHelpers');
 
 // Configure PayPal SDK
 paypal.configure({
-    'mode': process.env.PAYPAL_MODE || 'live', // Make sure this is correct
+    'mode': process.env.PAYPAL_MODE || 'live', 
     'client_id': process.env.PAYPAL_CLIENT_ID,
     'client_secret': process.env.PAYPAL_CLIENT_SECRET
 });
@@ -87,7 +87,7 @@ app.use(
 );
 
 
-// Passport middleware
+// Passport midleware
 app.use(passport.initialize());
 app.use(passport.session());
 
