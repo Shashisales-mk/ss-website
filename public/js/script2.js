@@ -1,3 +1,72 @@
+
+// foot quote form script
+document.getElementById("getq").addEventListener("click", function() {
+  var mobFoot = document.getElementById("mob-foot");
+  var overlay = document.getElementById("overlay");
+
+  console.log("Click detected on getq element");
+  mobFoot.style.display = 'none';
+
+  if (mobFoot.style.display === "none" || mobFoot.style.display === "") {
+      mobFoot.style.display = "block";
+      document.querySelector('.get-quote-menu').style.display = 'block';
+
+      if (window.innerWidth <= 768) {
+          document.querySelector('.get-quote-menu').style.position = 'fixed';
+          document.querySelector('.get-quote-menu').style.right = '5%';
+          document.querySelector('.get-quote-menu').style.top = '50%';
+          document.querySelector('.get-quote-menu').style.transform = 'translateY(-50%)';
+          document.querySelector('.get-quote-menu').style.width = '90%';
+          document.querySelector('.get-quote-menu').style.padding = '3vw';
+          document.querySelector('.get-quote-menu').style.background = '#d9d9d9c2';
+          document.querySelector('.contact-left-in').style.padding = '2vw 0';
+
+          document.querySelectorAll('.get-quote-menu .contact-left-in input, textarea').forEach(function(element) {
+              element.style.fontSize = "3.5vw";
+              element.style.height = "10vw";
+          });
+
+          document.querySelector('.get-quote-menu .ser-h textarea').style.height = "20vw";
+          document.querySelector('.get-quote-menu .form-submit input').style.height = '7vw';
+          document.querySelector('.get-quote-menu .form-submit input').style.width = '25vw';
+          document.querySelector('.get-quote-menu .form-submit input').style.borderRadius = '25px';
+          document.querySelector('.get-quote-menu .form-submit input').style.fontSize = '3.5vw';
+          document.querySelector('.get-quote-menu .fila div').style.width = '50%';
+          document.querySelector('.contact-left').style.background = "transparent";
+      }
+
+      overlay.style.display = "block"; 
+  } else {
+      mobFoot.style.display = "none"; 
+      overlay.style.display = "none"; 
+  }
+});
+
+document.getElementById("overlay").addEventListener("click", function() {
+  var mobFoot = document.getElementById("mob-foot");
+  var overlay = document.getElementById("overlay");
+  
+  if (window.innerWidth <= 768) {  
+      mobFoot.style.display = "none";
+  }
+
+  document.querySelector('.get-quote-menu').removeAttribute('style');
+  document.querySelector('.contact-left-in').removeAttribute('style');
+
+  document.querySelectorAll('.get-quote-menu .contact-left-in input, textarea').forEach(function(element) {
+      element.removeAttribute('style');
+  });
+
+  document.querySelector('.get-quote-menu .ser-h textarea').removeAttribute('style');
+  document.querySelector('.get-quote-menu .form-submit input').removeAttribute('style');
+  document.querySelector('.get-quote-menu .fila div').removeAttribute('style');
+  document.querySelector('.contact-left').removeAttribute('style');
+
+  overlay.style.display = "none"; 
+});
+
+// foot quote form script
+
 function validateForm() {
   var firstName = document.getElementById('firstName').value;
   var lastName = document.getElementById('lastName').value;
@@ -40,76 +109,6 @@ function validateForm() {
   return true;
 }
 
-
-// foot quote form script
-document.getElementById("getq").addEventListener("click", function() {
-  var mobFoot = document.getElementById("mob-foot");
-  var overlay = document.getElementById("overlay");
-
-  console.log("Click detected on getq element");
-  mobFoot.style.display = 'none';
-
-  // window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  if (mobFoot.style.display === "none" || mobFoot.style.display === "") {
-      mobFoot.style.display = "block";
-      document.querySelector('.get-quote-menu').style.display = 'block';
-
-      if (window.innerWidth <= 768) {
-          document.querySelector('.get-quote-menu').style.position = 'absolute';
-          document.querySelector('.get-quote-menu').style.right = '5%';
-          document.querySelector('.get-quote-menu').style.top = '20vw';
-          document.querySelector('.get-quote-menu').style.width = '90%';
-          document.querySelector('.get-quote-menu').style.padding = '3vw';
-          document.querySelector('.get-quote-menu').style.background = '#d9d9d9c2';
-          document.querySelector('.contact-left-in').style.padding = '2vw 0';
-
-          document.querySelectorAll('.get-quote-menu .contact-left-in input, textarea').forEach(function(element) {
-              element.style.fontSize = "3.5vw";
-              element.style.height = "10vw";
-          });
-
-          document.querySelector('.get-quote-menu .ser-h textarea').style.height = "20vw";
-          document.querySelector('.get-quote-menu .form-submit input').style.height = '7vw';
-          document.querySelector('.get-quote-menu .form-submit input').style.width = '25vw';
-          document.querySelector('.get-quote-menu .form-submit input').style.borderRadius = '25px';
-          document.querySelector('.get-quote-menu .form-submit input').style.fontSize = '3.5vw';
-          document.querySelector('.get-quote-menu .fila div').style.width = '50%';
-          document.querySelector('.contact-left').style.background = "transparent";
-      }
-
-      overlay.style.display = "block"; 
-  } else {
-      mobFoot.style.display = "none"; 
-      overlay.style.display = "none"; 
-  }
-});
-
-document.getElementById("overlay").addEventListener("click", function() {
-var mobFoot = document.getElementById("mob-foot");
-var overlay = document.getElementById("overlay");
-
-if (window.innerWidth <= 768) {  
-    mobFoot.style.display = "none";
-}
-
-// Reset all the styles applied earlier when form was shown
-document.querySelector('.get-quote-menu').removeAttribute('style');
-document.querySelector('.contact-left-in').removeAttribute('style');
-
-document.querySelectorAll('.get-quote-menu .contact-left-in input, textarea').forEach(function(element) {
-    element.removeAttribute('style');
-});
-
-document.querySelector('.get-quote-menu .ser-h textarea').removeAttribute('style');
-document.querySelector('.get-quote-menu .form-submit input').removeAttribute('style');
-document.querySelector('.get-quote-menu .fila div').removeAttribute('style');
-document.querySelector('.contact-left').removeAttribute('style');
-
-overlay.style.display = "none"; 
-});
-
-// foot quote form script
 
 
 
