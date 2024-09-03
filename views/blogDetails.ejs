@@ -728,37 +728,36 @@
                     </div>
 
                     <div id="touch" class="ad-frame">
-
-                        <div id="cii" class="ci">
-                            <div id="show-ad-title" style="display: flex;">
-                                <% ads.forEach(ad=> { %>
-                                    <span id="ad-title">
-                                        <%= ad.title %>
-                                    </span>
+                           
+                            <div id="cii" class="ci">
+                                <div id="show-ad-title" style="display: flex;">
+                                    <% ads.forEach(ad => { %>
+                                        <span id="ad-title"><%= ad.title %></span>
                                     <% }) %>
-                                        <span>i</span>
+                                    <span>i</span>
+                                </div>
+                                <span id="crss">&times;</span>
                             </div>
-                            <span id="crss">&times;</span>
-                        </div>
-                        <div id="ci2" class="ad-frame-in">
-                            <% ads.forEach(ad=> { %>
-
-                                <% if (ad.filePath.endsWith('.mp4')) { %>
-                                    <a href="<%= ad.linkPath %>" target="_blank">
+                            <div id="ci2" class="ad-frame-in">
+                                <% ads.forEach(ad => { %>
+                          
+                                    <% if (ad.filePath.endsWith('.mp4')) { %>
+                                      <a href="<%= ad.linkPath %>">
                                         <video controls width="300">
                                             <source src="<%= ad.filePath %>" type="video/mp4">
                                             Your browser does not support the video tag.
-                                        </video>
-                                    </a>
+                                          </video>
+                                      </a>
                                     <% } else { %>
-                                        <a href="<%= ad.linkPath %>" target="_blank">
-                                            <img style="width: 100%;" src="<%= ad.filePath %>" width="300"
-                                                alt="Ad Image">
-                                        </a>
-                                        <% } %>
-                                            <% }) %>
+                                      <a href="<%= ad.linkPath %>">
+                                        <img style="width: 100%;" src="<%= ad.filePath %>" width="300" alt="Ad Image">
+                                      </a>
+                                    <% } %>
+                                  <% }) %>
+                            </div>
                         </div>
-                    </div>
+
+
 
                 </div>
 

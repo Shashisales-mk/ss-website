@@ -1,369 +1,384 @@
 <% layout("/layouts/boilerplate") %>
 
-    <style>
-        .bl {
-            background-color: black;
-        }
+<style>
+    .bl {
+        background-color: black;
+    }
 
-        .main-page {
-            margin-top: 5rem;
-            margin-bottom: 0rem;
-            display: flex;
-        }
+    .main-page {
+        margin-top: 5rem;
+        margin-bottom: 0rem;
+        display: flex;
+    }
 
-        .bt {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            place-items: center;
-            border-bottom: 1px solid black;
-            padding-block: 1rem;
-        }
+    .bt {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        place-items: center;
+        border-bottom: 1px solid black;
+        padding-block: 1rem;
+    }
 
-        .blog-table-body button {
-            background: transparent;
-            padding: .5rem 1.3rem;
-            border: 2px solid red;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1rem;
-            color: red;
-        }
+    .blog-table-body button {
+        background: transparent;
+        padding: .5rem 1.3rem;
+        border: 2px solid red;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 1rem;
+        color: red;
+    }
 
-        .blog-table-body a {
-            background: transparent;
-            padding: .5rem 1.3rem;
-            border: 2px solid #11b911;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1rem;
-            color: #11b911;
-        }
+    .blog-table-body a {
+        background: transparent;
+        padding: .5rem 1.3rem;
+        border: 2px solid #11b911;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 1rem;
+        color: #11b911;
+    }
 
-        .action-btns {
-            width: 100%;
-            padding: 2vw 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    .action-btns {
+        width: 100%;
+        padding: 2vw 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-        .action-btns a {
-            background: #C4C800;
-            padding: .5vw 1vw;
-            border: 2px solid #C4C800;
-            border-radius: 2vw;
-            font-weight: 500;
-            font-size: 1.2vw;
-            color: #000;
-        }
+    .action-btns a {
+        background: #C4C800;
+        padding: .5vw 1vw;
+        border: 2px solid #C4C800;
+        border-radius: 2vw;
+        font-weight: 500;
+        font-size: 1.2vw;
+        color: #000;
+    }
 
-        .dieb{
-            background: #C4C800;
-            padding: .5vw 1vw;
-            border: 2px solid #C4C800;
-            border-radius: 2vw;
-            font-weight: 500;
-            font-size: 1.2vw;
-            color: #000;
-            margin-top: 1rem;
-            
-        }
-        .sideNavBar,
-        .main-page-in {
-            padding-top: 1vw;
-        }
+    .dieb{
+        background: #C4C800;
+        padding: .5vw 1vw;
+        border: 2px solid #C4C800;
+        border-radius: 2vw;
+        font-weight: 500;
+        font-size: 1.2vw;
+        color: #000;
+        margin-top: 1rem;
+        
+    }
+    .sideNavBar,
+    .main-page-in {
+        padding-top: 1vw;
+    }
 
-        .active {
-            background: #C4C800;
-        }
+    .active {
+        background: #C4C800;
+    }
 
-        .sideNavBar {
-            border-right: 0.1vw solid grey;
-            width: 20%;
-            background: #f3eeee;
-        }
+    .sideNavBar {
+        border-right: 0.1vw solid grey;
+        width: 20%;
+        background: #f3eeee;
+    }
 
-        .sideNavBar li {
-            text-align: center;
-            padding: 2vw;
-            border-bottom: 1px solid grey;
-            font-size: 1.2vw;
-            font-weight: 700;
-        }
+    .sideNavBar li {
+        text-align: center;
+        padding: 2vw;
+        border-bottom: 1px solid grey;
+        font-size: 1.2vw;
+        font-weight: 700;
+    }
 
-        .sideNavBar li:hover {
-            cursor: pointer;
-            background: #C4C800;
-        }
+    .sideNavBar li:hover {
+        cursor: pointer;
+        background: #C4C800;
+    }
 
-        .sideNavBar li.active {
-            background-color: #C4C800;
-        }
+    .sideNavBar li.active {
+        background-color: #C4C800;
+    }
 
-        .main-page-in {
-            width: 80%;
-            padding: 3vw 3vw;
-        }
+    .main-page-in {
+        width: 80%;
+        padding: 3vw 3vw;
+    }
 
-        .main-page-in h1 {
-            justify-content: start !important;
-        }
+    .main-page-in h1 {
+        justify-content: start !important;
+    }
 
-        .sideNavBar p a,
-        .gallery-section form button {
-            display: flex;
-            justify-content: center;
-            margin: 2vw 4vw;
-            padding: 0.6vw 1vw;
-            background: transparent;
-            color: #979a05;
-            border: 1px solid #979a05;
-            border-radius: 2vw;
-        }
+    .sideNavBar p a,
+    .gallery-section form button {
+        display: flex;
+        justify-content: center;
+        margin: 2vw 4vw;
+        padding: 0.6vw 1vw;
+        background: transparent;
+        color: #979a05;
+        border: 1px solid #979a05;
+        border-radius: 2vw;
+    }
 
-        .gallery-section form button {
-            margin: 2vw 0 0 0;
-        }
+    .gallery-section form button {
+        margin: 2vw 0 0 0;
+    }
 
-        .sideNavBar p a:hover {
-            background: #C4C800;
-            color: #000;
-            border: 1px solid #C4C800;
-        }
+    .sideNavBar p a:hover {
+        background: #C4C800;
+        color: #000;
+        border: 1px solid #C4C800;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 1.3vw;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1.3vw;
+    }
 
-        th,
-        td {
-            border: 2px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
+    th,
+    td {
+        border: 2px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
 
-        th {
-            background-color: #f2f2f2;
-            text-align: center;
-        }
+    th {
+        background-color: #f2f2f2;
+        text-align: center;
+    }
 
-        .edit-btn {
-            padding: 0.3vw 2vw;
-            border-radius: 3vw;
-            background: transparent;
-            border: 1px solid orange;
-            color: orange;
-        }
+    .edit-btn {
+        padding: 0.3vw 2vw;
+        border-radius: 3vw;
+        background: transparent;
+        border: 1px solid orange;
+        color: orange;
+    }
 
-        .popular,
-        .not-popular {
-            padding: 0.3vw 2vw;
-            border-radius: 3vw;
-            background: transparent;
-            border: 1px solid #C4C800;
-            color: #C4C800;
-            font-weight: bold;
-        }
+    .popular,
+    .not-popular {
+        padding: 0.3vw 2vw;
+        border-radius: 3vw;
+        background: transparent;
+        border: 1px solid #C4C800;
+        color: #C4C800;
+        font-weight: bold;
+    }
 
-        .approve,
-        .not-approve {
-            padding: 0.3vw 2vw;
-            border-radius: 3vw;
-            background: transparent;
-            border: 1px solid green;
-            color: green;
-            font-weight: bold;
-        }
+    .approve,
+    .not-approve {
+        padding: 0.3vw 2vw;
+        border-radius: 3vw;
+        background: transparent;
+        border: 1px solid green;
+        color: green;
+        font-weight: bold;
+    }
 
 
 
-        .del-btn {
-            margin: 0 !important;
-            padding: 0.3vw 2vw !important;
-            border-radius: 3vw !important;
-            background: transparent !important;
-            border: 1px solid red !important;
-            color: red !important;
-        }
+    .del-btn {
+        margin: 0 !important;
+        padding: 0.3vw 2vw !important;
+        border-radius: 3vw !important;
+        background: transparent !important;
+        border: 1px solid red !important;
+        color: red !important;
+    }
 
-        .del-btn:hover {
-            cursor: pointer;
-        }
+    .del-btn:hover {
+        cursor: pointer;
+    }
 
-        .gallery-cont {
-            padding-top: 2vw;
-            display: grid;
-            grid-column-gap: var(--column-gutter);
-            align-items: start;
-            grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
-        }
+    .gallery-cont {
+        padding-top: 2vw;
+        display: grid;
+        grid-column-gap: var(--column-gutter);
+        align-items: start;
+        grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    }
 
-        .gal-in {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr);
-            row-gap: var(--row-gutter);
-        }
+    .gal-in {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: var(--row-gutter);
+    }
 
-        .gal-in img,
-        .gal-in video {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            display: block;
-            unicode-bidi: isolate;
-        }
+    .gal-in img,
+    .gal-in video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+        unicode-bidi: isolate;
+    }
 
-        .secr {
-            display: flex;
-            gap: 2vw;
-            padding: 2vw 0 0.1vw 0;
-            font-size: 1.2vw;
-        }
+    .secr {
+        display: flex;
+        gap: 2vw;
+        padding: 2vw 0 0.1vw 0;
+        font-size: 1.2vw;
+    }
 
-        .gallery-section input,
-        .gallery-section select,
-        .testimonial-section input,
-        .testimonial-section select {
-            border: 0;
-            background: #ced5d5;
-            outline: none;
-            padding: 0.5vw;
-            font-size: 1.2vw;
-            border-radius: 0.4vw;
-        }
+    .gallery-section input,
+    .gallery-section select,
+    .testimonial-section input,
+    .testimonial-section select {
+        border: 0;
+        background: #ced5d5;
+        outline: none;
+        padding: 0.5vw;
+        font-size: 1.2vw;
+        border-radius: 0.4vw;
+    }
 
-        .gallery-cont table img,
-        .gallery-cont table video {
-            height: 5vw;
-            width: 5vw;
-        }
+    .gallery-cont table img,
+    .gallery-cont table video {
+        height: 5vw;
+        width: 5vw;
+    }
 
-        .gallery-cont table li {
-            list-style: none;
-            padding: 0.5vw 1vw;
-            background: #4e4949;
-            color: white;
-            border-radius: 2vw;
-        }
+    .gallery-cont table li {
+        list-style: none;
+        padding: 0.5vw 1vw;
+        background: #4e4949;
+        color: white;
+        border-radius: 2vw;
+    }
 
-        .gallery-cont table ul {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1vw;
-            flex-wrap: wrap;
-        }
+    .gallery-cont table ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1vw;
+        flex-wrap: wrap;
+    }
 
-        .gallery-section p {
-            display: grid;
-            width: 50%;
-        }
+    .gallery-section p {
+        display: grid;
+        width: 50%;
+    }
 
-        .secr label {
-            display: flex;
-            align-items: center;
-        }
+    .secr label {
+        display: flex;
+        align-items: center;
+    }
 
-        .appr-btn,
-        .testimonial-section button {
-            padding: 0.3vw 2vw;
-            border-radius: 3vw;
-            background: transparent;
-            border: 1px solid green;
-            color: green;
-        }
+    .appr-btn,
+    .testimonial-section button {
+        padding: 0.3vw 2vw;
+        border-radius: 3vw;
+        background: transparent;
+        border: 1px solid green;
+        color: green;
+    }
 
-        .tarea {
-            padding: 1vw 0;
-        }
+    .tarea {
+        padding: 1vw 0;
+    }
 
-        .tarea textarea {
-            padding: 1vw;
-            background: #ced5d536;
-            height: 8vw;
-        }
+    .tarea textarea {
+        padding: 1vw;
+        background: #ced5d536;
+        height: 8vw;
+    }
 
-        .tarea textarea::placeholder {
-            font-size: 1.2rem;
-        }
+    .tarea textarea::placeholder {
+        font-size: 1.2rem;
+    }
 
-        .tarea label {
-            display: flex;
-            margin-top: 1vw;
-            font-size: 1vw;
-        }
+    .tarea label {
+        display: flex;
+        margin-top: 1vw;
+        font-size: 1vw;
+    }
 
-        .edtes input,
-        .edtes select,
-        .edtes textarea {
-            width: 8vw !important;
-        }
+    .edtes input,
+    .edtes select,
+    .edtes textarea {
+        width: 8vw !important;
+    }
 
-        button:hover {
-            cursor: pointer;
-        }
+    button:hover {
+        cursor: pointer;
+    }
 
-        .comment::placeholder {
-            font-size: 1rem;
-        }
+    .comment::placeholder {
+        font-size: 1rem;
+    }
 
-        #charCount {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 0.5rem;
-            display: block;
-        }
+    #charCount {
+        font-size: 0.8rem;
+        color: #666;
+        margin-top: 0.5rem;
+        display: block;
+    }
 
-        .comment {
-            margin-top: 1rem;
-            width: 100%;
-            height: 100px;
-            border: 1px solid black;
-            font-size: 1rem;
-        }
+    .comment {
+        margin-top: 1rem;
+        width: 100%;
+        height: 100px;
+        border: 1px solid black;
+        font-size: 1rem;
+    }
 
-        .testi-sec input:first-child {
-            width: 68%;
-        }
+    .testi-sec input:first-child {
+        width: 68%;
+    }
 
-        .testi-sec input:last-child {
-            width: 30%;
-        }
-        /* Ads section */
-        .admin-ads{
-            margin-top: 2vw;
-            display: grid;
-            gap: 1vw;
-        }
-        .admin-ads input{
-            outline: none;
-            background: rgb(241, 243, 244);
-            padding: 1vw;
-            border: 0;
-            border-radius: 0.3vw;
-        }
-        .admin-ads button{
-            padding: 2vw;
-            font-weight: 700;
-            padding: 0.5vw 2vw;
-            color: green;
-            border: 1px solid green;
-            background: transparent;
-            border-radius: 1vw;
-        }
-        .ads-del-btn{
-            margin: 2vw 0;
-            padding: 0.5vw 1vw;
-            background: transparent;
-            border: 1px solid red;
-            color: red;
-            border-radius: 0.3vw;
-        }
+    .testi-sec input:last-child {
+        width: 30%;
+    }
+    /* Ads section */
+    .admin-ads{
+        margin-top: 2vw;
+        display: grid;
+        gap: 1vw;
+    }
+    .admin-ads input{
+        outline: none;
+        background: rgb(241, 243, 244);
+        padding: 1vw;
+        border: 0;
+        border-radius: 0.3vw;
+    }
+    .admin-ads button{
+        padding: 2vw;
+        font-weight: 700;
+        padding: 0.5vw 2vw;
+        color: green;
+        border: 1px solid green;
+        background: transparent;
+        border-radius: 1vw;
+    }
+    .ads-del-btn{
+        margin: 2vw 0;
+        padding: 0.5vw 1vw;
+        background: transparent;
+        border: 1px solid red;
+        color: red;
+        border-radius: 0.3vw;
+    }
+    .active-days{
+        display: flex;
+        justify-content: space-between;
+    }
+    table ul li{
+        list-style: none;
+    }
+    table ul{
+        display: grid;
+        gap: 1rem;
+    }
+    .fsf{
+        font-size: 0.8rem;
+    }
+</style>
 
-    </style>
+
 
     <div class="main-page">
         <div class="sideNavBar">
@@ -379,72 +394,111 @@
         <div class="main-page-in">
             <!-- Blog Section -->
             <div class="blog-section">
-                <!-- Ads Section -->
-            <h2>Upload New Ad</h2>
-            <form action="/uploadAd" method="POST" enctype="multipart/form-data">
-                <div class="admin-ads">
-                    <div>
-                        <input type="text" id="title" name="title" placeholder="Enter Ad Title" required>
-                        <input type="url" id="link" name="linkPath" placeholder="Enter Ad Link" required>
-                    </div>
+               
+<!-- Ads Section -->
+<h2>Upload New Ad</h2>
+<form action="/uploadAd" method="POST" enctype="multipart/form-data">
+  <div class="admin-ads">
+    <div>
+      <input type="text" id="title" name="title" placeholder="Enter Ad Title" required>
+      <input type="url" id="link" name="linkPath" placeholder="Enter Ad Link" required>
+      <input type="file" name="ad" accept="image/*,video/*" required>
+    </div>
+
+    <div>
+      <label for="startDate">Start Date:</label>
+      <input style="margin-right: 2rem;" type="date" id="startDate" name="startDate" required>
+
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate" required>
+    </div>
+
+    <div>
+      <label for="startTime">Start Time:</label>
+      <input style="margin-right: 2rem;" type="time" id="startTime" name="startTime" required>
+
+      <label for="endTime">End Time:</label>
+      <input type="time" id="endTime" name="endTime" required>
+    </div><br>
+
+    <div class="active-days">
+      <label>Active Days:</label><br><br>
+      <label><input type="checkbox" name="activeDays" value="Monday"> Monday</label>
+      <label><input type="checkbox" name="activeDays" value="Tuesday"> Tuesday</label>
+      <label><input type="checkbox" name="activeDays" value="Wednesday"> Wednesday</label>
+      <label><input type="checkbox" name="activeDays" value="Thursday"> Thursday</label>
+      <label><input type="checkbox" name="activeDays" value="Friday"> Friday</label>
+      <label><input type="checkbox" name="activeDays" value="Saturday"> Saturday</label>
+      <label><input type="checkbox" name="activeDays" value="Sunday"> Sunday</label>
+    </div>
+
+    <div>
+      <button type="submit">Upload</button>
+    </div>
+  </div>
+</form><br>
+
                 
-                    <div>
-                        <input type="file" name="ad" accept="image/*,video/*" required>
-                        <button type="submit">Upload</button>
-                    </div>
-                </div>
-                </form>
           
             <!-- Display Existing Ads Section -->
             <h2 style="margin-top: 2vw;">Uploaded Ads</h2>
             <% if (ads.length > 0) { %>
-                <form action="/delete-ads" method="POST">
-                    <button class="ads-del-btn" type="submit">Delete Selected Ads</button>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Select</th>
-                                <th>Ad Title</th>
-                                <th>Ad Link</th>
-                                <th>Image/Video</th>
-                            </tr>
-                        </thead>
-                        <% ads.forEach(ad => { %>
-                            <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" name="adIds" value="<%= ad._id %>">
-                                        </td>
-                                        <td>
-                                            <h3><%= ad.title %></h3>
-                                        </td>
-                                        <td>
-                                            <a href="<%= ad.linkPath %>" target="_blank"><%= ad.linkPath %></a>
-                                        </td>
-                                        <td>
-                                            <% if (ad.filePath.endsWith('.mp4') || ad.filePath.endsWith('.webm') || ad.filePath.endsWith('.ogg')) { %>
-                                                <video controls width="300">
-                                                    <source src="<%= ad.filePath %>" type="video/mp4">
-                                                    Your browser does not support the video tag.
-                                                </video>
-                                            <% } else { %>
-                                                <a href="<%= ad.linkPath %>" target="_blank">
-                                                    <img height="50" width="50" src="<%= ad.filePath %>" alt="Ad Image">
-                                                </a>
-                                            <% } %>
-                                        </td>
-                                        
-                                    </tr>
-                        
-                            </tbody>
-                        <% }) %>
-                    </table>
-                    
-                </form>
-            <% } else { %>
-              <p>No ads uploaded yet.</p>
+            <form action="/delete-ads" method="POST">
+                <button class="ads-del-btn" type="submit">Delete Selected Ads</button>
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Select</th>
+                        <th>Active</th>
+                        <th>Ad Title</th>
+                        <th>Ad Link</th>
+                        <th>Image/Video</th>
+                        <th><ul>
+                            <li>Start Date</li>
+                            <li>End Date</li>
+                        </ul></th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Active Days</th>
+                      </tr>
+                    </thead>
+                    <% ads.forEach(ad => { %>
+                      <tbody class="fsf">
+                        <tr>
+                          <td><input type="checkbox" name="adIds" value="<%= ad._id %>"></td>
+                          <td><%= ad.isActive %></td>
+                          <td><h3><%= ad.title %></h3></td>
+                          <td><a href="<%= ad.linkPath %>"><%= ad.linkPath %></a></td>
+                          <td>
+                            <% if (ad.filePath.endsWith('.mp4')) { %>
+                              <video controls width="100">
+                                <source src="<%= ad.filePath %>" type="video/mp4">
+                                Your browser does not support the video tag.
+                              </video>
+                            <% } else { %>
+                              <a href="<%= ad.linkPath %>">
+                                <img height="50" width="50" src="<%= ad.filePath %>" alt="Ad Image" width="100">
+                              </a>
+                            <% } %>
+                          </td>
+                          <td>
+                            <ul>
+                                <li><%= new Date(ad.startDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %></li>
+                                <li><%= new Date(ad.endDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) %></li>
+                              </ul>
+                        </td>
+                      
+                          <td><%= ad.startTime %></td>
+                          <td><%= ad.endTime %></td>
+                          <td><%= ad.activeDays.join(', ') %></td>
+                        </tr>
+                      </tbody>
+                    <% }) %>
+                  </table><br><br>
+            </form>
+              <% } else { %>
+                <p style="padding: 2rem 0;">No ads uploaded yet.</p>
             <% } %>
-
 
 
 

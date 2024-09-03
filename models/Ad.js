@@ -15,6 +15,11 @@ const adSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid URL!`
     }
   },
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true }, 
+  startTime: { type: String, required: true }, 
+  endTime: { type: String, required: true }, 
+  activeDays: { type: [String], required: true } 
 });
 
 module.exports = mongoose.model('Ad', adSchema);

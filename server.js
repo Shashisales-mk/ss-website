@@ -281,15 +281,27 @@ function parsePhoneNumber(phoneNumber) {
 
 
 app.get("/", async (req, res) => {
+    const now = new Date();
+    const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
+    const currentTime = now.toTimeString().slice(0, 5);
+
     const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
     const testimonials = await Testimonial.find().populate('page');
     const successMessage = req.session.successMessage || null;
     const errorMessage = req.session.errorMessage || null;
-    const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
     console.log('successMessage:', successMessage); // Log the value of successMessage
     console.log('errorMessage:', errorMessage); // Log the value of errorMessage
     req.session.successMessage = null; // Clear the success message after displaying it
     req.session.errorMessage = null; // Clear the error message after displaying it
+
+    const ads = await Ad.find({
+        isActive: true,
+        startDate: { $lte: now },
+        endDate: { $gte: now },
+        activeDays: dayOfWeek,
+        startTime: { $lte: currentTime }, 
+        endTime: { $gte: currentTime }  
+      }).sort({ uploadDate: -1 });
     res.render("home", {
         ads,
         successMessage,
@@ -538,34 +550,49 @@ app.get("/blog-form", (req, res) => {
 
 
 app.get("/blog-detail/:canonical", async (req, res) => {
-    try {
-        const { canonical } = req.params;
-        const blog = await Blog.findOne({ canonical: canonical });
-        if (!blog) {
-            return res.status(404).send("Blog not found");
-        }
+    const now = new Date();
+    const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
+    const currentTime = now.toTimeString().slice(0, 5);
 
-        const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
-        const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
-        const blogsRecommend = await Blog.find({
-            _id: { $ne: blog._id },  // Exclude the current blog
-            metaKeywords: { $in: blog.metaKeywords }  // Find blogs with similar tags
-        }).limit(4);
-        res.render("blogDetails", {
-            truncateString,
-            blogsRecommend,
-            ads,
-            blog,
-            comments: approvedComments,
-            title: blog.metaTitle,
-            description: blog.metaDescription
-            
-        });
+  
+    try {
+      const { canonical } = req.params;
+      const blog = await Blog.findOne({ canonical: canonical });
+      if (!blog) {
+        return res.status(404).send("Blog not found");
+      }
+  
+      const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
+  
+      const ads = await Ad.find({
+        isActive: true,
+        startDate: { $lte: now },
+        endDate: { $gte: now },
+        activeDays: dayOfWeek,
+        startTime: { $lte: currentTime }, 
+        endTime: { $gte: currentTime }  
+      }).sort({ uploadDate: -1 });
+  
+      const blogsRecommend = await Blog.find({
+        _id: { $ne: blog._id },
+        metaKeywords: { $in: blog.metaKeywords } 
+      }).limit(4);
+  
+      res.render("blogDetails", {
+        truncateString,
+        blogsRecommend,
+        ads,
+        blog,
+        comments: approvedComments,
+        title: blog.metaTitle,
+        description: blog.metaDescription
+      });
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
+      console.error(err);
+      res.status(500).send("Internal Server Error");
     }
-});
+  });
+
 
 
 app.post('/subscribe', async (req, res) => {
@@ -704,7 +731,12 @@ app.post('/update-all-blog-banners', uploadSingleBanner, isAdmin, async (req, re
 
 
 
+
 app.get("/all-blogs-list", isAdmin, async (req, res) => {
+    const now = new Date();
+    const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
+    const currentTime = now.toTimeString().slice(0, 5);
+    
     const AllBlogs = await Blog.find();
     const galleryItems = await Gallery.find();
     const category = await Gallery.find();
@@ -712,9 +744,19 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
     const subscribers = await Subscriber.find();
-    const ads = await Ad.find({ isActive: true }).sort({ uploadDate: -1 });
+    
+    const ads = await Ad.find().sort({ uploadDate: -1 });
+    ads.forEach(ad => {
+        const isActive = ad.isActive &&
+                              ad.startDate <= now &&
+                              ad.endDate >= now &&
+                              ad.activeDays.includes(dayOfWeek) &&
+                              ad.startTime <= currentTime &&
+                              ad.endTime >= currentTime;
+        ad.isActive = isActive;
+    });
+  
 
-    // console.log(AllBlogs);
     res.render("allBlogs", {
         ads,
         acomments: approvedComments,
@@ -724,11 +766,13 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
         category,
         AllBlogs,
         title: "All Blog List - how to create a website - Shashi Sales",
-        description: "Learn how to create a website with our step-by-step guide for beginners. This comprehensive tutorial covers everything you need to build your site from scratch.",
+        description: "Learn how to create a website with our step-by-step guide for beginners.",
         keywords: 'how to create a website',
         subscribers
-    })
-})
+    });
+});
+
+
 
 app.delete('/delete-blog/:id', isAdmin, async (req, res) => {
     try {
@@ -832,32 +876,36 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
 
 // Route for handling ads upload
 app.post('/uploadAd', upload.single('ad'), async (req, res) => {
-    const { title, linkPath } = req.body;
-    
-    if (!req.file) {
-        return res.status(400).send('No file uploaded');
-    }
-    
-    const fileType = req.file.mimetype;
-    if (!fileType.startsWith('image/') && !fileType.startsWith('video/')) {
-        return res.status(400).send('Only images and videos are allowed');
-    }
-
-    // Create new ad instance
-    const newAd = new Ad({
-      filePath: `/uploads/${req.file.filename}`,
-      linkPath,
-      title
-    });
-  
     try {
-      await newAd.save(); 
+      if (!req.file) {
+        req.session.errorMessage = 'No file uploaded!';
+        return res.redirect('/admin');
+      }
+  
+      const { title, linkPath, startDate, endDate, startTime, endTime, activeDays } = req.body;
+      
+      // Create a new Ad object
+      const ad = new Ad({
+        title,
+        linkPath,
+        filePath: '/uploads/' + req.file.filename, // Save relative path
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        activeDays
+      });
+      
+      // Save to the database
+      await ad.save();
+      req.session.successMessage = 'Ad uploaded successfully!';
       res.redirect('/all-blogs-list');
     } catch (err) {
-      console.error('Error saving ad:', err);
-      res.status(500).send('Error saving ad');
+      console.error('Error uploading ad:', err);
+      req.session.errorMessage = 'Ad not uploaded successfully!';
+      res.redirect('/all-blogs-list');
     }
-});
+  });
 
 
   app.post('/delete-ads', async (req, res) => {
