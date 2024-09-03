@@ -1426,10 +1426,10 @@ th {
 
 /* SEO page */
 
-.seo-hed{
+.seo-hed {
     position: sticky;
     top: 2%;
-    z-index: 1000;
+   z-index:998;
 }
 .seo-hed-in{
     box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
