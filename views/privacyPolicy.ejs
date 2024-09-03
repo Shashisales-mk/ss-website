@@ -1,101 +1,638 @@
 <% layout("/layouts/boilerplate") %>
 
-
-
 <style>
-     .bl {
-            background-color: #000;
-        }
+  .bl {
+    background-color: #000;
+  }
 
-        @media screen and (max-width : 600px) {
-        .main-page{
-            padding-top: 6rem;
-            
-        }
-       }
+  @media screen and (max-width: 600px) {
+    .main-page {
+      padding-top: 6rem;
+    }
+  }
 
-       .main-page{
-            padding-top: 8rem;
-            padding-inline: 6vw;
-        padding-bottom: 5rem;
-         
-        }
+  .main-page {
+    padding-top: var(--header-height, 8rem); /* Default to 8rem if variable is not set */
+    padding-inline: 6vw;
+    padding-bottom: 5rem;
+    font-family: "Inter", sans-serif;
+}
 
-        .main-page h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .main-page h2 {
-            font-size: 2rem;
-            margin-top: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        .main-page h3 {
-            font-size: 1.5rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .main-page p {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-        .main-page ul {
-            margin-bottom: 1rem;
-        }
-        .main-page li {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-   
+  .main-page h1 {
+    position: absolute;
+    top: 45%;
+    left: 2%;
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+  }
+  .main-page h2 {
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-family: "Inter", sans-serif;
+  }
+  .main-page h3 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-family: "Inter", sans-serif;
+  }
+  .main-page p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+  }
+  .main-page ul {
+    margin-bottom: 1.2rem;
+    padding-left: 3rem;
+  }
+  .main-page li {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+  }
+  .pps {
+    background: #c4c800;
+    position: sticky;
+    top: 0%;
+    padding: 1.3vw 6vw;
+    margin: 0vw -6vw 0vw -6vw;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    line-height: 1.5;
+    display: flex;
+    justify-content: space-between;
+  }
+  .pps a{
+    border: 1px solid #000;
+    border-radius: 5rem;
+    background: transparent;
+    padding: 0.5rem 1.5rem;
+    color: #000 !important;
+    text-decoration: none !important;
+    font-size: 1rem;
+    font-weight: 500 !important;
+  }
+  .pps a:hover{
+    border: 1px solid #343131;
+    color: #343131 !important;
+  }
+  .main-page table{
+    margin: 2rem 0 !important;
+    font-size: 1.2rem;
+  }
+  .main-page table th, td{
+    border: 1px solid rgb(230, 224, 224);
+  }
+  .main-page a{
+    font-weight: 600;
+    text-decoration: underline;
+    color: #2f78c4;
+  }
+  @media screen and (max-width: 768px){
+    .main-page table{
+    margin: 1.8rem 0 !important;
+    font-size: 1rem;
+  }
+  .pps {
+    padding: 1.3vw 6vw;
+    margin: 0vw -6vw 0vw -6vw;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .main-page p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .main-page ul {
+    margin-bottom: 1rem;
+    padding-left: 3rem;
+  }
+  .main-page li {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .pps a {
+    border-radius: 5rem;
+    padding: 0.3rem 1.4rem;
+    font-size: 1rem;
+}
+.main-page h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+  }
+  .main-page h2 {
+    font-size: 1.7rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-family: "Inter", sans-serif;
+  }
+  .main-page h3 {
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-family: "Inter", sans-serif;
+  }
+  }
+  .pdd{
+      width: 15vw;
+      padding: 1.8rem;
+    }
+    .udl{
+      font-size: 1.1;
+      text-decoration: underline;
+    }
+  @media screen and (max-width: 600px){
+    .dn{
+      display: none;
+    }
+    .main-page table {
+        margin: 1.8rem 0 !important;
+        font-size: 0.6rem;
+    }
+    .pdd{
+      width: 15vw;
+      padding: 1rem;
+    }
+    .main-page table{
+    margin: 1.8rem 0 !important;
+    font-size: 0.6rem;
+  }
+  .pps {
+    padding: 2vw 6vw;
+    margin: 0vw -6vw 0vw -6vw;
+    font-size: 0.9rem !important;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .main-page p {
+    font-size: 0.9rem !important;
+    margin-bottom: 1rem;
+  }
+  .main-page ul {
+    margin-bottom: 1rem;
+    padding-left: 3rem;
+  }
+  .main-page li {
+    font-size: 0.9rem !important;
+    margin-bottom: 1rem;
+  }
+  .pps a {
+    border-radius: 5rem;
+    padding: 0.3rem 1.4rem;
+    font-size: 1rem !important;
+}
+.main-page h1 {
+    font-size: 1.6rem !important;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+  }
+  .main-page h2 {
+        font-size: 1.3rem !important;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-family: "Inter", sans-serif;
+    }
+  .main-page h3 {
+    font-size: 1.3rem !important;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-family: "Inter", sans-serif;
+  }
+  .main-page h1 {
+    top: 35%;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  }
+
 </style>
 
 <body>
-    
-    <div class="main-page">
-
-        <h1>Our Privacy Policy</h1>
-        <p>At <strong>Shashi Sales &amp; Marketing</strong>, we are committed to safeguarding your privacy. We take appropriate measures to maintain the confidentiality and security of any data shared with us.</p>
-
-        <h2>We Respect Your Privacy</h2>
-        <ul>
+  <div class="main-page">
+    <div class="pps">
+        <div>Shashi Sales &amp; Marketing Privacy Policy</div>
+        <div class="dn"><a href="/contact-us">Contact Us</a></div>
+    </div>
+    <div
+      style="
+        aspect-ratio: 1280/333;
+        position: relative;
+        margin: 0vw -6vw 2vw -6vw;
+        position: relative;
+      "
+    >
+      <img
+        style="position: absolute; height: 100%; width: 100%"
+        src="/assets/images/blogBannerImage1.webp"
+        alt="Banner Image"
+      />
+      <h1>Website Privacy Policy</h1>
+    </div>
+    <h2>1 INTRODUCTION</h2>
+    <p>
+      At <strong>Shashi Sales &amp; Marketing</strong>, we are committed to
+      safeguarding your privacy. We take appropriate measures to maintain the
+      confidentiality and security of any data shared with us.
+    </p>
+    <p>
+      Shashi Sales & Marketing and its affiliates (hereinafter, “Shashi Sales
+      And Marketing” or “we,” “us,” or “our”), created this privacy policy to
+      demonstrate our firm commitment to your privacy and protection of your
+      information. This policy covers how Shashi Sales And Marketing and its
+      subsidiaries manage information that may be used to identify you directly
+      or indirectly (“Personal Information”) that you submit, or that we collect
+      and receive on our website, together with any other websites and related
+      mobile applications owned, operated or controlled by us (referred to
+      herein individually and collectively as the “website”) and related to your
+      use of our web services and mobile applications (hereinafter collectively,
+      “Services”). We provide the website and our Services to you subject to the
+      following conditions (this “Privacy Policy”), which are subject to, and
+      incorporated by reference into, our Terms and Conditions.
+    </p>
+    <p>
+      For the purposes of this Privacy Policy, Shashi Sales And Marketing is a
+      controller (i.e., responsible party) for the practices described in this
+      Privacy Policy. Additionally, this Privacy Policy does not apply to the
+      extent we process Personal Information in the role of a processor or
+      service provider (as applicable) on behalf of our business customers. For
+      more information about the privacy practices of a Shashi Sales And
+      Marketing business customer or a customer affiliate, please contact the
+      respective business customer directly. <span style="font-style: italic;">We are not responsible for the
+        privacy or data security practices of our business customers, which may
+        differ from those set forth in this Privacy Policy.</span>
+    </p>
+    <p>
+      BY VISITING THE WEBSITE OR USING OUR SERVICES, YOU ACKNOWLEDGE AND AGREE
+      THAT YOU HAVE READ THIS PRIVACY POLICY AND AGREE TO THE COLLECTION, USE
+      AND OTHER PROCESSING OF YOUR INFORMATION IN ACCORDANCE WITH THE PRACTICES
+      DESCRIBED IN THIS PRIVACY POLICY. IF YOU DO NOT AGREE TO ALL OF THE TERMS,
+      CONDITIONS AND PRACTICES SET FORTH HEREIN, DO NOT ACCESS THE WEBSITE OR
+      ANY OF OUR SERVICES.
+    </p>
+    <!-- <ul>
             <li><strong>Secure Information Handling</strong>: Any information you provide through our website inquiry forms is securely stored and processed.</li>
             <li><strong>Personal Details Usage</strong>: Your personal information (such as name, telephone number, fax, and email address) will be used solely for communication related to our products and services.</li>
             <li><strong>No Third-Party Sharing</strong>: We never share, lease, sell, or distribute your personal information to third-party entities for marketing purposes without your explicit consent.</li>
             <li><strong>Security Measures</strong>: We employ robust technologies and processes to prevent unauthorized access, use, or disclosure of your personal data.</li>
             <li><strong>Collaboration with Partners</strong>: Occasionally, we may need to share your information with business partners, affiliates, and authorized service vendors to provide our services.</li>
-        </ul>
-        
-        <h2>Leveraging Your Information for Better Service (Cookies)</h2>
-        <ul>
-            <li><strong>Personalized Experience</strong>: We use cookies on our websites to enhance your user experience.</li>
-            <li><strong>Analytics and Improvement</strong>: The information captured by cookies helps us improve our service offerings and website features.</li>
-            <li><strong>No Unauthorized Access</strong>: Rest assured, these cookies do not grant us remote access to your systems or any confidential information you haven't shared.</li>
-            <li><strong>Privacy Concerns</strong>: We never make location data or other customer-centric information public.</li>
-            <li><strong>Cookie Management</strong>: Cookies are stored within your browser or system memory. You can disable them by adjusting your browser settings, although this may limit the full benefits of using our website.</li>
-            <li><strong>Learn More</strong>: To understand cookies better, visit <a href="https://allaboutcookies.org" target="_blank" rel="noopener noreferrer">allaboutcookies.org</a>.</li>
-        </ul>
-        
-        <h2>External Links</h2>
-        <ul>
-            <li><strong>Use at Your Own Risk</strong>: Any external links on our website are provided for your convenience. Please access them cautiously.</li>
-            <li><strong>Third-Party Responsibility</strong>: SSM is not responsible for the security features, content, or privacy policies of these third-party websites.</li>
-        </ul>
-        
-        <h2>GDPR Compliance (For EU Visitors)</h2>
-        <ul>
-            <li><strong>Secure Storage</strong>: Basic identification details you provide (name, email, company, telephone, country) and web data (IP address, system location, cookies) are confidentially stored.</li>
-            <li><strong>Communication Purposes</strong>: We use this information solely for communication about our products and services.</li>
-            <li><strong>Retention Period</strong>: We retain personal data only as long as necessary for the defined purposes, unless longer retention is legally required or for legitimate business reasons.</li>
-            <li><strong>Your Rights</strong>: You can request information about your stored data, its location, and the purpose of storage.</li>
-        </ul>
-        
-        <h2>Changes to Our Privacy Policy</h2>
-        <ul>
-            <li>SSM regularly reviews and updates our privacy policy as needed.</li>
-            <li>We ensure that any changes are promptly made available on our website.</li>
-        </ul>
-        
-        <h2>How to Contact Us</h2>
-        <p>We strictly enforce our privacy policy and comply with GDPR regulations. If you have any questions, feel free to reach out to us at <a href="mailto:info@shashisales.com">info@shashisales.com</a>. Rest assured, we adhere to meta and Google policies to maintain your company's compliance.</p>
-    </div>
+        </ul> -->
+
+    <h2>2 WE REQUEST YOUR PRIVACY</h2>
+    <ul>
+      <li>
+        <strong>Secure Information Handling</strong>: Any information you
+        provide through our website inquiry forms is securely stored and
+        processed.
+      </li>
+      <li>
+        <strong>Personal Details Usage</strong>: Your personal information (such
+        as name, telephone number, fax, and email address) will be used solely
+        for communication related to our products and services.
+      </li>
+      <li>
+        <strong>No Third-Party Sharing</strong>: We never share, lease, sell, or
+        distribute your personal information to third-party entities for
+        marketing purposes without your explicit consent.
+      </li>
+      <li>
+        <strong>Security Measures</strong>: We employ robust technologies and
+        processes to prevent unauthorized access, use, or disclosure of your
+        personal data.
+      </li>
+      <li>
+        <strong>Collaboration with Partners</strong>: Occasionally, we may need
+        to share your information with business partners, affiliates, and
+        authorized service vendors to provide our services.
+      </li>
+    </ul>
+
+    <h2>3 CALIFORNIA CONSUMER NOTICE OF COLLECTION</h2>
+    <ul>
+      <li>
+        This Policy is provided to all California residents and any other
+        applicable individuals subject to this Privacy Policy.
+      </li>
+    </ul>
+
+    <h2>4 INFORMATION COLLECTION AND USAGE</h2>
+    <p>
+      Please be aware that the types of nonpublic Personal Information collected
+      depend on the specific Services you are utilizing. The Personal
+      Information collected may include:
+    </p>
+    <ul>
+      <li>
+        Information provided directly by you in applications, forms, and other
+        communications, such as name, address, email, phone numbers, website
+        URL, social networking usernames, demographic information, professional
+        details, and pages viewed/activity on our website.
+      </li>
+      <li>
+        Information obtained from your transactions with us, our affiliates, and
+        other sources.
+      </li>
+      <li>
+        Information collected during the registration process, including
+        username, password, and security questions/answers for password reset.
+      </li>
+      <li>
+        Information collected automatically from your browser or mobile device,
+        such as IP address, device type, operating system, browser type,
+        location, referring website, connection speed, internet service
+        provider, pages visited, and access timestamp.
+      </li>
+    </ul>
+    <p>
+      We utilize this Personal Information in accordance with applicable laws
+      for the following purposes:
+    </p>
+    <ul>
+      <li>Completing transactions and providing authorized Services.</li>
+      <li>
+        General business purposes, including diagnosing website/application
+        issues, account notifications, product updates, identity verification,
+        transaction limit determination, troubleshooting, analysis of
+        products/services, enforcement of Terms and Conditions, rights
+        protection, and service customization and improvement.
+      </li>
+      <li>
+        Other business purposes, such as data analysis, usage trends
+        identification, service effectiveness assessment, and feature
+        enhancement.
+      </li>
+      <li>
+        Compliance with legal requirements, agreements, and policies, as well as
+        prevention and protection against claims, liabilities, prohibited
+        behavior, and criminal activity.
+      </li>
+      <li>
+        Development and improvement of marketing activities, identifying new
+        customer opportunities, and sending marketing communications.
+      </li>
+      <li>Other activities consistent with this Privacy Notice.</li>
+    </ul>
+    <p>
+      Please note that mobile information, excluding opt-in text messaging data
+      and consent, will not be shared for marketing/promotional purposes.
+      Additionally, we may store and protect your Personal Information if you
+      are no longer using our Services for purposes such as risk management,
+      regulatory compliance, and audits, as required by law.
+    </p>
+    <p>
+      If you wish to stop receiving messages, you can send STOP, and for more
+      assistance, you can send HELP. Message and Data Rates may apply.
+    </p>
+
+    <h2>5 LEVERAGING YOUR INFORMATION FOR BETTER SERVICE (Cookies)</h2>
+    <ul>
+      <li>
+        <strong>Personalized Experience</strong>: We use cookies on our websites
+        to enhance your user experience.
+      </li>
+      <li>
+        <strong>Analytics and Improvement</strong>: The information captured by
+        cookies helps us improve our service offerings and website features.
+      </li>
+      <li>
+        <strong>No Unauthorized Access</strong>: Rest assured, these cookies do
+        not grant us remote access to your systems or any confidential
+        information you haven't shared.
+      </li>
+      <li>
+        <strong>Security Measures</strong>: We employ robust technologies and
+        processes to prevent unauthorized access, use, or disclosure of your
+        personal data.
+      </li>
+      <li>
+        <strong>Privacy Concerns</strong>: We never make location data or other
+        customer-centric information public.
+      </li>
+      <li>
+        <strong>Cookie Management</strong>: Cookies are stored within your
+        browser or system memory. You can disable them by adjusting your browser
+        settings, although this may limit the full benefits of using our
+        website.
+      </li>
+      <li>
+        <strong>Learn More</strong>: To understand cookies better, visit
+        <a href="https://www.allaboutcookies.org/">allaboutcookies.org</a>.
+      </li>
+    </ul>
+
+    <h2>6 COOKIES AND OTHER TRACKING TECHNOLOGIES</h2>
+    <p>
+      Every time you come to the website, our website’s web server automatically
+      collects information, including, in some instances, Personal Information,
+      through cookies, web beacons, and other similar tracking technologies
+      (collectively “cookies”). Cookies are small text files that are placed on
+      your computer or mobile device when you visit a website. Cookies help the
+      website remember information about your visit, which can make it easier to
+      visit the website again and make the website more useful to you. Some
+      cookies are deleted once you close your browser (session cookies), while
+      other cookies are retained even after you close your browser so that you
+      can be recognized when you return to a website (persistent cookies). More
+      information about cookies and how they work is available at
+      <a href="https://www.allaboutcookies.org/">www.allaboutcookies.org</a>.
+    </p>
+    <table>
+      <thead>
+        <tr style="border-bottom: 3px solid #c4c800;">
+          <th class="pdd">Cookie Type</th>
+          <td>Description</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Essential Cookies</th>
+          <td>
+            These are cookies that our website needs in order to function and
+            that enable you to move around and use the website and features.
+            Without these essential cookies, the website will not perform as
+            smoothly for you as we would like it to, and we may not be able to
+            provide the website or certain services or features you request.
+            Examples of where these cookies are used include: to determine when
+            you are signed in, to determine when your account has been inactive,
+            and for other troubleshooting and security purposes.
+          </td>
+        </tr>
+        <tr>
+          <th>Analytics Cookies</th>
+          <td>
+            Analytics cookies provide us with information regarding how visitors
+            navigate and interact with our website. Such cookies allow us to
+            understand, for example, more about how many visitors we have to our
+            website, how many times they visit us and how many times a user
+            viewed specific pages within our Site. Among other Analytics
+            cookies, we use Google Analytics cookies for these purposes. For
+            more information about Google Analytics, please refer to “How Google
+            Uses Information From Sites or Apps that Use Our Services,” which
+            can be found at <a href="https://policies.google.com/technologies/partner-sites">www.google.com/policies/privacy/partners/</a>, or any
+            other URL Google may provide from time to time.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      We may use the information collected through cookies and related tracking
+      technologies for the following purposes:
+    </p>
+    
+    <ul>
+      <li>
+        To make our website easier to use and generally improve its performance.
+      </li>
+      <li>To gather metrics about how you interact with our website.</li>
+      <li>For security reasons.</li>
+      <li>
+        To provide personalized content. For example, we may store user
+        preferences, your default language, device and browser information, your
+        profile information, which includes the level of your usage of the
+        website, which you visit, so we can identify you across devices and
+        personalize the content you see.
+      </li>
+    </ul>
+    <p>Most web browsers automatically accept cookies, but you can usually change your browser settings to prevent this. If you disable cookies, your ability to use some features of the website may be limited. For mobile devices, you may be able to manage certain cookies using your built-in mobile device settings and controls. Any choices concerning cookies are browser and/or device specific. If you clear your cookies from your browser on any of your devices, your choices will need to be reset. You should check how to do this on your device(s) and operating systems.</p>
+    <h2>7 EXTERNAL LINKS (LINKED THIRD PARTY WEBSITES)</h2>
+    <ul>
+        <li><strong>Use at Your Own Risk</strong>: Any external links on our website are provided for your convenience. Please access them cautiously.</li>
+        <li><strong>Third-Party Responsibility</strong>: SHASHI SALES AND MARKETING is not responsible for the security features, content, or privacy policies of these third-party websites.</li>
+        <li>We may provide links to other third party websites through the Services solely as a convenience to you. However, such linking does not mean, and should not be interpreted to mean, that Shashi Sales And Marketing endorses, is affiliated with or makes any representations concerning such third party websites. Shashi Sales And Marketing neither reviews, controls, nor is responsible for these third party sites or any content therein. By using such links, you will leave the Services. If you decide to access any of the third party websites linked to the Services, you do so entirely at your own risk. Shashi Sales And Marketing shall not be liable for any consequences arising from use of any third party websites to which the Services link.</li>
+    </ul>
+    <h2>8 INFORMATION SHARING AND DISCLOSURE</h2>
+    <p>We may disclose, or in the past 12 months have disclosed, the Personal Information identified above in the following limited circumstances for business purposes:</p>
+    <ul>
+        <li><strong>Partner Companies</strong>: We may disclose Personal Information with companies that are associated with us (for example, companies that control, are controlled by, or are under common control with us). We may also disclose Personal Information that is collected between websites that we, or our partners, control.</li>
+        <li><strong>Organizations that Provide Services</strong>: We may disclose your Personal Information with companies that perform services for us, such as credit, product development, and data processing vendors. The information shared with these companies typically includes Personal Information to process transactions on your behalf, conduct our operations, follow your instructions as you authorize, or protect the security of our records.</li>
+        <li><strong>Potential Buyers</strong>: In the event that we go through a business transition, such as a merger, another company acquires us or our affiliates, or we sell a portion of our assets, your Personal Information will, in most instances, be part of the assets transferred. Any successor entity shall be bound by terms and conditions reasonably similar to this Privacy Notice.</li>
+        <li><strong>Other Parties</strong>: We may disclose your Personal Information with other parties to comply with a legal obligation; to protect the legal rights of (or otherwise participate in a legal process pertaining to) our company, our employees, our agents, our clients, and our affiliates; to protect the safety and security of our visitors, or to protect against fraud; or otherwise with your consent or as allowed by applicable law.</li>
+    </ul>
+    <p>
+        We do not share consent with affiliates or third parties. No mobile information will be shared with third parties/affiliates for marketing/promotional purposes.
+    </p>
+    <p>
+        Generally, we do not sell, rent, lease or disclose your Personal Information to third parties except if you consent to such disclosure or as described in this Privacy Policy.
+    </p>
+    <p>
+        We reserve the right to disclose any Personal Information about you or your use of this website without your prior permission if we have a good faith belief that such action is necessary to: (i) protect and defend our rights, property or safety or that or those of our affiliates, other users of this website, or the public; (ii) enforce the Terms and Conditions or other terms for this website; or (iii) respond to claims that any content violates any law or the rights of third parties.
+    </p>
+
+    <h2>9 HOW WE PROTECT YOUR PERSONAL INFORMATION</h2>
+    <p>
+        At our organization, we have implemented effective technical and organizational safeguards to protect your Personal Information from loss, misuse, and unauthorized alteration. We have also ensured that your data is stored in secure facilities, and have taken appropriate measures to prevent unauthorized access. Our security measures are designed to match the level of risk involved in processing your Personal Information.
+    </p>
+    <p>
+        While we have taken these precautions, it's important to note that no security system is entirely infallible. As a result, we cannot guarantee the absolute security of our website or databases, or that the Personal Information you provide won't be intercepted during transmission over the Internet. We kindly ask that you play your part by keeping your usernames and passwords confidential when using our services.
+    </p>
+    <h2>10 DATA RETENTION</h2>
+    <p>
+        How long we retain your Personal Information depends on the context in which, and purposes for which, we collected it. We generally retain Personal Information for as long as necessary for achieving the purposes for which it was collected or processed, unless a different retention period is required by applicable law.
+    </p>
+    <p>
+        When we have no ongoing business need to process your Personal Information, we will either delete or anonymize it or, if this is not possible (for example, because your Personal Information has been stored in backup archives), then we will securely store your Personal Information and isolate it from any further processing until deletion is possible.
+    </p>
+    <h2>11 RIGHTS RELATED TO YOUR PERSONAL INFORMATION</h2>
+    <p>
+        Depending on where you live and the types of Personal Information at issue, you may have certain rights with respect to your Personal Information. Please note that many of these rights are subject to exceptions and limitations.
+    </p>
+    <ul>
+        <li><strong>Right of access</strong>: You have the right to know whether your Personal Information is being processed, and, where that is the case, to request access to, including a copy of, the Personal Information undergoing processing.</li>
+        <li><strong>Right to correction</strong>: You have the right to request that we correct or supplement any inaccurate or incomplete Personal Information we process about you.</li>
+        <li><strong>Right to deletion</strong>: You have the right to request that we delete your Personal Information or as applicable anonymize your Personal Information.</li>
+        <li><strong>Right to data portability</strong>: You have the right to request that we provide the Personal Information which you provided to us in a structured, commonly used and machine-readable format; and you have the right to transmit such Personal Information to another entity.</li>
+        <li><strong>Right to prohibit the sale or sharing (as the term is defined under applicable law) of Personal Information</strong>: At this time, we do not sell or share your Personal Information.</li>
+        <li><strong>Right to limit the processing of your sensitive Personal Information</strong>: We do not currently use or disclose sensitive Personal Information for purposes other than those which cannot be limited under applicable law.</li>
+        <li><strong>Right to file a complaint</strong>: If we decline your request for access rights, we will explain the reason for our decision. Should you feel dissatisfied with the handling of your request, please feel free to reach out to us.</li>
+    </ul>
+    <p>
+        If you choose to assert any of these rights under applicable laws, we will respond within the time period prescribed by applicable law. Please note that many of the above rights are subject to exceptions and limitations. If we are not able to provide the requested information or make the change you requested, you will be provided with the reasons for such decisions. Under local law, you may be entitled to lodge a complaint with your local data protection authority, such as your state Attorney General’s Office.
+    </p>
+    <p>
+        Your rights and our responses will vary based on your state of residency. Please note that you may be located in a jurisdiction where we are not obligated, or are unable, to fulfill a request. In such a case, your request may not be fulfilled.
+    </p>
+    <p>
+        We do not discriminate against individuals who exercise any of their rights described in this Privacy Policy. However, we may require use of your Personal Information to provide access to the Services. Therefore, when you exercise your deletion right, in particular, you may lose access to certain aspects of the Services that require your Personal Information.
+    </p>
+    <h2 class="udl">Verification Process</h2>
+    <p>
+        Only you, or a person that you authorize to act on your behalf, may make a verifiable consumer request related to your Personal Information. If you designate an authorized agent to submit requests to exercise certain privacy rights on your behalf, we will require verification that you provided the authorized agent permission to make a request on your behalf. You must provide us with a copy of the signed permission you have given to the authorized agent to submit the request on your behalf and verify your own identity directly with us.
+    </p>
+    <p>
+        The verifiable consumer request must:
+    </p>
+    <ul>
+        <li>Provide sufficient information that allows us to reasonably verify you are the person about whom we collected Personal Information or an authorized representative.
+        </li>
+        <li>Describe your request with sufficient detail that allows us to properly understand, evaluate, and respond to it.</li>
+    </ul>
+    <p>
+        Our verification process may also include a request for additional information to confirm your identity or your authorized agent’s identity (such as your name, email address and date of birth) or to obtain proof that you have given your authorized agent permission to act on your behalf. If our verification process is successful, we will respond to your request within the time and in the manner required by applicable law. If we cannot validate the identity of you and/or your authorized agent or obtain proof that you have given your authorized agent permission to act on your behalf, we will attempt to contact you to inform you.
+    </p>
+    <p>
+        We cannot respond to your request or provide you with Personal Information if we cannot verify your identity or authority to make the request and confirm that the Personal Information relates to you. We will only use Personal Information provided in a verifiable consumer request to verify the requestor’s identity or authority to make the request.
+    </p>
+    <p>
+        We will deliver our written response by mail or electronically, at your option. For data portability requests, we will select a format to provide your Personal Information that is readily useable and should allow you to transmit the Personal Information from one entity to another entity without hindrance, specifically by electronic mail communication. Further, if you would like to appeal any decision we make about your request, you may contact us as stated in the “Contact Information” section below.
+    </p>
+    <h2>12 CHILDREN</h2>
+    <p>
+        Our Services are not directed toward children under the age of thirteen, and we do not knowingly collect any Personal Information from children under the age of thirteen. If a child provided this website with Personal Information, we ask that a parent or guardian send us a written request to the address listed below and we will promptly delete the child’s Personal Information from our records.
+    </p>
+    <h2>13 PRIVACY POLICY CHANGES</h2>
+    <p>
+        Shashi Sales And Marketing is always improving our Services. As our Services evolve, we may update or amend this Privacy Policy. If we modify this Privacy Policy, we will post the revised Privacy Policy online. The revised Privacy Policy will be effective immediately at the time of posting, unless a later effective date is expressly stated therein. We will also revise the “Last updated” date stated below.
+    </p>
+    <p>
+        Should any modification materially change how we use your Personal Information, we will provide notice online prior to the effective date of the change.
+    </p>
+    <p>
+        It is your responsibility to periodically review this Privacy Policy. Users are bound by any changes to this Privacy Policy by using our Services after such changes have been first posted. If you do not agree to the new posted Privacy Policy, your only remedy is to discontinue use of the website.
+    </p>
+    <h2>14 GDPR Compliance (For EU Visitors)</h2>
+    <ul>
+        <li><strong>Secure Storage</strong>: Basic identification details you provide (name, email, company, telephone, country) and web data (IP address, system location, cookies) are confidentially stored.</li>
+        <li><strong>Communication Purposes</strong>: We use this information solely for communication about our products and services.</li>
+        <li><strong>Communication Purposes</strong>: We retain personal data only as long as necessary for the defined purposes, unless longer retention is legally required or for legitimate business reasons.</li>
+        <li><strong>Your Rights</strong>: You can request information about your stored data, its location, and the purpose of storage.</li>
+    </ul>
+    <h2>15 CHANGES TO OUR PRIVACY POLICY</h2>
+    <ul>
+        <li>SHASHI SALES AND MARKETING regularly reviews and updates our privacy policy as needed.</li>
+        <li>We ensure that any changes are promptly made available on our website.</li>
+    </ul>
+    <h2>16 HOW TO CONTACT US</h2>
+    <p>
+        We strictly enforce our privacy policy and comply with GDPR regulations. If you have any questions, feel free to reach out to us at <a href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!">info@shashisales.com</a>. Rest assured, we adhere to meta and Google policies to maintain your company's compliance.
+    </p>
+    <p><strong>Address</strong></p>
+    <p>Shashi Consultancy Services LLC 1317 Edge water Dr</p>
+    <p>#5714 Orlando, FL 32804</p>
+    <p>EIN +13212185890</p>
+    <p>email: <a href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!">info@shashisales.com</a></p> 
+    <p style="padding-top: 4vh;"><strong>Address</strong></p>
+    <p>ATS Bouquet, Office # 606, 6th Floor, Block A, Sector 132,</p>
+    <p>Noida, Uttar Pradesh-201304, IN</p>
+    <p>Phone: 1800-571-0605</p>
+    <p>email: <a href="mailto:info@shashisales.com?subject=Service%20Inquiry&body=Hello,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Here%20are%20my%20details:%0D%0A%0D%0AName:%20%0D%0APhone%20Number:%20%0D%0ABusiness%20Name:%20%0D%0ALocation:%20%0D%0AService%20Required:%20%0D%0ABudget:%20%0D%0A%0D%0AThank%20you!">info@shashisales.com</a></p> 
+    <p style="padding-top: 4vh;">Publish Date : September 09, 2024</p>
+    <p>Effective Date : September 09, 2024</p>
+  </div>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const header = document.querySelector("header");
+        const mainPage = document.querySelector(".main-page");
+        
+        if (header && mainPage) {
+            const headerHeight = header.offsetHeight;
+            mainPage.style.setProperty("--header-height", `${headerHeight}px`);
+        }
+    });
+</script>
