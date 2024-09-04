@@ -565,18 +565,14 @@ app.get("/blog-detail/:canonical", async (req, res) => {
   
       const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
   
-      const ads = await Ad.find().sort({ uploadDate: -1 });
-      ads.forEach(ad => {
-          const isActive = ad.isActive &&
-                                ad.startDate <= now &&
-                                ad.endDate >= now &&
-                                ad.activeDays.includes(dayOfWeek) &&
-                                ad.startTime <= currentTime &&
-                                ad.endTime >= currentTime;
-          ad.isActive = isActive;
-      });
-    
-  
+      const ads = await Ad.find({
+        isActive: true,
+        startDate: { $lte: now },
+        endDate: { $gte: now },
+        activeDays: dayOfWeek,
+        startTime: { $lte: currentTime }, 
+        endTime: { $gte: currentTime }  
+      }).sort({ uploadDate: -1 });
   
       const blogsRecommend = await Blog.find({
         _id: { $ne: blog._id },
@@ -888,19 +884,33 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
       }
   
       const { title, linkPath, startDate, endDate, startTime, endTime, activeDays } = req.body;
-      
+  
+      // Function to convert IST to UTC
+      function convertISTtoUTC(date, time) {
+        const istDate = new Date(`${date}T${time}:00+05:30`);
+        return istDate.toUTCString();
+      }
+  
+      // Convert IST times to UTC
+      const startUTC = convertISTtoUTC(startDate, startTime);
+      const endUTC = convertISTtoUTC(endDate, endTime);
+  
+      // Parse the UTC strings back into Date objects
+      const startDateUTC = new Date(startUTC);
+      const endDateUTC = new Date(endUTC);
+  
       // Create a new Ad object
       const ad = new Ad({
         title,
         linkPath,
         filePath: '/uploads/' + req.file.filename, // Save relative path
-        startDate,
-        endDate,
-        startTime,
-        endTime,
+        startDate: startDateUTC.toISOString().split('T')[0],
+        endDate: endDateUTC.toISOString().split('T')[0],
+        startTime: startDateUTC.toISOString().split('T')[1].substring(0, 5),
+        endTime: endDateUTC.toISOString().split('T')[1].substring(0, 5),
         activeDays
       });
-      
+  
       // Save to the database
       await ad.save();
       req.session.successMessage = 'Ad uploaded successfully!';
