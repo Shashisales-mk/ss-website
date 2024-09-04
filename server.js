@@ -565,14 +565,18 @@ app.get("/blog-detail/:canonical", async (req, res) => {
   
       const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
   
-      const ads = await Ad.find({
-        isActive: true,
-        startDate: { $lte: now },
-        endDate: { $gte: now },
-        activeDays: dayOfWeek,
-        startTime: { $lte: currentTime }, 
-        endTime: { $gte: currentTime }  
-      }).sort({ uploadDate: -1 });
+      const ads = await Ad.find().sort({ uploadDate: -1 });
+      ads.forEach(ad => {
+          const isActive = ad.isActive &&
+                                ad.startDate <= now &&
+                                ad.endDate >= now &&
+                                ad.activeDays.includes(dayOfWeek) &&
+                                ad.startTime <= currentTime &&
+                                ad.endTime >= currentTime;
+          ad.isActive = isActive;
+      });
+    
+  
   
       const blogsRecommend = await Blog.find({
         _id: { $ne: blog._id },
