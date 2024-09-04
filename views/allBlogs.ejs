@@ -534,12 +534,10 @@
               <td>
                 <ul>
                   <li>
-                    <%= new Date(ad.startDate).toLocaleDateString('en-GB', {
-                    day: 'numeric', month: 'short', year: 'numeric' }) %>
+                    <%= new Date(ad.startDate).toLocaleDateString('en-US') %>
                   </li>
                   <li>
-                    <%= new Date(ad.endDate).toLocaleDateString('en-GB', { day:
-                    'numeric', month: 'short', year: 'numeric' }) %>
+                    <%= new Date(ad.endDate).toLocaleDateString('en-US') %>
                   </li>
                 </ul>
               </td>
@@ -1287,7 +1285,6 @@
   });
 </script>
 
-<!-- new -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("delete-multiple-form");
@@ -1314,7 +1311,6 @@
     });
   });
 </script>
-<!-- new -->
 
 <script>
   async function fetchGalleryItems() {
@@ -1398,7 +1394,6 @@
   document.addEventListener("DOMContentLoaded", fetchGalleryItems);
 </script>
 
-<!-- download in excel scritp -->
 <script>
   function downloadTableAsCSV(tableId) {
     // Get the table element using the provided tableId
@@ -1455,4 +1450,4 @@
   }
 </script>
 
-<!-- download in excel scritp -->
+
