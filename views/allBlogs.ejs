@@ -394,170 +394,162 @@
   <div class="main-page-in">
     <!-- Blog Section -->
     <div class="blog-section">
-      <!-- Ads Section -->
-      <h2>Upload New Ad</h2>
-      <form action="/uploadAd" method="POST" enctype="multipart/form-data">
-        <div class="admin-ads">
-          <div>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Enter Ad Title"
-              required
-            />
-            <input
-              type="url"
-              id="link"
-              name="linkPath"
-              placeholder="Enter Ad Link"
-              required
-            />
-            <input type="file" name="ad" accept="image/*,video/*" required />
-          </div>
-
-          <div>
-            <label for="startDate">Start Date:</label>
-            <input
-              style="margin-right: 2rem"
-              type="date"
-              id="startDate"
-              name="startDate"
-              required
-            />
-
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" required />
-          </div>
-
-          <div>
-            <label for="startTime">Start Time:</label>
-            <input
-              style="margin-right: 2rem"
-              type="time"
-              id="startTime"
-              name="startTime"
-              required
-            />
-
-            <label for="endTime">End Time:</label>
-            <input type="time" id="endTime" name="endTime" required />
-          </div>
-          <br />
-
-          <div class="active-days">
-            <label>Active Days:</label><br /><br />
-            <label
-              ><input type="checkbox" name="activeDays" value="Monday" />
-              Monday</label
-            >
-            <label
-              ><input type="checkbox" name="activeDays" value="Tuesday" />
-              Tuesday</label
-            >
-            <label
-              ><input type="checkbox" name="activeDays" value="Wednesday" />
-              Wednesday</label
-            >
-            <label
-              ><input type="checkbox" name="activeDays" value="Thursday" />
-              Thursday</label
-            >
-            <label
-              ><input type="checkbox" name="activeDays" value="Friday" />
-              Friday</label
-            >
-            <label
-              ><input type="checkbox" name="activeDays" value="Saturday" />
-              Saturday</label
-            >
-            <label
-              ><input type="checkbox" name="activeDays" value="Sunday" />
-              Sunday</label
-            >
-          </div>
-
-          <div>
-            <button type="submit">Upload</button>
-          </div>
+    <!-- Ads Section -->
+    <h2>Upload New Ad</h2>
+    <form action="/uploadAd" method="POST" enctype="multipart/form-data">
+      <div class="admin-ads">
+        <div>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Enter Ad Title"
+            required
+          />
+          <input
+            type="url"
+            id="link"
+            name="linkPath"
+            placeholder="Enter Ad Link"
+            required
+          />
+          <input type="file" name="ad" accept="image/*,video/*" required />
         </div>
-      </form>
-      <br />
 
-      <!-- Display Existing Ads Section -->
-      <h2 style="margin-top: 2vw">Uploaded Ads</h2>
-      <% if (ads.length > 0) { %>
-      <form action="/delete-ads" method="POST">
-        <button class="ads-del-btn" type="submit">Delete Selected Ads</button>
-        <table>
-          <thead>
-            <tr>
-              <th>Select</th>
-              <th>Active</th>
-              <th>Ad Title</th>
-              <th>Ad Link</th>
-              <th>Image/Video</th>
-              <th>
-                <ul>
-                  <li>Start Date</li>
-                  <li>End Date</li>
-                </ul>
-              </th>
-              <th>Start Time</th>
-              <th>End Time</th>
-              <th>Active Days</th>
-            </tr>
-          </thead>
-          <% ads.forEach(ad => { %>
-          <tbody class="fsf">
-            <tr>
-              <td>
-                <input type="checkbox" name="adIds" value="<%= ad._id %>" />
-              </td>
-              <td><%= ad.isActive %></td>
-              <td><h3><%= ad.title %></h3></td>
-              <td><a href="<%= ad.linkPath %>"><%= ad.linkPath %></a></td>
-              <td>
-                <% if (ad.filePath.endsWith('.mp4')) { %>
-                <video controls width="100">
-                  <source src="<%= ad.filePath %>" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-                <% } else { %>
-                <a href="<%= ad.linkPath %>">
-                  <img
-                    height="50"
-                    width="50"
-                    src="<%= ad.filePath %>"
-                    alt="Ad Image"
-                    width="100"
-                  />
-                </a>
-                <% } %>
-              </td>
-              <td>
-                <ul>
-                  <li>
-                    <%= new Date(ad.startDate).toLocaleDateString() %>
-                  </li>
-                  <li>
-                    <%= new Date(ad.endDate).toLocaleDateString() %>
-                  </li>
-                </ul>
-              </td>
+        <div>
+          <label for="startDate">Start Date:</label>
+          <input
+            style="margin-right: 2rem"
+            type="date"
+            id="startDate"
+            name="startDate"
+            required
+          />
 
-              <td><%= ad.startTime %></td>
-              <td><%= ad.endTime %></td>
-              <td><%= ad.activeDays.join(', ') %></td>
-            </tr>
-          </tbody>
-          <% }) %>
-        </table>
-        <br /><br />
-      </form>
-      <% } else { %>
-      <p style="padding: 2rem 0">No ads uploaded yet.</p>
-      <% } %>
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate" name="endDate" required />
+        </div>
+
+        <div>
+          <label for="startTime">Start Time:</label>
+          <input
+            style="margin-right: 2rem"
+            type="time"
+            id="startTime"
+            name="startTime"
+            required
+          />
+
+          <label for="endTime">End Time:</label>
+          <input type="time" id="endTime" name="endTime" required />
+        </div>
+        <br />
+
+        <div class="active-days">
+          <label>Active Days:</label><br /><br />
+          <label
+            ><input type="checkbox" name="activeDays" value="Monday" />
+            Monday</label
+          >
+          <label
+            ><input type="checkbox" name="activeDays" value="Tuesday" />
+            Tuesday</label
+          >
+          <label
+            ><input type="checkbox" name="activeDays" value="Wednesday" />
+            Wednesday</label
+          >
+          <label
+            ><input type="checkbox" name="activeDays" value="Thursday" />
+            Thursday</label
+          >
+          <label
+            ><input type="checkbox" name="activeDays" value="Friday" />
+            Friday</label
+          >
+          <label
+            ><input type="checkbox" name="activeDays" value="Saturday" />
+            Saturday</label
+          >
+          <label
+            ><input type="checkbox" name="activeDays" value="Sunday" />
+            Sunday</label
+          >
+        </div>
+
+        <div>
+          <button type="submit">Upload</button>
+        </div>
+      </div>
+    </form>
+    <br />
+
+    <!-- Existing ads display section -->
+    <h2 style="margin-top: 2vw">Uploaded Ads</h2>
+    <% if (ads.length > 0) { %>
+    <form action="/delete-ads" method="POST">
+      <button class="ads-del-btn" type="submit">Delete Selected Ads</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Active</th>
+            <th>Ad Title</th>
+            <th>Ad Link</th>
+            <th>Image/Video</th>
+            <th>
+              <ul>
+                <li>Start Date</li>
+                <li>End Date</li>
+              </ul>
+            </th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Active Days</th>
+            <th>Edit</th> <!-- Add this column for editing -->
+          </tr>
+        </thead>
+        <% ads.forEach(ad => { %>
+        <tbody class="fsf">
+          <tr>
+            <td><input type="checkbox" name="adIds" value="<%= ad._id %>" /></td>
+            <td><%= ad.isActive %></td>
+            <td><h3><%= ad.title %></h3></td>
+            <td><a href="<%= ad.linkPath %>"><%= ad.linkPath %></a></td>
+            <td>
+              <% if (ad.filePath.endsWith('.mp4')) { %>
+              <video controls width="100">
+                <source src="<%= ad.filePath %>" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <% } else { %>
+              <a href="<%= ad.linkPath %>">
+                <img height="50" width="50" src="<%= ad.filePath %>" alt="Ad Image" width="100" />
+              </a>
+              <% } %>
+            </td>
+            <td>
+              <ul>
+                <li><%= new Date(ad.startDate).toLocaleDateString() %></li>
+                <li><%= new Date(ad.endDate).toLocaleDateString() %></li>
+              </ul>
+            </td>
+            <td><%= ad.startTime %></td>
+            <td><%= ad.endTime %></td>
+            <td><%= ad.activeDays.join(', ') %></td>
+            <td>
+              <a class="edit-btn" href="/edit-ad/<%= ad._id %>" target="_blank">Edit</a> <!-- Edit button -->
+            </td>
+          </tr>
+        </tbody>
+        <% }) %>
+      </table>
+      <br /><br />
+    </form>
+    <% } else { %>
+    <p style="padding: 2rem 0">No ads uploaded yet.</p>
+    <% } %>
+
 
       <h1 style="padding: 2vw; text-align: start">Blog Section</h1>
       <br /><br />

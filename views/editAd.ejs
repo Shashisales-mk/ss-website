@@ -1,0 +1,156 @@
+<style>
+    .ads-edit-cont{
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+    .ads-edit-cont p{
+        font-size: 0.8rem;
+    }
+    h1{
+        margin-top: 2rem !important;
+        text-align: center !important;
+    }
+    .admin-ads{
+        display: grid;
+        gap: 1rem;
+    }
+    .ads-edit-cont form{
+        width: 50%;
+        /* background: #d9d9d9c2; */
+        /* padding: 2rem; */
+        border-radius: 1rem;
+    }
+    .ads-edit-cont input{
+        outline: none;
+        background: rgb(241, 243, 244);
+        padding: 1vw;
+        border: 0;
+        border-radius: 0.3vw;
+    }
+    .ads-edit-cont button{
+        width: 70%;
+        padding: 2vw;
+        font-weight: 700;
+        padding: 0.5vw 2vw;
+        color: orange;
+        border: 1px solid orange;
+        background: transparent;
+        border-radius: 1vw;
+    }
+    .ads-edit-cont button:hover{
+        cursor: pointer;
+    }
+    .dfg{
+        display: flex;
+        gap: 1rem;
+    }
+    .dfg input{
+        width: 100%;
+    }
+    .dfagjs{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .dfagjs span{
+        display: grid;
+        width: 50%;
+    }
+</style>
+<!-- editAd.ejs -->
+<h1>Edit Ad</h1>
+<div class="ads-edit-cont">
+    <form action="/updateAd/<%= ad._id %>" method="POST" enctype="multipart/form-data">
+    <div class="admin-ads">
+        <div class="dfg">
+            <input
+                type="text"
+                id="title"
+                name="title"
+                value="<%= ad.title %>"
+                placeholder="Enter Ad Title"
+                required
+            />
+            <input
+                type="url"
+                id="link"
+                name="linkPath"
+                value="<%= ad.linkPath %>"
+                placeholder="Enter Ad Link"
+                required
+            />
+        </div>
+        <div>
+            <input type="file" name="ad" accept="image/*,video/*" />
+            <p>Current file: <%= ad.filePath %></p>
+        </div>
+
+        <div class="dfagjs">
+            <span>
+                <label for="startDate">Start Date:</label>
+                <input
+                    style="margin-right: 2rem"
+                    type="date"
+                    id="startDate"
+                    name="startDate"
+                    value="<%= new Date(ad.startDate).toISOString().split('T')[0] %>"
+                    required
+                />
+            </span>
+
+            <span>
+                <label for="endDate">End Date:</label>
+                <input
+                    type="date"
+                    id="endDate"
+                    name="endDate"
+                    value="<%= new Date(ad.endDate).toISOString().split('T')[0] %>"
+                    required
+                />
+            </span>
+        </div>
+
+        <div class="dfagjs">
+            <span>
+                <label for="startTime">Start Time:</label>
+                <input
+                    style="margin-right: 2rem"
+                    type="time"
+                    id="startTime"
+                    name="startTime"
+                    value="<%= ad.startTime %>"
+                    required
+                />
+            </span>
+
+            <span>
+                <label for="endTime">End Time:</label>
+                <input
+                    type="time"
+                    id="endTime"
+                    name="endTime"
+                    value="<%= ad.endTime %>"
+                    required
+                />
+            </span>
+        </div>
+
+        <div class="active-days">
+            <label>Active Days:</label><br><br>
+            <% ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(day => { %>
+            <label>
+                <input type="checkbox" name="activeDays" value="<%= day %>" <%= ad.activeDays.includes(day) ? 'checked' : '' %> />
+                <%= day %>
+            </label>
+            <% }) %>
+        </div>
+
+        <div style="display: flex;justify-content: center;">
+            <button type="submit">Update</button>
+        </div>
+    </div>
+    </form>
+
+</div>

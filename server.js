@@ -930,6 +930,51 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
   });
 
 
+  app.get('/edit-ad/:id', async (req, res) => {
+    try {
+      const adId = req.params.id;
+      const ad = await Ad.findById(adId);
+  
+      if (!ad) {
+        return res.status(404).send('Ad not found');
+      }
+  
+      res.render('editAd', { ad });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
+  app.post("/updateAd/:id", upload.single('ad'), async (req, res) => {
+    try {
+      const ad = await Ad.findById(req.params.id);
+      if (!ad) {
+        return res.status(404).send("Ad not found");
+      }
+
+      ad.title = req.body.title;
+      ad.linkPath = req.body.linkPath;
+      ad.startDate = req.body.startDate;
+      ad.endDate = req.body.endDate;
+      ad.startTime = req.body.startTime;
+      ad.endTime = req.body.endTime;
+      ad.activeDays = req.body.activeDays;
+  
+      if (req.file) {
+        ad.filePath = '/uploads/' + req.file.filename;
+      }
+  
+      await ad.save();
+      req.session.successMessage = 'Ad updated successfully!';
+      res.redirect('/all-blogs-list');
+    } catch (err) {
+      console.error('Error updating ad:', err);
+      req.session.errorMessage = 'Ad not updated successfully!';
+      res.redirect('/all-blogs-list');
+    }
+  });
+
+
   app.post('/delete-ads', async (req, res) => {
     const adIds = req.body.adIds;
   
@@ -955,6 +1000,8 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
       res.status(500).send('Error deleting ads');
     }
   });
+
+
 
 
 
