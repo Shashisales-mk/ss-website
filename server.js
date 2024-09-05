@@ -966,11 +966,11 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
   
       await ad.save();
       req.session.successMessage = 'Ad updated successfully!';
-      res.redirect('/all-blogs-list');
+      res.redirect('/admin-panel');
     } catch (err) {
       console.error('Error updating ad:', err);
       req.session.errorMessage = 'Ad not updated successfully!';
-      res.redirect('/all-blogs-list');
+      res.redirect('/admin-panel');
     }
   });
 
