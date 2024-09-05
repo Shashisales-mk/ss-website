@@ -1583,10 +1583,7 @@ app.get('/logout', (req, res) => {
         if (err) {
             console.error('Error during logout:', err);
         }
-        res.redirect('/login', {
-            title: " logout page",
-            description: " logout page"
-        });
+        res.redirect('/login');
     });
 });
 
