@@ -630,7 +630,7 @@ app.post('/subscribe', async (req, res) => {
             return res.status(404).json({ message: 'Subscriber not found' });
         }
 
-        res.redirect("/all-blogs-list");
+        res.redirect("/admin-panel");
     } catch (err) {
         console.error('Error deleting subscriber:', err);
         if (err.name === 'CastError') {
@@ -722,7 +722,7 @@ app.post('/update-all-blog-banners', uploadSingleBanner, isAdmin, async (req, re
             { $set: { bannerImage: newBannerPath } }
         );
 
-        res.redirect("/all-blogs-list");
+        res.redirect("/admin-panel");
     } catch (error) {
         console.error('Error updating blog banners:', error);
         res.status(500).send('An error occurred while updating blog banners');
@@ -733,7 +733,7 @@ app.post('/update-all-blog-banners', uploadSingleBanner, isAdmin, async (req, re
 
 
 
-app.get("/all-blogs-list", isAdmin, async (req, res) => {
+app.get("/admin-panel", isAdmin, async (req, res) => {
     const now = new Date();
     const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
     const currentTime = now.toTimeString().slice(0, 5);
@@ -746,6 +746,10 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
     const subscribers = await Subscriber.find();
     
+
+
+
+
     const ads = await Ad.find().sort({ uploadDate: -1 });
     ads.forEach(ad => {
         const isActive = ad.isActive &&
@@ -756,9 +760,12 @@ app.get("/all-blogs-list", isAdmin, async (req, res) => {
                               ad.endTime >= currentTime;
         ad.isActive = isActive;
     });
+
+    
   
 
     res.render("allBlogs", {
+        
         ads,
         acomments: approvedComments,
         comments: pendingComments,
@@ -784,7 +791,7 @@ app.delete('/delete-blog/:id', isAdmin, async (req, res) => {
             return res.status(404).send('Blog not found');
         }
 
-        res.redirect("/all-blogs-list");
+        res.redirect("/admin-panel");
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
@@ -865,7 +872,7 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
             isApprove: isApprove === 'false',
         }, { new: true });
 
-        res.redirect("/all-blogs-list");
+        res.redirect("/admin-panel");
     } catch (err) {
         console.error('Error updating blog:', err);
         res.status(500).send(`Internal Server Error: ${err.message}`);
@@ -913,12 +920,12 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
   
       // Save to the database
       await ad.save();
-      req.session.successMessage = 'Ad uploaded successfully!';
-      res.redirect('/all-blogs-list');
+    //   req.session.successMessage = 'Ad uploaded successfully!';
+      res.redirect('/admin-panel');
     } catch (err) {
       console.error('Error uploading ad:', err);
-      req.session.errorMessage = 'Ad not uploaded successfully!';
-      res.redirect('/all-blogs-list');
+    //   req.session.errorMessage = 'Ad not uploaded successfully!';
+      res.redirect('/admin-panel');
     }
   });
 
@@ -942,7 +949,7 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
   
       await Ad.deleteMany({ _id: { $in: adIds } });
   
-      res.redirect('/all-blogs-list'); 
+      res.redirect('/admin-panel'); 
     } catch (err) {
       console.error('Error deleting ads:', err);
       res.status(500).send('Error deleting ads');
@@ -965,7 +972,7 @@ app.post('/toggle-popular/:id', isAdmin, async (req, res) => {
         blog.isPopular = !blog.isPopular;
         await blog.save();
 
-        res.redirect('/all-blogs-list');
+        res.redirect('/admin-panel');
     } catch (err) {
         console.error('Error toggling popular status:', err);
         res.status(500).send('Internal Server Error');
@@ -1071,7 +1078,7 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
 }
 
 
-        res.redirect('/all-blogs-list');
+        res.redirect('/admin-panel');
     } catch (err) {
         console.error('Error toggling popular status:', err);
         res.status(500).send('Internal Server Error');
@@ -1119,7 +1126,7 @@ app.post("/blog-detail/:canonical/comment", async (req, res) => {
 app.post('/admin/approve-comment/:commentId', async (req, res) => {
     try {
         await Comment.findByIdAndUpdate(req.params.commentId, { isApproved: true });
-        res.redirect('/all-blogs-list');
+        res.redirect('/admin-panel');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error approving comment');
@@ -1129,7 +1136,7 @@ app.post('/admin/approve-comment/:commentId', async (req, res) => {
 app.post('/admin/delete-comment/:commentId', async (req, res) => {
     try {
         await Comment.findByIdAndDelete(req.params.commentId);
-        res.redirect('/all-blogs-list');
+        res.redirect('/admin-panel');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error deleting comment');
@@ -1563,7 +1570,7 @@ app.post(
     (req, res) => {
         const { role } = req.user;
         if (role === 'admin') {
-            res.redirect('/all-blogs-list'); // Redirect to admin panel
+            res.redirect('/admin-panel'); // Redirect to admin panel
         } else {
             res.redirect('/login'); // Redirect to home page
         }
@@ -2205,6 +2212,38 @@ app.post('/submit-review', async (req, res) => {
 });
 
 
+
+
+// ADS.TXT
+
+// Route to render the admin panel with ads.txt content
+app.get("/admin/edit-ads-txt", isAdmin, (req, res) => {
+    const filePath = path.join(__dirname, 'public', 'ads.txt');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Error loading ads.txt file');
+        }
+
+        // Render the EJS template and pass ads.txt content
+        res.render("editAdsTxt", { adsTxt: data });
+    });
+});
+
+// Route to handle updates to ads.txt
+app.post("/admin/update-ads-txt", isAdmin, (req, res) => {
+    const newAdsTxt = req.body.adsTxt; // Get updated content from the form submission
+    const filePath = path.join(__dirname, 'public', 'ads.txt');
+
+    fs.writeFile(filePath, newAdsTxt, (err) => {
+        if (err) {
+            return res.status(500).send('Error writing to ads.txt file');
+        }
+
+        // Redirect back to the edit page after updating
+        res.redirect('/admin/edit-ads-txt');
+    });
+});
 
 
 

@@ -14,7 +14,7 @@ router.post('/admin/add-testimonial', upload.single('image'), async (req, res) =
       image: req.file ? `/uploads/${req.file.filename}` : undefined
     });
     await newTestimonial.save();
-    res.redirect('/all-blogs-list');
+    res.redirect('/admin-panel');
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -75,7 +75,7 @@ router.post('/admin/add-testimonial-page/', async (req, res) => {
     const savedPage = await newTestimonialPage.save();
     await Testimonial.findByIdAndUpdate(testimonialId, { page: savedPage._id });
 
-    res.redirect('/all-blogs-list');
+    res.redirect('/admin-panel');
   } catch (error) {
     console.error('Error adding testimonial page:', error);
     res.status(500).send('Error adding testimonial page');
@@ -91,7 +91,7 @@ router.post('/admin/delete-testimonial/:id', async (req, res) => {
       await TestimonialPage.findByIdAndDelete(testimonial.page);
     }
     await Testimonial.findByIdAndDelete(req.params.id);
-    res.redirect('/all-blogs-list');
+    res.redirect('/admin-panel');
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -119,7 +119,7 @@ router.post('/admin/update-testimonial/:id', upload.single('image'), async (req,
     }
 
     await Testimonial.findByIdAndUpdate(req.params.id, updateData);
-    res.redirect('/all-blogs-list');  // or wherever your admin panel is
+    res.redirect('/admin-panel');  // or wherever your admin panel is
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -162,7 +162,7 @@ router.post('/admin/update-testimonial-page/:id', async (req, res) => {
     );
 
     await TestimonialPage.findByIdAndUpdate(req.params.id, updatedFields);
-    res.redirect('/all-blogs-list');  // or wherever your admin panel is
+    res.redirect('/admin-panel');  // or wherever your admin panel is
   } catch (error) {
     res.status(500).send(error.message);
   }

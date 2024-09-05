@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Ads.txt</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Monospaced font for notepad-like appearance */
+            background-color: #2e2e2e; /* Dark background color */
+            color: #e0e0e0; /* Light text color */
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            color: #ffffff; /* White color for the heading */
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 1100px; /* Optional: restrict maximum width */
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .heading h1 {
+            margin: 0;
+        }
+        .heading a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: transparent;
+            color: #979a05;
+            border: 1px solid #979a05;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .heading a:hover {
+            background: #979a05;
+            color: #2e2e2e;
+        }
+        textarea {
+            width: 100%;
+            height: 60vh; /* Adjust height as needed */
+            border: 1px solid #444; /* Dark border color */
+            background-color: #1e1e1e; /* Dark background color for textarea */
+            color: #e0e0e0; /* Light text color for textarea */
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px; /* Adjust font size as needed */
+            resize: vertical; /* Allow vertical resizing only */
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #c4c800; /* Button color */
+            color: #000; /* Button text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #d4d654; /* Darker button color on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .heading a {
+                margin-top: 10px;
+            }
+            textarea {
+                height: 50vh; /* Adjust height for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <h1>Edit Ads.txt File</h1>
+            <a href="/admin-panel">Back To Admin Panel</a>
+        </div>
+        <!-- Form to update ads.txt -->
+        <form action="/admin/update-ads-txt" method="POST">
+            <!-- Textarea populated with ads.txt content -->
+            <textarea name="adsTxt"><%= adsTxt %></textarea><br>
+            <button type="submit">Update Ads.txt</button>
+        </form>
+    </div>
+</body>
+</html>

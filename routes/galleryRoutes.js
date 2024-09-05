@@ -72,7 +72,7 @@ router.post('/add', upload.array('files', 12), async (req, res) => {
         });
 
         await Gallery.insertMany(galleryItems);
-        res.redirect('/all-blogs-list');
+        res.redirect('/admin-panel');
     } catch (error) {
         console.error('Error:', error.message);
         res.status(400).json({ error: error.message });
@@ -95,7 +95,7 @@ router.post('/delete/:id', async (req, res) => {
         });
 
         await Gallery.findByIdAndDelete(req.params.id);
-        res.redirect('/all-blogs-list');
+        res.redirect('/admin-panel');
     } catch (error) {
         console.error('Error deleting gallery item:', error);
         res.status(500).send('Server Error');
@@ -134,7 +134,7 @@ router.post('/delete-multiple', async (req, res) => {
             }
         }
 
-        res.redirect('/all-blogs-list');
+        res.redirect('/admin-panel');
     } catch (error) {
         console.error('Error in delete-multiple route:', error);
         res.status(500).send('Server Error: ' + error.message);
