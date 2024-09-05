@@ -1587,7 +1587,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
-//   payment gateway integration
+//payment gateway integration
 
 app.get("/phonepe-payment-page", async (req, res) => {
     res.render("phonepayForm", {
