@@ -223,13 +223,15 @@
   .gallery-section input,
   .gallery-section select,
   .testimonial-section input,
-  .testimonial-section select {
+  .testimonial-section select,
+  .create-new form input {
     border: 0;
     background: #ced5d5;
     outline: none;
     padding: 0.5vw;
     font-size: 1.2vw;
     border-radius: 0.4vw;
+
   }
 
   .gallery-cont table img,
@@ -265,13 +267,14 @@
   }
 
   .appr-btn,
-  .testimonial-section button {
+  .testimonial-section button, .create-new form button {
     padding: 0.3vw 2vw;
     border-radius: 3vw;
     background: transparent;
     border: 1px solid green;
     color: green;
   }
+
 
   .tarea {
     padding: 1vw 0;
@@ -1093,6 +1096,17 @@
         <a href="" class="open-create-subscriber">Create New Subscriber</a>
       </div>
 
+      <div class="create-new" style="display: none">
+        <h2>Create new subsciber</h2>
+
+        <form action="/subscribe" method="POST">
+          <input type="email" name="email" placeholder="Your Email" required />
+          <input type="hidden" name="redirectUrl" value="/admin-panel" />
+          <button type="submit">Create</button>
+        </form>
+      </div>
+
+
       <h2>Existing Subscibers</h2>
       <table id="subscriberTable">
         <thead>
@@ -1119,16 +1133,7 @@
         </tbody>
       </table>
 
-      <div class="create-new" style="display: none">
-        <h2>Create new subsciber</h2>
-
-        <form action="/subscribe" method="POST">
-          <input type="email" name="email" placeholder="Your Email" required />
-          <input type="hidden" name="redirectUrl" value="/admin-panel" />
-          <button type="submit">Create</button>
-        </form>
-      </div>
-
+      
       <!-- create new subscriber -->
 
       <div class="spb">
