@@ -5,8 +5,65 @@
     }
     .seo-section-one-left h1{
         line-height: 1.7;
-        font-size: 3vw;
+        font-size: 2.6vw;
         font-family: "Roboto-Serif";
+    }
+    .seo-proposal{
+        display: flex !important;
+        justify-content: start !important;
+    }
+    .seo-proposal ul{
+        box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        background: #C4C800;
+        border-radius: 2vw;
+    }
+    .seo-proposal ul li{
+        list-style: none;
+    }
+    .seo-proposal input{
+        outline: none;
+        border: 0;
+        padding: 1vw;
+        border-top-left-radius: 2vw;
+        width: 20vw;
+        border-bottom-left-radius: 2vw;
+    }
+    .seo-proposal button{
+        background: transparent;
+        border: 0;
+        color: black;
+        font-size: 1.3vw;
+        font-weight: 700;
+        padding-right: 2vw;
+        width: 15vw;
+    }
+    .seo-proposal button:hover{
+        cursor: pointer;
+    }
+    @media screen and (max-width: 600px){
+        .seo-proposal ul{
+            border-radius: 5vw;
+        }
+        .seo-proposal input{
+            font-size: 2.3vw;
+            outline: none;
+            border: 0;
+            padding: 1.1vw;
+            border-top-left-radius: 5vw;
+            width: 25vw;
+            border-bottom-left-radius: 5vw;
+        }
+        .seo-proposal ul{
+            gap: 2vw !important;
+        }
+        .seo-proposal button{
+            font-size: 1.7vw;
+            width: 18vw;
+            font-weight: 1000;
+            padding-left: 0.7vw;
+        }
     }
 </style>
 
@@ -19,13 +76,22 @@
             transform: translateY(10px);
         }
     }
-    </style>
+</style>
 <!-- SEO Section One -->
 <div class="seo-section-one">
     <div class="seo-section-one-left">
         <div>
-            <P><h1>ACHIEVE THE TOP RANK FOR YOUR WEBSITE WITH SUPERIOR QUALITY</h1></P>
-            <button><a href="/contact-us">CONSULT NOW</a></button>
+            <P><h1>INCREASE YOUR WEBSITE VISIBILITY BY CUSTOMISED SEO SERVICES WITH A TOP SEO AGENCY</h1></P>
+            <div class="seo-hed" style="width: 100%;">
+                <div class="seo-proposal">
+                    <form action="/send-praposal" method="POST">
+                        <ul>
+                            <li><input type="email" name="email" placeholder="Your Email" required></li>
+                            <li><button type="submit">Send Me Proposal</button></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="seo-section-one-right">
@@ -87,10 +153,10 @@
     <div class="seo-hed-in">
         <ul>
             <li><a href="#seo-services" class="seo-active">SEO Services</a></li>
-            <li><a href="#our-technology">Our Technology</a></li>
-            <li><a href="#case-studies">Case Studies</a></li>
+            <li><a href="#our-technology">Growth Duration</a></li>
+            <li><a href="#case-studies">Scenario</a></li>
             <li><a href="#seo-pricing">SEO Pricing</a></li>
-            <li><a href="#our-approach">Our Approach</a></li>
+            <li><a href="#our-approach">Backlink</a></li>
         </ul>
     </div>
 </div>
@@ -322,7 +388,7 @@
         <div class="moy1">
             <div class="moy1bb">
                 <h3>SEO PLANS</h3>
-                <p id="priceid">Starting at <span style="color: #72df6a;font-weight: 700;">Rs. 9990/-</span></p>
+                <p id="priceid">Starting at <span style="color: #72df6a;font-weight: 700;">$ 999/-</span></p>
             </div>
             <h3 class="tas">How we determine pricing</h3>
             <div class="moy1-in">
@@ -404,7 +470,18 @@
                 <p><img height="25" width="25" src="/assets/images/checkIcon.webp" alt="checkIcon"></p>
                 <p>100% Safe with Search Engines</p>
             </div>
-            <div class="paybtn"><a href="#">Get Quote</a></div>
+            <div class="paybtn">
+                <div class="seo-hed" style="width: 100%;">
+                    <div class="seo-proposal" style="justify-content: center !important;">
+                        <form action="/send-praposal" method="POST">
+                            <ul style="padding: 0;">
+                                <li><input type="email" name="email" placeholder="Your Email" required></li>
+                                <li><button type="submit">Send Me Proposal</button></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>

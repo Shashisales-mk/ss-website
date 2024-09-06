@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function(){
             </div>
             <div class="paybtn"><a href="#">Get Quote</a></div>
             `,
-            `Starting at <span style="color: #72df6a;font-weight: 700;">Rs. 20000/-</span>`,
+            `Starting at <span style="color: #72df6a;font-weight: 700;">$ 1499/-</span>`,
             "Website Size",
             "The size of your website will determine your relative SEO needs for content, management, on-page optimization, and more. Your Shashi Sales & Marketing strategist will consider your website’s needs for your custom SEO strategy.",
             "Content Marketing Needs",
@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function(){
             </div>
             <div class="paybtn"><a href="#">Get Quote</a></div>
             `,
-            `Starting at <span style="color: #72df6a;font-weight: 700;">Rs. 45000/-</span>`,
+            `Starting at <span style="color: #72df6a;font-weight: 700;">$ 2800/-</span>`,
             "Consultation Needs",
             "Every Shashi Sales & Marketing client gets the support of our 500+ digital marketing team, regular consultation calls, and ongoing business reviews. Our team can support complex needs as well, which you can discuss with your web strategist.",
             "Website Size",
@@ -468,3 +468,5 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("pre-logo1").src = "/assets/images/ii1.webp";
     document.getElementById("ba").style.color = "#C4C800";
 });
+
+

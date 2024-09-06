@@ -1403,6 +1403,151 @@ app.post('/submit-quote-lead', async (req, res) => {
         res.redirect(referrerUrl);
     }
 });
+app.post('/send-praposal', async (req, res) => {
+    const formData = req.body;
+    
+    const htmlTemplate1 = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Lead Received</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            color: #007BFF;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>New Lead Received</h1>
+        </div>
+        <div class="content">
+            <p>Hello Team,</p>
+            <p>You've received a new lead from Shashi Sales and Marketing. Here are the details:</p>
+            
+            <p><strong>Email:</strong> ${formData.email}</p>
+            
+            <p>Please follow up with the lead at your earliest convenience.</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated message. Please do not reply directly to this email.</p>
+        </div>
+    </div>
+</body>
+</html>
+`
+
+  const htmlTemplate2 = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Your Inquiry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            color: #007BFF;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Thank You for Your Inquiry</h1>
+        </div>
+        <div class="content">
+            <p>Dear,</p>
+            <p>Thank you for your interest in Shashi Sales and Marketing. We have received your inquiry and will get back to you soon.</p>
+            <p>If you have any immediate questions, feel free to reach out to us at [info@shashisales.com Or 1800-571-0605 (india)
++1321-125-5890 (international)].</p>
+            <p>Best regards,<br>Shashi Sales and Marketing Team</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated message. Please do not reply directly to this email.</p>
+        </div>
+    </div>
+</body>
+</html>
+`
+
+    try {
+        const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com', 'suryakantgupta678@gmail.com'];
+
+        console.log('Received form data:', formData);
+        // mailsender(formData, recipients);
+        Templatesender("suryakantgupta678@gmail.com", htmlTemplate1, "You Got New Lead");
+        Templatesender(formData.email, htmlTemplate2, "You Got New Lead");
+
+
+        // req.session.successMessage = 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon';
+        res.redirect("/seo");
+    } catch (error) {
+        console.error('Failed to send email:', error);
+        // req.session.errorMessage = 'An error occurred while submitting your form. Please try again later.';
+        res.redirect("/seo");
+    }
+});
+
+
 
 
 
