@@ -93,6 +93,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 // Make videoHelpers available to all views
 app.use((req, res, next) => {
     res.locals.videoHelpers = videoHelpers;
@@ -143,6 +144,11 @@ dotenv.config();
 
 
 
+// Middleware to make flash messages available to all views
+app.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    next();
+  });
 
 
 
@@ -288,13 +294,7 @@ app.get("/", async (req, res) => {
 
     const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
     const testimonials = await Testimonial.find().populate('page');
-    const successMessage = req.session.successMessage || null;
-    const errorMessage = req.session.errorMessage || null;
-    console.log('successMessage:', successMessage); // Log the value of successMessage
-    console.log('errorMessage:', errorMessage); // Log the value of errorMessage
-    req.session.successMessage = null; // Clear the success message after displaying it
-    req.session.errorMessage = null; // Clear the error message after displaying it
-
+   
     const ads = await Ad.find({
         isActive: true,
         startDate: { $lte: now },
@@ -305,8 +305,8 @@ app.get("/", async (req, res) => {
       }).sort({ uploadDate: -1 });
     res.render("home", {
         ads,
-        successMessage,
-        errorMessage,
+        // successMessage,
+        // errorMessage,
         blogs,
         testimonials,
         truncateString,
@@ -418,7 +418,10 @@ app.get("/email-marketing", (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/seo", (req, res) => {
+   
+  
     res.render("seo", {
+       
         title: "Leading SEO Company in Delhi-NCR & Best SEO Agency in Hyderabad | Shashi Sales",
         description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic.",
         keywords: 'Best SEO Agency in Delhi-NCR & Hyderabad'
@@ -920,11 +923,12 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
   
       // Save to the database
       await ad.save();
-    //   req.session.successMessage = 'Ad uploaded successfully!';
+  
+    req.flash('success', 'Your Ad is uploaded successfully.');
       res.redirect('/admin-panel');
     } catch (err) {
       console.error('Error uploading ad:', err);
-    //   req.session.errorMessage = 'Ad not uploaded successfully!';
+      req.flash('error', 'Ad not uploaded successfully!');
       res.redirect('/admin-panel');
     }
   });
@@ -965,11 +969,11 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
       }
   
       await ad.save();
-      req.session.successMessage = 'Ad updated successfully!';
+    req.flash('success', 'Your Ad is Updated successfully.');
       res.redirect('/admin-panel');
     } catch (err) {
       console.error('Error updating ad:', err);
-      req.session.errorMessage = 'Ad not updated successfully!';
+      req.flash('error', 'Ad not updated successfully!');
       res.redirect('/admin-panel');
     }
   });
@@ -1301,11 +1305,15 @@ app.post('/submit-quote', async (req, res) => {
         const authClient = await authenticate();
         // Append data to Google Sheets
         await appendToSheet(authClient, formData);
-        req.session.successMessage = 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon';
+        
+        req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
+
+        
         res.redirect(referrerUrl);
     } catch (error) {
         console.error('Failed to send email:', error);
-        req.session.errorMessage = 'An error occurred while submitting your form. Please try again later.';
+       
+        req.flash('error', 'An error occurred while submitting your form. Please try again later.');
         res.redirect(referrerUrl);
     }
 });
@@ -1395,11 +1403,11 @@ app.post('/submit-quote-lead', async (req, res) => {
 
 
 
-        req.session.successMessage = 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon';
+        req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
         res.redirect(referrerUrl);
     } catch (error) {
         console.error('Failed to send email:', error);
-        req.session.errorMessage = 'An error occurred while submitting your form. Please try again later.';
+        req.flash('error', 'An error occurred while submitting your form. Please try again later.');
         res.redirect(referrerUrl);
     }
 });
@@ -1530,19 +1538,19 @@ app.post('/send-praposal', async (req, res) => {
 `
 
     try {
-        const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com', 'suryakantgupta678@gmail.com'];
+        const recipients = ['anurag.tiwari@shashisales.com', 'info@shashisales.com'];
 
         console.log('Received form data:', formData);
         // mailsender(formData, recipients);
-        Templatesender("suryakantgupta678@gmail.com", htmlTemplate1, "You Got New Lead");
+        Templatesender(recipients, htmlTemplate1, "You Got New Lead");
         Templatesender(formData.email, htmlTemplate2, "You Got New Lead");
 
 
-        // req.session.successMessage = 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon';
+        req.flash('success', 'An email has been sent to reset your password.');
         res.redirect("/seo");
     } catch (error) {
         console.error('Failed to send email:', error);
-        // req.session.errorMessage = 'An error occurred while submitting your form. Please try again later.';
+        req.flash('error', 'No account with that email address exists.');
         res.redirect("/seo");
     }
 });
