@@ -1546,11 +1546,15 @@ app.post('/send-praposal', async (req, res) => {
         Templatesender(formData.email, htmlTemplate2, "You Got New Lead");
 
 
-        req.flash('success', 'An email has been sent to reset your password.');
+        req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
+
+        
         res.redirect("/seo");
     } catch (error) {
         console.error('Failed to send email:', error);
-        req.flash('error', 'No account with that email address exists.');
+       
+
+        req.flash('error', 'An error occurred while submitting your form. Please try again later.');
         res.redirect("/seo");
     }
 });
