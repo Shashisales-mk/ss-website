@@ -416,45 +416,67 @@
 
 <script>
   function getPhoneNumber(event) {
-    event.preventDefault(); // Prevent the default action of the anchor tag
+  event.preventDefault(); // Prevent the default action of the anchor tag
 
-    const callLink = document.getElementById("callLink");
+  const callLink = document.getElementById("callLink");
 
-    // Check if Geolocation is available
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
-    } else {
-      alert("Geolocation is not supported by your browser.");
-    }
-
-    function success(position) {
-    //   alert("Location retrieved successfully"); // Debugging alert
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-
-      fetch("/get-phone-number", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ latitude, longitude }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-        //   alert(`Phone number retrieved: ${data.phone}`); // Debugging alert
-          callLink.href = `tel:${data.phone}`;
-          window.location.href = callLink.href;
-        })
-        .catch((err) => {
-          console.error("Error:", err);
-          alert("Unable to retrieve phone number.");
-        });
-    }
-
-    function error() {
-      alert("Unable to retrieve your location.");
-    }
+  // Check if Geolocation is available
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  } else {
+    alert("Geolocation is not supported by your browser.");
+    showPhoneNumberOptions(); // Show both phone numbers
   }
+
+  // Success callback
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    // Send coordinates to the server
+    fetch('/get-phone-number', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ latitude, longitude })
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Set the phone number based on location
+      callLink.href = `tel:${data.phone}`;
+      // Trigger the call after updating the phone number
+      window.location.href = callLink.href;
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      alert("Unable to retrieve phone number.");
+    });
+  }
+
+  // Error callback
+  function error() {
+    alert("Location access denied.");
+    showPhoneNumberOptions(); // Show both phone numbers
+  }
+
+  function showPhoneNumberOptions() {
+    // Display an alert with both phone numbers
+    const indiaNumber = "18005710605"; // Replace with your India number
+    const globalNumber = "+1-321-125-5890"; // Replace with your global number
+
+    const userChoice = confirm(`Location access was denied.\n\nPlease choose a number to call:\n\nIndia: ${indiaNumber}\nGlobal: ${globalNumber}`);
+
+    if (userChoice) {
+      callLink.href = `tel:${indiaNumber}`;
+    } else {
+      callLink.href = `tel:${globalNumber}`;
+    }
+
+    window.location.href = callLink.href; // Trigger the call with the chosen number
+  }
+}
+
 </script>
 
 <script>
