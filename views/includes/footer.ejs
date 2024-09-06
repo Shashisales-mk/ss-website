@@ -428,7 +428,7 @@
     }
 
     function success(position) {
-      alert("Location retrieved successfully"); // Debugging alert
+    //   alert("Location retrieved successfully"); // Debugging alert
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
 
@@ -441,7 +441,7 @@
       })
         .then((response) => response.json())
         .then((data) => {
-          alert(`Phone number retrieved: ${data.phone}`); // Debugging alert
+        //   alert(`Phone number retrieved: ${data.phone}`); // Debugging alert
           callLink.href = `tel:${data.phone}`;
           window.location.href = callLink.href;
         })

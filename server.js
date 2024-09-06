@@ -2296,7 +2296,7 @@ app.post('/get-phone-number', (req, res) => {
   
     // Simple check for India based on latitude and longitude
     if (latitude >= 8.4 && latitude <= 37.6 && longitude >= 68.7 && longitude <= 97.25) {
-      res.json({ phone: '+91-7084992604' });  // Indian phone number
+      res.json({ phone: '18005710605' });  // Indian phone number
     } else {
       res.json({ phone: '+1-321-125-5890' });  // Non-Indian phone number
     }
