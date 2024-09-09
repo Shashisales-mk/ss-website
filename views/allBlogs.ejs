@@ -1463,9 +1463,9 @@
       localStorage.setItem("activeNav", navId);
     }
     // Function to show the selected section and set it as active in the sidebar
-    function showSection1(sectionId, navId) {
+    function showSection6(sectionId, navId) {
       hideAllSections();
-      document.querySelector(`.${sectionId}`).style.display = "flex";
+      document.querySelector(`.${"chatbot-section"}`).style.display = "flex";
       document
         .querySelectorAll(".sideNavBar li")
         .forEach((item) => item.classList.remove("active"));
@@ -1503,10 +1503,7 @@
       showSection("subscriber-section", "sec5");
     });
     document.getElementById("sec6").addEventListener("click", function () {
-      showSection1("chatbot-section", "sec6");
-      
-
-      
+      showSection6("chatbot-section", "sec6")    
     });
 
     // Ensure the form submission keeps the section visible
