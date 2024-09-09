@@ -309,7 +309,7 @@
             cursor: pointer;
         }
 
-       
+
 
         @media screen and (max-width: 1024px) {
             .share-item a {
@@ -732,36 +732,43 @@
                     </div>
 
                     <div class="ddf">
-                        <% ads.forEach(ad => { %>
-                            <p style="display: none;">Number of clicks: <span id="clickCount-<%= ad._id %>" data-click-count="<%= ad.clickCount %>"><%= ad.clickCount %></span></p>
+                        <% ads.forEach(ad=> { %>
+                            <p style="display: none;">Number of clicks: <span id="clickCount-<%= ad._id %>"
+                                    data-click-count="<%= ad.clickCount %>">
+                                    <%= ad.clickCount %>
+                                </span></p>
 
-                          <div class="ad-frame">
-                            <div id="<%= ad._id %>" class="ci">
-                              <div id="show-ad-title" style="display: flex;">
-                                <span id="ad-title"><%= ad.title %></span>
-                                <span>i</span>
-                              </div>
-                              <span class="crss" data-id="<%= ad._id %>" data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
+                            <div class="ad-frame">
+                                <div id="<%= ad._id %>" class="ci">
+                                    <div id="show-ad-title" style="display: flex;">
+                                        <span id="ad-title">
+                                            <%= ad.title %>
+                                        </span>
+                                        <span>i</span>
+                                    </div>
+                                    <span class="crss" data-id="<%= ad._id %>"
+                                        data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
+                                </div>
+                                <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>" class="ad-frame-in">
+                                    <div class="touch" data-id="<%= ad._id %>" onclick="trackClick('<%= ad._id %>')">
+                                        <% if (ad.filePath.endsWith('.mp4')) { %>
+                                            <a href="<%= ad.linkPath %>" target="_blank">
+                                                <video controls width="300">
+                                                    <source src="<%= ad.filePath %>" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </a>
+                                            <% } else { %>
+                                                <a href="<%= ad.linkPath %>" target="_blank">
+                                                    <img style="width: 100%;" src="<%= ad.filePath %>" width="300"
+                                                        alt="Ad Image">
+                                                </a>
+                                                <% } %>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>" class="ad-frame-in">
-                              <div class="touch" data-id="<%= ad._id %>" onclick="trackClick('<%= ad._id %>')">
-                                <% if (ad.filePath.endsWith('.mp4')) { %>
-                                  <a href="<%= ad.linkPath %>" target="_blank">
-                                    <video controls width="300">
-                                      <source src="<%= ad.filePath %>" type="video/mp4">
-                                      Your browser does not support the video tag.
-                                    </video>
-                                  </a>
-                                <% } else { %>
-                                  <a href="<%= ad.linkPath %>" target="_blank">
-                                    <img style="width: 100%;" src="<%= ad.filePath %>" width="300" alt="Ad Image">
-                                  </a>
-                                <% } %>
-                              </div>
-                            </div>
-                          </div>
-                        <% }) %>
-                      </div>
+                            <% }) %>
+                    </div>
 
 
 
@@ -888,10 +895,10 @@
         <script src="/js/script2.js"></script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 const header = document.querySelector("header");
                 const mainPage = document.querySelector(".main-page");
-                
+
                 if (header && mainPage) {
                     const headerHeight = header.offsetHeight;
                     mainPage.style.setProperty("--header-height", `${headerHeight}px`);
@@ -1126,19 +1133,71 @@
         </script>
 
         <script>
-            const Cross = document.getElementById('crss');
-            if (Cross) {
-                Cross.addEventListener('click', (event) => {
-                    document.getElementById('cii').style.display = 'none';
-                    document.getElementById('ci2').style.display = 'none';
+            const CrossElements = document.querySelectorAll('.crss');
+
+            CrossElements.forEach((cross) => {
+                cross.addEventListener('click', (event) => {
+                    const adId = cross.getAttribute('data-id');
+                    const adTitle = cross.getAttribute('data-title');
+
+                    document.getElementById(adId).style.display = 'none';
+                    document.getElementById(adId + adTitle).style.display = 'none';
+                });
+            });
+
+            const TouchElements = document.querySelectorAll('.touch');
+            TouchElements.forEach((touchElement) => {
+                const adFrameIn = touchElement.closest('.ad-frame-in');
+                if (adFrameIn && adFrameIn.innerHTML.trim() === "") {
+                    touchElement.style.display = 'none';
+                }
+            });
+        </script>
+        <script>
+            function initializeClickCounts() {
+                const touchElements = document.querySelectorAll('.touch');
+
+                touchElements.forEach((touchElement) => {
+                    const adId = touchElement.getAttribute('data-id');
+
+                    const clickCountElement = document.getElementById(`clickCount-${adId}`);
+                    if (clickCountElement) {
+                        clickCountElement.innerText = clickCountElement.getAttribute('data-click-count');
+                    }
                 });
             }
-            const Empt = document.getElementById('ci2');
-            const Touch = document.getElementById('touch');
 
-            if (Empt.innerHTML.trim() === "") {
-                Touch.style.display = 'none';
+            function handleAdClicks() {
+                const touchElements = document.querySelectorAll('.touch');
+
+                touchElements.forEach((touchElement) => {
+                    touchElement.addEventListener('click', function () {
+                        const adId = touchElement.getAttribute('data-id');
+
+                        fetch(`/updateClickCount/${adId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            }
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                const clickCountElement = document.getElementById(`clickCount-${adId}`);
+                                if (clickCountElement && data.clickCount !== undefined) {
+                                    clickCountElement.innerText = data.clickCount;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error updating click count:', error);
+                            });
+                    });
+                });
             }
+
+            window.onload = function () {
+                initializeClickCounts();
+                handleAdClicks();
+            };
         </script>
 
 
