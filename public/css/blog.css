@@ -144,9 +144,9 @@
   font-size: 1.2rem !important;
 }
 @media screen and (max-width: 768px){
-  .header{
+  /* .header{
     margin-top: 4rem;
-  }
+  } */
   .blog-content {
     font-size: 1.8vw;
     line-height: 1.5;
