@@ -178,12 +178,29 @@
 
     gtag('config', 'G-FZVQLLDS0B');
   </script>
+
+  
+
 </head>
 
 <body>
   <%- include("../includes/navbar") %>
   <%- include("../includes/flash-message") %>
-  <%- body %> <%- include("../includes/footer") %>
+  <%- body %> <div class="chatbot"></div>
+    <button id="chat-button">💬</button>
+    <div id="chat-container">
+        <div id="chat-header">Chat Bot</div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="chat-submit">➤</button>
+        </div>
+    </div>
+</div> <%- include("../includes/footer") %>
+<!-- chat bot script -->
+<script src="/socket.io/socket.io.js"></script>
+
+ <!-- chat bot script -->
        
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
@@ -192,6 +209,8 @@
         <script src="/js/script.js"></script>
         <script src="/js/script2.js"></script>
         <script src="/js/other.js"></script>
+
+
         
 </body>
 

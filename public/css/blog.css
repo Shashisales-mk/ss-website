@@ -170,20 +170,13 @@
 }
 
 .ic-img img {
-  border-radius: 0.6rem;
-  transition: 0.3s ease;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
 }
-.ic-img img:hover{
-  transform: scale(1.1);
-}
 .ic-img{
-  border-radius: 0.6rem;
-  overflow: hidden;
   width: 40%;
   position: relative;
   aspect-ratio: 350/350;
@@ -213,7 +206,7 @@
 }
 .ad-frame{
   position: relative;
-  width: 20%;
+  width: 100%;
   /* border: 1px solid; */
   height: auto;
 }
@@ -224,7 +217,7 @@
     width: 90%;
     height: auto;
 }
-.ci {
+.ci{
   position: inherit;
   display: flex;
   justify-content: end;
@@ -252,7 +245,7 @@
 #show-ad-title:hover #ad-title{
   display: block;
 }
-#crss{
+.crss{
   font-size: 1.5vw;
 }
 .ad-frame-in img:hover, .ad-frame-in video:hover{
@@ -260,10 +253,8 @@
 }
 
 @media screen and (max-width: 600px){
- 
   .blog-content {
     font-size: 4vw;
-    padding-inline: 2rem;
   }
   .upk {
     display: grid;
@@ -319,7 +310,6 @@
   font-size: 3vw;
 }
 }
-
 /* uploadform css */
 
 .upformp {
