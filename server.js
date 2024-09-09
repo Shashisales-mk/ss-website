@@ -29,6 +29,8 @@ const Story = require('./models/TestimonialPage');
 const PaymentDetails = require('./models/PaymentDetails');
 const Comment = require('./models/Comment');
 const Ad = require('./models/Ad');
+const Chatuser = require('./models/Chatuser');
+const Chat = require('./models/ChatSchema');
 
 const passport = require('./config/passport');
 
@@ -49,6 +51,7 @@ const videoHelpers = require('./utils/vedioHelpers');
 
 
 
+
 // Configure PayPal SDK
 paypal.configure({
     'mode': process.env.PAYPAL_MODE || 'live', 
@@ -58,6 +61,10 @@ paypal.configure({
 
 
 const app = express();
+
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
 
 main().then(() => {
     console.log("connected to the DB");
@@ -764,12 +771,16 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
         ad.isActive = isActive;
     });
 
+    const chats = await Chat.find({ isOpen: true }).populate('user');
+    const Closedchats = await Chat.find({ isOpen: false }).populate('user');
     
   
 
     res.render("allBlogs", {
         
         ads,
+        chats,
+        Closedchats,
         acomments: approvedComments,
         comments: pendingComments,
         testimonials,
@@ -1002,6 +1013,24 @@ app.post('/uploadAd', upload.single('ad'), async (req, res) => {
     } catch (err) {
       console.error('Error deleting ads:', err);
       res.status(500).send('Error deleting ads');
+    }
+  });
+
+
+  app.post('/updateClickCount/:id', async (req, res) => {
+    try {
+      const adId = req.params.id;
+      const ad = await Ad.findById(adId);
+      
+      if (ad) {
+        ad.clickCount += 1;
+        await ad.save();
+        res.status(200).json({ message: 'Click count updated successfully', clickCount: ad.clickCount });
+      } else {
+        res.status(404).json({ message: 'Ad not found' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating click count', error });
     }
   });
 
@@ -2461,6 +2490,114 @@ app.post('/get-phone-number', (req, res) => {
   
 
 
+//   chat-bot
+
+app.get('/admin/chat/:chatId', async (req, res) => {
+    try {
+      const chat = await Chat.findById(req.params.chatId).populate('user');
+      res.json(chat);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error retrieving chat' });
+    }
+  });
+  
+  app.post('/admin/reply', async (req, res) => {
+    try {
+      const { chatId, content } = req.body;
+      const chat = await Chat.findById(chatId);
+      if (!chat || !chat.isOpen) {
+        return res.status(400).json({ error: 'Chat not found or closed' });
+      }
+      chat.messages.push({ content, sender: 'admin' });
+      await chat.save();
+      io.to(chatId).emit('chat message', { content, sender: 'admin' });
+      res.json({ success: true });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error sending reply' });
+    }
+  });
+  
+  app.post('/close-chat', async (req, res) => {
+    try {
+      const { chatId } = req.body;
+      const chat = await Chat.findById(chatId);
+      if (!chat) {
+        return res.status(404).json({ error: 'Chat not found' });
+      }
+      chat.isOpen = false;
+      chat.closedAt = new Date();
+      await chat.save();
+      io.to(chatId).emit('chat closed', chatId);
+      res.json({ success: true });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error closing chat' });
+    }
+  });
+  
+  io.on('connection', (socket) => {
+    console.log('A user connected');
+  
+    socket.on('join chat', (chatId) => {
+      socket.join(chatId);
+      console.log(`User joined chat: ${chatId}`);
+    });
+  
+    socket.on('chat message', async ({ chatId, content }) => {
+      try {
+        console.log(`Received message for chat ${chatId}: ${content}`);
+        const chat = await Chat.findById(chatId);
+        if (!chat || !chat.isOpen) {
+          return socket.emit('error', 'Chat not found or closed');
+        }
+        const message = { content, sender: 'user' };
+        chat.messages.push(message);
+        await chat.save();
+        console.log(`Emitting message to chat ${chatId}`);
+        io.to(chatId).emit('chat message', { chatId, ...message });
+      } catch (err) {
+        console.error('Error saving message:', err);
+        socket.emit('error', 'Error saving message');
+      }
+    });
+  
+    socket.on('disconnect', () => {
+      console.log('User disconnected');
+    });
+  });
+  
+  
+  app.post('/start-chat', async (req, res) => {
+    try {
+      const { 0: name, 1: email, 2: number, 3: problem } = req.body;
+      let user = await Chatuser.findOne({ email });
+      if (!user) {
+        user = new Chatuser({ name, email, number, problem });
+        await user.save();
+      }
+      const chat = new Chat({ 
+        user: user._id,
+        initialQuestions: [
+          { question: "What's your name?", answer: name },
+          { question: "What's your email address?", answer: email },
+          { question: "What's your phone number?", answer: number },
+          { question: "Please describe your problem.", answer: problem }
+        ]
+      });
+      await chat.save();
+      console.log(`New chat started: ${chat._id}`);
+      io.emit('new chat', { _id: chat._id, userName: user.name });
+      res.json({ userId: user._id, chatId: chat._id });
+    } catch (err) {
+      console.error('Error starting chat:', err);
+      res.status(500).json({ error: 'Error starting chat' });
+    }
+  });
+  
+
+
 
 
 app.all("*", (req, res) => {
@@ -2469,6 +2606,6 @@ app.all("*", (req, res) => {
 
 
 
-app.listen(4000, () => {
+http.listen(4000, () => {
     console.log("listening on port 4000");
 })

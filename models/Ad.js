@@ -19,7 +19,8 @@ const adSchema = new mongoose.Schema({
   endDate: { type: Date, required: true }, 
   startTime: { type: String, required: true }, 
   endTime: { type: String, required: true }, 
-  activeDays: { type: [String], required: true } 
+  activeDays: { type: [String], required: true },
+  clickCount: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('Ad', adSchema);

@@ -96,6 +96,12 @@
     </script>
     <!-- End Google Tag Manager -->
     <style>
+        .main-page {
+            padding-top: var(--header-height, 8rem);
+            padding-bottom: 5rem;
+            font-family: "Inter", sans-serif;
+        }
+
         .bl {
             background-color: black;
         }
@@ -725,35 +731,38 @@
                                     <% }) %>
                     </div>
 
-                    <div id="touch" class="ad-frame">
-                           
-                            <div id="cii" class="ci">
-                                <div id="show-ad-title" style="display: flex;">
-                                    <% ads.forEach(ad => { %>
-                                        <span id="ad-title"><%= ad.title %></span>
-                                    <% }) %>
-                                    <span>i</span>
-                                </div>
-                                <span id="crss">&times;</span>
+                    <div class="ddf">
+                        <% ads.forEach(ad => { %>
+                            <p style="display: none;">Number of clicks: <span id="clickCount-<%= ad._id %>" data-click-count="<%= ad.clickCount %>"><%= ad.clickCount %></span></p>
+
+                          <div class="ad-frame">
+                            <div id="<%= ad._id %>" class="ci">
+                              <div id="show-ad-title" style="display: flex;">
+                                <span id="ad-title"><%= ad.title %></span>
+                                <span>i</span>
+                              </div>
+                              <span class="crss" data-id="<%= ad._id %>" data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
                             </div>
-                            <div id="ci2" class="ad-frame-in">
-                                <% ads.forEach(ad => { %>
-                          
-                                    <% if (ad.filePath.endsWith('.mp4')) { %>
-                                      <a href="<%= ad.linkPath %>" target="_blank">
-                                        <video controls width="300">
-                                            <source src="<%= ad.filePath %>" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                          </video>
-                                      </a>
-                                    <% } else { %>
-                                      <a href="<%= ad.linkPath %>"  target="_blank">
-                                        <img style="width: 100%;" src="<%= ad.filePath %>" width="300" alt="Ad Image">
-                                      </a>
-                                    <% } %>
-                                  <% }) %>
+                            <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>" class="ad-frame-in">
+                              <div class="touch" data-id="<%= ad._id %>" onclick="trackClick('<%= ad._id %>')">
+                                <% if (ad.filePath.endsWith('.mp4')) { %>
+                                  <a href="<%= ad.linkPath %>" target="_blank">
+                                    <video controls width="300">
+                                      <source src="<%= ad.filePath %>" type="video/mp4">
+                                      Your browser does not support the video tag.
+                                    </video>
+                                  </a>
+                                <% } else { %>
+                                  <a href="<%= ad.linkPath %>" target="_blank">
+                                    <img style="width: 100%;" src="<%= ad.filePath %>" width="300" alt="Ad Image">
+                                  </a>
+                                <% } %>
+                              </div>
                             </div>
-                        </div>
+                          </div>
+                        <% }) %>
+                      </div>
+
 
 
 
@@ -877,6 +886,18 @@
         <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
         <script src="/js/script.js"></script>
         <script src="/js/script2.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const header = document.querySelector("header");
+                const mainPage = document.querySelector(".main-page");
+                
+                if (header && mainPage) {
+                    const headerHeight = header.offsetHeight;
+                    mainPage.style.setProperty("--header-height", `${headerHeight}px`);
+                }
+            });
+        </script>
 
 
         <script>
@@ -1119,6 +1140,8 @@
                 Touch.style.display = 'none';
             }
         </script>
+
+
 </body>
 
 </html>

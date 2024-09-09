@@ -1,555 +1,708 @@
 <% layout("/layouts/boilerplate") %>
 
-<style>
-  .bl {
-    background-color: black;
-  }
+  <style>
+    .chatbot-section {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: #f0f2f5;
+    }
 
-  .main-page {
-    margin-top: 5rem;
-    margin-bottom: 0rem;
-    display: flex;
-  }
+    #chat-list {
+      width: 30%;
+      max-width: 420px;
+      background-color: #ffffff;
+      border-right: 1px solid #e1e4e8;
+      display: flex;
+      flex-direction: column;
+    }
 
-  .bt {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    place-items: center;
-    border-bottom: 1px solid black;
-    padding-block: 1rem;
-  }
+    #chat-area {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #e5ddd5;
+    }
 
-  .blog-table-body button {
-    background: transparent;
-    padding: 0.5rem 1.3rem;
-    border: 2px solid red;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 1rem;
-    color: red;
-  }
+    #chat-list-header,
+    #chat-area-header {
+      padding: 10px 16px;
+      background-color: #f0f2f5;
+      display: flex;
+      align-items: center;
+      height: 60px;
+    }
 
-  .blog-table-body a {
-    background: transparent;
-    padding: 0.5rem 1.3rem;
-    border: 2px solid #11b911;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 1rem;
-    color: #11b911;
-  }
+    #active-chats {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
 
-  .action-btns {
-    width: 100%;
-    padding: 2vw 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .chat-item {
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f2f5;
+    }
 
-  .action-btns a {
-    background: #c4c800;
-    padding: 0.5vw 1vw;
-    border: 2px solid #c4c800;
-    border-radius: 2vw;
-    font-weight: 500;
-    font-size: 1.2vw;
-    color: #000;
-  }
+    .chat-item:hover {
+      background-color: #f5f6f6;
+    }
 
-  .dieb {
-    background: #c4c800;
-    padding: 0.5vw 1vw;
-    border: 2px solid #c4c800;
-    border-radius: 2vw;
-    font-weight: 500;
-    font-size: 1.2vw;
-    color: #000;
-    margin-top: 1rem;
-  }
-  .sideNavBar,
-  .main-page-in {
-    padding-top: 1vw;
-  }
+    .chat-item.active {
+      background-color: #f0f2f5;
+    }
 
-  .active {
-    background: #c4c800;
-  }
+    .chat-avatar {
+      width: 49px;
+      height: 49px;
+      border-radius: 50%;
+      background-color: #dfe5e7;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #ffffff;
+    }
 
-  .sideNavBar {
-    border-right: 0.1vw solid grey;
-    width: 20%;
-    background: #f3eeee;
-  }
+    .chat-info {
+      flex-grow: 1;
+    }
 
-  .sideNavBar li {
-    text-align: center;
-    padding: 2vw;
-    border-bottom: 1px solid grey;
-    font-size: 1.2vw;
-    font-weight: 700;
-  }
+    .chat-name {
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
 
-  .sideNavBar li:hover {
-    cursor: pointer;
-    background: #c4c800;
-  }
+    .chat-preview {
+      color: #667781;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-  .sideNavBar li.active {
-    background-color: #c4c800;
-  }
+    #chat-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
 
-  .main-page-in {
-    width: 80%;
-    padding: 3vw 3vw;
-  }
+    .message {
+      max-width: 65%;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 7.5px;
+      position: relative;
+      line-height: 1.4;
+      clear: both;
+    }
 
-  .main-page-in h1 {
-    justify-content: start !important;
-  }
+    .user-message {
+      background-color: #d9fdd3;
+      align-self: flex-end;
+      float: right;
+    }
 
-  .sideNavBar p a,
-  .gallery-section form button {
-    display: flex;
-    justify-content: center;
-    margin: 2vw 4vw;
-    padding: 0.6vw 1vw;
-    background: transparent;
-    color: #979a05;
-    border: 1px solid #979a05;
-    border-radius: 2vw;
-  }
+    .admin-message {
+      background-color: #ffffff;
+      align-self: flex-start;
+      float: left;
+    }
 
-  .gallery-section form button {
-    margin: 2vw 0 0 0;
-  }
+    #reply-form {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #f0f2f5;
+    }
 
-  .sideNavBar p a:hover {
-    background: #c4c800;
-    color: #000;
-    border: 1px solid #c4c800;
-  }
+    #reply-input {
+      flex-grow: 1;
+      padding: 9px 12px;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+      font-size: 15px;
+    }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 1.3vw;
-  }
+    #reply-form button {
+      background-color: #00a884;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  th,
-  td {
-    border: 2px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
+    #close-chat {
+      margin: 10px;
+      padding: 8px 16px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: calc(100% - 20px);
+    }
 
-  th {
-    background-color: #f2f2f2;
-    text-align: center;
-  }
+    .bl {
+      background-color: black;
+    }
 
-  .edit-btn {
-    padding: 0.3vw 2vw;
-    border-radius: 3vw;
-    background: transparent;
-    border: 1px solid orange;
-    color: orange;
-  }
+    .main-page {
+      margin-top: 5rem;
+      margin-bottom: 0rem;
+      display: flex;
+    }
 
-  .popular,
-  .not-popular {
-    padding: 0.3vw 2vw;
-    border-radius: 3vw;
-    background: transparent;
-    border: 1px solid #c4c800;
-    color: #c4c800;
-    font-weight: bold;
-  }
+    .bt {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      place-items: center;
+      border-bottom: 1px solid black;
+      padding-block: 1rem;
+    }
 
-  .approve,
-  .not-approve {
-    padding: 0.3vw 2vw;
-    border-radius: 3vw;
-    background: transparent;
-    border: 1px solid green;
-    color: green;
-    font-weight: bold;
-  }
+    .blog-table-body button {
+      background: transparent;
+      padding: 0.5rem 1.3rem;
+      border: 2px solid red;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: red;
+    }
 
-  .del-btn {
-    margin: 0 !important;
-    padding: 0.3vw 2vw !important;
-    border-radius: 3vw !important;
-    background: transparent !important;
-    border: 1px solid red !important;
-    color: red !important;
-  }
+    .blog-table-body a {
+      background: transparent;
+      padding: 0.5rem 1.3rem;
+      border: 2px solid #11b911;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #11b911;
+    }
 
-  .del-btn:hover {
-    cursor: pointer;
-  }
+    .action-btns {
+      width: 100%;
+      padding: 2vw 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  .gallery-cont {
-    padding-top: 2vw;
-    display: grid;
-    grid-column-gap: var(--column-gutter);
-    align-items: start;
-    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
-  }
+    .action-btns a {
+      background: #c4c800;
+      padding: 0.5vw 1vw;
+      border: 2px solid #c4c800;
+      border-radius: 2vw;
+      font-weight: 500;
+      font-size: 1.2vw;
+      color: #000;
+    }
 
-  .gal-in {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--row-gutter);
-  }
+    .dieb {
+      background: #c4c800;
+      padding: 0.5vw 1vw;
+      border: 2px solid #c4c800;
+      border-radius: 2vw;
+      font-weight: 500;
+      font-size: 1.2vw;
+      color: #000;
+      margin-top: 1rem;
+    }
 
-  .gal-in img,
-  .gal-in video {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    unicode-bidi: isolate;
-  }
+    .sideNavBar,
+    .main-page-in {
+      padding-top: 1vw;
+    }
 
-  .secr {
-    display: flex;
-    gap: 2vw;
-    padding: 2vw 0 0.1vw 0;
-    font-size: 1.2vw;
-  }
+    .active {
+      background: #c4c800;
+    }
 
-  .gallery-section input,
-  .gallery-section select,
-  .testimonial-section input,
-  .testimonial-section select,
-  .create-new form input {
-    border: 0;
-    background: #ced5d5;
-    outline: none;
-    padding: 0.5vw;
-    font-size: 1.2vw;
-    border-radius: 0.4vw;
+    .sideNavBar {
+      border-right: 0.1vw solid grey;
+      width: 20%;
+      background: #f3eeee;
+    }
 
-  }
+    .sideNavBar li {
+      text-align: center;
+      padding: 2vw;
+      border-bottom: 1px solid grey;
+      font-size: 1.2vw;
+      font-weight: 700;
+    }
 
-  .gallery-cont table img,
-  .gallery-cont table video {
-    height: 5vw;
-    width: 5vw;
-  }
+    .sideNavBar li:hover {
+      cursor: pointer;
+      background: #c4c800;
+    }
 
-  .gallery-cont table li {
-    list-style: none;
-    padding: 0.5vw 1vw;
-    background: #4e4949;
-    color: white;
-    border-radius: 2vw;
-  }
+    .sideNavBar li.active {
+      background-color: #c4c800;
+    }
 
-  .gallery-cont table ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1vw;
-    flex-wrap: wrap;
-  }
+    .main-page-in {
+      width: 80%;
+      padding: 3vw 3vw;
+    }
 
-  .gallery-section p {
-    display: grid;
-    width: 50%;
-  }
+    .main-page-in h1 {
+      justify-content: start !important;
+    }
 
-  .secr label {
-    display: flex;
-    align-items: center;
-  }
+    .sideNavBar p a,
+    .gallery-section form button {
+      display: flex;
+      justify-content: center;
+      margin: 2vw 4vw;
+      padding: 0.6vw 1vw;
+      background: transparent;
+      color: #979a05;
+      border: 1px solid #979a05;
+      border-radius: 2vw;
+    }
 
-  .appr-btn,
-  .testimonial-section button, .create-new form button {
-    padding: 0.3vw 2vw;
-    border-radius: 3vw;
-    background: transparent;
-    border: 1px solid green;
-    color: green;
-  }
+    .gallery-section form button {
+      margin: 2vw 0 0 0;
+    }
 
+    .sideNavBar p a:hover {
+      background: #c4c800;
+      color: #000;
+      border: 1px solid #c4c800;
+    }
 
-  .tarea {
-    padding: 1vw 0;
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.3vw;
+    }
 
-  .tarea textarea {
-    padding: 1vw;
-    background: #ced5d536;
-    height: 8vw;
-  }
+    th,
+    td {
+      border: 2px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
 
-  .tarea textarea::placeholder {
-    font-size: 1.2rem;
-  }
+    th {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
 
-  .tarea label {
-    display: flex;
-    margin-top: 1vw;
-    font-size: 1vw;
-  }
+    .edit-btn {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid orange;
+      color: orange;
+    }
 
-  .edtes input,
-  .edtes select,
-  .edtes textarea {
-    width: 8vw !important;
-  }
+    .popular,
+    .not-popular {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid #c4c800;
+      color: #c4c800;
+      font-weight: bold;
+    }
 
-  button:hover {
-    cursor: pointer;
-  }
+    .approve,
+    .not-approve {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid green;
+      color: green;
+      font-weight: bold;
+    }
 
-  .comment::placeholder {
-    font-size: 1rem;
-  }
+    .del-btn {
+      margin: 0 !important;
+      padding: 0.3vw 2vw !important;
+      border-radius: 3vw !important;
+      background: transparent !important;
+      border: 1px solid red !important;
+      color: red !important;
+    }
 
-  #charCount {
-    font-size: 0.8rem;
-    color: #666;
-    margin-top: 0.5rem;
-    display: block;
-  }
+    .del-btn:hover {
+      cursor: pointer;
+    }
 
-  .comment {
-    margin-top: 1rem;
-    width: 100%;
-    height: 100px;
-    border: 1px solid black;
-    font-size: 1rem;
-  }
+    .gallery-cont {
+      padding-top: 2vw;
+      display: grid;
+      grid-column-gap: var(--column-gutter);
+      align-items: start;
+      grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    }
 
-  .testi-sec input:first-child {
-    width: 68%;
-  }
+    .gal-in {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--row-gutter);
+    }
 
-  .testi-sec input:last-child {
-    width: 30%;
-  }
-  /* Ads section */
-  .admin-ads {
-    margin-top: 2vw;
-    display: grid;
-    gap: 1vw;
-  }
-  .admin-ads input {
-    outline: none;
-    background: rgb(241, 243, 244);
-    padding: 1vw;
-    border: 0;
-    border-radius: 0.3vw;
-  }
-  .admin-ads button,
-  .blog-btn {
-    padding: 2vw;
-    font-weight: 700;
-    padding: 0.5vw 2vw;
-    color: green;
-    border: 1px solid green;
-    background: transparent;
-    border-radius: 1vw;
-  }
-  .ads-del-btn {
-    margin: 2vw 0;
-    padding: 0.5vw 1vw;
-    background: transparent;
-    border: 1px solid red;
-    color: red;
-    border-radius: 0.3vw;
-  }
-  .active-days {
-    display: flex;
-    justify-content: space-between;
-  }
-  table ul li {
-    list-style: none;
-  }
-  table ul {
-    display: grid;
-    gap: 1rem;
-  }
-  .fsf {
-    font-size: 0.8rem;
-  }
-</style>
+    .gal-in img,
+    .gal-in video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      unicode-bidi: isolate;
+    }
 
-<div class="main-page">
-  <div class="sideNavBar">
-    <ul>
-      <li id="sec1" class="active">Blogs</li>
-      <li id="sec2">Gallery</li>
-      <li id="sec3">Testimonials</li>
-      <li id="sec4">Pending Comments</li>
-      <li id="sec5">Subscribers</li>
-      <p><a href="/logout">Logout</a></p>
-      <p><a href="/admin/edit-ads-txt">Edit Ads.txt</a></p>
-    </ul>
-  </div>
-  <div class="main-page-in">
-    <!-- Blog Section -->
-    <div class="blog-section">
-    <!-- Ads Section -->
-    <h2>Upload New Ad</h2>
-    <form action="/uploadAd" method="POST" enctype="multipart/form-data">
-      <div class="admin-ads">
-        <div>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Enter Ad Title"
-            required
-          />
-          <input
-            type="url"
-            id="link"
-            name="linkPath"
-            placeholder="Enter Ad Link"
-            required
-          />
-          <input type="file" name="ad" accept="image/*,video/*" required />
-        </div>
+    .secr {
+      display: flex;
+      gap: 2vw;
+      padding: 2vw 0 0.1vw 0;
+      font-size: 1.2vw;
+    }
 
-        <div>
-          <label for="startDate">Start Date:</label>
-          <input
-            style="margin-right: 2rem"
-            type="date"
-            id="startDate"
-            name="startDate"
-            required
-          />
+    .gallery-section input,
+    .gallery-section select,
+    .testimonial-section input,
+    .testimonial-section select {
+      border: 0;
+      background: #ced5d5;
+      outline: none;
+      padding: 0.5vw;
+      font-size: 1.2vw;
+      border-radius: 0.4vw;
+    }
 
-          <label for="endDate">End Date:</label>
-          <input type="date" id="endDate" name="endDate" required />
-        </div>
+    .gallery-cont table img,
+    .gallery-cont table video {
+      height: 5vw;
+      width: 5vw;
+    }
 
-        <div>
-          <label for="startTime">Start Time:</label>
-          <input
-            style="margin-right: 2rem"
-            type="time"
-            id="startTime"
-            name="startTime"
-            required
-          />
+    .gallery-cont table li {
+      list-style: none;
+      padding: 0.5vw 1vw;
+      background: #4e4949;
+      color: white;
+      border-radius: 2vw;
+    }
 
-          <label for="endTime">End Time:</label>
-          <input type="time" id="endTime" name="endTime" required />
-        </div>
+    .gallery-cont table ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1vw;
+      flex-wrap: wrap;
+    }
+
+    .gallery-section p {
+      display: grid;
+      width: 50%;
+    }
+
+    .secr label {
+      display: flex;
+      align-items: center;
+    }
+
+    .appr-btn,
+    .testimonial-section button {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid green;
+      color: green;
+    }
+
+    .tarea {
+      padding: 1vw 0;
+    }
+
+    .tarea textarea {
+      padding: 1vw;
+      background: #ced5d536;
+      height: 8vw;
+    }
+
+    .tarea textarea::placeholder {
+      font-size: 1.2rem;
+    }
+
+    .tarea label {
+      display: flex;
+      margin-top: 1vw;
+      font-size: 1vw;
+    }
+
+    .edtes input,
+    .edtes select,
+    .edtes textarea {
+      width: 8vw !important;
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+
+    .comment::placeholder {
+      font-size: 1rem;
+    }
+
+    #charCount {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    .comment {
+      margin-top: 1rem;
+      width: 100%;
+      height: 100px;
+      border: 1px solid black;
+      font-size: 1rem;
+    }
+
+    .testi-sec input:first-child {
+      width: 68%;
+    }
+
+    .testi-sec input:last-child {
+      width: 30%;
+    }
+
+    /* Ads section */
+    .admin-ads {
+      margin-top: 2vw;
+      display: grid;
+      gap: 1vw;
+    }
+
+    .admin-ads input {
+      outline: none;
+      background: rgb(241, 243, 244);
+      padding: 1vw;
+      border: 0;
+      border-radius: 0.3vw;
+    }
+
+    .admin-ads button,
+    .blog-btn {
+      padding: 2vw;
+      font-weight: 700;
+      padding: 0.5vw 2vw;
+      color: green;
+      border: 1px solid green;
+      background: transparent;
+      border-radius: 1vw;
+    }
+
+    .ads-del-btn {
+      margin: 2vw 0;
+      padding: 0.5vw 1vw;
+      background: transparent;
+      border: 1px solid red;
+      color: red;
+      border-radius: 0.3vw;
+    }
+
+    .active-days {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    table ul li {
+      list-style: none;
+    }
+
+    table ul {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .fsf {
+      font-size: 0.8rem;
+    }
+  </style>
+
+  <div class="main-page">
+    <div class="sideNavBar">
+      <ul>
+        <li id="sec1" class="active">Blogs</li>
+        <li id="sec2">Gallery</li>
+        <li id="sec3">Testimonials</li>
+        <li id="sec4">Pending Comments</li>
+        <li id="sec5">Subscribers</li>
+        <li id="sec6">Active Queries</li>
+        <p><a href="/logout">Logout</a></p>
+        <p><a href="/admin/edit-ads-txt">Edit Ads.txt</a></p>
+      </ul>
+    </div>
+    <div class="main-page-in">
+      <!-- Blog Section -->
+      <div class="blog-section">
+        <!-- Ads Section -->
+        <h2>Upload New Ad</h2>
+        <form action="/uploadAd" method="POST" enctype="multipart/form-data">
+          <div class="admin-ads">
+            <div>
+              <!-- <input type="text" id="id" name="id" placeholder="Create unique ID" required> -->
+              <input type="text" id="title" name="title" placeholder="Enter Ad Title" required />
+              <input type="url" id="link" name="linkPath" placeholder="Enter Ad Link" required />
+              <input type="file" name="ad" accept="image/*,video/*" required />
+            </div>
+
+            <div>
+              <label for="startDate">Start Date:</label>
+              <input style="margin-right: 2rem" type="date" id="startDate" name="startDate" required />
+
+              <label for="endDate">End Date:</label>
+              <input type="date" id="endDate" name="endDate" required />
+            </div>
+
+            <div>
+              <label for="startTime">Start Time:</label>
+              <input style="margin-right: 2rem" type="time" id="startTime" name="startTime" required />
+
+              <label for="endTime">End Time:</label>
+              <input type="time" id="endTime" name="endTime" required />
+            </div>
+            <br />
+
+            <div class="active-days">
+              <label>Active Days:</label><br /><br />
+              <label><input type="checkbox" name="activeDays" value="Monday" />
+                Monday</label>
+              <label><input type="checkbox" name="activeDays" value="Tuesday" />
+                Tuesday</label>
+              <label><input type="checkbox" name="activeDays" value="Wednesday" />
+                Wednesday</label>
+              <label><input type="checkbox" name="activeDays" value="Thursday" />
+                Thursday</label>
+              <label><input type="checkbox" name="activeDays" value="Friday" />
+                Friday</label>
+              <label><input type="checkbox" name="activeDays" value="Saturday" />
+                Saturday</label>
+              <label><input type="checkbox" name="activeDays" value="Sunday" />
+                Sunday</label>
+            </div>
+
+            <div>
+              <button type="submit">Upload</button>
+            </div>
+          </div>
+        </form>
         <br />
 
-        <div class="active-days">
-          <label>Active Days:</label><br /><br />
-          <label
-            ><input type="checkbox" name="activeDays" value="Monday" />
-            Monday</label
-          >
-          <label
-            ><input type="checkbox" name="activeDays" value="Tuesday" />
-            Tuesday</label
-          >
-          <label
-            ><input type="checkbox" name="activeDays" value="Wednesday" />
-            Wednesday</label
-          >
-          <label
-            ><input type="checkbox" name="activeDays" value="Thursday" />
-            Thursday</label
-          >
-          <label
-            ><input type="checkbox" name="activeDays" value="Friday" />
-            Friday</label
-          >
-          <label
-            ><input type="checkbox" name="activeDays" value="Saturday" />
-            Saturday</label
-          >
-          <label
-            ><input type="checkbox" name="activeDays" value="Sunday" />
-            Sunday</label
-          >
-        </div>
-
-        <div>
-          <button type="submit">Upload</button>
-        </div>
-      </div>
-    </form>
-    <br />
-
-    <!-- Existing ads display section -->
-    <h2 style="margin-top: 2vw">Uploaded Ads</h2>
-    <% if (ads.length > 0) { %>
-    <form action="/delete-ads" method="POST">
-      <button class="ads-del-btn" type="submit">Delete Selected Ads</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>Active</th>
-            <th>Ad Title</th>
-            <th>Ad Link</th>
-            <th>Image/Video</th>
-            <th>
-              <ul>
-                <li>Start Date</li>
-                <li>End Date</li>
-              </ul>
-            </th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Active Days</th>
-            <th>Edit</th> <!-- Add this column for editing -->
-          </tr>
-        </thead>
-        <% ads.forEach(ad => { %>
-        <tbody class="fsf">
-          <tr>
-            <td><input type="checkbox" name="adIds" value="<%= ad._id %>" /></td>
-            <td><%= ad.isActive %></td>
-            <td><h3><%= ad.title %></h3></td>
-            <td><a href="<%= ad.linkPath %>"><%= ad.linkPath %></a></td>
-            <td>
-              <% if (ad.filePath.endsWith('.mp4')) { %>
-              <video controls width="100">
-                <source src="<%= ad.filePath %>" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              <% } else { %>
-              <a href="<%= ad.linkPath %>">
-                <img height="50" width="50" src="<%= ad.filePath %>" alt="Ad Image" width="100" />
-              </a>
-              <% } %>
-            </td>
-            <td>
-              <ul>
-                <li><%= new Date(ad.startDate).toLocaleDateString() %></li>
-                <li><%= new Date(ad.endDate).toLocaleDateString() %></li>
-              </ul>
-            </td>
-            <td><%= ad.startTime %></td>
-            <td><%= ad.endTime %></td>
-            <td><%= ad.activeDays.join(', ') %></td>
-            <td>
-              <a class="edit-btn" href="/edit-ad/<%= ad._id %>" target="_blank">Edit</a> <!-- Edit button -->
-            </td>
-          </tr>
-        </tbody>
-        <% }) %>
-      </table>
-      <br /><br />
-    </form>
-    <% } else { %>
-    <p style="padding: 2rem 0">No ads uploaded yet.</p>
-    <% } %>
-
+        <!-- Existing ads display section -->
+        <h2 style="margin-top: 2vw">Uploaded Ads</h2>
+        <% if (ads.length> 0) { %>
+          <form action="/delete-ads" method="POST">
+            <button class="ads-del-btn" type="submit">Delete Selected Ads</button>
+            <table>
+              <thead>
+                <tr>
+                  <th>Select</th>
+                  <th>Active</th>
+                  <th>Total Taps</th>
+                  <th>Ad Title</th>
+                  <th>Ad Link</th>
+                  <th>Image/Video</th>
+                  <th>
+                    <ul>
+                      <li>Start Date</li>
+                      <li>End Date</li>
+                    </ul>
+                  </th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Active Days</th>
+                  <th>Edit</th>
+                  <!-- Add this column for editing -->
+                </tr>
+              </thead>
+              <% ads.forEach(ad=> { %>
+                <tbody class="fsf">
+                  <tr>
+                    <td>
+                      <input type="checkbox" name="adIds" value="<%= ad._id %>" />
+                    </td>
+                    <td>
+                      <%= ad.isActive %>
+                    </td>
+                    <td>
+                      <%= ad.clickCount %>
+                    </td>
+                    <td>
+                      <h3>
+                        <%= ad.title %>
+                      </h3>
+                    </td>
+                    <td><a href="<%= ad.linkPath %>">
+                        <%= ad.linkPath %>
+                      </a></td>
+                    <td>
+                      <% if (ad.filePath.endsWith('.mp4')) { %>
+                        <video controls width="100">
+                          <source src="<%= ad.filePath %>" type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                        <% } else { %>
+                          <a href="<%= ad.linkPath %>">
+                            <img height="50" width="50" src="<%= ad.filePath %>" alt="Ad Image" width="100" />
+                          </a>
+                          <% } %>
+                    </td>
+                    <td>
+                      <ul>
+                        <li>
+                          <%= new Date(ad.startDate).toLocaleDateString() %>
+                        </li>
+                        <li>
+                          <%= new Date(ad.endDate).toLocaleDateString() %>
+                        </li>
+                      </ul>
+                    </td>
+                    <td>
+                      <%= ad.startTime %>
+                    </td>
+                    <td>
+                      <%= ad.endTime %>
+                    </td>
+                    <td>
+                      <%= ad.activeDays.join(', ') %></td>
+              <td>
+                <a
+                  class="edit-btn"
+                  href="/edit-ad/<%= ad._id %>"
+                  target="_blank"
+                  >Edit</a
+                >
+                <!-- Edit button -->
+              </td>
+            </tr>
+          </tbody>
+          <% }) %>
+        </table>
+        <br /><br />
+      </form>
+      <% } else { %>
+      <p style="padding: 2rem 0">No ads uploaded yet.</p>
+      <% } %>
 
       <h1 style="padding: 2vw; text-align: start">Blog Section</h1>
       <br /><br />
@@ -607,845 +760,945 @@
               <form method="POST" action="/toggle-popular/<%= blog._id %>">
                 <button
                   type="submit"
-                  class="<%= blog.isPopular ? 'popular' : 'not-popular' %>"
-                >
-                  <%= blog.isPopular ? 'Popular' : 'Not Popular' %>
-                </button>
-              </form>
-            </td>
-            <td>
-              <form method="POST" action="/toggle-approve/<%= blog._id %>">
-                <button
-                  type="submit"
-                  class="<%= blog.isApprove ? 'approve' : 'not-approve' %>"
-                >
-                  <%= blog.isApprove ? 'Approve' : 'Not Approve' %>
-                </button>
-              </form>
-            </td>
+                  class="<%= blog.isPopular ? ' popular' : 'not-popular' %>"
+                        >
+                        <%= blog.isPopular ? 'Popular' : 'Not Popular' %>
+                          </button>
+          </form>
+          </td>
+          <td>
+            <form method="POST" action="/toggle-approve/<%= blog._id %>">
+              <button type="submit" class="<%= blog.isApprove ? 'approve' : 'not-approve' %>">
+                <%= blog.isApprove ? 'Approve' : 'Not Approve' %>
+              </button>
+            </form>
+          </td>
           </tr>
           <% }) %>
-        </tbody>
-      </table>
-    </div>
+            </tbody>
+            </table>
+      </div>
 
-    <!-- Gallery Section -->
-    <div class="gallery-section" style="display: none">
-      <h1>Gallery Section</h1>
-      <form action="/add" method="POST" enctype="multipart/form-data">
-        <div class="secr">
-          <p>
-            <select name="type" id="type">
-              <option value="image">Image</option>
-              <option value="video">Video</option>
-            </select>
-          </p>
-          <p><input type="file" name="files" id="files" multiple required /></p>
-        </div>
-        <div class="secr">
-          <p>
-            <input
-              type="text"
-              name="tags"
-              id="tags"
-              placeholder="Tags (comma-separated)"
-            />
-          </p>
-          <p>
-            <select name="category" id="category">
-              <option value="pro-sho">Product Shoot</option>
-              <option value="mod-sho">Model Shoot</option>
-              <option value="oth">Others</option>
-              <option value="grph-dsgn">Graphic Designs</option>
-              <option value="motion-posture">Motion Posture</option>
-              <option value="promotional-videos">Promotional Videos</option>
-              <option value="creative-shoot">Creative Shoot</option>
-              <option value="banners">Banners</option>
-              <option value="Office">Office</option>
-            </select>
-          </p>
-          <!-- <p>
+      <!-- Gallery Section -->
+      <div class="gallery-section" style="display: none">
+        <h1>Gallery Section</h1>
+        <form action="/add" method="POST" enctype="multipart/form-data">
+          <div class="secr">
+            <p>
+              <select name="type" id="type">
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+              </select>
+            </p>
+            <p><input type="file" name="files" id="files" multiple required /></p>
+          </div>
+          <div class="secr">
+            <p>
+              <input type="text" name="tags" id="tags" placeholder="Tags (comma-separated)" />
+            </p>
+            <p>
+              <select name="category" id="category">
+                <option value="pro-sho">Product Shoot</option>
+                <option value="mod-sho">Model Shoot</option>
+                <option value="oth">Others</option>
+                <option value="grph-dsgn">Graphic Designs</option>
+                <option value="motion-posture">Motion Posture</option>
+                <option value="promotional-videos">Promotional Videos</option>
+                <option value="creative-shoot">Creative Shoot</option>
+                <option value="banners">Banners</option>
+                <option value="Office">Office</option>
+              </select>
+            </p>
+            <!-- <p>
                             <select name="section" id="section">
                                 <option value="section1">Row 1</option>
                                 <option value="section2">Row 2</option>
                                 <option value="section3">Row 3</option>
                             </select>
                         </p> -->
-        </div>
-        <button type="submit">Upload</button>
-      </form>
-      <!-- New multi-delete form -->
-      <form id="delete-multiple-form" action="/delete-multiple" method="POST">
-        <button
-          type="submit"
-          id="delete-multiple-button"
-          class="delete-multiple-button"
-        >
-          Delete Selected Items
-        </button>
+          </div>
+          <button type="submit">Upload</button>
+        </form>
+        <!-- New multi-delete form -->
+        <form id="delete-multiple-form" action="/delete-multiple" method="POST">
+          <button type="submit" id="delete-multiple-button" class="delete-multiple-button">
+            Delete Selected Items
+          </button>
 
-        <div class="gallery-cont">
-          <table>
-            <thead>
-              <tr>
-                <th>SELECT</th>
-                <th>IMAGE</th>
-                <th>TAGS</th>
-                <th>DELETE</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% ['section1', 'section2' , 'section3' ].forEach(section=> { %>
-              <% galleryItems.forEach(gal=> { %> <% if (gal.section===section) {
-              %>
-              <tr>
-                <td>
-                  <input
-                    type="checkbox"
-                    name="selectedItems"
-                    value="<%= gal._id %>"
-                  />
-                </td>
+          <div class="gallery-cont">
+            <table>
+              <thead>
+                <tr>
+                  <th>SELECT</th>
+                  <th>IMAGE</th>
+                  <th>TAGS</th>
+                  <th>DELETE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% ['section1', 'section2' , 'section3' ].forEach(section=> { %>
+                  <% galleryItems.forEach(gal=> { %> <% if (gal.section===section) { %>
+                      <tr>
+                        <td>
+                          <input type="checkbox" name="selectedItems" value="<%= gal._id %>" />
+                        </td>
 
+                        <td>
+                          <% if (gal.type==='image' ) { %>
+                            <img loading="lazy" src="<%= gal.src %>" alt="Image" class="clickable" />
+                            <% } else if (gal.type==='video' ) { %>
+                              <video autoplay loop muted id="heroVideo">
+                                <source src="<%= gal.src %>" type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                              <% } %>
+                        </td>
+                        <td>
+                          <ul>
+                            <% gal.tags.forEach(tag=> { %>
+                              <li id="<%= tag %>">
+                                <%= tag %>
+                              </li>
+                              <% }) %>
+                          </ul>
+                        </td>
+                        <td>
+                          <form action="/delete/<%= gal._id %>" method="POST"
+                            style="display: flex; justify-content: center">
+                            <button type="submit" class="delete-button del-btn">
+                              Delete
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                      <% } %>
+                        <% }) %>
+                          <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+
+      <!-- Testimonial Section -->
+      <div class="testimonial-section" style="display: none">
+        <h2>Add New Testimonial</h2>
+        <form style="padding: 2vw 0" action="/admin/add-testimonial" method="POST" enctype="multipart/form-data"
+          class="testi-form">
+          <div style="display: flex; justify-content: space-between" class="testi-sec">
+            <input type="text" name="name" placeholder="Client Name" required />
+            <input type="file" name="image" />
+          </div>
+          <textarea name="text" class="comment" placeholder="Testimonial Text" required maxlength="250"
+            oninput="updateCharCount(this)"></textarea>
+          <span id="charCount">0 / 250 characters</span>
+          <div style="margin-top: 1vw">
+            <button type="submit">Add Testimonial</button>
+          </div>
+        </form>
+
+        <h2>Add Testimonial Page Content</h2>
+        <form style="padding: 2vw 0" action="/admin/add-testimonial-page" method="POST">
+          <select name="testimonialId" required>
+            <% if (testimonials && testimonials.length> 0) { %> <% testimonials.forEach(testimonial=> { %>
+                <option value="<%= testimonial._id %>">
+                  <%= testimonial.name %>
+                </option>
+                <% }) %>
+                  <% } else { %>
+                    <option value="">No testimonials available</option>
+                    <% } %>
+          </select>
+          <div class="tarea">
+            <textarea name="growthStory" placeholder="Growth Story"></textarea>
+
+            <textarea name="problemStatement" placeholder="Problem Statement"></textarea>
+            <textarea name="clientOverview" placeholder="Client Overview"></textarea>
+            <textarea name="challenges" placeholder="Challenges"></textarea>
+            <textarea name="objectives" placeholder="Objectives"></textarea>
+            <textarea name="solution" placeholder="Solution"></textarea>
+            <textarea name="result" placeholder="Result"></textarea>
+            <textarea name="conclusion" placeholder="Conclusion"></textarea>
+          </div>
+          <button type="submit">Add Testimonial Page</button>
+        </form>
+
+        <h2 style="margin-bottom: 1vw">Existing Testimonials</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Page Name</th>
+              <th>Text</th>
+              <th>Image</th>
+              <th>Edit Testimonial</th>
+              <th>Edit Page</th>
+
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% testimonials.forEach(testimonial=> { %>
+              <tr>
                 <td>
-                  <% if (gal.type==='image' ) { %>
-                  <img
-                    loading="lazy"
-                    src="<%= gal.src %>"
-                    alt="Image"
-                    class="clickable"
-                  />
-                  <% } else if (gal.type==='video' ) { %>
-                  <video autoplay loop muted id="heroVideo">
-                    <source src="<%= gal.src %>" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                  <% } %>
+                  <%= testimonial.name %>
                 </td>
                 <td>
-                  <ul>
-                    <% gal.tags.forEach(tag=> { %>
-                    <li id="<%= tag %>"><%= tag %></li>
-                    <% }) %>
-                  </ul>
+                  <%= testimonial.text %>
                 </td>
                 <td>
-                  <form
-                    action="/delete/<%= gal._id %>"
-                    method="POST"
-                    style="display: flex; justify-content: center"
-                  >
-                    <button type="submit" class="delete-button del-btn">
-                      Delete
+                  <img src="<%= testimonial.image %>" alt="Shashi sales and marketing" width="70px" height="70px" />
+                </td>
+                <td>
+                  <button onclick="toggleEditForm('editTestimonial<%= testimonial._id %>')">
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <% if (testimonial.page) { %>
+                    <button onclick="toggleEditForm('editTestimonialPage<%= testimonial.page._id %>')">
+                      Edit
                     </button>
+                    <% } %>
+                </td>
+
+                <td>
+                  <form action="/admin/delete-testimonial/<%= testimonial._id %>" method="POST">
+                    <button class="del-btn" type="submit">Delete</button>
                   </form>
                 </td>
               </tr>
-              <% } %> <% }) %> <% }) %>
-            </tbody>
-          </table>
-        </div>
-      </form>
-    </div>
+              <% }) %>
+          </tbody>
+        </table>
 
-    <!-- Testimonial Section -->
-    <div class="testimonial-section" style="display: none">
-      <h2>Add New Testimonial</h2>
-      <form
-        style="padding: 2vw 0"
-        action="/admin/add-testimonial"
-        method="POST"
-        enctype="multipart/form-data"
-        class="testi-form"
-      >
-        <div
-          style="display: flex; justify-content: space-between"
-          class="testi-sec"
-        >
-          <input type="text" name="name" placeholder="Client Name" required />
-          <input type="file" name="image" />
-        </div>
-        <textarea
-          name="text"
-          class="comment"
-          placeholder="Testimonial Text"
-          required
-          maxlength="250"
-          oninput="updateCharCount(this)"
-        ></textarea>
-        <span id="charCount">0 / 250 characters</span>
-        <div style="margin-top: 1vw">
-          <button type="submit">Add Testimonial</button>
-        </div>
-      </form>
+        <% testimonials.forEach(testimonial=> { %>
+          <div id="editTestimonial<%= testimonial._id %>" style="display: none">
+            <h2 style="margin-bottom: 1vw; margin-top: 2vw">Edit Testimonial</h2>
+            <form action="/admin/update-testimonial/<%= testimonial._id %>" method="POST" enctype="multipart/form-data">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Page Name</th>
+                    <th>Text</th>
+                    <th>Select Image</th>
+                    <th>Image</th>
+                    <th style="width: 2vw">Toggle Approve</th>
+                    <th style="width: 2vw">Update</th>
+                  </tr>
+                </thead>
+                <tbody class="edtes">
+                  <tr>
+                    <td>
+                      <input type="text" name="name" value="<%= testimonial.name %>" required />
+                    </td>
+                    <td>
+                      <input type="text" name="text" value="<%= testimonial.text %>" required />
+                    </td>
+                    <td>
+                      <input style="font-size: 0.5vw" type="file" name="image" />
+                    </td>
+                    <td>
+                      <img src="<%= testimonial.image %>" alt="Shashi sales and marketing" width="70px" height="70px" />
+                    </td>
+                    <td>
+                      <form method="POST" action="/toggle-approve/<%= testimonial._id %>">
+                        <button type="submit" class="<%= testimonial.isApprove ? 'approve' : 'not-approve' %>">
+                          <%= testimonial.isApprove ? 'A' : 'N/A' %>
+                        </button>
+                      </form>
+                    </td>
+                    <td><button type="submit">Update</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+          <% if (testimonial.page) { %>
+            <div id="editTestimonialPage<%= testimonial.page._id %>" style="display: none">
+              <h2 style="margin-top: 2vw; margin-bottom: 1vw">
+                Edit Testimonial Page
+              </h2>
+              <form action="/admin/update-testimonial-page/<%= testimonial.page._id %>" method="POST">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Update Content</th>
+                      <!-- <th>Update Testimonial Page</th> -->
+                    </tr>
+                  </thead>
+                  <tbody class="tarea">
+                    <tr>
+                      <td>
+                        <label for="growthStory">Growth Story:</label>
+                        <textarea name="growthStory">
+<%- testimonial.page.growthStory %></textarea>
 
-      <h2>Add Testimonial Page Content</h2>
-      <form
-        style="padding: 2vw 0"
-        action="/admin/add-testimonial-page"
-        method="POST"
-      >
-        <select name="testimonialId" required>
-          <% if (testimonials && testimonials.length> 0) { %> <%
-          testimonials.forEach(testimonial=> { %>
-          <option value="<%= testimonial._id %>">
-            <%= testimonial.name %>
-          </option>
-          <% }) %> <% } else { %>
-          <option value="">No testimonials available</option>
-          <% } %>
-        </select>
-        <div class="tarea">
-          <textarea name="growthStory" placeholder="Growth Story"></textarea>
-
-          <textarea
-            name="problemStatement"
-            placeholder="Problem Statement"
-          ></textarea>
-          <textarea
-            name="clientOverview"
-            placeholder="Client Overview"
-          ></textarea>
-          <textarea name="challenges" placeholder="Challenges"></textarea>
-          <textarea name="objectives" placeholder="Objectives"></textarea>
-          <textarea name="solution" placeholder="Solution"></textarea>
-          <textarea name="result" placeholder="Result"></textarea>
-          <textarea name="conclusion" placeholder="Conclusion"></textarea>
-        </div>
-        <button type="submit">Add Testimonial Page</button>
-      </form>
-
-      <h2 style="margin-bottom: 1vw">Existing Testimonials</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Page Name</th>
-            <th>Text</th>
-            <th>Image</th>
-            <th>Edit Testimonial</th>
-            <th>Edit Page</th>
-
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% testimonials.forEach(testimonial=> { %>
-          <tr>
-            <td><%= testimonial.name %></td>
-            <td><%= testimonial.text %></td>
-            <td>
-              <img
-                src="<%= testimonial.image %>"
-                alt="Shashi sales and marketing"
-                width="70px"
-                height="70px"
-              />
-            </td>
-            <td>
-              <button
-                onclick="toggleEditForm('editTestimonial<%= testimonial._id %>')"
-              >
-                Edit
-              </button>
-            </td>
-            <td>
-              <% if (testimonial.page) { %>
-              <button
-                onclick="toggleEditForm('editTestimonialPage<%= testimonial.page._id %>')"
-              >
-                Edit
-              </button>
-              <% } %>
-            </td>
-
-            <td>
-              <form
-                action="/admin/delete-testimonial/<%= testimonial._id %>"
-                method="POST"
-              >
-                <button class="del-btn" type="submit">Delete</button>
+                        <label for="problemStatement">Problem Statement:</label>
+                        <textarea name="problemStatement">
+<%- testimonial.page.problemStatement %></textarea>
+                        <label for="clientOverview">Client Overview:</label>
+                        <textarea name="clientOverview">
+<%- testimonial.page.clientOverview %></textarea>
+                        <label for="challenges">Challenges:</label>
+                        <textarea name="challenges">
+<%- testimonial.page.challenges %></textarea>
+                        <label for="objectives">Objectives:</label>
+                        <textarea name="objectives">
+<%- testimonial.page.objectives %></textarea>
+                        <label for="solution">Solution:</label>
+                        <textarea name="solution">
+<%- testimonial.page.solution %></textarea>
+                        <label for="result">Result:</label>
+                        <textarea name="result">
+<%- testimonial.page.result %></textarea>
+                        <label for="conclusion">Conclusion:</label>
+                        <textarea name="conclusion">
+<%- testimonial.page.conclusion %></textarea>
+                      </td>
+                    </tr>
+                    <tr>
+                      <button style="margin: 1vw 0" type="submit">Update</button>
+                    </tr>
+                  </tbody>
+                </table>
               </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+            </div>
+            <% } %>
+              <% }) %>
+      </div>
 
-      <% testimonials.forEach(testimonial=> { %>
-      <div id="editTestimonial<%= testimonial._id %>" style="display: none">
-        <h2 style="margin-bottom: 1vw; margin-top: 2vw">Edit Testimonial</h2>
-        <form
-          action="/admin/update-testimonial/<%= testimonial._id %>"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <table>
-            <thead>
-              <tr>
-                <th>Page Name</th>
-                <th>Text</th>
-                <th>Select Image</th>
-                <th>Image</th>
-                <th style="width: 2vw">Toggle Approve</th>
-                <th style="width: 2vw">Update</th>
-              </tr>
-            </thead>
-            <tbody class="edtes">
+      <!-- comment section -->
+      <div class="comment-section" style="display: none">
+        <h1>Pending Comments</h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Author Email</th>
+              <th>Blog</th>
+              <th>Name</th>
+              <th>Comment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% comments.forEach(comment=> { %>
               <tr>
                 <td>
-                  <input
-                    type="text"
-                    name="name"
-                    value="<%= testimonial.name %>"
-                    required
-                  />
+                  <%= comment.email %>
                 </td>
                 <td>
-                  <input
-                    type="text"
-                    name="text"
-                    value="<%= testimonial.text %>"
-                    required
-                  />
+                  <%= comment.blog.title %>
                 </td>
                 <td>
-                  <input style="font-size: 0.5vw" type="file" name="image" />
+                  <%= comment.name %>
                 </td>
                 <td>
-                  <img
-                    src="<%= testimonial.image %>"
-                    alt="Shashi sales and marketing"
-                    width="70px"
-                    height="70px"
-                  />
+                  <%= comment.comment %>
                 </td>
                 <td>
-                  <form
-                    method="POST"
-                    action="/toggle-approve/<%= testimonial._id %>"
-                  >
-                    <button
-                      type="submit"
-                      class="<%= testimonial.isApprove ? 'approve' : 'not-approve' %>"
-                    >
-                      <%= testimonial.isApprove ? 'A' : 'N/A' %>
-                    </button>
+                  <form method="POST" action="/admin/approve-comment/<%= comment._id %>">
+                    <button class="appr-btn" type="submit">Approve</button>
+                  </form>
+                  <br />
+                  <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                    <button class="del-btn" type="submit">Delete</button>
                   </form>
                 </td>
-                <td><button type="submit">Update</button></td>
               </tr>
-            </tbody>
-          </table>
-        </form>
-      </div>
-      <% if (testimonial.page) { %>
-      <div
-        id="editTestimonialPage<%= testimonial.page._id %>"
-        style="display: none"
-      >
-        <h2 style="margin-top: 2vw; margin-bottom: 1vw">
-          Edit Testimonial Page
-        </h2>
-        <form
-          action="/admin/update-testimonial-page/<%= testimonial.page._id %>"
-          method="POST"
-        >
-          <table>
-            <thead>
-              <tr>
-                <th>Update Content</th>
-                <!-- <th>Update Testimonial Page</th> -->
-              </tr>
-            </thead>
-            <tbody class="tarea">
+              <% }) %>
+          </tbody>
+        </table>
+        <br />
+
+        <h1>Approved Comments</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Author Email</th>
+              <th>Blog</th>
+              <th>Name</th>
+              <th>Comment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% acomments.forEach(comment=> { %>
               <tr>
                 <td>
-                  <label for="growthStory">Growth Story:</label>
-                  <textarea name="growthStory">
-<%- testimonial.page.growthStory %></textarea
-                  >
-
-                  <label for="problemStatement">Problem Statement:</label>
-                  <textarea name="problemStatement">
-<%- testimonial.page.problemStatement %></textarea
-                  >
-                  <label for="clientOverview">Client Overview:</label>
-                  <textarea name="clientOverview">
-<%- testimonial.page.clientOverview %></textarea
-                  >
-                  <label for="challenges">Challenges:</label>
-                  <textarea name="challenges">
-<%- testimonial.page.challenges %></textarea
-                  >
-                  <label for="objectives">Objectives:</label>
-                  <textarea name="objectives">
-<%- testimonial.page.objectives %></textarea
-                  >
-                  <label for="solution">Solution:</label>
-                  <textarea name="solution">
-<%- testimonial.page.solution %></textarea
-                  >
-                  <label for="result">Result:</label>
-                  <textarea name="result">
-<%- testimonial.page.result %></textarea
-                  >
-                  <label for="conclusion">Conclusion:</label>
-                  <textarea name="conclusion">
-<%- testimonial.page.conclusion %></textarea
-                  >
+                  <%= comment.email %>
+                </td>
+                <td>
+                  <%= comment.blog.title %>
+                </td>
+                <td>
+                  <%= comment.name %>
+                </td>
+                <td>
+                  <%= comment.comment %>
+                </td>
+                <td>
+                  <form method="POST" action="/admin/delete-comment/<%= comment._id %>">
+                    <button class="del-btn" type="submit">Delete</button>
+                  </form>
                 </td>
               </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- subscriber section -->
+
+      <div class="subscriber-section" style="display: none">
+        <!-- existing subscribers -->
+
+        <div class="action-btns">
+          <a href="" class="open-create-subscriber">Create New Subscriber</a>
+        </div>
+
+        <div class="create-new" style="display: none">
+          <h2>Create new subsciber</h2>
+
+          <form action="/subscribe" method="POST">
+            <input type="email" name="email" placeholder="Your Email" required />
+            <input type="hidden" name="redirectUrl" value="/admin-panel" />
+            <button type="submit">Create</button>
+          </form>
+        </div>
+
+        <h2>Existing Subscibers</h2>
+        <table id="subscriberTable">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% subscribers.forEach(subscriber=> { %>
               <tr>
-                <button style="margin: 1vw 0" type="submit">Update</button>
+                <td>
+                  <%= subscriber.email %>
+                </td>
+
+                <td>
+                  <form method="POST" action="/delete-subscriber/<%= subscriber._id %>?_method=DELETE">
+                    <button class="del-btn" type="submit">Delete</button>
+                  </form>
+                </td>
               </tr>
-            </tbody>
-          </table>
-        </form>
-      </div>
-      <% } %> <% }) %>
-    </div>
+              <% }) %>
+          </tbody>
+        </table>
 
-    <!-- comment section -->
-    <div class="comment-section" style="display: none">
-      <h1>Pending Comments</h1>
+        <!-- create new subscriber -->
 
-      <table>
-        <thead>
-          <tr>
-            <th>Author Email</th>
-            <th>Blog</th>
-            <th>Name</th>
-            <th>Comment</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% comments.forEach(comment=> { %>
-          <tr>
-            <td><%= comment.email %></td>
-            <td><%= comment.blog.title %></td>
-            <td><%= comment.name %></td>
-            <td><%= comment.comment %></td>
-            <td>
-              <form
-                method="POST"
-                action="/admin/approve-comment/<%= comment._id %>"
-              >
-                <button class="appr-btn" type="submit">Approve</button>
-              </form>
-              <br />
-              <form
-                method="POST"
-                action="/admin/delete-comment/<%= comment._id %>"
-              >
-                <button class="del-btn" type="submit">Delete</button>
-              </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <br />
-
-      <h1>Approved Comments</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Author Email</th>
-            <th>Blog</th>
-            <th>Name</th>
-            <th>Comment</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% acomments.forEach(comment=> { %>
-          <tr>
-            <td><%= comment.email %></td>
-            <td><%= comment.blog.title %></td>
-            <td><%= comment.name %></td>
-            <td><%= comment.comment %></td>
-            <td>
-              <form
-                method="POST"
-                action="/admin/delete-comment/<%= comment._id %>"
-              >
-                <button class="del-btn" type="submit">Delete</button>
-              </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- subscriber section -->
-
-    <div class="subscriber-section" style="display: none">
-      <!-- existing subscribers -->
-
-      <div class="action-btns">
-        <a href="" class="open-create-subscriber">Create New Subscriber</a>
-      </div>
-
-      <div class="create-new" style="display: none">
-        <h2>Create new subsciber</h2>
-
-        <form action="/subscribe" method="POST">
-          <input type="email" name="email" placeholder="Your Email" required />
-          <input type="hidden" name="redirectUrl" value="/admin-panel" />
-          <button type="submit">Create</button>
-        </form>
+        <div class="spb">
+          <button class="dieb" onclick="downloadTableAsCSV('subscriberTable')">
+            Download as CSV
+          </button>
+        </div>
       </div>
 
 
-      <h2>Existing Subscibers</h2>
-      <table id="subscriberTable">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% subscribers.forEach(subscriber=> { %>
-          <tr>
-            <td><%= subscriber.email %></td>
-
-            <td>
-              <form
-                method="POST"
-                action="/delete-subscriber/<%= subscriber._id %>?_method=DELETE"
-              >
-                <button class="del-btn" type="submit">Delete</button>
-              </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-
-      
-      <!-- create new subscriber -->
-
-      <div class="spb">
-        <button class="dieb" onclick="downloadTableAsCSV('subscriberTable')">
-          Download as CSV
-        </button>
+<!-- chat bot section -->
+      <div class="chatbot-section">
+        <div id="chat-list">
+          <div id="chat-list-header">
+            <h2>Chats</h2>
+          </div>
+          <div id="active-chats">
+            <% chats.forEach(chat=> { %>
+              <div class="chat-item" data-id="<%= chat._id %>">
+                <div class="chat-avatar">
+                  <%= chat.user.name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="chat-info">
+                  <div class="chat-name">
+                    <%= chat.user.name %>
+                  </div>
+                  <div class="chat-preview">Click to view conversation</div>
+                </div>
+              </div>
+              <% }); %>
+          </div>
+        </div>
+        <div id="chat-area">
+          <div id="chat-area-header">
+            <h2 id="current-user"></h2>
+          </div>
+          <div id="chat-messages"></div>
+          <form id="reply-form" style="display: none">
+            <input type="text" id="reply-input" autocomplete="off" placeholder="Type a message" />
+            <button type="submit">
+              <svg viewBox="0 0 24 24" width="24" height="24" class="">
+                <path fill="currentColor"
+                  d="M1.101 21.757 23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"></path>
+              </svg>
+            </button>
+          </form>
+          <button id="close-chat" style="display: none">Close Chat</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- subscriber script -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const openCreateSubscriberLink = document.querySelector(
-      ".open-create-subscriber"
-    );
-    const createNewDiv = document.querySelector(".create-new");
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const chatItems = document.querySelectorAll(".chat-item");
+    const currentUser = document.getElementById("current-user");
+    const chatMessages = document.getElementById("chat-messages");
+    const replyForm = document.getElementById("reply-form");
+    const replyInput = document.getElementById("reply-input");
+    const closeChat = document.getElementById("close-chat");
+    const activeChats = document.getElementById("active-chats");
+    let activeChatId;
 
-    openCreateSubscriberLink.addEventListener("click", function (e) {
-      e.preventDefault(); // Prevent the default link behavior
+    chatItems.forEach((item) => {
+      item.addEventListener("click", loadChat);
+    });
 
-      if (
-        createNewDiv.style.display === "none" ||
-        createNewDiv.style.display === ""
-      ) {
-        createNewDiv.style.display = "block";
-        this.textContent = " Create New Subscriber";
-      } else {
-        createNewDiv.style.display = "none";
-        this.textContent = "Create New Subscriber";
+    async function loadChat() {
+      chatItems.forEach((item) => item.classList.remove("active"));
+      this.classList.add("active");
+      activeChatId = this.getAttribute("data-id");
+      try {
+        const response = await fetch(`/admin/chat/${activeChatId}`);
+        const chat = await response.json();
+        currentUser.textContent = chat.user.name;
+        chatMessages.innerHTML = "";
+        chat.initialQuestions.forEach((q) => {
+          addMessage(`Q: ${q.question}`, "user");
+          addMessage(`A: ${q.answer}`, "admin");
+        });
+        chat.messages.forEach((msg) => {
+          addMessage(msg.content, msg.sender);
+        });
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        socket.emit("join chat", activeChatId);
+        replyForm.style.display = "flex";
+        closeChat.style.display = "block";
+      } catch (error) {
+        console.error("Error fetching chat:", error);
       }
-    });
-  });
-</script>
-<!-- subscriber script -->
-
-<!-- character limit -->
-<script>
-  function updateCharCount(textarea) {
-    const maxLength = textarea.getAttribute("maxlength");
-    const currentLength = textarea.value.length;
-    document.getElementById(
-      "charCount"
-    ).innerText = `${currentLength} / ${maxLength} characters`;
-  }
-</script>
-<!-- character limit -->
-
-<!-- testimonial section -->
-<script>
-  function toggleEditForm(formId) {
-    const form = document.getElementById(formId);
-    if (form.style.display === "none") {
-      form.style.display = "block";
-    } else {
-      form.style.display = "none";
     }
-  }
 
-  function showEditTestimonialForm(id) {
-    const testimonial = testimonials.find((t) => t._id === id);
-    document.getElementById("editTestimonialId").value = id;
-    document.getElementById("editTestimonialText").value = testimonial.text;
-    document.getElementById("editTestimonialName").value = testimonial.name;
-    document.getElementById("editTestimonialForm").style.display = "block";
-  }
+    function addMessage(content, sender) {
+      const messageElement = document.createElement("div");
+      messageElement.className = `message ${sender}-message`;
+      messageElement.textContent = content;
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
-  function showEditTestimonialPageForm(id) {
-    const testimonialPage = testimonialPages.find((tp) => tp._id === id);
-    document.getElementById("editTestimonialPageId").value = id;
-
-    document.getElementById("editGrowthStory").value =
-      testimonialPage.growthStory;
-
-    document.getElementById("editTestimonialPageForm").style.display = "block";
-  }
-
-  // Function to hide all sections
-  function hideAllSections() {
-    document.querySelector(".blog-section").style.display = "none";
-    document.querySelector(".gallery-section").style.display = "none";
-    document.querySelector(".testimonial-section").style.display = "none";
-    document.querySelector(".comment-section").style.display = "none";
-    document.querySelector(".subscriber-section").style.display = "none";
-    // Add additional sections here if needed
-  }
-
-  // Function to show the selected section and set it as active in the sidebar
-  function showSection(sectionId, navId) {
-    hideAllSections();
-    document.querySelector(`.${sectionId}`).style.display = "block";
-    document
-      .querySelectorAll(".sideNavBar li")
-      .forEach((item) => item.classList.remove("active"));
-    document.getElementById(navId).classList.add("active");
-    localStorage.setItem("activeSection", sectionId);
-    localStorage.setItem("activeNav", navId);
-  }
-
-  // When the document is fully loaded
-  document.addEventListener("DOMContentLoaded", function () {
-    // Check if there's an active section stored in local storage
-    const activeSection =
-      localStorage.getItem("activeSection") || "blog-section";
-    const activeNav = localStorage.getItem("activeNav") || "sec1";
-    showSection(activeSection, activeNav);
-  });
-
-  // Event listeners for sidebar menu items
-  document.getElementById("sec1").addEventListener("click", function () {
-    showSection("blog-section", "sec1");
-  });
-
-  document.getElementById("sec2").addEventListener("click", function () {
-    showSection("gallery-section", "sec2");
-  });
-
-  document.getElementById("sec3").addEventListener("click", function () {
-    showSection("testimonial-section", "sec3");
-  });
-
-  document.getElementById("sec4").addEventListener("click", function () {
-    showSection("comment-section", "sec4");
-  });
-  document.getElementById("sec5").addEventListener("click", function () {
-    showSection("subscriber-section", "sec5");
-  });
-
-  // Ensure the form submission keeps the section visible
-  document.querySelectorAll("form").forEach((form) => {
-    form.addEventListener("submit", function () {
-      const activeSection = document.querySelector(".sideNavBar .active").id;
-      const sectionMap = {
-        sec1: "blog-section",
-        sec2: "gallery-section",
-        sec3: "testimonial-section",
-        sec4: "comment-section",
-        sec5: "subcriber-section",
-      };
-      localStorage.setItem("activeSection", sectionMap[activeSection]);
-    });
-  });
-</script>
-<!-- testimonial section -->
-
-<script>
-  const menuItems = document.querySelectorAll(".sideNavBar li");
-
-  menuItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      menuItems.forEach((item) => item.classList.remove("active"));
-      item.classList.add("active");
-    });
-  });
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("delete-multiple-form");
-    const deleteButton = document.getElementById("delete-multiple-button");
-    const checkboxes = document.querySelectorAll('input[name="selectedItems"]');
-
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", function () {
-        deleteButton.style.display = [...checkboxes].some((cb) => cb.checked)
-          ? "block"
-          : "none";
-      });
-    });
-
-    form.addEventListener("submit", function (e) {
+    replyForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if ([...checkboxes].some((cb) => cb.checked)) {
-        if (confirm("Are you sure you want to delete these items?")) {
-          this.submit();
+      if (replyInput.value && activeChatId) {
+        try {
+          const response = await fetch("/admin/reply", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chatId: activeChatId,
+              content: replyInput.value,
+            }),
+          });
+          const data = await response.json();
+          if (data.success) {
+            addMessage(replyInput.value, "admin");
+            replyInput.value = "";
+          }
+        } catch (error) {
+          console.error("Error sending reply:", error);
         }
-      } else {
-        alert("Please select items to delete");
       }
     });
-  });
-</script>
 
-<script>
-  async function fetchGalleryItems() {
-    const response = await fetch("/gallery");
-    const galleryItems = await response.json();
-    const galleryContainer = document.getElementById("galleryContainer");
+    closeChat.addEventListener("click", async () => {
+      if (activeChatId) {
+        try {
+          const response = await fetch("/close-chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chatId: activeChatId }),
+          });
+          const data = await response.json();
+          if (data.success) {
+            addMessage("Chat closed", "admin");
+            replyForm.style.display = "none";
+            closeChat.style.display = "none";
+            document.querySelector(`[data-id="${activeChatId}"]`).remove();
+            activeChatId = null;
+            currentUser.textContent = "";
+          }
+        } catch (error) {
+          console.error("Error closing chat:", error);
+        }
+      }
+    });
 
-    galleryItems.forEach((item) => {
-      const galIn = document.createElement("div");
-      galIn.classList.add("gal-in");
+    socket.on("chat message", (msg) => {
+      if (msg.chatId === activeChatId) {
+        addMessage(msg.content, msg.sender);
+      }
+    });
 
-      const mediaElement = document.createElement(
-        item.type === "image" ? "img" : "video"
+    socket.on("new chat", (chat) => {
+      const chatItem = document.createElement("div");
+      chatItem.className = "chat-item";
+      chatItem.setAttribute("data-id", chat._id);
+      chatItem.innerHTML = `
+                <div class="chat-avatar">${chat.userName
+          .charAt(0)
+          .toUpperCase()}</div>
+                <div class="chat-info">
+                    <div class="chat-name">${chat.userName}</div>
+                    <div class="chat-preview">New conversation</div>
+                </div>
+            `;
+      chatItem.addEventListener("click", loadChat);
+      activeChats.appendChild(chatItem);
+    });
+
+    socket.on("chat closed", (chatId) => {
+      if (chatId === activeChatId) {
+        addMessage("Chat closed by user", "admin");
+        replyForm.style.display = "none";
+        closeChat.style.display = "none";
+        currentUser.textContent = "";
+      }
+      document.querySelector(`[data-id="${chatId}"]`).remove();
+    });
+  </script>
+
+  <!-- subscriber script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const openCreateSubscriberLink = document.querySelector(
+        ".open-create-subscriber"
       );
-      if (item.type === "video") {
-        const source = document.createElement("source");
-        source.src = item.src;
-        source.type = "video/webm";
-        mediaElement.appendChild(source);
-        mediaElement.autoplay = true;
-        mediaElement.loop = true;
-        mediaElement.muted = true;
-      } else {
-        mediaElement.src = item.src;
-      }
-      mediaElement.classList.add("clickable");
-      galIn.appendChild(mediaElement);
+      const createNewDiv = document.querySelector(".create-new");
 
-      const ul = document.createElement("ul");
-      item.tags.forEach((tag) => {
-        const li = document.createElement("li");
-        li.textContent = tag;
-        ul.appendChild(li);
+      openCreateSubscriberLink.addEventListener("click", function (e) {
+        e.preventDefault(); // Prevent the default link behavior
+
+        if (
+          createNewDiv.style.display === "none" ||
+          createNewDiv.style.display === ""
+        ) {
+          createNewDiv.style.display = "block";
+          this.textContent = " Create New Subscriber";
+        } else {
+          createNewDiv.style.display = "none";
+          this.textContent = "Create New Subscriber";
+        }
       });
-      galIn.appendChild(ul);
-
-      galleryContainer.appendChild(galIn);
     });
-  }
+  </script>
+  <!-- subscriber script -->
 
-  document.addEventListener("DOMContentLoaded", fetchGalleryItems);
-</script>
-<script>
-  async function fetchGalleryItems() {
-    const response = await fetch("/allBlogs");
-    const galleryItems = await response.json();
-    const galleryContainer = document.getElementById("galleryContainer");
+  <!-- character limit -->
+  <script>
+    function updateCharCount(textarea) {
+      const maxLength = textarea.getAttribute("maxlength");
+      const currentLength = textarea.value.length;
+      document.getElementById(
+        "charCount"
+      ).innerText = `${currentLength} / ${maxLength} characters`;
+    }
+  </script>
+  <!-- character limit -->
 
-    galleryItems.forEach((item) => {
-      const galIn = document.createElement("div");
-      galIn.classList.add("gal-in");
-
-      const mediaElement = document.createElement(
-        item.type === "image" ? "img" : "video"
-      );
-      if (item.type === "video") {
-        const source = document.createElement("source");
-        source.src = item.src;
-        source.type = "video/webm";
-        mediaElement.appendChild(source);
-        mediaElement.autoplay = true;
-        mediaElement.loop = true;
-        mediaElement.muted = true;
+  <!-- testimonial section -->
+  <script>
+    function toggleEditForm(formId) {
+      const form = document.getElementById(formId);
+      if (form.style.display === "none") {
+        form.style.display = "block";
       } else {
-        mediaElement.src = item.src;
+        form.style.display = "none";
       }
-      mediaElement.classList.add("clickable");
-      galIn.appendChild(mediaElement);
-
-      const ul = document.createElement("ul");
-      item.tags.forEach((tag) => {
-        const li = document.createElement("li");
-        li.textContent = tag;
-        ul.appendChild(li);
-      });
-      galIn.appendChild(ul);
-
-      galleryContainer.appendChild(galIn);
-    });
-  }
-  document.addEventListener("DOMContentLoaded", fetchGalleryItems);
-</script>
-
-<script>
-  function downloadTableAsCSV(tableId) {
-    // Get the table element using the provided tableId
-    const table = document.getElementById(tableId);
-
-    // Check if the table exists
-    if (!table) {
-      console.error("No table found with ID:", tableId);
-      return;
     }
 
-    // Create an array to hold the CSV data
-    const csvData = [];
+    function showEditTestimonialForm(id) {
+      const testimonial = testimonials.find((t) => t._id === id);
+      document.getElementById("editTestimonialId").value = id;
+      document.getElementById("editTestimonialText").value = testimonial.text;
+      document.getElementById("editTestimonialName").value = testimonial.name;
+      document.getElementById("editTestimonialForm").style.display = "block";
+    }
 
-    // Get the table headers (only 'Name' and 'Email')
-    const headers = Array.from(table.querySelectorAll("th")).map((th) =>
-      th.textContent.trim()
-    );
-    // Filter the headers to keep only 'Name' and 'Email'
-    const filteredHeaders = headers.filter(
-      (header) => header === "Name" || header === "Email"
-    );
-    csvData.push(filteredHeaders.join(","));
+    function showEditTestimonialPageForm(id) {
+      const testimonialPage = testimonialPages.find((tp) => tp._id === id);
+      document.getElementById("editTestimonialPageId").value = id;
 
-    // Get the table rows
-    const rows = Array.from(table.querySelectorAll("tbody tr"));
+      document.getElementById("editGrowthStory").value =
+        testimonialPage.growthStory;
 
-    // Convert each row to a CSV row, but only for 'Name' and 'Email'
-    rows.forEach((row) => {
-      // Get the 'Name' and 'Email' cells only
-      const cells = Array.from(row.querySelectorAll("td"));
-      const nameEmailData = [
-        cells[0].textContent.trim(),
-        cells[1].textContent.trim(),
-      ];
-      csvData.push(nameEmailData.join(","));
+      document.getElementById("editTestimonialPageForm").style.display = "block";
+    }
+
+
+    function hideAllSections() {
+      document.querySelector(".blog-section").style.display = "none";
+      document.querySelector(".gallery-section").style.display = "none";
+      document.querySelector(".testimonial-section").style.display = "none";
+      document.querySelector(".comment-section").style.display = "none";
+      document.querySelector(".subscriber-section").style.display = "none";
+      document.querySelector(".chatbot-section").style.display = "none";
+      // Add additional sections here if needed
+    }
+
+    // Function to show the selected section and set it as active in the sidebar
+    function showSection(sectionId, navId) {
+      hideAllSections();
+      document.querySelector(`.${sectionId}`).style.display = "block";
+      document
+        .querySelectorAll(".sideNavBar li")
+        .forEach((item) => item.classList.remove("active"));
+      document.getElementById(navId).classList.add("active");
+      localStorage.setItem("activeSection", sectionId);
+      localStorage.setItem("activeNav", navId);
+    }
+    // Function to show the selected section and set it as active in the sidebar
+    function showSection1(sectionId, navId) {
+      hideAllSections();
+      document.querySelector(`.${sectionId}`).style.display = "flex";
+      document
+        .querySelectorAll(".sideNavBar li")
+        .forEach((item) => item.classList.remove("active"));
+      document.getElementById(navId).classList.add("active");
+      localStorage.setItem("activeSection", sectionId);
+      localStorage.setItem("activeNav", navId);
+    }
+
+    // When the document is fully loaded
+    document.addEventListener("DOMContentLoaded", function () {
+      // Check if there's an active section stored in local storage
+      const activeSection =
+        localStorage.getItem("activeSection") || "blog-section";
+      const activeNav = localStorage.getItem("activeNav") || "sec1";
+      showSection(activeSection, activeNav);
     });
 
-    // Create a CSV string from the data array
-    const csvString = csvData.join("\n");
+    // Event listeners for sidebar menu items
+    document.getElementById("sec1").addEventListener("click", function () {
+      showSection("blog-section", "sec1");
+    });
 
-    // Create a temporary anchor element to trigger the download
-    const a = document.createElement("a");
-    a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csvString);
-    a.download = "subscriber_data.csv";
-    a.style.display = "none";
-    document.body.appendChild(a);
+    document.getElementById("sec2").addEventListener("click", function () {
+      showSection("gallery-section", "sec2");
+    });
 
-    // Trigger the download
-    a.click();
+    document.getElementById("sec3").addEventListener("click", function () {
+      showSection("testimonial-section", "sec3");
+    });
 
-    // Remove the temporary anchor element
-    document.body.removeChild(a);
-  }
-</script>
+    document.getElementById("sec4").addEventListener("click", function () {
+      showSection("comment-section", "sec4");
+    });
+    document.getElementById("sec5").addEventListener("click", function () {
+      showSection("subscriber-section", "sec5");
+    });
+    document.getElementById("sec6").addEventListener("click", function () {
+      showSection1("chatbot-section", "sec6");
+      
 
+      
+    });
 
+    // Ensure the form submission keeps the section visible
+    document.querySelectorAll("form").forEach((form) => {
+      form.addEventListener("submit", function () {
+        const activeSection = document.querySelector(".sideNavBar .active").id;
+        const sectionMap = {
+          sec1: "blog-section",
+          sec2: "gallery-section",
+          sec3: "testimonial-section",
+          sec4: "comment-section",
+          sec5: "subcriber-section",
+          sec6: "chatbot-section",
+        };
+        localStorage.setItem("activeSection", sectionMap[activeSection]);
+      });
+    });
+  </script>
+  <!-- testimonial section -->
+
+  <script>
+    const menuItems = document.querySelectorAll(".sideNavBar li");
+
+    menuItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        menuItems.forEach((item) => item.classList.remove("active"));
+        item.classList.add("active");
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("delete-multiple-form");
+      const deleteButton = document.getElementById("delete-multiple-button");
+      const checkboxes = document.querySelectorAll('input[name="selectedItems"]');
+
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          deleteButton.style.display = [...checkboxes].some((cb) => cb.checked)
+            ? "block"
+            : "none";
+        });
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if ([...checkboxes].some((cb) => cb.checked)) {
+          if (confirm("Are you sure you want to delete these items?")) {
+            this.submit();
+          }
+        } else {
+          alert("Please select items to delete");
+        }
+      });
+    });
+  </script>
+
+  <script>
+    async function fetchGalleryItems() {
+      const response = await fetch("/gallery");
+      const galleryItems = await response.json();
+      const galleryContainer = document.getElementById("galleryContainer");
+
+      galleryItems.forEach((item) => {
+        const galIn = document.createElement("div");
+        galIn.classList.add("gal-in");
+
+        const mediaElement = document.createElement(
+          item.type === "image" ? "img" : "video"
+        );
+        if (item.type === "video") {
+          const source = document.createElement("source");
+          source.src = item.src;
+          source.type = "video/webm";
+          mediaElement.appendChild(source);
+          mediaElement.autoplay = true;
+          mediaElement.loop = true;
+          mediaElement.muted = true;
+        } else {
+          mediaElement.src = item.src;
+        }
+        mediaElement.classList.add("clickable");
+        galIn.appendChild(mediaElement);
+
+        const ul = document.createElement("ul");
+        item.tags.forEach((tag) => {
+          const li = document.createElement("li");
+          li.textContent = tag;
+          ul.appendChild(li);
+        });
+        galIn.appendChild(ul);
+
+        galleryContainer.appendChild(galIn);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchGalleryItems);
+  </script>
+  <script>
+    async function fetchGalleryItems() {
+      const response = await fetch("/allBlogs");
+      const galleryItems = await response.json();
+      const galleryContainer = document.getElementById("galleryContainer");
+
+      galleryItems.forEach((item) => {
+        const galIn = document.createElement("div");
+        galIn.classList.add("gal-in");
+
+        const mediaElement = document.createElement(
+          item.type === "image" ? "img" : "video"
+        );
+        if (item.type === "video") {
+          const source = document.createElement("source");
+          source.src = item.src;
+          source.type = "video/webm";
+          mediaElement.appendChild(source);
+          mediaElement.autoplay = true;
+          mediaElement.loop = true;
+          mediaElement.muted = true;
+        } else {
+          mediaElement.src = item.src;
+        }
+        mediaElement.classList.add("clickable");
+        galIn.appendChild(mediaElement);
+
+        const ul = document.createElement("ul");
+        item.tags.forEach((tag) => {
+          const li = document.createElement("li");
+          li.textContent = tag;
+          ul.appendChild(li);
+        });
+        galIn.appendChild(ul);
+
+        galleryContainer.appendChild(galIn);
+      });
+    }
+    document.addEventListener("DOMContentLoaded", fetchGalleryItems);
+  </script>
+
+  <script>
+    function downloadTableAsCSV(tableId) {
+      // Get the table element using the provided tableId
+      const table = document.getElementById(tableId);
+
+      // Check if the table exists
+      if (!table) {
+        console.error("No table found with ID:", tableId);
+        return;
+      }
+
+      // Create an array to hold the CSV data
+      const csvData = [];
+
+      // Get the table headers (only 'Name' and 'Email')
+      const headers = Array.from(table.querySelectorAll("th")).map((th) =>
+        th.textContent.trim()
+      );
+      // Filter the headers to keep only 'Name' and 'Email'
+      const filteredHeaders = headers.filter(
+        (header) => header === "Name" || header === "Email"
+      );
+      csvData.push(filteredHeaders.join(","));
+
+      // Get the table rows
+      const rows = Array.from(table.querySelectorAll("tbody tr"));
+
+      // Convert each row to a CSV row, but only for 'Name' and 'Email'
+      rows.forEach((row) => {
+        // Get the 'Name' and 'Email' cells only
+        const cells = Array.from(row.querySelectorAll("td"));
+        const nameEmailData = [
+          cells[0].textContent.trim(),
+          cells[1].textContent.trim(),
+        ];
+        csvData.push(nameEmailData.join(","));
+      });
+
+      // Create a CSV string from the data array
+      const csvString = csvData.join("\n");
+
+      // Create a temporary anchor element to trigger the download
+      const a = document.createElement("a");
+      a.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csvString);
+      a.download = "subscriber_data.csv";
+      a.style.display = "none";
+      document.body.appendChild(a);
+
+      // Trigger the download
+      a.click();
+
+      // Remove the temporary anchor element
+      document.body.removeChild(a);
+    }
+  </script>
