@@ -494,7 +494,7 @@ footer{
     bottom: -100%;
     right: 17px;
     transition: bottom 0.8s ease-in-out;
-   z-index: 999;
+   z-index: 9999;
 }
 
 

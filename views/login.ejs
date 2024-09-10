@@ -1,91 +1,109 @@
 <% layout("/layouts/boilerplate") %>
 
-<style>
-    .og{
-    background-color: #fdfafe;
-}
-.login-page{
-    width: 450px;
-    height: 100vh;
-    margin: auto;
-    background-color: #fdfafe;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 3rem;
-    padding: 3rem;
-   
-}
+    <style>
+        .og {
+            background-color: #fdfafe;
+        }
+
+        #chat-preview {
+            display: none;
+            opacity: 0;
+        }
+
+        #chat-button {
+            display: none;
+        }
+        .bl{
+            background-color: black;
+        }
+
+        .login-page {
+            width: 450px;
+            height: 100vh;
+            margin: auto;
+            background-color: #fdfafe;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            gap: 3rem;
+            padding: 3rem;
+
+        }
 
 
 
 
- .form{
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    gap: .3rem;
- }
+        .form {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+            gap: .3rem;
+        }
 
- .form input{
-    width: 100%;
-    padding: .5rem;
-    border: 2px solid #b3b0b0;
-    border-radius: 4px;
- }
+        .form input {
+            width: 100%;
+            padding: .5rem;
+            border: 2px solid #b3b0b0;
+            border-radius: 4px;
+        }
 
- .form label{
-    font-size: 1.17rem;
-    font-weight: bold;
- }
- .login-otp{
-    margin-top: .8rem;
-    color: blue;
-    cursor: pointer;
- }
+        .form label {
+            font-size: 1.17rem;
+            font-weight: bold;
+        }
 
- .form button{
-    background-color: #C4C800;
-    padding-inline: 4rem;
-    padding-block: .7rem;
-    border-radius: 5px;
-    border: none;
-    margin-top: 1.5rem;
- }
+        .login-otp {
+            margin-top: .8rem;
+            color: blue;
+            cursor: pointer;
+        }
 
-
-
+        .form button {
+            background-color: #C4C800;
+            padding-inline: 4rem;
+            padding-block: .7rem;
+            border-radius: 5px;
+            border: none;
+            margin-top: 1.5rem;
+        }
 
 
 
 
-@media screen and (max-width : 650px) {
-    .login-page{
-        padding-top: 8rem;
-    }
-}
-</style>
-
-<% if (successMessage) { %>
-    <div class="alert alert-success"><%= successMessage %></div>
-  <% } %>
-  <% if (errorMessage) { %>
-    <div class="alert alert-danger"><%= errorMessage %></div>
-  <% } %>
 
 
-  
-<div class="login-page">
-    <form style="margin-top: 10rem;" action="/login" method="post" class="email-form form">
-        <label for="email">Enter Email</label>
-        <input type="email" name="email" id="email" />
-            <label for="role">Enter Role</label>
-        <input type="text" name="role" id="role" />
-        <label for="pass">Enter Password</label>
-        <input type="password" name="password" id="pass" />
-        <button type="submit">Login</button>
-      </form>
-</div>
+
+        @media screen and (max-width : 650px) {
+            .login-page {
+                padding-top: 8rem;
+            }
+        }
+    </style>
+
+    <% if (successMessage) { %>
+        <div class="alert alert-success">
+            <%= successMessage %>
+        </div>
+        <% } %>
+            <% if (errorMessage) { %>
+                <div class="alert alert-danger">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+
+
+
+                    <div class="login-page">
+                        <form style="margin-top: 10rem;" action="/login" method="post" class="email-form form">
+                            <label for="email">Enter Email</label>
+                            <input type="email" name="email" id="email" />
+                            <label for="role">Enter Role</label>
+                            <input type="text" name="role" id="role" />
+                            <label for="pass">Enter Password</label>
+                            <input type="password" name="password" id="pass" />
+                            <button type="submit">Login</button>
+                        </form>
+                    </div>

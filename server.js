@@ -772,7 +772,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     });
 
     const chats = await Chat.find({ isOpen: true }).populate('user');
-    const Closedchats = await Chat.find({ isOpen: false }).populate('user');
+    const closedChats = await Chat.find({ isOpen: false }).populate('user').sort({ closedAt: -1 }).limit(10);
     
   
 
@@ -780,7 +780,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
         
         ads,
         chats,
-        Closedchats,
+        closedChats,
         acomments: approvedComments,
         comments: pendingComments,
         testimonials,
