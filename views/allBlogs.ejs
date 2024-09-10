@@ -1282,7 +1282,11 @@
                   <div class="chat-name">
                     <%= chat.user.name %> (Closed)
                   </div>
-                  <div class="chat-preview">Closed on <%= chat.closedAt.toLocaleString() %>
+                  <div class="chat-preview">Closed on  <% if (chat.closedAt) { %>
+                    <%= chat.closedAt.toLocaleString() %>
+                  <% } else { %>
+                    N/A
+                  <% } %>
                   </div>
                 </div>
               </div>
