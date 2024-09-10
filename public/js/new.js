@@ -1,118 +1,147 @@
 // chatbot
 
-    const socket = io();
-    let chatId;
-    let currentQuestion = 0;
-    const questions = [
-        "What's your name?",
-        "What's your email address?",
-        "What's your phone number?",
-        "Please describe your problem."
-    ];
-    const answers = {};
 
-    const chatButton = document.getElementById('chat-button');
-    const chatContainer = document.getElementById('chat-container');
-    const chatMessages = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const chatSubmit = document.getElementById('chat-submit');
+const socket = io();
+let chatId;
+let currentQuestion = 0;
+const questions = [
+"How may I help you? (Estimated wait time: 30 seconds)",
+"What's your name?",
+"What's your email address?",
+// "Please describe your problem."
+];
+const answers = {};
+const typingIndicator = document.getElementById('typing-indicator');
+const chatPreview = document.getElementById('chat-preview');
+const chatPreviewClose = document.getElementById('chat-preview-close');
+const chatButton = document.getElementById('chat-button');
+const chatContainer = document.getElementById('chat-container');
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const chatSubmit = document.getElementById('chat-submit');
 
-    chatButton.addEventListener('click', () => {
-        chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
-        if (chatContainer.style.display === 'block' && currentQuestion === 0) {
-            askNextQuestion();
-        }
-    });
+function toggleChatPreview(show) {
+chatPreview.style.display = show ? 'flex' : 'none';
+}
 
-    function askNextQuestion() {
-        if (currentQuestion < questions.length) {
-            addBotMessage(questions[currentQuestion]);
-        }
+chatButton.addEventListener('click', () => {
+chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
+toggleChatPreview(false);
+if (chatContainer.style.display === 'block' && currentQuestion === 0) {
+askNextQuestion();
+}
+});
+
+chatPreviewClose.addEventListener('click', () => {
+toggleChatPreview(false);
+});
+
+// Show chat preview by default
+toggleChatPreview(true);
+
+function askNextQuestion() {
+if (currentQuestion < questions.length) {
+addBotMessage(questions[currentQuestion]);
+}
+}
+
+function addBotMessage(message) {
+const messageElement = document.createElement('div');
+messageElement.className = 'message bot-message';
+messageElement.textContent = message;
+chatMessages.appendChild(messageElement);
+chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function addUserMessage(message) {
+const messageElement = document.createElement('div');
+messageElement.className = 'message user-message';
+messageElement.textContent = message;
+chatMessages.appendChild(messageElement);
+chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+chatSubmit.addEventListener('click', sendMessage);
+chatInput.addEventListener('keypress', (e) => {
+if (e.key === 'Enter') {
+sendMessage();
+}
+});
+
+function sendMessage() {
+const message = chatInput.value.trim();
+if (message) {
+if (currentQuestion < questions.length) {
+    answers[currentQuestion] = message;
+    addUserMessage(message);
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+        askNextQuestion();
+    } else {
+        startChat();
     }
-
-    function addBotMessage(message) {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'message bot-message';
-        messageElement.textContent = message;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+} else {
+    if (chatId) {
+        socket.emit('chat message', { chatId, content: message });
+        addUserMessage(message);
+    } else {
+        console.error('Chat not initialized');
+        addBotMessage("There was an error sending your message. Please try again.");
     }
+}
+chatInput.value = '';
+}
+}
 
-    function addUserMessage(message) {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'message user-message';
-        messageElement.textContent = message;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+async function startChat() {
+try {
+const response = await fetch('/start-chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(answers)
+});
+const data = await response.json();
+chatId = data.chatId;
+socket.emit('join chat', chatId);
+addBotMessage("To offer you the best solution, may i ask a couple of questions?");
+} catch (error) {
+console.error('Error starting chat:', error);
+addBotMessage("I'm sorry, there was an error starting the chat. Please try again later.");
+}
+}
+
+let typingTimeout;
+chatInput.addEventListener('input', () => {
+    if (chatId) {
+        socket.emit('typing', { chatId, isTyping: true });
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            socket.emit('typing', { chatId, isTyping: false });
+        }, 1000);
     }
+});
 
-     
+socket.on('typing', ({ isTyping }) => {
+    typingIndicator.style.display = isTyping ? 'block' : 'none';
+});
 
-    chatSubmit.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
 
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            if (currentQuestion < questions.length) {
-                answers[currentQuestion] = message;
-                addUserMessage(message);
-                currentQuestion++;
-                if (currentQuestion < questions.length) {
-                    askNextQuestion();
-                } else {
-                    startChat();
-                }
-            } else {
-                if (chatId) {
-                    socket.emit('chat message', { chatId, content: message });
-                    addUserMessage(message);
-                } else {
-                    console.error('Chat not initialized');
-                    addBotMessage("There was an error sending your message. Please try again.");
-                }
-            }
-            chatInput.value = '';
-        }
-    }
+socket.on('chat message', (msg) => {
+if (msg.sender === 'admin') {
+addBotMessage(msg.content);
+}
+});
 
-    async function startChat() {
-        try {
-            const response = await fetch('/start-chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(answers)
-            });
-            const data = await response.json();
-            chatId = data.chatId;
-            socket.emit('join chat', chatId);
-            addBotMessage("Thank you for providing your information. How can I assist you today?");
-        } catch (error) {
-            console.error('Error starting chat:', error);
-            addBotMessage("I'm sorry, there was an error starting the chat. Please try again later.");
-        }
-    }
+socket.on('chat closed', () => {
+addBotMessage("This chat has been closed. Thank you for using our service.");
+chatInput.disabled = true;
+chatSubmit.disabled = true;
+});
 
-    socket.on('chat message', (msg) => {
-        if (msg.sender === 'admin') {
-            addBotMessage(msg.content);
-        }
-    });
-
-    socket.on('chat closed', () => {
-        addBotMessage("This chat has been closed. Thank you for using our service.");
-        chatInput.disabled = true;
-        chatSubmit.disabled = true;
-    });
-
-    socket.on('error', (errorMsg) => {
-        console.error('Socket error:', errorMsg);
-        addBotMessage(`Error: ${errorMsg}`);
-    });
+socket.on('error', (errorMsg) => {
+console.error('Socket error:', errorMsg);
+addBotMessage(`Error: ${errorMsg}`);
+});
 
 // chatbot
 

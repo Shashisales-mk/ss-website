@@ -186,17 +186,31 @@
 <body>
   <%- include("../includes/navbar") %>
   <%- include("../includes/flash-message") %>
-  <%- body %> <div class="chatbot"></div>
-    <button id="chat-button">💬</button>
-    <div id="chat-container">
-        <div id="chat-header">Chat Bot</div>
-        <div id="chat-messages"></div>
-        <div id="chat-input-container">
-            <input type="text" id="chat-input" placeholder="Type a message...">
-            <button id="chat-submit">➤</button>
-        </div>
-    </div>
-</div> <%- include("../includes/footer") %>
+  <%- body %>  
+
+  <div class="chatbot">
+    <div id="chat-preview">
+      <div id="chat-preview-header">
+          <span>Shashi sales and marketing</span>
+          <button id="chat-preview-close">✕</button>
+      </div>
+      <div id="chat-preview-message">
+          Hello! How can we help you ? We're here to assist you!
+      </div>
+  </div>
+  <button id="chat-button">💬</button>
+  <div id="chat-container">
+      <div id="chat-header">Chat Bot</div>
+      <div id="chat-messages"></div>
+      <div id="typing-indicator" style="display: none;">Admin is typing...</div>
+      <div id="chat-input-container">
+          <input type="text" id="chat-input" placeholder="Type a message...">
+          <button id="chat-submit">➤</button>
+      </div>
+  </div>
+  </div>
+  
+  <%- include("../includes/footer") %>
 <!-- chat bot script -->
 <script src="/socket.io/socket.io.js"></script>
 

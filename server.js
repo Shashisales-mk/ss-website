@@ -2446,6 +2446,10 @@ app.post('/submit-review', async (req, res) => {
 
 // ADS.TXT
 
+app.get('/blog/ads.txt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
+});
+
 // Route to render the admin panel with ads.txt content
 app.get("/admin/edit-ads-txt", isAdmin, (req, res) => {
     const filePath = path.join(__dirname, 'public', 'ads.txt');
@@ -2492,7 +2496,8 @@ app.post('/get-phone-number', (req, res) => {
 
 //   chat-bot
 
-app.get('/admin/chat/:chatId', async (req, res) => {
+  
+  app.get('/admin/chat/:chatId', async (req, res) => {
     try {
       const chat = await Chat.findById(req.params.chatId).populate('user');
       res.json(chat);
@@ -2563,6 +2568,11 @@ app.get('/admin/chat/:chatId', async (req, res) => {
       }
     });
   
+    // New event for typing indicator
+    socket.on('typing', ({ chatId, isTyping }) => {
+      socket.to(chatId).emit('typing', { chatId, isTyping });
+    });
+  
     socket.on('disconnect', () => {
       console.log('User disconnected');
     });
@@ -2571,19 +2581,19 @@ app.get('/admin/chat/:chatId', async (req, res) => {
   
   app.post('/start-chat', async (req, res) => {
     try {
-      const { 0: name, 1: email, 2: number, 3: problem } = req.body;
+      const { 0: problem, 1: name, 2: email } = req.body;
       let user = await Chatuser.findOne({ email });
       if (!user) {
-        user = new Chatuser({ name, email, number, problem });
+        user = new Chatuser({ name, email,  problem });
         await user.save();
       }
       const chat = new Chat({ 
         user: user._id,
         initialQuestions: [
+          { question: "Hey! how can we assist you?", answer: problem },
           { question: "What's your name?", answer: name },
           { question: "What's your email address?", answer: email },
-          { question: "What's your phone number?", answer: number },
-          { question: "Please describe your problem.", answer: problem }
+          
         ]
       });
       await chat.save();
