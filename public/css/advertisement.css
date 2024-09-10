@@ -440,6 +440,10 @@ footer{
     }
 }
 
+.vertical-icons{
+    display: none;
+  }
+
 @media only screen and (max-width: 600px){
     .fs1{
         font-size: 1rem;
