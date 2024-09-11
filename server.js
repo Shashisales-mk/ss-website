@@ -817,6 +817,8 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
     try {
         const { canonical } = req.params;
         const blog = await Blog.findOne({ canonical: canonical });
+
+
        
 
         if (!blog) {
@@ -863,7 +865,7 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
         for (let i = 0; i < headings.length; i++) {
             content.push({
                 heading: headings[i],
-                paragraph: paragraphs[i],
+                paragraph: paragraphs[i].replace(/\n/g, '<br>'),
                 image: images[i] || null
             });
         }
