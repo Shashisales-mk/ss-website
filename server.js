@@ -367,7 +367,7 @@ app.get("/digital-marketing", async (req, res) => {
 });
 // Redirect from /fusion-marketing to /digital-marketing
 app.get("/fusion-marketing", (req, res) => {
-    res.redirect("/digital-marketing");
+    res.redirect(301, "/digital-marketing");
 });
 
 app.get("/cookie-policy", (req, res) => {
