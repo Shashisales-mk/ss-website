@@ -643,6 +643,10 @@
             display: grid;
             width: 20%;
         }
+        .blog-paragraph {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
     </style>
 
 
@@ -705,7 +709,7 @@
                                         <%= contentItem.heading %>
                                     </h3>
                                     <p>
-                                        <%= contentItem.paragraph %>
+                                        <%- contentItem.paragraph %>
                                     </p>
                                 </div>
                                 <% if (contentItem.image) { %>

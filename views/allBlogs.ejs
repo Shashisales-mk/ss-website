@@ -599,7 +599,7 @@
     </div>
     <div class="main-page-in">
       <!-- Blog Section -->
-      <div class="blog-section">
+      <div class="blog-section" style="flex-direction: column;">
         <!-- Ads Section -->
         <h2>Upload New Ad</h2>
         <form action="/uploadAd" method="POST" enctype="multipart/form-data">
@@ -825,7 +825,7 @@
       </div>
 
       <!-- Gallery Section -->
-      <div class="gallery-section" style="display: none">
+      <div class="gallery-section" style="display: none; flex-direction: column;" >
         <h1>Gallery Section</h1>
         <form action="/add" method="POST" enctype="multipart/form-data">
           <div class="secr">
@@ -926,7 +926,7 @@
       </div>
 
       <!-- Testimonial Section -->
-      <div class="testimonial-section" style="display: none">
+      <div class="testimonial-section" style="display: none; ">
         <h2>Add New Testimonial</h2>
         <form style="padding: 2vw 0" action="/admin/add-testimonial" method="POST" enctype="multipart/form-data"
           class="testi-form">
@@ -1113,7 +1113,7 @@
       </div>
 
       <!-- comment section -->
-      <div class="comment-section" style="display: none">
+      <div class="comment-section" style="display: none; flex-direction: column;">
         <h1>Pending Comments</h1>
 
         <table>
@@ -1195,7 +1195,7 @@
 
       <!-- subscriber section -->
 
-      <div class="subscriber-section" style="display: none">
+      <div class="subscriber-section" style="display: none; flex-direction: column;">
         <!-- existing subscribers -->
 
         <div class="action-btns">
@@ -1575,7 +1575,7 @@
     // Function to show the selected section and set it as active in the sidebar
     function showSection(sectionId, navId) {
       hideAllSections();
-      document.querySelector(`.${sectionId}`).style.display = "block";
+      document.querySelector(`.${sectionId}`).style.display = "flex";
       document
         .querySelectorAll(".sideNavBar li")
         .forEach((item) => item.classList.remove("active"));
@@ -1624,6 +1624,7 @@
       showSection("subscriber-section", "sec5");
     });
     document.getElementById("sec6").addEventListener("click", function () {
+      document.querySelector(".chatbot-section").style.display = "flex";
       showSection6("chatbot-section", "sec6")
     });
 

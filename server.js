@@ -655,30 +655,34 @@ app.post('/subscribe', async (req, res) => {
 // Route for handling blog upload
 app.post('/upload-blog', uploadFields, async (req, res) => {
     try {
-        const {authorName, authorEmail,  blogTitle, blogShortDesc,videoUrl, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical } = req.body;
+        const {
+            authorName, authorEmail, blogTitle, blogShortDesc, videoUrl,
+            headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical
+        } = req.body;
+
         const bannerImage = req.files['blogBannerImage'] ? req.files['blogBannerImage'][0] : null;
         const showImg = req.files['showImg'] ? req.files['showImg'][0] : null;
         const images = req.files['images'] ? req.files['images'].map(img => `/uploads/${img.filename}`) : [];
+
         const subscribers = await Subscriber.find();
 
         if (!bannerImage) {
-            throw new Error('B-blog-listlog banner image is required');
+            throw new Error('Blog banner image is required');
         }
         if (!showImg) {
-            throw new Error('B-blog-listlog banner image is required');
+            throw new Error('Blog show image is required');
         }
 
         const content = [];
         for (let i = 0; i < headings.length; i++) {
             content.push({
                 heading: headings[i],
-                paragraph: paragraphs[i],
+                paragraph: paragraphs[i].replace(/\n/g, '<br>'),  
                 image: images[i] || null
             });
         }
 
         const contentText = req.body.contentText.replace(/<\/?[^>]+(>|$)/g, '');
-
 
         const blog = new Blog({
             name: authorName,
@@ -700,13 +704,9 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         });
 
         await blog.save();
-        
-
-
 
         console.log(blog);
-        // res.status(200).send('Blog uploaded successfully!');
-        res.redirect("/blog")
+        res.redirect("/blog");
     } catch (error) {
         console.error('Error uploading blog:', error);
         res.status(500).send('Failed to upload blog. Please try again.');
