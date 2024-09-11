@@ -365,8 +365,8 @@ app.get("/digital-marketing", async (req, res) => {
         keywords: 'Affiliate Marketing, off-page SEO techniques'
     });
 });
-// Redirect from /fusion-marketing to /digital-marketing
-app.get("/fusion-marketing", (req, res) => {
+// Redirect from /digital-marketingketing to /digital-marketing
+app.get("/digital-marketingketing", (req, res) => {
     res.redirect(301, "/digital-marketing");
 });
 
