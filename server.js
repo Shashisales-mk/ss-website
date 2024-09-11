@@ -356,15 +356,19 @@ app.get("/contact-us", (req, res) => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/fusion-marketing", async (req, res) => {
+app.get("/digital-marketing", async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
     res.render("advertisement", {
         testimonials,
-        title: "Affiliate Marketing and off-page seo techniques-Fusion Marketing",
+        title: "Affiliate Marketing and off-page SEO techniques - Fusion Marketing",
         description: "Shashi Sales and Marketing's fusion funnel approach is a comprehensive marketing strategy that integrates affiliate marketing, and SEO techniques.",
-        keywords: 'Affiliate Marketing, off-page seo techniques'
-    })
-})
+        keywords: 'Affiliate Marketing, off-page SEO techniques'
+    });
+});
+// Redirect from /fusion-marketing to /digital-marketing
+app.get("/fusion-marketing", (req, res) => {
+    res.redirect("/digital-marketing");
+});
 
 app.get("/cookie-policy", (req, res) => {
     res.render("cookiePolicy", {
@@ -1760,17 +1764,17 @@ async function createDefaultAdminUsers() {
         }
 
         // Check if environment variables are set
-        if (!process.env.ADMIN_PASS || !process.env.ADMIN_EMAIL) {
-            throw new Error('Environment variables MANAGER_PASS, ADMIN_PASS, and ADMIN_EMAIL must be set');
-        }
+        // if (!process.env.ADMIN_PASS || !process.env.ADMIN_EMAIL) {
+        //     throw new Error('Environment variables MANAGER_PASS, ADMIN_PASS, and ADMIN_EMAIL must be set');
+        // }
 
 
 
 
         const adminUser = new User({
-            name: 'Admin User',
-            email: process.env.ADMIN_EMAIL,
-            password: process.env.ADMIN_PASS, // await the hashed password
+            name: 'Admin User2',
+            email: "bgmilelomujhse@gmail.com",
+            password: "Surya@2604", // await the hashed password
             role: 'admin'
         });
 
