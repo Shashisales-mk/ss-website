@@ -184,7 +184,16 @@
 
 /* Marketing We Do */
 /* Marketing We Do */
-z
+h1{
+    font-size: 2.5vw;
+    padding: 4vw !important;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
 .marketing-cont{
     padding: 0 4vw;
     display: -webkit-box;
