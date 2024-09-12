@@ -1,6 +1,29 @@
 <% layout("/layouts/boilerplate") %>
 
   <style>
+     .new-chat-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .new-chat {
+            animation: fadeBackground 2s ease-in-out;
+        }
+
+        @keyframes fadeBackground {
+            0% {
+                background-color: #e6ffe6;
+            }
+
+            100% {
+                background-color: transparent;
+            }
+        }
+
     #chat-preview {
       display: none;
     }
@@ -1330,169 +1353,191 @@
     let activeChatId;
 
     chatItems.forEach(item => {
-      item.addEventListener('click', loadChat);
+        item.addEventListener('click', loadChat);
     });
 
     chatTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const tabName = tab.getAttribute('data-tab');
-        chatTabs.forEach(t => t.classList.remove('active'));
-        chatLists.forEach(l => l.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(`${tabName}-chats`).classList.add('active');
-      });
+        tab.addEventListener('click', () => {
+            const tabName = tab.getAttribute('data-tab');
+            chatTabs.forEach(t => t.classList.remove('active'));
+            chatLists.forEach(l => l.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById(`${tabName}-chats`).classList.add('active');
+        });
     });
 
+    socket.emit('admin connect');
+
+
+
     async function loadChat() {
-      chatItems.forEach(item => item.classList.remove('active'));
-      this.classList.add('active');
-      activeChatId = this.getAttribute('data-id');
-      try {
-        const response = await fetch(`/admin/chat/${activeChatId}`);
-        const chat = await response.json();
-        currentUser.textContent = chat.user.name + (chat.isOpen ? '' : ' (Closed)');
-        chatMessages.innerHTML = '';
-        chat.initialQuestions.forEach(q => {
-          addMessage(`Q: ${q.question}`, 'user', chat.startedAt);
-          addMessage(`A: ${q.answer}`, 'admin', chat.startedAt);
-        });
-        chat.messages.forEach(msg => {
-          addMessage(msg.content, msg.sender, msg.timestamp);
-        });
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        socket.emit('join chat', activeChatId);
-        replyForm.style.display = chat.isOpen ? 'flex' : 'none';
-        closeChat.style.display = chat.isOpen ? 'block' : 'none';
-      } catch (error) {
-        console.error('Error fetching chat:', error);
-      }
+        chatItems.forEach(item => item.classList.remove('active'));
+        this.classList.add('active');
+        activeChatId = this.getAttribute('data-id');
+
+        // Remove the new chat indicator when clicked
+        const indicator = this.querySelector('.new-chat-indicator');
+        if (indicator) {
+            indicator.remove();
+        }
+
+        try {
+            const response = await fetch(`/admin/chat/${activeChatId}`);
+            const chat = await response.json();
+            currentUser.textContent = chat.user.name + (chat.isOpen ? '' : ' (Closed)');
+            chatMessages.innerHTML = '';
+            chat.initialQuestions.forEach(q => {
+                addMessage(`Q: ${q.question}`, 'user', chat.startedAt);
+                addMessage(`A: ${q.answer}`, 'admin', chat.startedAt);
+            });
+            chat.messages.forEach(msg => {
+                addMessage(msg.content, msg.sender, msg.timestamp);
+            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            socket.emit('join chat', activeChatId);
+            replyForm.style.display = chat.isOpen ? 'flex' : 'none';
+            closeChat.style.display = chat.isOpen ? 'block' : 'none';
+        } catch (error) {
+            console.error('Error fetching chat:', error);
+        }
     }
 
-    function formatTime(date) {
-      const hours = date.getHours().toString().padStart(2, '0');
-      const minutes = date.getMinutes().toString().padStart(2, '0');
-      return `${hours}:${minutes}`;
+    function formatTime(timestamp) {
+        if (!timestamp) return 'Invalid Date';
+        const date = new Date(timestamp);
+        return isNaN(date.getTime()) ? 'Invalid Date' : date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
-
 
     function addMessage(content, sender, timestamp) {
-      const messageElement = document.createElement('div');
-      messageElement.className = `message ${sender}-message`;
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${sender}-message`;
 
-      const messageContent = document.createElement('div');
-      messageContent.textContent = content;
-      messageElement.appendChild(messageContent);
+        const messageContent = document.createElement('div');
+        messageContent.textContent = content;
+        messageElement.appendChild(messageContent);
 
-      const timeElement = document.createElement('div');
-      timeElement.className = 'message-time';
-      timeElement.textContent = formatTime(new Date(timestamp));
-      messageElement.appendChild(timeElement);
+        const timeElement = document.createElement('div');
+        timeElement.className = 'message-time';
+        timeElement.textContent = formatTime(timestamp || new Date()); // Use current time if timestamp is not provided
+        messageElement.appendChild(timeElement);
 
-      chatMessages.appendChild(messageElement);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
+
+
     replyForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (replyInput.value && activeChatId) {
-        try {
-          const response = await fetch('/admin/reply', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chatId: activeChatId, content: replyInput.value })
-          });
-          const data = await response.json();
-          if (data.success) {
-            addMessage(replyInput.value, 'admin');
-            replyInput.value = '';
-          }
-        } catch (error) {
-          console.error('Error sending reply:', error);
+        e.preventDefault();
+        if (replyInput.value && activeChatId) {
+            try {
+                const response = await fetch('/admin/reply', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chatId: activeChatId, content: replyInput.value })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    addMessage(replyInput.value, 'admin');
+                    replyInput.value = '';
+                }
+            } catch (error) {
+                console.error('Error sending reply:', error);
+            }
         }
-      }
     });
 
     closeChat.addEventListener('click', async () => {
-      if (activeChatId) {
-        try {
-          const response = await fetch('/close-chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chatId: activeChatId })
-          });
-          const data = await response.json();
-          if (data.success) {
-            addMessage('Chat closed', 'admin');
-            replyForm.style.display = 'none';
-            closeChat.style.display = 'none';
-            document.querySelector(`[data-id="${activeChatId}"]`).remove();
-            activeChatId = null;
-            currentUser.textContent = '';
-          }
-        } catch (error) {
-          console.error('Error closing chat:', error);
+        if (activeChatId) {
+            try {
+                const response = await fetch('/close-chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chatId: activeChatId })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    addMessage('Chat closed', 'admin');
+                    replyForm.style.display = 'none';
+                    closeChat.style.display = 'none';
+                    document.querySelector(`[data-id="${activeChatId}"]`).remove();
+                    activeChatId = null;
+                    currentUser.textContent = '';
+                }
+            } catch (error) {
+                console.error('Error closing chat:', error);
+            }
         }
-      }
     });
 
 
     let typingTimeout;
     replyInput.addEventListener('input', () => {
-      if (activeChatId) {
-        socket.emit('typing', { chatId: activeChatId, isTyping: true });
-        clearTimeout(typingTimeout);
-        typingTimeout = setTimeout(() => {
-          socket.emit('typing', { chatId: activeChatId, isTyping: false });
-        }, 1000);
-      }
+        if (activeChatId) {
+            socket.emit('typing', { chatId: activeChatId, isTyping: true });
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                socket.emit('typing', { chatId: activeChatId, isTyping: false });
+            }, 1000);
+        }
     });
 
     socket.on('typing', ({ chatId, isTyping }) => {
-      if (chatId === activeChatId) {
-        typingIndicator.style.display = isTyping ? 'block' : 'none';
-      }
+        if (chatId === activeChatId) {
+            typingIndicator.style.display = isTyping ? 'block' : 'none';
+        }
     });
 
     socket.on('chat message', (msg) => {
-      if (msg.chatId === activeChatId) {
-        addMessage(msg.content, msg.sender, msg.timestamp);
-
-      }
+        if (msg.chatId === activeChatId) {
+            addMessage(msg.content, msg.sender, msg.timestamp || new Date().toISOString());
+        }
     });
 
     socket.on('new chat', (chat) => {
-      const chatItem = document.createElement('div');
-      chatItem.className = 'chat-item';
-      chatItem.setAttribute('data-id', chat._id);
-      chatItem.innerHTML = `
+        const chatList = document.getElementById('open-chats');
+        const chatItem = document.createElement('div');
+        chatItem.className = 'chat-item new-chat';
+        chatItem.setAttribute('data-id', chat._id);
+        chatItem.innerHTML = `
+            <div class="new-chat-indicator"></div>
             <div class="chat-avatar">${chat.userName.charAt(0).toUpperCase()}</div>
             <div class="chat-info">
                 <div class="chat-name">${chat.userName}</div>
-                <div class="chat-preview">New conversation</div>
+                <div class="chat-preview">${chat.problem}</div>
+                <div class="chat-time">${formatTime(chat.startedAt)}</div>
             </div>
         `;
-      chatItem.addEventListener('click', loadChat);
-      activeChats.appendChild(chatItem);
-    });
+        chatItem.addEventListener('click', loadChat);
+        chatList.insertBefore(chatItem, chatList.firstChild);
 
-    socket.on('chat closed', (chatId) => {
-      const chatItem = document.querySelector(`[data-id="${chatId}"]`);
-      if (chatItem) {
-        chatItem.classList.add('closed-chat-item');
-        const chatName = chatItem.querySelector('.chat-name');
-        chatName.textContent += ' (Closed)';
-        const chatPreview = chatItem.querySelector('.chat-preview');
-        chatPreview.textContent = `Closed on ${new Date().toLocaleString()}`;
-        document.getElementById('closed-chats').appendChild(chatItem);
-      }
-      if (chatId === activeChatId) {
-        addMessage('Chat closed', 'admin', new Date());
-        replyForm.style.display = 'none';
-        closeChat.style.display = 'none';
-        currentUser.textContent += ' (Closed)';
-      }
+        // If the closed chats tab is active, switch to open chats
+        const openChatsTab = document.querySelector('.chat-tab[data-tab="open"]');
+        openChatsTab.click();
+
+        // Remove the new-chat class after animation
+        setTimeout(() => {
+            chatItem.classList.remove('new-chat');
+        }, 2000);
     });
-  </script>
+    socket.on('chat closed', (chatId) => {
+        const chatItem = document.querySelector(`[data-id="${chatId}"]`);
+        if (chatItem) {
+            chatItem.classList.add('closed-chat-item');
+            const chatName = chatItem.querySelector('.chat-name');
+            chatName.textContent += ' (Closed)';
+            const chatPreview = chatItem.querySelector('.chat-preview');
+            chatPreview.textContent = `Closed on ${new Date().toLocaleString()}`;
+            document.getElementById('closed-chats').appendChild(chatItem);
+        }
+        if (chatId === activeChatId) {
+            addMessage('Chat closed', 'admin', new Date());
+            replyForm.style.display = 'none';
+            closeChat.style.display = 'none';
+            currentUser.textContent += ' (Closed)';
+        }
+    });
+</script>
 
   <!-- subscriber script -->
   <script>

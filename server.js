@@ -2503,7 +2503,7 @@ app.post('/get-phone-number', (req, res) => {
 //   chat-bot
 
   
-  app.get('/admin/chat/:chatId', async (req, res) => {
+app.get('/admin/chat/:chatId', async (req, res) => {
     try {
       const chat = await Chat.findById(req.params.chatId).populate('user');
       res.json(chat);
@@ -2551,6 +2551,11 @@ app.post('/get-phone-number', (req, res) => {
   io.on('connection', (socket) => {
     console.log('A user connected');
   
+    socket.on('admin connect', () => {
+      socket.join('admin');
+      console.log('Admin connected');
+    });
+  
     socket.on('join chat', (chatId) => {
       socket.join(chatId);
       console.log(`User joined chat: ${chatId}`);
@@ -2590,7 +2595,7 @@ app.post('/get-phone-number', (req, res) => {
       const { 0: problem, 1: name, 2: email } = req.body;
       let user = await Chatuser.findOne({ email });
       if (!user) {
-        user = new Chatuser({ name, email,  problem });
+        user = new Chatuser({ name, email, problem });
         await user.save();
       }
       const chat = new Chat({ 
@@ -2599,18 +2604,27 @@ app.post('/get-phone-number', (req, res) => {
           { question: "Hey! how can we assist you?", answer: problem },
           { question: "What's your name?", answer: name },
           { question: "What's your email address?", answer: email },
-          
         ]
       });
       await chat.save();
       console.log(`New chat started: ${chat._id}`);
-      io.emit('new chat', { _id: chat._id, userName: user.name });
+      
+      // Emit a 'new chat' event to all connected admin clients
+      io.to('admin').emit('new chat', { 
+        _id: chat._id, 
+        userName: user.name,
+        userEmail: user.email,
+        problem: problem,
+        startedAt: chat.startedAt.toISOString() // Convert to ISO string for consistent formatting
+      });
+      
       res.json({ userId: user._id, chatId: chat._id });
     } catch (err) {
       console.error('Error starting chat:', err);
       res.status(500).json({ error: 'Error starting chat' });
     }
   });
+  
   
 
 

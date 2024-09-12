@@ -20,17 +20,21 @@ const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const chatSubmit = document.getElementById('chat-submit');
 
-function toggleChatPreview(show) {
-chatPreview.style.display = show ? 'flex' : 'none';
-}
-
 chatButton.addEventListener('click', () => {
-chatContainer.style.display = chatContainer.style.display === 'none' ? 'block' : 'none';
-toggleChatPreview(false);
-if (chatContainer.style.display === 'block' && currentQuestion === 0) {
-askNextQuestion();
-}
+    if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+        chatContainer.style.display = 'block';
+        chatPreview.style.display = 'none';
+        if (currentQuestion === 0) {
+            askNextQuestion();
+        }
+    } else {
+        chatContainer.style.display = 'none';
+    }
 });
+
+function toggleChatPreview(show) {
+    chatPreview.style.display = show ? 'flex' : 'none';
+}
 
 chatPreviewClose.addEventListener('click', () => {
 toggleChatPreview(false);
