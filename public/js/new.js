@@ -11,6 +11,7 @@ const questions = [
 // "Please describe your problem."
 ];
 const answers = {};
+const notificationSound = document.getElementById('notificationSound');
 const typingIndicator = document.getElementById('typing-indicator');
 const chatPreview = document.getElementById('chat-preview');
 const chatPreviewClose = document.getElementById('chat-preview-close');
@@ -20,25 +21,23 @@ const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const chatSubmit = document.getElementById('chat-submit');
 
+
+
 chatButton.addEventListener('click', () => {
-    if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
-        chatContainer.style.display = 'block';
-        chatPreview.style.display = 'none';
-        if (currentQuestion === 0) {
-            askNextQuestion();
-        }
-    } else {
-        chatContainer.style.display = 'none';
-    }
+if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+chatContainer.style.display = 'block';
+chatPreview.style.display = 'none';
+if (currentQuestion === 0) {
+    askNextQuestion();
+}
+} else {
+chatContainer.style.display = 'none';
+}
 });
 
 function toggleChatPreview(show) {
-    chatPreview.style.display = show ? 'flex' : 'none';
+chatPreview.style.display = show ? 'flex' : 'none';
 }
-
-chatPreviewClose.addEventListener('click', () => {
-toggleChatPreview(false);
-});
 
 // Show chat preview by default
 toggleChatPreview(true);
@@ -76,22 +75,22 @@ function sendMessage() {
 const message = chatInput.value.trim();
 if (message) {
 if (currentQuestion < questions.length) {
-    answers[currentQuestion] = message;
-    addUserMessage(message);
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
-        askNextQuestion();
-    } else {
-        startChat();
-    }
+answers[currentQuestion] = message;
+addUserMessage(message);
+currentQuestion++;
+if (currentQuestion < questions.length) {
+askNextQuestion();
 } else {
-    if (chatId) {
-        socket.emit('chat message', { chatId, content: message });
-        addUserMessage(message);
-    } else {
-        console.error('Chat not initialized');
-        addBotMessage("There was an error sending your message. Please try again.");
-    }
+startChat();
+}
+} else {
+if (chatId) {
+socket.emit('chat message', { chatId, content: message });
+addUserMessage(message);
+} else {
+console.error('Chat not initialized');
+addBotMessage("There was an error sending your message. Please try again.");
+}
 }
 chatInput.value = '';
 }
@@ -100,9 +99,9 @@ chatInput.value = '';
 async function startChat() {
 try {
 const response = await fetch('/start-chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(answers)
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(answers)
 });
 const data = await response.json();
 chatId = data.chatId;
@@ -116,23 +115,25 @@ addBotMessage("I'm sorry, there was an error starting the chat. Please try again
 
 let typingTimeout;
 chatInput.addEventListener('input', () => {
-    if (chatId) {
-        socket.emit('typing', { chatId, isTyping: true });
-        clearTimeout(typingTimeout);
-        typingTimeout = setTimeout(() => {
-            socket.emit('typing', { chatId, isTyping: false });
-        }, 1000);
-    }
+if (chatId) {
+socket.emit('typing', { chatId, isTyping: true });
+clearTimeout(typingTimeout);
+typingTimeout = setTimeout(() => {
+    socket.emit('typing', { chatId, isTyping: false });
+}, 1000);
+}
 });
 
 socket.on('typing', ({ isTyping }) => {
-    typingIndicator.style.display = isTyping ? 'block' : 'none';
+typingIndicator.style.display = isTyping ? 'block' : 'none';
 });
 
 
 socket.on('chat message', (msg) => {
 if (msg.sender === 'admin') {
 addBotMessage(msg.content);
+// Play notification sound for admin messages
+notificationSound.play().catch(error => console.error('Error playing sound:', error));
 }
 });
 

@@ -1333,6 +1333,8 @@
           </form>
           <button id="close-chat" style="display: none;">Close Chat</button>
         </div>
+        <audio id="notificationSound" src="/notification.mp3" preload="auto"></audio>
+
       </div>
     </div>
   </div>
@@ -1340,6 +1342,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
+    const notificationSound = document.getElementById('notificationSound');
     const typingIndicator = document.getElementById('typing-indicator');
     const chatTabs = document.querySelectorAll('.chat-tab');
     const chatLists = document.querySelectorAll('.chat-list');
@@ -1488,11 +1491,42 @@
         }
     });
 
-    socket.on('chat message', (msg) => {
-        if (msg.chatId === activeChatId) {
-            addMessage(msg.content, msg.sender, msg.timestamp || new Date().toISOString());
-        }
-    });
+    function initializeAudio() {
+notificationSound.play().then(() => {
+    notificationSound.pause();
+    notificationSound.currentTime = 0;
+}).catch(error => {
+    console.log('Audio play failed:', error);
+});
+}
+
+function playNotificationSound() {
+notificationSound.play().catch(error => {
+    console.error('Error playing sound:', error);
+    // Fallback: show a visual notification
+    showVisualNotification();
+});
+}
+
+function showVisualNotification() {
+console.log('New message received!');
+// Flash the title
+let originalTitle = document.title;
+document.title = '🔔 New Message!';
+setTimeout(() => { document.title = originalTitle; }, 3000);
+}
+document.addEventListener('click', initializeAudio, { once: true });
+
+socket.on('chat message', (msg) => {
+if (msg.chatId === activeChatId) {
+    addMessage(msg.content, msg.sender, msg.timestamp || new Date().toISOString());
+    
+    // Play notification sound if the message is from the user
+    if (msg.sender === 'user') {
+        playNotificationSound();
+    }
+}
+});
 
     socket.on('new chat', (chat) => {
         const chatList = document.getElementById('open-chats');
@@ -1514,6 +1548,8 @@
         // If the closed chats tab is active, switch to open chats
         const openChatsTab = document.querySelector('.chat-tab[data-tab="open"]');
         openChatsTab.click();
+
+        playNotificationSound();
 
         // Remove the new-chat class after animation
         setTimeout(() => {
