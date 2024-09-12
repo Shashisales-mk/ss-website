@@ -1,6 +1,7 @@
 // chatbot
 
 
+  
 const socket = io();
 let chatId;
 let currentQuestion = 0;
@@ -21,7 +22,9 @@ const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const chatSubmit = document.getElementById('chat-submit');
 
-
+chatPreviewClose.addEventListener('click', () => {
+toggleChatPreview(false);
+});
 
 chatButton.addEventListener('click', () => {
 if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
