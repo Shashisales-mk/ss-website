@@ -369,6 +369,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+
 // for seo page 
 
 
@@ -455,9 +458,20 @@ document.addEventListener('DOMContentLoaded', function(){
                 <p><img height="25" width="25" src="/assets/images/checkIcon.webp" alt="checkIcon"></p>
                 <p>100% Safe with Search Engines</p>
             </div>
-            <div class="paybtn"><a href="#">Get Quote</a></div>
+            <div class="paybtn">
+                <div class="seo-hed" style="width: 100%;">
+                    <div class="seo-proposal" style="justify-content: center !important;">
+                        <form action="/send-praposal" method="POST">
+                            <ul style="padding: 0;">
+                                <li><input type="email" name="email" placeholder="Your Email" required></li>
+                                <li><button type="submit">Send Me Proposal</button></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
             `,
-            `Starting at <span style="color: #72df6a;font-weight: 700;">Rs. 9990/-</span>`,
+            `Starting at <span style="color: #72df6a;font-weight: 700;">$ 999/-</span>`,
             "Content Marketing Needs",
             "With 65+ different content formats, Shashi Sales & Marketing’s dedicated content team can help grow your business through professionally-written, SEO optimized content no matter your industry.",
             "Website Size",
@@ -523,7 +537,18 @@ document.addEventListener('DOMContentLoaded', function(){
                 <p><img height="25" width="25" src="/assets/images/checkIcon.webp" alt="checkIcon"></p>
                 <p>100% Safe with Search Engines</p>
             </div>
-            <div class="paybtn"><a href="#">Get Quote</a></div>
+            <div class="paybtn">
+                <div class="seo-hed" style="width: 100%;">
+                    <div class="seo-proposal" style="justify-content: center !important;">
+                        <form action="/send-praposal" method="POST">
+                            <ul style="padding: 0;">
+                                <li><input type="email" name="email" placeholder="Your Email" required></li>
+                                <li><button type="submit">Send Me Proposal</button></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
             `,
             `Starting at <span style="color: #72df6a;font-weight: 700;">$ 1499/-</span>`,
             "Website Size",
@@ -591,7 +616,18 @@ document.addEventListener('DOMContentLoaded', function(){
                 <p><img height="25" width="25" src="/assets/images/checkIcon.webp" alt="checkIcon"></p>
                 <p>100% Safe with Search Engines</p>
             </div>
-            <div class="paybtn"><a href="#">Get Quote</a></div>
+            <div class="paybtn">
+                <div class="seo-hed" style="width: 100%;">
+                    <div class="seo-proposal" style="justify-content: center !important;">
+                        <form action="/send-praposal" method="POST">
+                            <ul style="padding: 0;">
+                                <li><input type="email" name="email" placeholder="Your Email" required></li>
+                                <li><button type="submit">Send Me Proposal</button></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
             `,
             `Starting at <span style="color: #72df6a;font-weight: 700;">$ 2800/-</span>`,
             "Consultation Needs",
@@ -625,5 +661,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("pre-logo1").src = "/assets/images/ii1.webp";
     document.getElementById("ba").style.color = "#C4C800";
 });
+
+
 
 
