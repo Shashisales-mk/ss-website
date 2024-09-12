@@ -1040,7 +1040,7 @@
         </table>
 
         <% testimonials.forEach(testimonial=> { %>
-          <div id="editTestimonial<%= testimonial._id %>" style="display: none">
+          <div id="editTestimonial<%= testimonial._id %>" style="display: none;">
             <h2 style="margin-bottom: 1vw; margin-top: 2vw">Edit Testimonial</h2>
             <form action="/admin/update-testimonial/<%= testimonial._id %>" method="POST" enctype="multipart/form-data">
               <table>
@@ -1082,7 +1082,7 @@
             </form>
           </div>
           <% if (testimonial.page) { %>
-            <div id="editTestimonialPage<%= testimonial.page._id %>" style="display: none">
+            <div id="editTestimonialPage<%= testimonial.page._id %>" style="display: none; width: 100%;">
               <h2 style="margin-top: 2vw; margin-bottom: 1vw">
                 Edit Testimonial Page
               </h2>

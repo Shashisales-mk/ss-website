@@ -2626,7 +2626,13 @@ app.get('/admin/chat/:chatId', async (req, res) => {
   });
   
   
-
+app.get("/new-page" , (req, res)=>{
+    res.render("blogPage" , {
+        title : "",
+        description : "",
+        keywords : ""
+    });
+})
 
 
 
