@@ -2475,16 +2475,16 @@ app.post("/admin/update-ads-txt", isAdmin, (req, res) => {
     const newAdsTxt = req.body.adsTxt; // Get updated content from the form submission
     const filePath = path.join(__dirname, 'public', 'ads.txt');
 
-    fs.writeFile(filePath, newAdsTxt, (err) => {
-        if (err) {
-            console.error('Error writing file:', err); // Log error for debugging
-            req.flash('error', 'Error writing to ads.txt file');
-            return res.redirect('/admin/edit-ads-txt');
-        }
-        req.flash('success', 'Ads.txt file is updated successfully');
-        res.redirect('/admin/edit-ads-txt');
-    });
-    
+   fs.writeFile(filePath, newAdsTxt, (err) => {
+    if (err) {
+        console.error('Error writing file:', err); // Log error for debugging
+        req.flash('error', 'Error writing to ads.txt file');
+        return res.redirect('/admin/edit-ads-txt');
+    }
+    req.flash('success', 'Ads.txt file is updated successfully');
+    res.redirect('/admin/edit-ads-txt');
+});
+
 });
 
 

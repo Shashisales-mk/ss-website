@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Ads.txt</title>
     <style>
+        *,
+        *::after,
+        *::before {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Inter', sans-serif;
+        }
+        
+        html,
         body {
+          height: 100%;
+          width: 100%;
+        }
+        .body {
             font-family: 'Courier New', Courier, monospace; /* Monospaced font for notepad-like appearance */
             background-color: #2e2e2e; /* Dark background color */
             color: #e0e0e0; /* Light text color */
@@ -94,7 +108,9 @@
         }
     </style>
 </head>
+<%- include("./includes/flash-message") %>
 <body>
+   <div class="body">
     <div class="container">
         <div class="heading">
             <h1>Edit Ads.txt File</h1>
@@ -107,5 +123,6 @@
             <button type="submit">Update Ads.txt</button>
         </form>
     </div>
+   </div>
 </body>
 </html>
