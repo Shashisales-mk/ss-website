@@ -155,34 +155,41 @@ tiles2.forEach(tile2 => {
 
 document.addEventListener("DOMContentLoaded", function () {
   const swiper = new Swiper('.testimonial-swiper', {
-      slidesPerView: 3,
-      centeredSlides: true,
-      spaceBetween: 30,
-      loop: true,
-      speed: 500,
-      effect: 'coverflow',
-      coverflowEffect: {
-          rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    spaceBetween: 30,
+    loop: true,
+    speed: 500,
+    effect: 'coverflow',
+    coverflowEffect: {
+      rotate: 0,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: false,
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1.2,
+        spaceBetween: 20
       },
-      allowTouchMove: false, // Disable swiping
+      768: {
+        slidesPerView: 3,
+        spaceBetween: 30
+      }
+    },
+    allowTouchMove: true,
   });
 
-  // Add click event listeners to slides
-  swiper.slides.forEach((slide, index) => {
-      slide.addEventListener('click', () => {
-          if (slide.classList.contains('swiper-slide-prev')) {
-              swiper.slidePrev();
-          } else if (slide.classList.contains('swiper-slide-next')) {
-              swiper.slideNext();
-          }
-      });
+  swiper.slides.forEach((slide) => {
+    slide.addEventListener('click', () => {
+      if (slide.classList.contains('swiper-slide-prev')) {
+        swiper.slidePrev();
+      } else if (slide.classList.contains('swiper-slide-next')) {
+        swiper.slideNext();
+      }
+    });
   });
-
-  
 });
 
 async function openUserStory() {

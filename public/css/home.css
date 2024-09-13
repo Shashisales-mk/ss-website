@@ -1002,6 +1002,7 @@ font-weight: bold;
   /* opacity: 0.4; */
   transform: scale(0.8);
   transition: 0.3s;
+  
 }
 
 .swiper-slide-active {
@@ -1128,18 +1129,54 @@ font-weight: bold;
   border-style: solid;
   border-color: transparent transparent #333 transparent;
 }
-@media screen and (max-width: 768px){
-
- 
-.testimonial {
-  width: 30.5% !important;
-}
-}
-@media screen and (max-width: 450px) {
-  .testimonial {
-      width: 28.2% !important;
+@media screen and (max-width: 768px) {
+  .testimonial-section {
+    padding: 6vw 4vw;
   }
+
+  .swiper-slide {
+    width: 85% !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .swiper-slide-active {
+    transform: scale(1.05) !important;
+  }
+
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+
+  .testimonial {
+    font-size: 2.2vw;
+    padding: 6vw 4vw;
+    height: 25vw;
+  }
+
+  .testimonial img {
+    width: 10vw;
+    bottom: -4.2vw;
+  }
+
+  .name {
+    margin-top: 2vw;
+  }
+
+  
 }
+ @media screen and (max-width: 450px) {
+  .swiper-slide {
+   
+    margin-right: 10px !important;
+    
+  }
+
+}
+
+/*
 @media screen and (max-width: 375px) {
   .testimonial {
       width: 27.5% !important;
@@ -1149,7 +1186,7 @@ font-weight: bold;
   .testimonial {
       width: 26.5% !important;
   }
-}
+} */
 
 
 
@@ -1989,7 +2026,7 @@ text-decoration: none;
 
 .swiper {
   width: 100%;
-  padding: 20px 0;
+  padding: 30px 0;
 }
 
 
@@ -2182,3 +2219,77 @@ text-decoration: none;
 
 
 /* blogPage css */
+
+
+
+/* Slider container */
+.slider-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+/* Slider */
+.slider {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.slide {
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+.slide  img {
+  width: 100%;
+  
+}
+
+/* Navigation arrows */
+.nav-arrows {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrow {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.arrow i {
+  color: #fff;
+}
+
+/* Navigation dots */
+.nav-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #000; /* Black color for inactive dots */
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #888; /* Gray color for active dot */
+}

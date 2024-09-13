@@ -5,3 +5,95 @@
         background-color: black;
     }
 </style>
+
+
+<body>
+    <div class="blog-header">
+        <div class="tag-btns">
+            <a href="">All blogs</a>
+            <a href="">Latest blogs</a>
+            <a href="">Popular blogs</a>
+            <a href="">Upload your blog</a>
+        </div>
+        <div class="icons">
+            <img src="/assets/images/fb.webp" alt="">
+            <img src="/assets/images/in.webp" alt="">
+            <img src="/assets/images/ln.webp" alt="">
+            <img src="/assets/images/yt.webp" alt="">
+            <img src="/assets/images/x.webp" alt="">
+        </div>
+    </div>
+
+    <div class="full-blog">
+        <div class="left-blog">
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide"><img src="/assets/images/abo-img-1.webp" alt="Image 1"></div>
+                    <div class="slide"><img src="/assets/images/abo-img-2.webp" alt="Image 2"></div>
+                    <div class="slide"><img src="/assets/images/abo-img-1.webp" alt="Image 3"></div>
+                </div>
+                <div class="nav-arrows">
+                    <div class="arrow prev"><i class="fa-solid fa-angle-left"></i></div>
+                    <div class="arrow next"><i class="fa-solid fa-angle-right"></i></div>
+                </div>
+                <div class="nav-dots"></div>
+            </div>
+        </div>
+        <div class="right-blog"></div>
+    </div>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        // Code for slideshow
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.querySelector('.nav-dots');
+    const prevArrow = document.querySelector('.arrow.prev');
+    const nextArrow = document.querySelector('.arrow.next');
+    let currentSlide = 0;
+  
+    // Add navigation dots if there are slides
+    if (slides.length > 0) {
+      for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        dot.addEventListener('click', () => {
+          goToSlide(i);
+        });
+        dotsContainer.appendChild(dot);
+      }
+      const dots = document.querySelectorAll('.dot');
+      dots[currentSlide].classList.add('active');
+  
+      // Go to a specific slide
+      function goToSlide(index) {
+        slides.forEach((slide) => {
+          slide.style.transform = `translateX(-${index * 100}%)`;
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+      }
+  
+      // Go to previous slide
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        goToSlide(currentSlide);
+      }
+  
+      // Go to next slide
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        goToSlide(currentSlide);
+      }
+  
+      // Set up event listeners for navigation arrows
+      prevArrow.addEventListener('click', prevSlide);
+      nextArrow.addEventListener('click', nextSlide);
+  
+      // Automatic slide change
+      setInterval(nextSlide, 3000); // Change slide every 3 seconds
+    }
+    })
+</script>
