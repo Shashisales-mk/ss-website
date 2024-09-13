@@ -54,7 +54,7 @@ const videoHelpers = require('./utils/vedioHelpers');
 
 // Configure PayPal SDK
 paypal.configure({
-    'mode': process.env.PAYPAL_MODE || 'live', 
+    'mode': process.env.PAYPAL_MODE || 'live',
     'client_id': process.env.PAYPAL_CLIENT_ID,
     'client_secret': process.env.PAYPAL_CLIENT_SECRET
 });
@@ -155,7 +155,7 @@ dotenv.config();
 app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     next();
-  });
+});
 
 
 
@@ -167,7 +167,7 @@ app.use((req, res, next) => {
 
     // Create the canonical URL
     const canonicalUrl = `${protocol}://${req.get('host')}${req.originalUrl}`;
-    
+
 
     // Pass the canonical URL to all templates
     res.locals.canonicalUrl = canonicalUrl;
@@ -274,8 +274,8 @@ async function appendToSheet(auth, data) {
 
 function parsePhoneNumber(phoneNumber) {
     // Remove all non-digit characters
-    const cleaned = phoneNumber.replace(/\D/g,'');
-    
+    const cleaned = phoneNumber.replace(/\D/g, '');
+
     // Always take the first two digits as the country code
     const countryCode = cleaned.slice(0, 2);
     const number = cleaned.slice(2);
@@ -301,15 +301,15 @@ app.get("/", async (req, res) => {
 
     const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
     const testimonials = await Testimonial.find().populate('page');
-   
+
     const ads = await Ad.find({
         isActive: true,
         startDate: { $lte: now },
         endDate: { $gte: now },
         activeDays: dayOfWeek,
-        startTime: { $lte: currentTime }, 
-        endTime: { $gte: currentTime }  
-      }).sort({ uploadDate: -1 });
+        startTime: { $lte: currentTime },
+        endTime: { $gte: currentTime }
+    }).sort({ uploadDate: -1 });
     res.render("home", {
         ads,
         // successMessage,
@@ -429,10 +429,10 @@ app.get("/email-marketing", (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////
 
 app.get("/seo", (req, res) => {
-   
-  
+
+
     res.render("seo", {
-       
+
         title: "Leading SEO Company in Delhi-NCR & Best SEO Agency in Hyderabad | Shashi Sales",
         description: "Shashi Sales And Marketing - Explore the services of the top SEO experts in Delhi-NCR and the best SEO agency in Hyderabad, offering solutions for online success and increased traffic.",
         keywords: 'Best SEO Agency in Delhi-NCR & Hyderabad'
@@ -522,7 +522,7 @@ app.get("/user-story/:id", async (req, res) => {
             story,
             title: testimonial.title || "",
             description: testimonial.description || "",
-            keywords : " "
+            keywords: " "
         });
     } catch (error) {
         console.error('Error fetching case study:', error);
@@ -560,7 +560,7 @@ app.get("/blog-form", (req, res) => {
         title: "Blog Form - Seo Company in Delhi-NCR India - Shashi Sales",
         description: "Boost your online presence with Shashi Sales and Marketing, the top SEO company in Delhi-NCR India. Drive traffic and enhance your brand visibility today!",
         keywords: 'Draggan Website'
- });
+    });
 });
 
 
@@ -569,73 +569,73 @@ app.get("/blog-detail/:canonical", async (req, res) => {
     const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
     const currentTime = now.toTimeString().slice(0, 5);
 
-  
+
     try {
-      const { canonical } = req.params;
-      const blog = await Blog.findOne({ canonical: canonical });
-      if (!blog) {
-        return res.status(404).send("Blog not found");
-      }
-  
-      const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
-  
-      const ads = await Ad.find({
-        isActive: true,
-        startDate: { $lte: now },
-        endDate: { $gte: now },
-        activeDays: dayOfWeek,
-        startTime: { $lte: currentTime }, 
-        endTime: { $gte: currentTime }  
-      }).sort({ uploadDate: -1 });
-  
-      const blogsRecommend = await Blog.find({
-        _id: { $ne: blog._id },
-        metaKeywords: { $in: blog.metaKeywords } 
-      }).limit(4);
-  
-      res.render("blogDetails", {
-        truncateString,
-        blogsRecommend,
-        ads,
-        blog,
-        comments: approvedComments,
-        title: blog.metaTitle,
-        description: blog.metaDescription
-      });
+        const { canonical } = req.params;
+        const blog = await Blog.findOne({ canonical: canonical });
+        if (!blog) {
+            return res.status(404).send("Blog not found");
+        }
+
+        const approvedComments = await Comment.find({ blog: blog._id, isApproved: true });
+
+        const ads = await Ad.find({
+            isActive: true,
+            startDate: { $lte: now },
+            endDate: { $gte: now },
+            activeDays: dayOfWeek,
+            startTime: { $lte: currentTime },
+            endTime: { $gte: currentTime }
+        }).sort({ uploadDate: -1 });
+
+        const blogsRecommend = await Blog.find({
+            _id: { $ne: blog._id },
+            metaKeywords: { $in: blog.metaKeywords }
+        }).limit(4);
+
+        res.render("blogDetails", {
+            truncateString,
+            blogsRecommend,
+            ads,
+            blog,
+            comments: approvedComments,
+            title: blog.metaTitle,
+            description: blog.metaDescription
+        });
     } catch (err) {
-      console.error(err);
-      res.status(500).send("Internal Server Error");
+        console.error(err);
+        res.status(500).send("Internal Server Error");
     }
-  });
+});
 
 
 
 app.post('/subscribe', async (req, res) => {
     try {
-      const { email, redirectUrl } = req.body;
-      
-      // Check if the email already exists
-      const existingSubscriber = await Subscriber.findOne({ email });
-      if (existingSubscriber) {
-        req.flash('error', 'This email is already subscribed.');
-        return res.redirect(redirectUrl);
-      }
-  
-      // Create a new subscriber
-      const newSubscriber = new Subscriber({  email });
-      await newSubscriber.save();
-  
-      req.flash('success', 'Subscription successful!');
-      res.redirect(redirectUrl);
+        const { email, redirectUrl } = req.body;
+
+        // Check if the email already exists
+        const existingSubscriber = await Subscriber.findOne({ email });
+        if (existingSubscriber) {
+            req.flash('error', 'This email is already subscribed.');
+            return res.redirect(redirectUrl);
+        }
+
+        // Create a new subscriber
+        const newSubscriber = new Subscriber({ email });
+        await newSubscriber.save();
+
+        req.flash('success', 'Subscription successful!');
+        res.redirect(redirectUrl);
     } catch (error) {
-      console.error('Error subscribing:', error);
-      req.flash('error', 'Failed to subscribe. Please try again.');
-      res.redirect(redirectUrl);
+        console.error('Error subscribing:', error);
+        req.flash('error', 'Failed to subscribe. Please try again.');
+        res.redirect(redirectUrl);
     }
-  });
+});
 
 
-  app.delete('/delete-subscriber/:id', async (req, res) => {
+app.delete('/delete-subscriber/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const deletedSubscriber = await Subscriber.findByIdAndDelete(id);
@@ -681,7 +681,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
         for (let i = 0; i < headings.length; i++) {
             content.push({
                 heading: headings[i],
-                paragraph: paragraphs[i].replace(/\n/g, '<br>'),  
+                paragraph: paragraphs[i].replace(/\n/g, '<br>'),
                 image: images[i] || null
             });
         }
@@ -751,7 +751,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     const now = new Date();
     const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
     const currentTime = now.toTimeString().slice(0, 5);
-    
+
     const AllBlogs = await Blog.find();
     const galleryItems = await Gallery.find();
     const category = await Gallery.find();
@@ -759,7 +759,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
     const subscribers = await Subscriber.find();
-    
+
 
 
 
@@ -767,21 +767,21 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     const ads = await Ad.find().sort({ uploadDate: -1 });
     ads.forEach(ad => {
         const isActive = ad.isActive &&
-                              ad.startDate <= now &&
-                              ad.endDate >= now &&
-                              ad.activeDays.includes(dayOfWeek) &&
-                              ad.startTime <= currentTime &&
-                              ad.endTime >= currentTime;
+            ad.startDate <= now &&
+            ad.endDate >= now &&
+            ad.activeDays.includes(dayOfWeek) &&
+            ad.startTime <= currentTime &&
+            ad.endTime >= currentTime;
         ad.isActive = isActive;
     });
 
     const chats = await Chat.find({ isOpen: true }).populate('user');
     const closedChats = await Chat.find({ isOpen: false }).populate('user').sort({ closedAt: -1 }).limit(10);
-    
-  
+
+
 
     res.render("allBlogs", {
-        
+
         ads,
         chats,
         closedChats,
@@ -823,14 +823,14 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
         const blog = await Blog.findOne({ canonical: canonical });
 
 
-       
+
 
         if (!blog) {
             return res.status(404).send('Blog not found');
         }
 
         res.render('blogEdit', {
-            blog,title: "blog edit  ",
+            blog, title: "blog edit  ",
             description: " blog edit page"
         });
     } catch (err) {
@@ -845,7 +845,7 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
 app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        const {authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
+        const { authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
 
         const subscribers = await Subscriber.find();
 
@@ -905,140 +905,140 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
 // Route for handling ads upload
 app.post('/uploadAd', upload.single('ad'), async (req, res) => {
     try {
-      if (!req.file) {
-        req.session.errorMessage = 'No file uploaded!';
-        return res.redirect('/admin');
-      }
-  
-      const { title, linkPath, startDate, endDate, startTime, endTime, activeDays } = req.body;
-  
-      // Function to convert IST to UTC
-      function convertISTtoUTC(date, time) {
-        const istDate = new Date(`${date}T${time}:00+05:30`);
-        return istDate.toUTCString();
-      }
-  
-      // Convert IST times to UTC
-      const startUTC = convertISTtoUTC(startDate, startTime);
-      const endUTC = convertISTtoUTC(endDate, endTime);
-  
-      // Parse the UTC strings back into Date objects
-      const startDateUTC = new Date(startUTC);
-      const endDateUTC = new Date(endUTC);
-  
-      // Create a new Ad object
-      const ad = new Ad({
-        title,
-        linkPath,
-        filePath: '/uploads/' + req.file.filename, // Save relative path
-        startDate: startDateUTC.toISOString().split('T')[0],
-        endDate: endDateUTC.toISOString().split('T')[0],
-        startTime: startDateUTC.toISOString().split('T')[1].substring(0, 5),
-        endTime: endDateUTC.toISOString().split('T')[1].substring(0, 5),
-        activeDays
-      });
-  
-      // Save to the database
-      await ad.save();
-  
-    req.flash('success', 'Your Ad is uploaded successfully.');
-      res.redirect('/admin-panel');
-    } catch (err) {
-      console.error('Error uploading ad:', err);
-      req.flash('error', 'Ad not uploaded successfully!');
-      res.redirect('/admin-panel');
-    }
-  });
-
-
-  app.get('/edit-ad/:id', async (req, res) => {
-    try {
-      const adId = req.params.id;
-      const ad = await Ad.findById(adId);
-  
-      if (!ad) {
-        return res.status(404).send('Ad not found');
-      }
-  
-      res.render('editAd', { ad });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Server error');
-    }
-  });
-  app.post("/updateAd/:id", upload.single('ad'), async (req, res) => {
-    try {
-      const ad = await Ad.findById(req.params.id);
-      if (!ad) {
-        return res.status(404).send("Ad not found");
-      }
-
-      ad.title = req.body.title;
-      ad.linkPath = req.body.linkPath;
-      ad.startDate = req.body.startDate;
-      ad.endDate = req.body.endDate;
-      ad.startTime = req.body.startTime;
-      ad.endTime = req.body.endTime;
-      ad.activeDays = req.body.activeDays;
-  
-      if (req.file) {
-        ad.filePath = '/uploads/' + req.file.filename;
-      }
-  
-      await ad.save();
-    req.flash('success', 'Your Ad is Updated successfully.');
-      res.redirect('/admin-panel');
-    } catch (err) {
-      console.error('Error updating ad:', err);
-      req.flash('error', 'Ad not updated successfully!');
-      res.redirect('/admin-panel');
-    }
-  });
-
-
-  app.post('/delete-ads', async (req, res) => {
-    const adIds = req.body.adIds;
-  
-    if (!adIds || adIds.length === 0) {
-      return res.redirect('/admin');
-    }
-  
-    try {
-      const adsToDelete = await Ad.find({ _id: { $in: adIds } });
-  
-      adsToDelete.forEach(ad => {
-        const filePath = `./public${ad.filePath}`;
-        if (fs.existsSync(filePath)) {
-          fs.unlinkSync(filePath); 
+        if (!req.file) {
+            req.session.errorMessage = 'No file uploaded!';
+            return res.redirect('/admin');
         }
-      });
-  
-      await Ad.deleteMany({ _id: { $in: adIds } });
-  
-      res.redirect('/admin-panel'); 
-    } catch (err) {
-      console.error('Error deleting ads:', err);
-      res.status(500).send('Error deleting ads');
-    }
-  });
 
+        const { title, linkPath, startDate, endDate, startTime, endTime, activeDays } = req.body;
 
-  app.post('/updateClickCount/:id', async (req, res) => {
-    try {
-      const adId = req.params.id;
-      const ad = await Ad.findById(adId);
-      
-      if (ad) {
-        ad.clickCount += 1;
+        // Function to convert IST to UTC
+        function convertISTtoUTC(date, time) {
+            const istDate = new Date(`${date}T${time}:00+05:30`);
+            return istDate.toUTCString();
+        }
+
+        // Convert IST times to UTC
+        const startUTC = convertISTtoUTC(startDate, startTime);
+        const endUTC = convertISTtoUTC(endDate, endTime);
+
+        // Parse the UTC strings back into Date objects
+        const startDateUTC = new Date(startUTC);
+        const endDateUTC = new Date(endUTC);
+
+        // Create a new Ad object
+        const ad = new Ad({
+            title,
+            linkPath,
+            filePath: '/uploads/' + req.file.filename, // Save relative path
+            startDate: startDateUTC.toISOString().split('T')[0],
+            endDate: endDateUTC.toISOString().split('T')[0],
+            startTime: startDateUTC.toISOString().split('T')[1].substring(0, 5),
+            endTime: endDateUTC.toISOString().split('T')[1].substring(0, 5),
+            activeDays
+        });
+
+        // Save to the database
         await ad.save();
-        res.status(200).json({ message: 'Click count updated successfully', clickCount: ad.clickCount });
-      } else {
-        res.status(404).json({ message: 'Ad not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ message: 'Error updating click count', error });
+
+        req.flash('success', 'Your Ad is uploaded successfully.');
+        res.redirect('/admin-panel');
+    } catch (err) {
+        console.error('Error uploading ad:', err);
+        req.flash('error', 'Ad not uploaded successfully!');
+        res.redirect('/admin-panel');
     }
-  });
+});
+
+
+app.get('/edit-ad/:id', async (req, res) => {
+    try {
+        const adId = req.params.id;
+        const ad = await Ad.findById(adId);
+
+        if (!ad) {
+            return res.status(404).send('Ad not found');
+        }
+
+        res.render('editAd', { ad });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+app.post("/updateAd/:id", upload.single('ad'), async (req, res) => {
+    try {
+        const ad = await Ad.findById(req.params.id);
+        if (!ad) {
+            return res.status(404).send("Ad not found");
+        }
+
+        ad.title = req.body.title;
+        ad.linkPath = req.body.linkPath;
+        ad.startDate = req.body.startDate;
+        ad.endDate = req.body.endDate;
+        ad.startTime = req.body.startTime;
+        ad.endTime = req.body.endTime;
+        ad.activeDays = req.body.activeDays;
+
+        if (req.file) {
+            ad.filePath = '/uploads/' + req.file.filename;
+        }
+
+        await ad.save();
+        req.flash('success', 'Your Ad is Updated successfully.');
+        res.redirect('/admin-panel');
+    } catch (err) {
+        console.error('Error updating ad:', err);
+        req.flash('error', 'Ad not updated successfully!');
+        res.redirect('/admin-panel');
+    }
+});
+
+
+app.post('/delete-ads', async (req, res) => {
+    const adIds = req.body.adIds;
+
+    if (!adIds || adIds.length === 0) {
+        return res.redirect('/admin');
+    }
+
+    try {
+        const adsToDelete = await Ad.find({ _id: { $in: adIds } });
+
+        adsToDelete.forEach(ad => {
+            const filePath = `./public${ad.filePath}`;
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        });
+
+        await Ad.deleteMany({ _id: { $in: adIds } });
+
+        res.redirect('/admin-panel');
+    } catch (err) {
+        console.error('Error deleting ads:', err);
+        res.status(500).send('Error deleting ads');
+    }
+});
+
+
+app.post('/updateClickCount/:id', async (req, res) => {
+    try {
+        const adId = req.params.id;
+        const ad = await Ad.findById(adId);
+
+        if (ad) {
+            ad.clickCount += 1;
+            await ad.save();
+            res.status(200).json({ message: 'Click count updated successfully', clickCount: ad.clickCount });
+        } else {
+            res.status(404).json({ message: 'Ad not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating click count', error });
+    }
+});
 
 
 
@@ -1080,18 +1080,18 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
         blog.isApprove = !blog.isApprove;
         await blog.save();
 
-        
-         // Fetch 3 suggested blog posts
-    const suggestedBlogs = await Blog.find({ _id: { $ne: blog._id } })
-    .sort({ createdAt: -1 })
-    .limit(3);
 
-  for (const subscriber of subscribers) {
-    const imageUrl = blog.bannerImage.startsWith('https' || 'http') 
-      ? blog.bannerImage 
-      : `https://shashisales.com${blog.bannerImage}`;
+        // Fetch 3 suggested blog posts
+        const suggestedBlogs = await Blog.find({ _id: { $ne: blog._id } })
+            .sort({ createdAt: -1 })
+            .limit(3);
 
-    const htmlTemplate = `
+        for (const subscriber of subscribers) {
+            const imageUrl = blog.bannerImage.startsWith('https' || 'http')
+                ? blog.bannerImage
+                : `https://shashisales.com${blog.bannerImage}`;
+
+            const htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1156,12 +1156,12 @@ app.post('/toggle-approve/:id', isAdmin, async (req, res) => {
 </html>
     `;
 
-    await Templatesender(
-        [subscriber.email], 
-        htmlTemplate, 
-        "New Blog Post: " + blog.title
-      );
-}
+            await Templatesender(
+                [subscriber.email],
+                htmlTemplate,
+                "New Blog Post: " + blog.title
+            );
+        }
 
 
         res.redirect('/admin-panel');
@@ -1255,20 +1255,20 @@ app.post('/submit-quote', async (req, res) => {
         return res.redirect(referrerUrl);
     }
 
-        // Remove non-digit characters for length check
-        const phoneDigits = formData.tel.replace(/[^\d+]/g, '');
+    // Remove non-digit characters for length check
+    const phoneDigits = formData.tel.replace(/[^\d+]/g, '');
 
-        if (phoneDigits.length < 8) {
-            req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
-            return res.redirect(referrerUrl);
-        }
-    
-        // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-        if (!/^\+[\d\s\-()]+$/.test(formData.tel)) {
-            req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
-            return res.redirect(referrerUrl);
-        }
-    
+    if (phoneDigits.length < 8) {
+        req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
+        return res.redirect(referrerUrl);
+    }
+
+    // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+    if (!/^\+[\d\s\-()]+$/.test(formData.tel)) {
+        req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
+        return res.redirect(referrerUrl);
+    }
+
 
     // Simple email validation
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -1340,14 +1340,14 @@ app.post('/submit-quote', async (req, res) => {
         const authClient = await authenticate();
         // Append data to Google Sheets
         await appendToSheet(authClient, formData);
-        
+
         req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
 
-        
+
         res.redirect(referrerUrl);
     } catch (error) {
         console.error('Failed to send email:', error);
-       
+
         req.flash('error', 'An error occurred while submitting your form. Please try again later.');
         res.redirect(referrerUrl);
     }
@@ -1357,19 +1357,19 @@ app.post('/submit-quote-lead', async (req, res) => {
     const formData = req.body;
     const referrerUrl = req.get('Referrer') || '/';
 
-     // Remove non-digit characters for length check
-     const phoneDigits = formData.number.replace(/\D/g, '');
+    // Remove non-digit characters for length check
+    const phoneDigits = formData.number.replace(/\D/g, '');
 
-     if (phoneDigits.length < 7) {
-         req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
-         return res.redirect(referrerUrl);
-     }
- 
-     // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-     if (!/^[\d\s\-()]+$/.test(formData.number)) {
-         req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
-         return res.redirect(referrerUrl);
-     }
+    if (phoneDigits.length < 7) {
+        req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
+        return res.redirect(referrerUrl);
+    }
+
+    // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+    if (!/^[\d\s\-()]+$/.test(formData.number)) {
+        req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
+        return res.redirect(referrerUrl);
+    }
 
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
@@ -1448,7 +1448,7 @@ app.post('/submit-quote-lead', async (req, res) => {
 });
 app.post('/send-praposal', async (req, res) => {
     const formData = req.body;
-    
+
     const htmlTemplate1 = `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -1511,7 +1511,7 @@ app.post('/send-praposal', async (req, res) => {
 </html>
 `
 
-  const htmlTemplate2 = `<!DOCTYPE html>
+    const htmlTemplate2 = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1583,11 +1583,11 @@ app.post('/send-praposal', async (req, res) => {
 
         req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
 
-        
+
         res.redirect("/seo");
     } catch (error) {
         console.error('Failed to send email:', error);
-       
+
 
         req.flash('error', 'An error occurred while submitting your form. Please try again later.');
         res.redirect("/seo");
@@ -1602,74 +1602,74 @@ app.post('/send-praposal', async (req, res) => {
 
 // servey code
 
-  
-app.get('/survey', async(req, res) => {
+
+app.get('/survey', async (req, res) => {
     try {
-      const questions = await Question.find();
-      const questionNumber = parseInt(req.query.q) || 1;
-      const question = questions[questionNumber - 1];
-  
-      // Replace placeholders with actual values
-      let questionText = question.text;
-      if (question.placeholders && question.placeholders.length > 0) {
-        question.placeholders.forEach(placeholder => {
-          const value = req.session[placeholder] || `{${placeholder}}`;
-          questionText = questionText.replace(new RegExp(`{${placeholder}}`, 'g'), value);
+        const questions = await Question.find();
+        const questionNumber = parseInt(req.query.q) || 1;
+        const question = questions[questionNumber - 1];
+
+        // Replace placeholders with actual values
+        let questionText = question.text;
+        if (question.placeholders && question.placeholders.length > 0) {
+            question.placeholders.forEach(placeholder => {
+                const value = req.session[placeholder] || `{${placeholder}}`;
+                questionText = questionText.replace(new RegExp(`{${placeholder}}`, 'g'), value);
+            });
+        }
+
+        res.render('servey', {
+            questionNumber,
+            question: { ...question.toObject(), text: questionText },
+            totalQuestions: questions.length,
+            title: " ",
+            description: " ",
+            keywords: " "
         });
-      }
-  
-      res.render('servey', {
-        questionNumber,
-        question: { ...question.toObject(), text: questionText },
-        totalQuestions: questions.length,
-        title: " ",
-        description: " ",
-        keywords: " "
-      });
     } catch (error) {
-      res.status(500).send('An error occurred while fetching questions');
+        res.status(500).send('An error occurred while fetching questions');
     }
-  });
-  
-  app.post('/submit', async (req, res) => {
+});
+
+app.post('/submit', async (req, res) => {
     const { questionId, answer } = req.body;
     const questionNumber = parseInt(req.body.questionNumber);
 
-   
-  
-    try {
-      const questions = await Question.find();
-      let survey = await Survey.findOne({ _id: req.session.surveyId });
-  
-      if (!survey) {
-        survey = new Survey({
-          answers: [],
-          serialBias: Math.floor(Math.random() * questions.length) + 1
-        });
-        req.session.surveyId = survey._id;
-      }
-  
-      const existingAnswerIndex = survey.answers.findIndex(a => a.question.toString() === questionId);
-      if (existingAnswerIndex > -1) {
-        survey.answers[existingAnswerIndex].answer = answer;
-      } else {
-        survey.answers.push({ question: questionId, answer });
-      }
-  
-      await survey.save();
-  
-      // Store only firstname and company in the session
-      if (questionNumber === 1) {
-        req.session.firstname = answer;
-      } else if (questionNumber === 3) {
-        req.session.company = answer;
-      }
-  
-      if (questionNumber < questions.length) {
-        res.redirect(`/survey?q=${questionNumber + 1}`);
-      } else {
 
-        const htmlTemplate = `
+
+    try {
+        const questions = await Question.find();
+        let survey = await Survey.findOne({ _id: req.session.surveyId });
+
+        if (!survey) {
+            survey = new Survey({
+                answers: [],
+                serialBias: Math.floor(Math.random() * questions.length) + 1
+            });
+            req.session.surveyId = survey._id;
+        }
+
+        const existingAnswerIndex = survey.answers.findIndex(a => a.question.toString() === questionId);
+        if (existingAnswerIndex > -1) {
+            survey.answers[existingAnswerIndex].answer = answer;
+        } else {
+            survey.answers.push({ question: questionId, answer });
+        }
+
+        await survey.save();
+
+        // Store only firstname and company in the session
+        if (questionNumber === 1) {
+            req.session.firstname = answer;
+        } else if (questionNumber === 3) {
+            req.session.company = answer;
+        }
+
+        if (questionNumber < questions.length) {
+            res.redirect(`/survey?q=${questionNumber + 1}`);
+        } else {
+
+            const htmlTemplate = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -1726,22 +1726,22 @@ app.get('/survey', async(req, res) => {
         </html>
       `;
 
-        Templatesender(recipients, htmlTemplate, "A client has submitted the survey");
-        res.redirect('/thank-you');
-      }
+            Templatesender(recipients, htmlTemplate, "A client has submitted the survey");
+            res.redirect('/thank-you');
+        }
     } catch (error) {
-      res.status(500).send('An error occurred while saving the survey');
+        res.status(500).send('An error occurred while saving the survey');
     }
-  });
-  
-  app.get('/thank-you', (req, res) => {
-    
-    res.render('thank-you' , {
+});
+
+app.get('/thank-you', (req, res) => {
+
+    res.render('thank-you', {
         redirectUrl: "/"
     });
 
-   
-  });
+
+});
 // servey code
 
 
@@ -2477,160 +2477,162 @@ app.post("/admin/update-ads-txt", isAdmin, (req, res) => {
 
     fs.writeFile(filePath, newAdsTxt, (err) => {
         if (err) {
-            return res.status(500).send('Error writing to ads.txt file');
+            console.error('Error writing file:', err); // Log error for debugging
+            req.flash('error', 'Error writing to ads.txt file');
+            return res.redirect('/admin/edit-ads-txt');
         }
-
-        // Redirect back to the edit page after updating
+        req.flash('success', 'Ads.txt file is updated successfully');
         res.redirect('/admin/edit-ads-txt');
     });
+    
 });
 
 
 
 app.post('/get-phone-number', (req, res) => {
     const { latitude, longitude } = req.body;
-  
+
     // Simple check for India based on latitude and longitude
     if (latitude >= 8.4 && latitude <= 37.6 && longitude >= 68.7 && longitude <= 97.25) {
-      res.json({ phone: '18005710605' });  // Indian phone number
+        res.json({ phone: '18005710605' });  // Indian phone number
     } else {
-      res.json({ phone: '+1-321-125-5890' });  // Non-Indian phone number
+        res.json({ phone: '+1-321-125-5890' });  // Non-Indian phone number
     }
-  });
-  
+});
+
 
 
 //   chat-bot
 
-  
+
 app.get('/admin/chat/:chatId', async (req, res) => {
     try {
-      const chat = await Chat.findById(req.params.chatId).populate('user');
-      res.json(chat);
+        const chat = await Chat.findById(req.params.chatId).populate('user');
+        res.json(chat);
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Error retrieving chat' });
+        console.error(err);
+        res.status(500).json({ error: 'Error retrieving chat' });
     }
-  });
-  
-  app.post('/admin/reply', async (req, res) => {
+});
+
+app.post('/admin/reply', async (req, res) => {
     try {
-      const { chatId, content } = req.body;
-      const chat = await Chat.findById(chatId);
-      if (!chat || !chat.isOpen) {
-        return res.status(400).json({ error: 'Chat not found or closed' });
-      }
-      chat.messages.push({ content, sender: 'admin' });
-      await chat.save();
-      io.to(chatId).emit('chat message', { content, sender: 'admin' });
-      res.json({ success: true });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Error sending reply' });
-    }
-  });
-  
-  app.post('/close-chat', async (req, res) => {
-    try {
-      const { chatId } = req.body;
-      const chat = await Chat.findById(chatId);
-      if (!chat) {
-        return res.status(404).json({ error: 'Chat not found' });
-      }
-      chat.isOpen = false;
-      chat.closedAt = new Date();
-      await chat.save();
-      io.to(chatId).emit('chat closed', chatId);
-      res.json({ success: true });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Error closing chat' });
-    }
-  });
-  
-  io.on('connection', (socket) => {
-    console.log('A user connected');
-  
-    socket.on('admin connect', () => {
-      socket.join('admin');
-      console.log('Admin connected');
-    });
-  
-    socket.on('join chat', (chatId) => {
-      socket.join(chatId);
-      console.log(`User joined chat: ${chatId}`);
-    });
-  
-    socket.on('chat message', async ({ chatId, content }) => {
-      try {
-        console.log(`Received message for chat ${chatId}: ${content}`);
+        const { chatId, content } = req.body;
         const chat = await Chat.findById(chatId);
         if (!chat || !chat.isOpen) {
-          return socket.emit('error', 'Chat not found or closed');
+            return res.status(400).json({ error: 'Chat not found or closed' });
         }
-        const message = { content, sender: 'user' };
-        chat.messages.push(message);
+        chat.messages.push({ content, sender: 'admin' });
         await chat.save();
-        console.log(`Emitting message to chat ${chatId}`);
-        io.to(chatId).emit('chat message', { chatId, ...message });
-      } catch (err) {
-        console.error('Error saving message:', err);
-        socket.emit('error', 'Error saving message');
-      }
+        io.to(chatId).emit('chat message', { content, sender: 'admin' });
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error sending reply' });
+    }
+});
+
+app.post('/close-chat', async (req, res) => {
+    try {
+        const { chatId } = req.body;
+        const chat = await Chat.findById(chatId);
+        if (!chat) {
+            return res.status(404).json({ error: 'Chat not found' });
+        }
+        chat.isOpen = false;
+        chat.closedAt = new Date();
+        await chat.save();
+        io.to(chatId).emit('chat closed', chatId);
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error closing chat' });
+    }
+});
+
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    socket.on('admin connect', () => {
+        socket.join('admin');
+        console.log('Admin connected');
     });
-  
+
+    socket.on('join chat', (chatId) => {
+        socket.join(chatId);
+        console.log(`User joined chat: ${chatId}`);
+    });
+
+    socket.on('chat message', async ({ chatId, content }) => {
+        try {
+            console.log(`Received message for chat ${chatId}: ${content}`);
+            const chat = await Chat.findById(chatId);
+            if (!chat || !chat.isOpen) {
+                return socket.emit('error', 'Chat not found or closed');
+            }
+            const message = { content, sender: 'user' };
+            chat.messages.push(message);
+            await chat.save();
+            console.log(`Emitting message to chat ${chatId}`);
+            io.to(chatId).emit('chat message', { chatId, ...message });
+        } catch (err) {
+            console.error('Error saving message:', err);
+            socket.emit('error', 'Error saving message');
+        }
+    });
+
     // New event for typing indicator
     socket.on('typing', ({ chatId, isTyping }) => {
-      socket.to(chatId).emit('typing', { chatId, isTyping });
+        socket.to(chatId).emit('typing', { chatId, isTyping });
     });
-  
+
     socket.on('disconnect', () => {
-      console.log('User disconnected');
+        console.log('User disconnected');
     });
-  });
-  
-  
-  app.post('/start-chat', async (req, res) => {
+});
+
+
+app.post('/start-chat', async (req, res) => {
     try {
-      const { 0: problem, 1: name, 2: email } = req.body;
-      let user = await Chatuser.findOne({ email });
-      if (!user) {
-        user = new Chatuser({ name, email, problem });
-        await user.save();
-      }
-      const chat = new Chat({ 
-        user: user._id,
-        initialQuestions: [
-          { question: "Hey! how can we assist you?", answer: problem },
-          { question: "What's your name?", answer: name },
-          { question: "What's your email address?", answer: email },
-        ]
-      });
-      await chat.save();
-      console.log(`New chat started: ${chat._id}`);
-      
-      // Emit a 'new chat' event to all connected admin clients
-      io.to('admin').emit('new chat', { 
-        _id: chat._id, 
-        userName: user.name,
-        userEmail: user.email,
-        problem: problem,
-        startedAt: chat.startedAt.toISOString() // Convert to ISO string for consistent formatting
-      });
-      
-      res.json({ userId: user._id, chatId: chat._id });
+        const { 0: problem, 1: name, 2: email } = req.body;
+        let user = await Chatuser.findOne({ email });
+        if (!user) {
+            user = new Chatuser({ name, email, problem });
+            await user.save();
+        }
+        const chat = new Chat({
+            user: user._id,
+            initialQuestions: [
+                { question: "Hey! how can we assist you?", answer: problem },
+                { question: "What's your name?", answer: name },
+                { question: "What's your email address?", answer: email },
+            ]
+        });
+        await chat.save();
+        console.log(`New chat started: ${chat._id}`);
+
+        // Emit a 'new chat' event to all connected admin clients
+        io.to('admin').emit('new chat', {
+            _id: chat._id,
+            userName: user.name,
+            userEmail: user.email,
+            problem: problem,
+            startedAt: chat.startedAt.toISOString() // Convert to ISO string for consistent formatting
+        });
+
+        res.json({ userId: user._id, chatId: chat._id });
     } catch (err) {
-      console.error('Error starting chat:', err);
-      res.status(500).json({ error: 'Error starting chat' });
+        console.error('Error starting chat:', err);
+        res.status(500).json({ error: 'Error starting chat' });
     }
-  });
-  
-  
-app.get("/new-page" , (req, res)=>{
-    res.render("blogPage" , {
-        title : "",
-        description : "",
-        keywords : ""
+});
+
+
+app.get("/new-page", (req, res) => {
+    res.render("blogPage", {
+        title: "",
+        description: "",
+        keywords: ""
     });
 })
 
