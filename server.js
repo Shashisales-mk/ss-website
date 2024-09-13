@@ -1772,9 +1772,9 @@ async function createDefaultAdminUsers() {
 
 
         const adminUser = new User({
-            name: 'Admin User2',
-            email: "bgmilelomujhse@gmail.com",
-            password: "Surya@2604", // await the hashed password
+            name: 'Anurag',
+            email: "anurag.tiwari@shashisales.com",
+            password: "India@420325!", // await the hashed password
             role: 'admin'
         });
 
