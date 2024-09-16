@@ -2219,14 +2219,67 @@ text-decoration: none;
 
 
 /* blogPage css */
+.full-page{
+  padding: 0 4vw;
+}
 .blog-header{
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-top: 10rem;
+  border: 2px solid #c4C800;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.tag-btns{
+  width: 65%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 
+
+.tag-btns a{
+  color: black;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 1rem;
+}
+.icons{
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.icons img{
+  width: 40px;
+}
+.inverted{
+  filter: invert();
+}
+.active{
+  background-color: #000;
+  color: white !important;
+}
+
+.full-blog{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.left-blog{
+  width: 60%;
+}
+.right-blog{
+  padding: 2.5rem 0px;
+  width: 37%;
+}
 
 /* Slider container */
 .slider-container {
@@ -2234,6 +2287,7 @@ text-decoration: none;
   width: 100%;
   margin: 0 auto;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 /* Slider */
@@ -2250,7 +2304,7 @@ text-decoration: none;
 
 .slide  img {
   width: 100%;
-  
+  height: 400px;
 }
 
 /* Navigation arrows */
@@ -2299,3 +2353,301 @@ text-decoration: none;
 .dot.active {
   background-color: #888; /* Gray color for active dot */
 }
+
+
+.all-blogs{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.single-blog{
+  width: 48%;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-direction: column;
+  height: 380px;
+  object-fit: contain;
+  color: white;
+  
+}
+
+.single-blog img{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 8;
+}
+.single-blog p, .single-blog h3{
+  z-index: 9;
+  position: relative;
+  padding: 1rem;
+}
+.blog-list{
+  width: 48%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 2rem;
+  
+}
+
+.blog{
+  height:100px ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  /* flex-direction: column; */
+}
+.blog-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  
+}
+
+.blog-title span{
+  font-size: small;
+}
+
+
+
+.blog img{
+  height: 100%;
+  border-radius: 10px;
+}
+
+.view-more{
+  background-color: #c4C800;
+  text-align: center;
+  padding: .5rem 1.5rem;
+  border-radius: 10px;
+  float: right;
+  outline: none;
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.latest-blogs, .popular-blogs{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.lb, .pb{
+  width: 47%;
+  border: 2px solid #c4C800;
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+
+.lb-desc, .pb-desc{
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+
+.lb-desc p, .pb-desc p{
+  margin-bottom: 20px;
+}
+
+.lb-desc span, .pb-desc span{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: small;
+}
+
+.lb img , .pb img{
+  width: 100%;
+  height: 200px;
+}
+
+
+.right-blog{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.news-letter{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: .8rem;
+}
+
+.subcriber-form{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.subcriber-form form{
+  width: 100%;
+}
+
+.email{
+  width: 65%;
+ border: none;
+ outline: none;
+ background-color: #e8dbdb;
+ padding: .8rem;
+ color: black;
+ border-radius: 8px;
+}
+
+.submit{
+  width: 28%;
+  background-color: red;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  padding: .8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+}
+
+.tags{
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #c4C800;
+  border-radius: 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tag-name{
+  width: 100%;
+  
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .6rem;
+}
+
+.tags a{
+  color: black;
+  width: 20%;
+  background-color: #F3F4AD;
+  padding: .3rem .7rem;
+  text-align: center;
+  border-radius: 8px;
+}
+
+
+
+.weekly-blogs{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid #c4C800;
+  border-radius: 15px;
+}
+
+.headline-icon{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.upload-blog{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.upload-blog a{
+  width: 100%;
+  text-align: center;
+  padding: .8rem 2rem;
+  background-color: #c4C800;
+  font-weight: bold;
+  color: #000;
+  border-radius: 12px;
+  font-size: 1.2rem;
+}
+
+.suggested-blogs{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.s-blog{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 100px;
+}
+
+.blog-title{
+  align-items: flex-start;
+
+  /* justify-content: flex-end; */
+}
+
+
+.s-blog img{
+  height: 100%;
+  border-radius: 10px;
+}
+
+
+.sub{
+  font-size: 1.5rem;
+}
+
+.hidden-blog-AB, .hidden-blog-LB, .hidden-blog-PB {
+  display: none;
+}
+

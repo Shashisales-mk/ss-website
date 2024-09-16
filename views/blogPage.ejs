@@ -8,140 +8,217 @@
 
 
     <body>
-        <div class="blog-header">
-            <div class="tag-btns">
-                <a href="">All blogs</a>
-                <a href="">Latest blogs</a>
-                <a href="">Popular blogs</a>
-                <a href="">Upload your blog</a>
+        <div class="full-page">
+            <div class="blog-header">
+                <div class="tag-btns">
+                    <a href="" class="active">All blogs</a>
+                    <a href="">Latest blogs</a>
+                    <a href="">Popular blogs</a>
+                    <a target="_blank" href="/blog-form">Upload your blog</a>
+                </div>
+                <div class="icons">
+                    <a href="https://www.facebook.com/shashigroups" target="_blank"><img class="inverted" src="/assets/images/fb.webp" alt=""></a>
+                    <a href="https://www.instagram.com/shashisales/" target="_blank"><img class="inverted" src="/assets/images/in.webp" alt=""></a>
+                    <a href="https://www.linkedin.com/company/shashisales/" target="_blank"><img class="inverted" src="/assets/images/ln.webp" alt=""></a>
+                    <a href=""><img src="/assets/images/yt.jpg" alt=""></a>
+                    <a href=""><img src="/assets/images/x.jpg" alt=""></a>
+                </div>
             </div>
-            <div class="icons">
-                <img src="/assets/images/fb.webp" alt="">
-                <img src="/assets/images/in.webp" alt="">
-                <img src="/assets/images/ln.webp" alt="">
-                <img src="/assets/images/yt.webp" alt="">
-                <img src="/assets/images/x.webp" alt="">
+
+            <div class="full-blog">
+                <div class="left-blog">
+                    <div class="slider-container">
+                        <div class="slider">
+                            <div class="slide"><img src="/assets/images/abo-img-1.webp" alt="Image 1"></div>
+                            <div class="slide"><img src="/assets/images/abo-img-2.webp" alt="Image 2"></div>
+                            <div class="slide"><img src="/assets/images/abo-img-1.webp" alt="Image 3"></div>
+                            <div class="slide"><img src="/assets/images/abo-img-2.webp" alt="Image 2"></div>
+                            <div class="slide"><img src="/assets/images/abo-img-1.webp" alt="Image 3"></div>
+                        </div>
+                        <div class="nav-arrows">
+                            <div class="arrow prev"><i class="fa-solid fa-angle-left"></i></div>
+                            <div class="arrow next"><i class="fa-solid fa-angle-right"></i></div>
+                        </div>
+                        <div class="nav-dots"></div>
+                    </div>
+
+                    <h3 style="margin-bottom: 2rem;">All Blogs</h3>
+                    <div class="all-blogs">
+                        <a class="single-blog">
+                            <img src="/assets/images/abo-img-1.webp" alt="">
+                            <h3>Blog title you can write anything</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod, nostrum magni enim
+                                laboriosam distinctio obcaecati saepe deserunt consequuntur suscipit facere.</p>
+                        </a>
+
+                        <div class="blog-list">
+                            <% blogs.forEach((blog, index)=> { %>
+                                <a class="blog <% if (index >= 3) { %>hidden-blog-AB<% } %>">
+                                    <img src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                                    <div class="blog-title">
+                                        <h4>
+                                            <%= blog.title %>
+                                        </h4>
+                                        <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                })  %></span>
+                                    </div>
+                                </a>
+                                <% }) %>
+                        </div>
+                    </div>
+                    <button class="view-more" id="all-AB">View More</button>
+
+                    <h3>Latest Blogs</h3>
+                    <div class="latest-blogs">
+                        <% blogs.forEach((blog, index)=> { %>
+                            <% if(blog.isLatest === true){ %>
+                        <div class="lb <% if (index >= 2) { %>hidden-blog-LB<% } %>" >
+                            <img src="/assets/images/abo-img-1.webp" alt="">
+                            <div class="lb-desc">
+                                <h4>Blog title you can write anything </h4>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo obcaecati hic eos sed
+                                    vel fuga culpa quibusdam natus? Cumque, mollitia!</p>
+                                <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                })  %></span>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% }) %>
+                      
+                    </div>
+                    <button class="view-more" id="all-LB">View More</button>
+
+
+                    <h3>Popular Blogs</h3>
+                    <div class="popular-blogs">
+                        <% blogs.forEach((blog, index)=> { %>
+                            <% if(blog.isPopular === true){ %>
+                        <div class="pb <% if (index >= 4) { %>hidden-blog-PB<% } %>" >
+                            <img src="/assets/images/abo-img-1.webp" alt="">
+                            <div class="pb-desc">
+                                <h4>Blog title you can write anything </h4>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo obcaecati hic eos sed
+                                    vel fuga culpa quibusdam natus? Cumque, mollitia!</p>
+                                <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                })  %></span>
+                            </div>
+                        </div>
+                        <% } %>
+                        <% }) %>
+                        
+                    </div>
+                    <button class="view-more" id="all-PB">View More</button>
+
+                </div>
+
+                <div class="right-blog">
+                    <div class="news-letter">
+                        <h1 class="sub">Subscribe to Our Newsletter</h1>
+                        <div class="subcriber-form">
+                            <form action="/subscribe" method="POST">
+                                <input type="email" class="email" name="email" placeholder="Email">
+                                <input type="hidden" name="redirectUrl" value="/blog">
+                                <input class="submit" type="submit" value="Submit">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="tags">
+                        <h3>Tags</h3>
+                        <div class="tag-name">
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+                            <a href="">tag</a>
+
+                        </div>
+                    </div>
+
+                    <!-- <div class="weekly-blogs">
+                        <h3>Weekly Blogs</h3>
+                        <div class="headline-icon">
+                            <span>&#11088; </span>
+                            <a>Blog title you can write anything Blog title you can write anything</a>
+                        </div>
+                        <div class="headline-icon">
+                            <span>&#11088; </span>
+                            <a>Blog title you can write anything Blog title you can write anything</a>
+                        </div>
+
+                    </div> -->
+
+                    <div class="upload-blog">
+                        <a href="">Submit Your Story/Blog</a>
+                    </div>
+
+                    <div class="suggested-blogs">
+                        <h3>Suggested Blogs</h3>
+                        <% blogs.forEach((blog, index)=> { %>
+                            <% if(blog.isPopular === true){ %>
+                        <a class="s-blog <% if (index >= 10) { %>hidden-blog-PB<% } %>">
+                            <img src="<%= blog.showImg %>" alt="<%= blog.title%>">
+                            <div class="blog-title">
+                                <h4><%= blog.title%></h4>
+
+                                <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                })  %></span>
+                            </div>
+                        </a>
+                        <% } %>
+                        <% }) %>
+                        
+
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="full-blog">
-            <div class="left-blog">
-                <div class="slider-container">
-                    <div class="slider">
-                        <div class="slide"><img src="/assets/images/abo-img-1.webp" alt="Image 1"></div>
-                        <div class="slide"><img src="/assets/images/abo-img-2.webp" alt="Image 2"></div>
-                        <div class="slide"><img src="/assets/images/abo-img-1.webp" alt="Image 3"></div>
-                    </div>
-                    <div class="nav-arrows">
-                        <div class="arrow prev"><i class="fa-solid fa-angle-left"></i></div>
-                        <div class="arrow next"><i class="fa-solid fa-angle-right"></i></div>
-                    </div>
-                    <div class="nav-dots"></div>
-                </div>
-
-                <h3>All Blogs</h3>
-                <div class="all-blogs">
-                    <div class="single-blog">
-                        <img src="" alt="">
-                        <h3></h3>
-                        <p></p>
-                    </div>
-                    <div class="blog-list">
-                        <div class="blog">
-                            <img src="" alt="">
-                            <h3></h3>
-                            <p></p>
-                            <span></span>
-                        </div>
-                        <div class="blog">
-                            <img src="" alt="">
-                            <h3></h3>
-                            <p></p>
-                            <span></span>
-                        </div>
-                    </div>
-                </div>
-                <button class="view-more"></button>
-
-                <h3>Latest Blogs</h3>
-                <div class="latest-blogs">
-                    <div class="lb">
-                        <img src="" alt="">
-                        <h4></h4>
-                        <p></p>
-                        <span></span>
-                    </div>
-                    <div class="lb">
-                        <img src="" alt="">
-                        <h4></h4>
-                        <p></p>
-                        <span></span>
-                    </div>
-                </div>
-                <button class="view-more"></button>
-
-
-                <h3>Popular Blogs</h3>
-                <div class="popular-blogs">
-                    <div class="pb">
-                        <img src="" alt="">
-                        <h4></h4>
-                        <p></p>
-                        <span></span>
-                    </div>
-                    <div class="pb">
-                        <img src="" alt="">
-                        <h4></h4>
-                        <p></p>
-                        <span></span>
-                    </div>
-                </div>
-                <button class="view-more"></button>
-
-            </div>
-            <div class="right-blog">
-                <div class="news-letter">
-                    <h3></h3>
-                    <div class="subcriber-form">
-                        <input type="text"> <input type="submit" value="">
-                    </div>
-                </div>
-
-                <div class="tags">
-                    <h3>Tags</h3>
-                    <a href="">tag</a>
-                </div>
-
-                <div class="weekly-blogs">
-                    <a><span></span>title</a>
-                    <a><span></span>title</a>
-                </div>
-
-                <div class="upload-blog">
-                    <a href="">Submit Your Story/Blog</a>
-                </div>
-
-                <div class="suggested-blogs">
-                    <div class="blog-list"></div>
-                    <div class="blog">
-                        <img src="" alt="">
-                        <h3></h3>
-                        <p></p>
-                        <span></span>
-                    </div>
-                    <div class="blog">
-                        <img src="" alt="">
-                        <h3></h3>
-                        <p></p>
-                        <span></span>
-                    </div>
-                </div>
-            </div>
-        </div>       
     </body>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            function setupToggle(buttonId, blogClass) {
+        const viewMoreButton = document.querySelector(buttonId);
+        let isViewMore = true; // Track the current state of the button
+
+        viewMoreButton.addEventListener('click', function () {
+            const hiddenBlogs = document.querySelectorAll(blogClass);
+
+            if (isViewMore) {
+                // Show all hidden blogs
+                hiddenBlogs.forEach(blog => {
+                    blog.style.display = 'flex';
+                });
+                viewMoreButton.textContent = 'View Less'; // Change button text to 'View Less'
+            } else {
+                // Hide the additional blogs again
+                hiddenBlogs.forEach(blog => {
+                    blog.style.display = 'none';
+                });
+                viewMoreButton.textContent = 'View More'; // Change button text back to 'View More'
+            }
+
+            isViewMore = !isViewMore; // Toggle the state
+        });
+    }
+
+    // Setup for all buttons
+    setupToggle('#all-LB', '.hidden-blog-LB'); // For the first button and blogs
+    setupToggle('#all-PB', '.hidden-blog-PB'); // For the second button and blogs
+    setupToggle('#all-AB', '.hidden-blog-AB'); // For the third button and blogs
+
+
             // Code for slideshow
             const slides = document.querySelectorAll('.slide');
             const dotsContainer = document.querySelector('.nav-dots');
