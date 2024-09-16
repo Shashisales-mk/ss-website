@@ -2260,7 +2260,7 @@ text-decoration: none;
 .inverted{
   filter: invert();
 }
-.active{
+.active2{
   background-color: #000;
   color: white !important;
 }
