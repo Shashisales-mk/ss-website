@@ -764,7 +764,7 @@
                                     <div class="touch" data-id="<%= ad._id %>" onclick="trackClick('<%= ad._id %>')">
                                         <% if (ad.filePath.endsWith('.mp4')) { %>
                                             <a href="<%= ad.linkPath %>" target="_blank">
-                                                <video controls width="300">
+                                                <video style="width: 100%;" autoplay muted loop width="300">
                                                     <source src="<%= ad.filePath %>" type="video/mp4">
                                                     Your browser does not support the video tag.
                                                 </video>
