@@ -336,8 +336,10 @@ app.get("/about-us", (req, res) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/web-development", (req, res) => {
+app.get("/web-development", async (req, res) => {
+    const testimonials = await Testimonial.find().populate('page');
     res.render("webDevelopment", {
+        testimonials,
         title: "Leading Website Development Companies - Shashi Sales ",
         description: "Get to know the top website development companies of 2024 and their innovative approaches to web development.",
         keywords: 'Website Development Companies'
