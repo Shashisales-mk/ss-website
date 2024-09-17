@@ -547,8 +547,8 @@ app.get("/blog", async (req, res) => {
         res.render("blog", {
             blogs,
             truncateString,
-            title: "Draggan AI  Revolutionizing Workflow Optimization - Shashi Sales",
-            description: "Discover how Draggan AI is revolutionizing workflow optimization. Explore its powerful capabilities in automating tasks and enhancing efficiency across projects.",
+            title: "Shashi Sales Blogs | Tech, Sales & Marketing Insights",
+            description: "Shashi Sales And Marketing is the biggest marketplace in Asia for IT services, offering solutions like web design & development, digital marketing, SEO, UI/UX design and many more.",
             keywords: 'Draggan AI'
         });
     } catch (err) {
@@ -2630,22 +2630,7 @@ app.post('/start-chat', async (req, res) => {
 });
 
 
-app.get("/new-page", async (req, res) => {
-    try {
-        const blogs = await Blog.find({ isApprove: true }).sort({ createdAt: -1 });
-        console.log(blogs.canonical);
-        res.render("blogPage", {
-            blogs,
-            truncateString,
-            title: "Draggan AI  Revolutionizing Workflow Optimization - Shashi Sales",
-            description: "Discover how Draggan AI is revolutionizing workflow optimization. Explore its powerful capabilities in automating tasks and enhancing efficiency across projects.",
-            keywords: 'Draggan AI'
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
-    }
-})
+
 
 
 

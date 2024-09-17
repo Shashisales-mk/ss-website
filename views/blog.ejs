@@ -1,247 +1,390 @@
 <% layout("/layouts/boilerplate") %>
+
+
     <style>
         .bl {
             background-color: black;
         }
-
-        .blog-page {
-            margin-top: 10rem;
-            margin-bottom: 4rem;
-        }
-
-        .blog-page-cont {
-            margin-top: 2rem;
-        }
-        .latestBlogs{
-            display: none;
-        }
-        .popularBlogs{
-            display: none;
-        }
-        .allBlogs, .latestBlogs, .popularBlogs {
-        display: none;
-    }
-    .allBlogs {
-        display: flex; /* Show all blogs by default */
-    }
-    .active {
-        background: #000 !important;
-        color: white;
-    }
-
-    .allBlogbtn, .latestBlogbtn, .popularBlogbtn, .uploadblog{
-        /* border: none;
-        background-color: #C4C800;
-        color: #000;
-        font-weight: bold;
-        padding: .6rem 2rem;
-        border-radius: 8px; */
-        display: inline-block !important;
-        padding: 10px 20px !important;
-        margin-right: 10px !important;
-        background: #f0f0f0;
-        border-radius: 5px !important;
-        cursor: pointer;
-        white-space: nowrap;
-        border: 0;
-        font-size: 1.5vw;
-    }
-    .allBlogs, .latestBlogs, .popularBlogs{
-        width: 24%;
-    }
-    .horizontal-scroll {
-        display: flex !important;
-        justify-content: center;
-        overflow-x: auto;
-        white-space: nowrap;
-        padding: 10px 0 !important;
-        margin: 0 !important;
-        list-style: none;
-    }
-    .horizontal-scroll::-webkit-scrollbar {
-        height: 3px;
-        background: #f0f0f0;
-    }
-
-    .horizontal-scroll::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
-    }
-    .horizontal-scroll::-webkit-scrollbar {
-        display: none;
-    }
-    .horizontal-scroll:hover::-webkit-scrollbar {
-        display: block;
-    }
-    .horizontal-scroll li {
-        display: inline-block !important;
-        /* padding: 10px 20px !important; */
-        /* margin-right: 10px !important; */
-        /* background: #f0f0f0; */
-        border-radius: 5px !important;
-        cursor: pointer;
-        white-space: nowrap;
-    }
-
-    .horizontal-scroll li:last-child {
-        margin-right: 0 !important;
-    }
-        @media screen and (max-width: 768px){
-            .blog-page{
-                margin-top: 6rem;
-                margin-bottom: 4rem;
-            }
-            .allBlogs, .latestBlogs, .popularBlogs {
-                width: 32% !important;
-                -webkit-box-flex: 0;
-                -ms-flex: 0 0 auto;
-                flex: 0 0 auto;
-                scroll-snap-align: start;
-            }
-        }
-        @media screen and (max-width: 600px){
-            .blog-page {
-                margin-top: 6rem;
-                margin-bottom: 4rem;
-                padding-bottom: 20vw;
-            }
-            .allBlogs, .latestBlogs, .popularBlogs {
-                width: 48% !important;
-                -webkit-box-flex: 0;
-                -ms-flex: 0 0 auto;
-                flex: 0 0 auto;
-                scroll-snap-align: start;
-            }
-            .blog-page-cont .mar-section {
-                width: 100%;
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
-                -webkit-box-pack: justify;
-                -ms-flex-pack: justify;
-                justify-content: space-between;
-                gap: 2vw;
-                flex-wrap: wrap;
-                gap: 2vw;
-            }
-            .allBlogbtn, .latestBlogbtn, .popularBlogbtn, .uploadblog {
-                display: inline-block !important;
-                padding: 6px 15px !important;
-                margin-right: 10px !important;
-                background: #f0f0f0;
-                border-radius: 5px !important;
-                cursor: pointer;
-                white-space: nowrap;
-                border: 0;
-                font-size: 2.8vw;
-            }
-            .horizontal-scroll {
-                display: flex !important;
-                justify-content: start;
-                overflow-x: auto;
-                white-space: nowrap;
-                padding: 10px 0 !important;
-                margin: 0 !important;
-                list-style: none;
-            }
-        }
-        
-        @media screen and (max-width: 350px){
-            .blog-page {
-                margin-top: 5rem;
-                margin-bottom: 4rem;
-            }
-        }
-
-
     </style>
 
 
-<div class="main-page blog-page">
+    <body>
+        <div class="full-page">
+            <div class="blog-header">
+                <div class="tag-btns">
+                    <a href="" class="active">All blogs</a>
+                    <a href="">Latest blogs</a>
+                    <a href="">Popular blogs</a>
+                    <a target="_blank" href="/blog-form">Upload your blog</a>
+                </div>
+                <div class="icons">
+                    <a href="https://www.facebook.com/shashigroups" target="_blank"><img class="inverted"
+                            src="/assets/images/fb.webp" alt=""></a>
+                    <a href="https://www.instagram.com/shashisales/" target="_blank"><img class="inverted"
+                            src="/assets/images/in.webp" alt=""></a>
+                    <a href="https://www.linkedin.com/company/shashisales/" target="_blank"><img class="inverted"
+                            src="/assets/images/ln.webp" alt=""></a>
+                    <a href=""><img src="/assets/images/yt.jpg" alt=""></a>
+                    <a href=""><img src="/assets/images/x.jpg" alt=""></a>
+                </div>
+            </div>
 
-    <h1>Unlock Smarter Marketing Strategies With Us</h1>
-    
-    <div class="blog-page-cont">
-        <ul class="horizontal-scroll">
-            <li><button class="allBlogbtn active">All Blogs</button></li>
-            <li><button class="latestBlogbtn">Latest Blogs</button></li>
-            <li><button class="popularBlogbtn">Popular Blogs</button></li>
-            <li><a class="uploadblog" target="_blank" href="/blog-form">Upload Your Blog</a></li>
-        </ul>
-            
-            
-            
-        <div class="mar-section">
-            
+            <div class="full-blog">
+                <div class="left-blog">
+                    <div class="slider-container">
+                        <div class="slider">
+                            <% blogs.slice(0, 5).forEach((blog, index)=> { %> <!-- Limit to the first five blogs -->
+                                <a href="/blog-detail/<%= blog.canonical %>" class="slide">
+                                    <img src="<%= blog.bannerImage %>" alt="<%= blog.title %>">
+                                    <div class="slide-info">
+                                        <h2 class="slide-title">
+                                            <%= blog.title %>
+                                        </h2> <!-- Assuming blog has a title property -->
+                                        <p class="slide-description short-description">
+                                            <%= blog.shortDescription %>
+                                        </p> <!-- Assuming blog has a description -->
+                                        <p class="slide-time"><%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                            day: 'numeric' , year: 'numeric' , hour: 'numeric' ,
+                                            minute: 'numeric' }) %></p>
+                                        <!-- Placeholder for time, you can adjust this -->
+                                    </div>
+                                </a>
+                                <% }) %>
+                        </div>
+                        <div class="nav-arrows">
+                            <div class="arrow prev">&lt;</div>
+                            <div class="arrow next">&gt;</div>
+                        </div>
+                        <div class="nav-dots"></div>
+                    </div>
 
-            <% blogs.forEach(blog => { %>
-                <div class="allBlogs">
-                    <a href="/blog-detail/<%= blog.canonical %>" class="blog-page-card">
-                        <div class="mar-img">
-                            <img class="ad-img" src="<%= blog.showImg %>" alt="<%= blog.title %>">
-                        </div>
-                        <div class="mar-desc">
-                            <h2 style="color: #000;"><%= blog.title %></h2>
-                            <div><%= truncateString(blog.shortDescription) %></div>
-                        </div>
-                    </a>
+
+                    <h3 class="hfs" style="margin-bottom: 2rem;">All Blogs</h3>
+                    <div class="all-blogs">
+                        <% if (blogs.length> 0) { %>
+                            <a href="/blog-detail/<%= blogs[0].canonical %>" class="single-blog">
+                                <img src="<%= blogs[0].showImg %>" alt="<%= blogs[0].title %>">
+                                <h3>
+                                    <%= blogs[0].title %>
+                                </h3>
+                                <p class="short-description">
+                                    <%= blogs[0].shortDescription %>
+                                </p>
+                            </a>
+                            <% } %>
+
+                                <div class="blog-list">
+                                    <% blogs.slice(1).forEach((blog, index)=> { %>
+                                        <a href="/blog-detail/<%= blog.canonical %>" class="blog <% if (index >= 3) { %>hidden-blog-AB<% } %>">
+                                            <img src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                                            <div class="blog-title">
+                                                <h4>
+                                                    <%= blog.title %>
+                                                </h4>
+                                                <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                        day: 'numeric' , year: 'numeric' , hour: 'numeric' ,
+                                                        minute: 'numeric' }) %></span>
+                                            </div>
+                                        </a>
+                                        <% }) %>
+                                </div>
+                    </div>
+                    <button class="view-more" id="all-AB">View More</button>
+
+                    <h3 class="ptb4 hfs">Latest Blogs</h3>
+                    <div class="latest-blogs formo">
+                        <% const firstLatestBlog=blogs.find(blog=> blog.isLatest === true);
+
+                            if (firstLatestBlog) {
+                            %>
+                            <a href="<%= firstLatestBlog.canonical %>" class="lb lb-first-ele">
+                                <img src="<%= firstLatestBlog.showImg %>" alt="<%= firstLatestBlog.title %>">
+                                <div class="lb-desc lb-desc-first-ele">
+                                    <h4>
+                                        <%= firstLatestBlog.title %>
+                                    </h4>
+                                    <p class="short-description">
+                                        <%= firstLatestBlog.shortDescription %>
+                                    </p>
+                                    <span>- <%= firstLatestBlog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                            day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric' }) %>
+                                    </span>
+                                </div>
+                            </a>
+                            <% } %>
+
+                                <% blogs.forEach((blog, index)=> {
+                                    if (blog.isLatest === true && blog !== firstLatestBlog) {
+                                    %>
+                                    <a href="/blog-detail/<%= blog.canonical %>" class="lb <% if (index >= 3) { %>hidden-blog-LB<% } %>">
+                                        <img src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                                        <div class="lb-desc">
+                                            <h4>
+                                                <%= blog.title %>
+                                            </h4>
+                                            <p class="short-description">
+                                                <%= blog.shortDescription %>
+                                            </p>
+                                            <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                    day: 'numeric' , year: 'numeric' , hour: 'numeric' ,
+                                                    minute: 'numeric' }) %></span>
+                                        </div>
+                                    </a>
+                                    <% } }) %>
+                    </div>
+
+
+                    <div class="latest-blogs forde">
+                        <% blogs.forEach((blog, index)=> { %>
+                            <% if(blog.isLatest===true){ %>
+                                <a href="/blog-detail/<%= blog.canonical %>" class="lb <% if (index >= 2) { %>hidden-blog-LB<% } %>">
+                                    <img src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                                    <div class="lb-desc">
+                                        <h4>
+                                            <%= blog.title %>
+                                        </h4>
+                                        <p class="short-description">
+                                            <%= blog.shortDescription %>
+                                        </p>
+                                        <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                }) %></span>
+                                    </div>
+                                </a>
+                                <% } %>
+                                    <% }) %>
+
+                    </div>
+                    <button class="view-more" id="all-LB">View More</button>
+
+
+                    <h3 class="ptb4 hfs">Popular Blogs</h3>
+                    <div class="popular-blogs forde">
+                        <% blogs.forEach((blog, index)=> { %>
+                            <% if(blog.isPopular===true){ %>
+                                <a href="/blog-detail/<%= blog.canonical %>" class="pb <% if (index >= 4) { %>hidden-blog-PB<% } %>">
+                                    <img src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                                    <div class="pb-desc">
+                                        <h4>
+                                            <%= blog.title %>
+                                        </h4>
+                                        <p class="short-description">
+                                            <%= blog.shortDescription %>
+                                        </p>
+                                        <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                }) %></span>
+                                    </div>
+                                </a>
+                                <% } %>
+                                    <% }) %>
+
+                    </div>
+
+
+                    <div class="popular-blogs formo">
+                        <% const firstPopularBlog=blogs.find(blog=> blog.isPopular === true);
+
+                            if (firstPopularBlog) {
+                            %>
+                            <a href="<%= firstPopularBlog.canonical%>" class="pb pb-first-ele">
+                                <img src="<%= firstPopularBlog.showImg %>" alt="<%= firstPopularBlog.title %>">
+                                <div class="pb-desc pb-desc-first-ele">
+                                    <h4>
+                                        <%= firstPopularBlog.title %>
+                                    </h4>
+                                    <p class="short-description">
+                                        <%= firstPopularBlog.shortDescription %>
+                                    </p>
+                                    <span>- <%= firstPopularBlog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                            day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric' }) %>
+                                    </span>
+                                </div>
+                            </a>
+                            <% } %>
+
+                                <% blogs.forEach((blog, index)=> {
+                                    if (blog.isPopular === true && blog !== firstPopularBlog) {
+                                    %>
+                                    <a href="/blog-detail/<%= blog.canonical %>" class="pb <% if (index >= 4) { %>hidden-blog-PB<% } %>">
+                                        <img src="<%= blog.showImg %>" alt="<%= blog.title %>">
+                                        <div class="pb-desc">
+                                            <h4>
+                                                <%= blog.title %>
+                                            </h4>
+                                            <p class="short-description">
+                                                <%= blog.shortDescription %>
+                                            </p>
+                                            <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                    day: 'numeric' , year: 'numeric' , hour: 'numeric' ,
+                                                    minute: 'numeric' }) %></span>
+                                        </div>
+                                    </a>
+                                    <% } }) %>
+                    </div>
+                    <button class="view-more" id="all-PB">View More</button>
+
                 </div>
 
-                <% if(blog.isLatest === true){ %>
-                    <div class="latestBlogs"> 
-                        <a href="/blog-detail/<%= blog.canonical %>" class="blog-page-card">
-                            <div class="mar-img">
-                                <img class="ad-img" src="<%= blog.showImg %>" alt="<%= blog.title %>">
-                            </div>
-                            <div class="mar-desc">
-                                <h2 style="color: #000;"><%= blog.title %></h2>
-                                <div><%= truncateString(blog.shortDescription) %></div>
-                            </div>
-                        </a>
+                <div class="right-blog">
+                    <div class="news-letter">
+                        <h1 class="sub">Subscribe to Our Newsletter</h1>
+                        <div class="subcriber-form">
+                            <form action="/subscribe" method="POST">
+                                <input type="email" class="email" name="email" placeholder="Email">
+                                <input type="hidden" name="redirectUrl" value="/blog">
+                                <input class="submit" type="submit" value="Submit">
+                            </form>
+                        </div>
                     </div>
-                <% } %>
 
-                <% if(blog.isPopular === true){ %>
-                    <div class="popularBlogs">
-                        <a href="/blog-detail/<%= blog.canonical %>" class="blog-page-card">
-                            <div class="mar-img">
-                                <img class="ad-img" src="<%= blog.showImg %>" alt="<%= blog.title %>">
-                            </div>
-                            <div class="mar-desc">
-                                <h2 style="color: #000;"><%= blog.title %></h2>
-                                <div><%= truncateString(blog.shortDescription) %></div>
-                            </div>
-                        </a>
+                    <div class="tags">
+                        <h3>Tags</h3>
+                        <div class="tag-name">
+                            <a href="">Technology</a>
+                            <a href="">Design</a>
+                            <a href="">Trending</a>
+                            <a href="">Latest</a>
+                            <a href="">Popular</a>
+                            <a href="">News</a>
+                            <a href="">Story</a>
+                            <a href="">Startup story</a>
+                            <a href="">Latest News</a>
+                            <a href="">Marketing</a>
+                            <a href="">Advertisement</a>
+                            <a href="">Social Media</a>
+
+                        </div>
                     </div>
-                <% } %>
-            <% }) %>
+
+
+
+                    <div class="upload-blog">
+                        <a href="">Submit Your Story/Blog</a>
+                    </div>
+
+                    <div class="suggested-blogs">
+                        <h3 class="ptb4 hfs">Suggested Blogs</h3>
+                        <% blogs.forEach((blog, index)=> { %>
+                            <% if(blog.isPopular===true){ %>
+                                <a href="/blog-detail/<%= blog.canonical %>" class="s-blog <% if (index >= 10) { %>hidden-blog-PB<% } %>">
+                                    <img src="<%= blog.showImg %>" alt="<%= blog.title%>">
+                                    <div class="blog-title">
+                                        <h4>
+                                            <%= blog.title%>
+                                        </h4>
+
+                                        <span>- <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric'
+                                                }) %></span>
+                                    </div>
+                                </a>
+                                <% } %>
+                                    <% }) %>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </body>
 
-<script>
-    const allBlogBtn = document.querySelector(".allBlogbtn");
-    const popularBlogBtn = document.querySelector(".popularBlogbtn");
-    const latestBlogBtn = document.querySelector(".latestBlogbtn");
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            function setupToggle(buttonId, blogClass) {
+                const viewMoreButton = document.querySelector(buttonId);
+                let isViewMore = true; // Track the current state of the button
 
-    const allBlogs = document.querySelectorAll(".allBlogs");
-    const popularBlogs = document.querySelectorAll(".popularBlogs");
-    const latestBlogs = document.querySelectorAll(".latestBlogs");
+                viewMoreButton.addEventListener('click', function () {
+                    const hiddenBlogs = document.querySelectorAll(blogClass);
 
-    function showBlogs(blogsToShow, activeButton) {
-        [allBlogs, popularBlogs, latestBlogs].forEach(blogs => 
-            blogs.forEach(blog => blog.style.display = "none")
-        );
-        blogsToShow.forEach(blog => blog.style.display = "flex");
-        
-        [allBlogBtn, popularBlogBtn, latestBlogBtn].forEach(btn => btn.classList.remove("active"));
-        activeButton.classList.add("active");
-    }
+                    if (isViewMore) {
+                        // Show all hidden blogs
+                        hiddenBlogs.forEach(blog => {
+                            blog.style.display = 'flex';
+                        });
+                        viewMoreButton.textContent = 'View Less'; // Change button text to 'View Less'
+                    } else {
+                        // Hide the additional blogs again
+                        hiddenBlogs.forEach(blog => {
+                            blog.style.display = 'none';
+                        });
+                        viewMoreButton.textContent = 'View More'; // Change button text back to 'View More'
+                    }
 
-    allBlogBtn.addEventListener("click", () => showBlogs(allBlogs, allBlogBtn));
-    popularBlogBtn.addEventListener("click", () => showBlogs(popularBlogs, popularBlogBtn));
-    latestBlogBtn.addEventListener("click", () => showBlogs(latestBlogs, latestBlogBtn));
+                    isViewMore = !isViewMore; // Toggle the state
+                });
+            }
 
-    // Show All Blogs by default
-    showBlogs(allBlogs, allBlogBtn);
-</script>
+            // Setup for all buttons
+            setupToggle('#all-LB', '.hidden-blog-LB'); // For the first button and blogs
+            setupToggle('#all-PB', '.hidden-blog-PB'); // For the second button and blogs
+            setupToggle('#all-AB', '.hidden-blog-AB'); // For the third button and blogs
+
+
+            // Function to truncate text
+            function truncateText(element, maxLength) {
+                let text = element.textContent;
+                if (text.length > maxLength) {
+                    element.textContent = text.substring(0, maxLength) + '...';
+                }
+            }
+
+            // Apply truncation to all elements with class 'short-description'
+            document.querySelectorAll('.short-description').forEach(element => {
+                truncateText(element, 120);
+            });
+
+
+            // Code for slideshow
+            const slides = document.querySelectorAll('.slide');
+            const dotsContainer = document.querySelector('.nav-dots');
+            const prevArrow = document.querySelector('.arrow.prev');
+            const nextArrow = document.querySelector('.arrow.next');
+            let currentSlide = 0;
+
+            // Add navigation dots if there are slides
+            if (slides.length > 0) {
+                for (let i = 0; i < slides.length; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    dot.addEventListener('click', () => {
+                        goToSlide(i);
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+                const dots = document.querySelectorAll('.dot');
+                dots[currentSlide].classList.add('active');
+
+                // Go to a specific slide
+                function goToSlide(index) {
+                    slides.forEach((slide) => {
+                        slide.style.transform = `translateX(-${index * 100}%)`;
+                    });
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                    currentSlide = index;
+                }
+
+                // Go to previous slide
+                function prevSlide() {
+                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    goToSlide(currentSlide);
+                }
+
+                // Go to next slide
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    goToSlide(currentSlide);
+                }
+
+                // Set up event listeners for navigation arrows
+                prevArrow.addEventListener('click', prevSlide);
+                nextArrow.addEventListener('click', nextSlide);
+
+                // Automatic slide change
+                setInterval(nextSlide, 3000); // Change slide every 3 seconds
+            }
+        })
+    </script>
