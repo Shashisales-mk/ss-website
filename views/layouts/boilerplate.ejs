@@ -37,6 +37,33 @@
   <link rel="stylesheet" href="/css/blog.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
   <link rel="stylesheet" href="/css/rating.css" />
+
+
+  <!-- clarity code -->
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-M49293JP');</script>
+  <!-- End Google Tag Manager -->
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "o7qe7mmne2");
+</script>
+
+  <!-- clarity code -->
+
+
+
+
   <!-- Google tag (gtag.js) -->
   <script>
     // Define dataLayer and the gtag function.
@@ -179,58 +206,66 @@
     gtag('config', 'G-FZVQLLDS0B');
   </script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1513305058792581"
-crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1513305058792581"
+    crossorigin="anonymous"></script>
 
 </head>
 
 <body>
+
+  <!-- clarity code -->
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M49293JP" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- clarity code -->
   <%- include("../includes/navbar") %>
-  <%- include("../includes/flash-message") %>
-  <%- body %>  
+    <%- include("../includes/flash-message") %>
+      <%- body %>
 
-  <div class="chatbot">
-    <div id="chat-preview">
-      <div id="chat-preview-header">
-          <span>Shashi sales and marketing</span>
-          <button id="chat-preview-close">✕</button>
-      </div>
-      <div id="chat-preview-message">
-          Hello! How can we help you ? We're here to assist you!
-      </div>
-  </div>
-  <button id="chat-button">💬</button>
-  <div id="chat-container">
-      <div id="chat-header">
-        <img src="/assets/images/chatbot-icon.png" alt="">
-        <p>shashi sales and marketing</p>
-      </div>
-      <div id="chat-messages"></div>
-      <div id="typing-indicator" style="display: none;">Admin is typing...</div>
-      <div id="chat-input-container">
-          <input type="text" id="chat-input" placeholder="Type a message...">
-          <button id="chat-submit">➤</button>
-      </div>
-  </div>
-  <audio id="notificationSound" src="/notification.mp3" preload="auto"></audio>
-  </div>
-  
-  <%- include("../includes/footer") %>
-<!-- chat bot script -->
-<script src="/socket.io/socket.io.js"></script>
+        <div class="chatbot">
+          <div id="chat-preview">
+            <div id="chat-preview-header">
+              <span>Shashi sales and marketing</span>
+              <button id="chat-preview-close">✕</button>
+            </div>
+            <div id="chat-preview-message">
+              Hello! How can we help you ? We're here to assist you!
+            </div>
+          </div>
+          <button id="chat-button">💬</button>
+          <div id="chat-container">
+            <div id="chat-header">
+              <img src="/assets/images/chatbot-icon.png" alt="">
+              <p>shashi sales and marketing</p>
+            </div>
+            <div id="chat-messages"></div>
+            <div id="typing-indicator" style="display: none;">Admin is typing...</div>
+            <div id="chat-input-container">
+              <input type="text" id="chat-input" placeholder="Type a message...">
+              <button id="chat-submit">➤</button>
+            </div>
+          </div>
+          <audio id="notificationSound" src="/notification.mp3" preload="auto"></audio>
+        </div>
 
- <!-- chat bot script -->
-       
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-        <script src="/js/new.js"></script>
-        <script src="/js/script.js"></script>
-        <script src="/js/script2.js"></script>
-        <script src="/js/other.js"></script>
+        <%- include("../includes/footer") %>
+          <!-- chat bot script -->
+          <script src="/socket.io/socket.io.js"></script>
+
+          <!-- chat bot script -->
+
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@22.0.2/build/js/intlTelInput.min.js"></script>
+          <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+          <script src="/js/new.js"></script>
+          <script src="/js/script.js"></script>
+          <script src="/js/script2.js"></script>
+          <script src="/js/other.js"></script>
 
 
-        
+
 </body>
 
 </html>
