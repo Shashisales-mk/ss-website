@@ -2438,6 +2438,7 @@ text-decoration: none;
   z-index: 9;
   position: relative;
   padding: 1rem;
+  color: #000;
 }
 .blog-list{
   width: 48%;
