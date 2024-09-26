@@ -12,9 +12,9 @@
         <div class="full-page">
             <div class="blog-header">
                 <div class="tag-btns">
-                    <a href="" class="active">All blogs</a>
-                    <a href="">Latest blogs</a>
-                    <a href="">Popular blogs</a>
+                    <a href="#allBlogs" class="active">All blogs</a>
+                    <a href="#latestBlogs">Latest blogs</a>
+                    <a href="#popularBlogs">Popular blogs</a>
                     <a target="_blank" href="/blog-form">Upload your blog</a>
                 </div>
                 <div class="icons">
@@ -60,7 +60,7 @@
 
 
                     <h3 class="hfs" style="margin-bottom: 2rem;">All Blogs</h3>
-                    <div class="all-blogs">
+                    <div class="all-blogs" id="#allBlogs">
                         <% if (blogs.length> 0) { %>
                             <a href="/blog-detail/<%= blogs[0].canonical %>" class="single-blog">
                                 <img src="<%= blogs[0].showImg %>" alt="<%= blogs[0].title %>">
@@ -92,7 +92,7 @@
                     <button class="view-more" id="all-AB">View More</button>
 
                     <h3 class="ptb4 hfs">Latest Blogs</h3>
-                    <div class="latest-blogs formo">
+                    <div class="latest-blogs formo" id="#latestBlogs">
                         <% const firstLatestBlog=blogs.find(blog=> blog.isLatest === true);
 
                             if (firstLatestBlog) {
@@ -134,7 +134,7 @@
                     </div>
 
 
-                    <div class="latest-blogs forde">
+                    <div class="latest-blogs forde" id="#latestBlogs">
                         <% blogs.forEach((blog, index)=> { %>
                             <% if(blog.isLatest===true){ %>
                                 <a href="/blog-detail/<%= blog.canonical %>" class="lb <% if (index >= 2) { %>hidden-blog-LB<% } %>">
@@ -159,7 +159,7 @@
 
 
                     <h3 class="ptb4 hfs">Popular Blogs</h3>
-                    <div class="popular-blogs forde">
+                    <div class="popular-blogs forde" id="#popularBlogs"> 
                         <% blogs.forEach((blog, index)=> { %>
                             <% if(blog.isPopular===true){ %>
                                 <a href="/blog-detail/<%= blog.canonical %>" class="pb <% if (index >= 4) { %>hidden-blog-PB<% } %>">
@@ -182,7 +182,7 @@
                     </div>
 
 
-                    <div class="popular-blogs formo">
+                    <div class="popular-blogs formo" id="#popularBlogs">
                         <% const firstPopularBlog=blogs.find(blog=> blog.isPopular === true);
 
                             if (firstPopularBlog) {
