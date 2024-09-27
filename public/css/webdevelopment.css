@@ -100,11 +100,14 @@ h1{
     justify-content: center;
 }
 
+
+
+
 /* Second Component */
 .wheel-animation {
     width: 100%;
     /* margin-left: 4vw; */
-    height: 45vw;
+    height: 45vw !important;
     position: relative;
     overflow: hidden;
   }
@@ -235,43 +238,163 @@ h1{
         -ms-transform: rotate(0deg);
             transform: rotate(0deg);
   }
-/* .sec-com{
-    padding: 0 0 0 3vw;
-    display: flex;
-    margin-bottom: 3vw;
-    gap: 2rem;
-}
-.sec-com-1{
-    width: 70%;
-    display: grid;
-    gap: 2rem;
-}
-.sec-com-1 div{
-    display: grid;
-    gap: 1rem;
-}
-.fc-g{
-    color: grey;
-    padding: 0 10rem 0 0;
-    font-size: 1.1rem;
-}
-.sec-com-2{
-    width: 30%;
-    position: relative;
-}
-.sec-com-2 div{
-    position: absolute;
-    top: 40%;
-    right: 18%;
-    font-size: 2.5rem;
-    width: 10rem;
-    text-align: center;
-}
-.sec-com-2 img{
-    height: 100%;
-    width: 100%;
-} */
 
+
+/* Second Component */
+.wheel-animation-mo {
+    width: 100%;
+    /* margin-left: 4vw; */
+    height: 45vw !important;
+    position: relative;
+    overflow: hidden;
+    display: none;
+  }
+  
+  .wheel-mo {
+    padding-left: 4vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    gap: 1.5vw;
+    opacity: 0;
+    -webkit-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+    margin-inline:auto;
+  }
+  
+  .wheel-mo.active {
+    opacity: 1;
+    background-color: white;
+    color: black !important;
+}
+  
+  .wheel-text-mo {
+    width: 59%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 1vw;
+    opacity: 0;
+    -webkit-transform: scale(0.8);
+        -ms-transform: scale(0.8);
+            transform: scale(0.8);
+    -webkit-transition: opacity 1s ease-in-out 0.5s, -webkit-transform 1s ease-in-out 0.5s;
+    transition: opacity 1s ease-in-out 0.5s, -webkit-transform 1s ease-in-out 0.5s;
+    -o-transition: opacity 1s ease-in-out 0.5s, transform 1s ease-in-out 0.5s;
+    transition: opacity 1s ease-in-out 0.5s, transform 1s ease-in-out 0.5s;
+    transition: opacity 1s ease-in-out 0.5s, transform 1s ease-in-out 0.5s, -webkit-transform 1s ease-in-out 0.5s;
+  }
+  
+  .wheel-mo.active .wheel-text-mo {
+    opacity: 1;
+    -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+            transform: scale(1);
+  }
+  
+  .wheel-text-mo .iwt {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 1vw;
+  }
+  .wheel-text-mo .iwt h3, .wheel-text-mo .iwt p{
+    font-size: 1.2vw;
+  }
+  .wheel-text-mo .iwt p {
+    line-height: 1.5;
+  }
+  
+  .wheel-image-mo {
+    width: 39%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    opacity: 0;
+    -webkit-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .wheel-mo.active .wheel-image-mo {
+    opacity: 1;
+  }
+  
+  .wheel-image-mo img {
+    width: 85%;
+    -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+    -webkit-transition: -webkit-transform 1s ease-in-out;
+    transition: -webkit-transform 1s ease-in-out;
+    -o-transition: transform 1s ease-in-out;
+    transition: transform 1s ease-in-out;
+    transition: transform 1s ease-in-out, -webkit-transform 1s ease-in-out;
+  }
+  
+  .wheel-mo.active .wheel-image-mo img {
+    -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+
+
+
+  @media screen and (max-width : 1000px) {
+    .wheel-animation{
+        display: none;
+    }
+    .wheel-animation-mo{
+        display: block;
+    }
+  }
+
+
+
+
+  
+
+  
 
 
 /* What makes us different section  */

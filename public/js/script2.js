@@ -263,13 +263,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-const wheels = document.querySelectorAll('.wheel');
-let currentWheelIndex = 0;
-const wheelAnimation = document.querySelector('.wheel-animation');
-let isAnimating = false; // Flag to track animation state
+const wheelsMo = document.querySelectorAll('.wheel-mo');
+let currentWheelIndexMo = 0;
+const wheelAnimationMo = document.querySelector('.wheel-animation-mo');
+let isAnimatingMo = false; // Flag to track animation state
 
-function showWheel(index, direction) {
-  wheels.forEach((wheel, i) => {
+// Function to show the current wheel
+function showCurrentWheel(index, direction) {
+  wheelsMo.forEach((wheel, i) => {
     if (i === index) {
       wheel.classList.add('active');
     } else {
@@ -279,103 +280,98 @@ function showWheel(index, direction) {
 }
 
 // Show the first wheel initially
-showWheel(currentWheelIndex, 'forward');
+showCurrentWheel(currentWheelIndexMo, 'forward');
 
 // Add event listener for scroll
-wheelAnimation.addEventListener('wheel', (event) => {
-  if (isAnimating) return; // Ignore scroll event if animation is in progress
+wheelAnimationMo.addEventListener('wheel', (event) => {
+  if (isAnimatingMo) return; // Ignore scroll event if animation is in progress
 
   const delta = event.deltaY;
-  const maxIndex = wheels.length - 1;
+  const maxIndex = wheelsMo.length - 1;
 
   if (delta > 0) {
     // Scroll down
-    if (currentWheelIndex < maxIndex) {
-      currentWheelIndex++;
-      startAnimation('forward');
+    if (currentWheelIndexMo < maxIndex) {
+      currentWheelIndexMo++;
+      initiateAnimation('forward');
     }
   } else {
     // Scroll up
-    if (currentWheelIndex > 0) {
-      currentWheelIndex--;
-      startAnimation('reverse');
+    if (currentWheelIndexMo > 0) {
+      currentWheelIndexMo--;
+      initiateAnimation('reverse');
     }
   }
 }, { passive: true });
 
 // Prevent body scroll when a wheel is active
 document.addEventListener('wheel', (event) => {
-  if (isAnimating) {
+  if (isAnimatingMo) {
     event.preventDefault();
   }
 }, { passive: false });
 
-function startAnimation(direction) {
-  isAnimating = true; // Set the animation flag
+function initiateAnimation(direction) {
+  isAnimatingMo = true; // Set the animation flag
 
-  showWheel(currentWheelIndex, direction);
+  showCurrentWheel(currentWheelIndexMo, direction);
 
   // Wait for the animation to complete
-  const animationDuration = 1500; // Adjust this value based on your transition durations
+  const animationDurationMo = 1500; // Adjust this value based on your transition durations
   setTimeout(() => {
-    isAnimating = false; // Reset the animation flag
-  }, animationDuration);
+    isAnimatingMo = false; // Reset the animation flag
+  }, animationDurationMo);
 }
 
 // Add event listener for touch events
-document.addEventListener('touchstart', handleTouchStart, false);
-document.addEventListener('touchmove', handleTouchMove, false);
+document.addEventListener('touchstart', handleTouchStartMo, false);
+document.addEventListener('touchmove', handleTouchMoveMo, false);
 
-let initialY = null;
+let initialYMo = null;
 
-function handleTouchStart(event) {
-  initialY = event.touches[0].clientY;
+function handleTouchStartMo(event) {
+  initialYMo = event.touches[0].clientY;
 }
 
-function handleTouchMove(event) {
-  if (isAnimating) {
+function handleTouchMoveMo(event) {
+  if (isAnimatingMo) {
     event.preventDefault(); // Prevent body scroll during animation
     return; // Exit the function to avoid further execution
   }
 
-  if (!initialY) return;
+  if (!initialYMo) return;
 
   const currentY = event.touches[0].clientY;
-  const diff = initialY - currentY;
+  const diff = initialYMo - currentY;
 
   if (Math.abs(diff) > 50) { // Set a threshold for scrolling
     if (diff > 0) {
       // Scroll down
-      if (currentWheelIndex < wheels.length - 1) {
-        currentWheelIndex++;
-        startAnimation('forward');
+      if (currentWheelIndexMo < wheelsMo.length - 1) {
+        currentWheelIndexMo++;
+        initiateAnimation('forward');
       }
     } else {
       // Scroll up
-      if (currentWheelIndex > 0) {
-        currentWheelIndex--;
-        startAnimation('reverse');
+      if (currentWheelIndexMo > 0) {
+        currentWheelIndexMo--;
+        initiateAnimation('reverse');
       }
     }
 
-    initialY = null; // Reset initialY after handling the scroll
+    initialYMo = null; // Reset initialY after handling the scroll
   }
 }
 
-// Unlock body scroll after animation is finished
-setTimeout(() => {
-  document.removeEventListener('touchmove', preventBodyScroll, { passive: false });
-}, animationDuration + 100); // Add a small buffer time (100ms) after animation is finished
-
 // Prevent body scroll when a wheel is active
-const preventBodyScroll = (event) => {
-  const activeWheel = document.querySelector('.wheel.active');
+const preventBodyScrollMo = (event) => {
+  const activeWheel = document.querySelector('.wheel-mo.active');
   if (activeWheel) {
     event.preventDefault();
   }
 };
 
-document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+document.addEventListener('touchmove', preventBodyScrollMo, { passive: false });
 
 
 
