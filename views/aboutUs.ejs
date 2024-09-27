@@ -347,6 +347,23 @@
                 </div>
             </div>
 
+
+            <!-- testing -->
+            <% members.forEach(member=> { %>
+            <div class="bri-card">
+                <div class="img-cont"><img src="<%= member.image %>" loading="lazy" alt="<%= member.name %>"></div>
+                <div class="bri-card-t">
+                    <div>
+                        <h3><%= member.designation %></h3>
+                        <p><%= member.name %></p>
+                    </div>
+                </div>
+                <div class="bri-card-b">
+                    <p><%= member.description %></p>
+                </div>
+            </div>
+            <% }) %>
+
         </div>
     </div>
 

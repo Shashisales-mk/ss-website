@@ -31,6 +31,7 @@ const Comment = require('./models/Comment');
 const Ad = require('./models/Ad');
 const Chatuser = require('./models/Chatuser');
 const Chat = require('./models/ChatSchema');
+const Team = require('./models/Team');
 
 const passport = require('./config/passport');
 
@@ -326,12 +327,17 @@ app.get("/", async (req, res) => {
 
 
 
-app.get("/about-us", (req, res) => {
+app.get("/about-us", async (req, res) => {
+
+    const members = await Team.find();
+
     res.render("aboutUs", {
+        members,
         title: 'About us | Digital Marketing Agency | Shashi Sales ',
         description: 'Shashi Sales and Marketing offers expert digital marketing services to enhance online presence, boost engagement, and drive business growth.',
         keywords: 'Digital Marketing Agency'
     });
+    
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -758,6 +764,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     const galleryItems = await Gallery.find();
     const category = await Gallery.find();
     const testimonials = await Testimonial.find().populate('page');
+    const members = await Team.find();
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
     const subscribers = await Subscriber.find();
@@ -790,6 +797,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
         acomments: approvedComments,
         comments: pendingComments,
         testimonials,
+        members,
         galleryItems,
         category,
         AllBlogs,

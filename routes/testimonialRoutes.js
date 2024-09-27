@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Testimonial = require('../models/Testimonial');
 const TestimonialPage = require('../models/TestimonialPage');
+const Team = require('../models/Team');
 const multer = require('multer');
 const upload = multer({ dest: 'public/uploads/' });
 
@@ -179,5 +180,67 @@ router.get('/testimonial/:id', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+
+
+// about section team section routes
+
+router.post('/admin/add-member', upload.single('image'), async (req, res) => {
+  try {
+    const newMember = new Team({
+      designation: req.body.designation,
+      name: req.body.name,
+      image: req.file ? `/uploads/${req.file.filename}` : undefined,
+      description: req.body.description
+
+    });
+    await newMember.save();
+    res.redirect('/admin-panel');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+router.post('/admin/update-member/:id', upload.single('image'), async (req, res) => {
+  try {
+    const member = await Team.findById(req.params.id);
+
+    if (!member) {
+      return res.status(404).send('Member not found');
+    }
+
+    const updateData = {
+      name: req.body.name,
+      designation: req.body.designation,
+      image: req.file ? `/uploads/${req.file.filename}` : undefined,
+      description: req.body.description
+    };
+
+    if (req.file) {
+      updateData.image = `/uploads/${req.file.filename}`;
+    }
+
+    await Team.findByIdAndUpdate(req.params.id, updateData);
+    res.redirect('/admin-panel');  // or wherever your admin panel is
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+
+router.post('/admin/delete-member/:id', async (req, res) => {
+  try {
+    const member = await Team.findById(req.params.id);
+    if (!member) {
+      return res.status(404).send('Member not found');
+    }
+    await Team.findByIdAndDelete(req.params.id);
+    res.redirect('/admin-panel');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 
 module.exports = router;

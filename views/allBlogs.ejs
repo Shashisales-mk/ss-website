@@ -1,28 +1,96 @@
 <% layout("/layouts/boilerplate") %>
 
   <style>
-     .new-chat-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: #00ff00;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
+    /* General form styles */
+    .team-form {
+      padding: 2vw;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      margin-block: 2rem;
+    }
 
-        .new-chat {
-            animation: fadeBackground 2s ease-in-out;
-        }
+    .team-sec {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
 
-        @keyframes fadeBackground {
-            0% {
-                background-color: #e6ffe6;
-            }
+    /* Input field styles */
+    .input-field {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-            100% {
-                background-color: transparent;
-            }
-        }
+    .input-file {
+      padding: 0.5rem;
+      flex-basis: 30%;
+    }
+
+    /* Textarea styles */
+    .description {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      height: 40px;
+    }
+
+    /* Submit button styles */
+    .form-action {
+      margin-top: 1vw;
+      text-align: center;
+    }
+
+    .submit-btn {
+      background-color: #c4c800;
+      color: black;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .team-sec-btn {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid green;
+      color: green;
+    }
+
+    .new-chat-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #00ff00;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .new-chat {
+      animation: fadeBackground 2s ease-in-out;
+    }
+
+    @keyframes fadeBackground {
+      0% {
+        background-color: #e6ffe6;
+      }
+
+      100% {
+        background-color: transparent;
+      }
+    }
 
     #chat-preview {
       display: none;
@@ -617,11 +685,13 @@
         <li id="sec4">Pending Comments</li>
         <li id="sec5">Subscribers</li>
         <li id="sec6">Active Queries</li>
+        <li id="sec7">Team Members</li>
         <p><a href="/logout">Logout</a></p>
         <p><a href="/admin/edit-ads-txt">Edit Ads.txt</a></p>
       </ul>
     </div>
     <div class="main-page-in">
+
       <!-- Blog Section -->
       <div class="blog-section" style="flex-direction: column;">
         <!-- Ads Section -->
@@ -849,7 +919,7 @@
       </div>
 
       <!-- Gallery Section -->
-      <div class="gallery-section" style="display: none; flex-direction: column;" >
+      <div class="gallery-section" style="display: none; flex-direction: column;">
         <h1>Gallery Section</h1>
         <form action="/add" method="POST" enctype="multipart/form-data">
           <div class="secr">
@@ -1218,7 +1288,6 @@
       </div>
 
       <!-- subscriber section -->
-
       <div class="subscriber-section" style="display: none; flex-direction: column;">
         <!-- existing subscribers -->
 
@@ -1306,11 +1375,11 @@
                   <div class="chat-name">
                     <%= chat.user.name %> (Closed)
                   </div>
-                  <div class="chat-preview">Closed on  <% if (chat.closedAt) { %>
-                    <%= chat.closedAt.toLocaleString() %>
-                  <% } else { %>
-                    N/A
-                  <% } %>
+                  <div class="chat-preview">Closed on <% if (chat.closedAt) { %>
+                      <%= chat.closedAt.toLocaleString() %>
+                        <% } else { %>
+                          N/A
+                          <% } %>
                   </div>
                 </div>
               </div>
@@ -1337,6 +1406,97 @@
         <audio id="notificationSound" src="/notification.mp3" preload="auto"></audio>
 
       </div>
+
+
+      <!-- Add team member section -->
+      <div class="team-section" style="flex-direction: column;">
+
+        <!-- add a new Team member -->
+        <h2>Add New Member</h2>
+        <form action="/admin/add-member" method="POST" enctype="multipart/form-data" class="team-form">
+          <div class="team-sec">
+            <input type="text" name="name" placeholder="Member Name" class="input-field" required />
+            <input type="text" name="designation" placeholder="Member Designation" class="input-field" required />
+            <input type="file" name="image" class="input-file" />
+          </div>
+          <textarea name="description" class="description" placeholder="Member description" required></textarea>
+
+          <div class="form-action">
+            <button type="submit" class="submit-btn">Add Member</button>
+          </div>
+        </form>
+
+
+        <!-- existings members and update form -->
+
+
+        <% members.forEach(member=> { %>
+          <div id="editMember<%= member._id %>" style="display: none;">
+            <h2 style="margin-bottom: 1vw; margin-top: 2vw">Edit Member</h2>
+            <form action="/admin/update-member/<%= member._id %>" method="POST" enctype="multipart/form-data"
+              class="team-form">
+
+              <div class="team-sec">
+                <input class="input-field" type="text" name="name" value="<%= member.name %>" required />
+
+                <input class="input-field" type="text" name="designation" value="<%= member.designation %>" required />
+
+                <input class="input-file" type="file" name="image" />
+
+
+              </div>
+
+              <textarea type="text" name="description" class="description" required><%= member.description %></textarea>
+              <button type="submit" class="submit-btn">Update</button>
+            </form>
+          </div>
+
+          <% }) %>
+
+            <h2 style="margin-bottom: 1vw">Existing Members</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Designation</th>
+                  <th>Image</th>
+
+                  <th>Edit Member</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% members.forEach(member=> { %>
+                  <tr>
+                    <td>
+                      <%= member.name %>
+                    </td>
+                    <td>
+                      <%= member.designation %>
+                    </td>
+                    <td>
+                      <img src="<%= member.image %>" alt="Shashi sales and marketing" width="70px" height="70px" />
+                    </td>
+                    <td>
+                      <button class="team-sec-btn" onclick="toggleEditForm('editMember<%= member._id %>')">
+                        Edit
+                      </button>
+                    </td>
+                    <td>
+                      <form action="/admin/delete-member/<%= member._id %>" method="POST">
+                        <button class="del-btn" type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+
+
+
+      </div>
+
+
     </div>
   </div>
 
@@ -1357,17 +1517,17 @@
     let activeChatId;
 
     chatItems.forEach(item => {
-        item.addEventListener('click', loadChat);
+      item.addEventListener('click', loadChat);
     });
 
     chatTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const tabName = tab.getAttribute('data-tab');
-            chatTabs.forEach(t => t.classList.remove('active'));
-            chatLists.forEach(l => l.classList.remove('active'));
-            tab.classList.add('active');
-            document.getElementById(`${tabName}-chats`).classList.add('active');
-        });
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+        chatTabs.forEach(t => t.classList.remove('active'));
+        chatLists.forEach(l => l.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(`${tabName}-chats`).classList.add('active');
+      });
     });
 
     socket.emit('admin connect');
@@ -1375,166 +1535,166 @@
 
 
     async function loadChat() {
-        chatItems.forEach(item => item.classList.remove('active'));
-        this.classList.add('active');
-        activeChatId = this.getAttribute('data-id');
+      chatItems.forEach(item => item.classList.remove('active'));
+      this.classList.add('active');
+      activeChatId = this.getAttribute('data-id');
 
-        // Remove the new chat indicator when clicked
-        const indicator = this.querySelector('.new-chat-indicator');
-        if (indicator) {
-            indicator.remove();
-        }
+      // Remove the new chat indicator when clicked
+      const indicator = this.querySelector('.new-chat-indicator');
+      if (indicator) {
+        indicator.remove();
+      }
 
-        try {
-            const response = await fetch(`/admin/chat/${activeChatId}`);
-            const chat = await response.json();
-            currentUser.textContent = chat.user.name + (chat.isOpen ? '' : ' (Closed)');
-            chatMessages.innerHTML = '';
-            chat.initialQuestions.forEach(q => {
-                addMessage(`Q: ${q.question}`, 'user', chat.startedAt);
-                addMessage(`A: ${q.answer}`, 'admin', chat.startedAt);
-            });
-            chat.messages.forEach(msg => {
-                addMessage(msg.content, msg.sender, msg.timestamp);
-            });
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            socket.emit('join chat', activeChatId);
-            replyForm.style.display = chat.isOpen ? 'flex' : 'none';
-            closeChat.style.display = chat.isOpen ? 'block' : 'none';
-        } catch (error) {
-            console.error('Error fetching chat:', error);
-        }
+      try {
+        const response = await fetch(`/admin/chat/${activeChatId}`);
+        const chat = await response.json();
+        currentUser.textContent = chat.user.name + (chat.isOpen ? '' : ' (Closed)');
+        chatMessages.innerHTML = '';
+        chat.initialQuestions.forEach(q => {
+          addMessage(`Q: ${q.question}`, 'user', chat.startedAt);
+          addMessage(`A: ${q.answer}`, 'admin', chat.startedAt);
+        });
+        chat.messages.forEach(msg => {
+          addMessage(msg.content, msg.sender, msg.timestamp);
+        });
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        socket.emit('join chat', activeChatId);
+        replyForm.style.display = chat.isOpen ? 'flex' : 'none';
+        closeChat.style.display = chat.isOpen ? 'block' : 'none';
+      } catch (error) {
+        console.error('Error fetching chat:', error);
+      }
     }
 
     function formatTime(timestamp) {
-        if (!timestamp) return 'Invalid Date';
-        const date = new Date(timestamp);
-        return isNaN(date.getTime()) ? 'Invalid Date' : date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      if (!timestamp) return 'Invalid Date';
+      const date = new Date(timestamp);
+      return isNaN(date.getTime()) ? 'Invalid Date' : date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
     function addMessage(content, sender, timestamp) {
-        const messageElement = document.createElement('div');
-        messageElement.className = `message ${sender}-message`;
+      const messageElement = document.createElement('div');
+      messageElement.className = `message ${sender}-message`;
 
-        const messageContent = document.createElement('div');
-        messageContent.textContent = content;
-        messageElement.appendChild(messageContent);
+      const messageContent = document.createElement('div');
+      messageContent.textContent = content;
+      messageElement.appendChild(messageContent);
 
-        const timeElement = document.createElement('div');
-        timeElement.className = 'message-time';
-        timeElement.textContent = formatTime(timestamp || new Date()); // Use current time if timestamp is not provided
-        messageElement.appendChild(timeElement);
+      const timeElement = document.createElement('div');
+      timeElement.className = 'message-time';
+      timeElement.textContent = formatTime(timestamp || new Date()); // Use current time if timestamp is not provided
+      messageElement.appendChild(timeElement);
 
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
 
 
     replyForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (replyInput.value && activeChatId) {
-            try {
-                const response = await fetch('/admin/reply', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chatId: activeChatId, content: replyInput.value })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    addMessage(replyInput.value, 'admin');
-                    replyInput.value = '';
-                }
-            } catch (error) {
-                console.error('Error sending reply:', error);
-            }
+      e.preventDefault();
+      if (replyInput.value && activeChatId) {
+        try {
+          const response = await fetch('/admin/reply', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chatId: activeChatId, content: replyInput.value })
+          });
+          const data = await response.json();
+          if (data.success) {
+            addMessage(replyInput.value, 'admin');
+            replyInput.value = '';
+          }
+        } catch (error) {
+          console.error('Error sending reply:', error);
         }
+      }
     });
 
     closeChat.addEventListener('click', async () => {
-        if (activeChatId) {
-            try {
-                const response = await fetch('/close-chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chatId: activeChatId })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    addMessage('Chat closed', 'admin');
-                    replyForm.style.display = 'none';
-                    closeChat.style.display = 'none';
-                    document.querySelector(`[data-id="${activeChatId}"]`).remove();
-                    activeChatId = null;
-                    currentUser.textContent = '';
-                }
-            } catch (error) {
-                console.error('Error closing chat:', error);
-            }
+      if (activeChatId) {
+        try {
+          const response = await fetch('/close-chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chatId: activeChatId })
+          });
+          const data = await response.json();
+          if (data.success) {
+            addMessage('Chat closed', 'admin');
+            replyForm.style.display = 'none';
+            closeChat.style.display = 'none';
+            document.querySelector(`[data-id="${activeChatId}"]`).remove();
+            activeChatId = null;
+            currentUser.textContent = '';
+          }
+        } catch (error) {
+          console.error('Error closing chat:', error);
         }
+      }
     });
 
 
     let typingTimeout;
     replyInput.addEventListener('input', () => {
-        if (activeChatId) {
-            socket.emit('typing', { chatId: activeChatId, isTyping: true });
-            clearTimeout(typingTimeout);
-            typingTimeout = setTimeout(() => {
-                socket.emit('typing', { chatId: activeChatId, isTyping: false });
-            }, 1000);
-        }
+      if (activeChatId) {
+        socket.emit('typing', { chatId: activeChatId, isTyping: true });
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+          socket.emit('typing', { chatId: activeChatId, isTyping: false });
+        }, 1000);
+      }
     });
 
     socket.on('typing', ({ chatId, isTyping }) => {
-        if (chatId === activeChatId) {
-            typingIndicator.style.display = isTyping ? 'block' : 'none';
-        }
+      if (chatId === activeChatId) {
+        typingIndicator.style.display = isTyping ? 'block' : 'none';
+      }
     });
 
     function initializeAudio() {
-notificationSound.play().then(() => {
-    notificationSound.pause();
-    notificationSound.currentTime = 0;
-}).catch(error => {
-    console.log('Audio play failed:', error);
-});
-}
-
-function playNotificationSound() {
-notificationSound.play().catch(error => {
-    console.error('Error playing sound:', error);
-    // Fallback: show a visual notification
-    showVisualNotification();
-});
-}
-
-function showVisualNotification() {
-console.log('New message received!');
-// Flash the title
-let originalTitle = document.title;
-document.title = '🔔 New Message!';
-setTimeout(() => { document.title = originalTitle; }, 3000);
-}
-document.addEventListener('click', initializeAudio, { once: true });
-
-socket.on('chat message', (msg) => {
-if (msg.chatId === activeChatId) {
-    addMessage(msg.content, msg.sender, msg.timestamp || new Date().toISOString());
-    
-    // Play notification sound if the message is from the user
-    if (msg.sender === 'user') {
-        playNotificationSound();
+      notificationSound.play().then(() => {
+        notificationSound.pause();
+        notificationSound.currentTime = 0;
+      }).catch(error => {
+        console.log('Audio play failed:', error);
+      });
     }
-}
-});
+
+    function playNotificationSound() {
+      notificationSound.play().catch(error => {
+        console.error('Error playing sound:', error);
+        // Fallback: show a visual notification
+        showVisualNotification();
+      });
+    }
+
+    function showVisualNotification() {
+      console.log('New message received!');
+      // Flash the title
+      let originalTitle = document.title;
+      document.title = '🔔 New Message!';
+      setTimeout(() => { document.title = originalTitle; }, 3000);
+    }
+    document.addEventListener('click', initializeAudio, { once: true });
+
+    socket.on('chat message', (msg) => {
+      if (msg.chatId === activeChatId) {
+        addMessage(msg.content, msg.sender, msg.timestamp || new Date().toISOString());
+
+        // Play notification sound if the message is from the user
+        if (msg.sender === 'user') {
+          playNotificationSound();
+        }
+      }
+    });
 
     socket.on('new chat', (chat) => {
-        const chatList = document.getElementById('open-chats');
-        const chatItem = document.createElement('div');
-        chatItem.className = 'chat-item new-chat';
-        chatItem.setAttribute('data-id', chat._id);
-        chatItem.innerHTML = `
+      const chatList = document.getElementById('open-chats');
+      const chatItem = document.createElement('div');
+      chatItem.className = 'chat-item new-chat';
+      chatItem.setAttribute('data-id', chat._id);
+      chatItem.innerHTML = `
             <div class="new-chat-indicator"></div>
             <div class="chat-avatar">${chat.userName.charAt(0).toUpperCase()}</div>
             <div class="chat-info">
@@ -1543,38 +1703,38 @@ if (msg.chatId === activeChatId) {
                 <div class="chat-time">${formatTime(chat.startedAt)}</div>
             </div>
         `;
-        chatItem.addEventListener('click', loadChat);
-        chatList.insertBefore(chatItem, chatList.firstChild);
+      chatItem.addEventListener('click', loadChat);
+      chatList.insertBefore(chatItem, chatList.firstChild);
 
-        // If the closed chats tab is active, switch to open chats
-        const openChatsTab = document.querySelector('.chat-tab[data-tab="open"]');
-        openChatsTab.click();
+      // If the closed chats tab is active, switch to open chats
+      const openChatsTab = document.querySelector('.chat-tab[data-tab="open"]');
+      openChatsTab.click();
 
-        playNotificationSound();
+      playNotificationSound();
 
-        // Remove the new-chat class after animation
-        setTimeout(() => {
-            chatItem.classList.remove('new-chat');
-        }, 2000);
+      // Remove the new-chat class after animation
+      setTimeout(() => {
+        chatItem.classList.remove('new-chat');
+      }, 2000);
     });
     socket.on('chat closed', (chatId) => {
-        const chatItem = document.querySelector(`[data-id="${chatId}"]`);
-        if (chatItem) {
-            chatItem.classList.add('closed-chat-item');
-            const chatName = chatItem.querySelector('.chat-name');
-            chatName.textContent += ' (Closed)';
-            const chatPreview = chatItem.querySelector('.chat-preview');
-            chatPreview.textContent = `Closed on ${new Date().toLocaleString()}`;
-            document.getElementById('closed-chats').appendChild(chatItem);
-        }
-        if (chatId === activeChatId) {
-            addMessage('Chat closed', 'admin', new Date());
-            replyForm.style.display = 'none';
-            closeChat.style.display = 'none';
-            currentUser.textContent += ' (Closed)';
-        }
+      const chatItem = document.querySelector(`[data-id="${chatId}"]`);
+      if (chatItem) {
+        chatItem.classList.add('closed-chat-item');
+        const chatName = chatItem.querySelector('.chat-name');
+        chatName.textContent += ' (Closed)';
+        const chatPreview = chatItem.querySelector('.chat-preview');
+        chatPreview.textContent = `Closed on ${new Date().toLocaleString()}`;
+        document.getElementById('closed-chats').appendChild(chatItem);
+      }
+      if (chatId === activeChatId) {
+        addMessage('Chat closed', 'admin', new Date());
+        replyForm.style.display = 'none';
+        closeChat.style.display = 'none';
+        currentUser.textContent += ' (Closed)';
+      }
     });
-</script>
+  </script>
 
   <!-- subscriber script -->
   <script>
@@ -1651,6 +1811,7 @@ if (msg.chatId === activeChatId) {
       document.querySelector(".comment-section").style.display = "none";
       document.querySelector(".subscriber-section").style.display = "none";
       document.querySelector(".chatbot-section").style.display = "none";
+      document.querySelector(".team-section").style.display = "none";
       // Add additional sections here if needed
     }
 
@@ -1707,7 +1868,11 @@ if (msg.chatId === activeChatId) {
     });
     document.getElementById("sec6").addEventListener("click", function () {
       document.querySelector(".chatbot-section").style.display = "flex";
-      showSection6("chatbot-section", "sec6")
+      showSection("chatbot-section", "sec6")
+    });
+    document.getElementById("sec7").addEventListener("click", function () {
+      document.querySelector(".team-section").style.display = "flex";
+      showSection("team-section", "sec7")
     });
 
     // Ensure the form submission keeps the section visible
@@ -1721,6 +1886,7 @@ if (msg.chatId === activeChatId) {
           sec4: "comment-section",
           sec5: "subcriber-section",
           sec6: "chatbot-section",
+          sec7: "team-section",
         };
         localStorage.setItem("activeSection", sectionMap[activeSection]);
       });
