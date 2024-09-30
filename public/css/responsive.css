@@ -114,7 +114,7 @@
     h3 {
         font-size: 3vw !important;
     }
-    h2 {
+    .faq-container h2 {
         font-size: 3vw !important;
     }
 
@@ -469,6 +469,8 @@
       width: 100%;
       color: black;
     } */
+
+    
 
     .mobile-header{
         display: -webkit-box;

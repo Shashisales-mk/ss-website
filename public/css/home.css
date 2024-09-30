@@ -53,11 +53,12 @@ a {
   display: none;
 }
 
-header {
+.nav-header {
   width: 100%;
+ 
   position: absolute;
   top: 0px;
-  padding:.6rem 0rem;
+  /* padding:.6rem 0rem; */
   font-size: 1.2rem;
   z-index: 999;
 }
@@ -75,6 +76,7 @@ nav{
   color: white;
   height: 6vw;
   padding-inline: 4vw;
+  height: 75px;
 }
 .nav-cont{
   font-size: 1.3vw;
@@ -1337,6 +1339,7 @@ font-weight: bold;
 
 .blogs-recommend{
   padding: 0 0 2vw 0;
+  width: 100%;
 }
 
 .blog-card .mar-img::before {
@@ -2992,3 +2995,4 @@ text-decoration: none;
   font-size: 0.9rem !important;
 }
 }
+

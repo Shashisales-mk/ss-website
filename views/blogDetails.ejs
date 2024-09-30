@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         <%= blog.metaTitle %>
     </title>
@@ -13,33 +13,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="canonical" href="https://www.shashisales.com/blog-detail/<%= blog.canonical %>">
-    <link rel="stylesheet" href="/css/blog.css">
+    <!-- <link rel="canonical" href="https://www.shashisales.com/blog-detail/<%= blog.canonical %>"> -->
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/blog.css">
     <link rel="stylesheet" href="/css/advertisement.css">
     <link rel="stylesheet" href="/css/responsive.css">
-    <link rel="stylesheet" href="/css/style.css">
-      <!-- clarity code -->
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-    w[l] = w[l] || []; w[l].push({
-      'gtm.start':
-        new Date().getTime(), event: 'gtm.js'
-    }); var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-M49293JP');</script>
-<!-- End Google Tag Manager -->
 
-<script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "o7qe7mmne2");
-</script>
 
-<!-- clarity code -->
+    <!-- clarity code -->
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-M49293JP');</script>
+    <!-- End Google Tag Manager -->
+
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "o7qe7mmne2");
+    </script>
+
+    <!-- clarity code -->
 
 
     <script>
@@ -118,24 +120,124 @@
         })(window, document, "script", "dataLayer", "GTM-FZVQLLDS0B");
     </script>
     <!-- End Google Tag Manager -->
-    <style>
-        .main-page {
-            padding-top: var(--header-height, 8rem);
-            padding-bottom: 5rem;
-            font-family: "Inter", sans-serif;
-        }
 
+
+
+    <style>
         .bl {
             background-color: black;
         }
 
-        h3 {
-            text-transform: uppercase;
+        .bp-container {
+            display: flex;
+            width: 100%;
+            margin: 4rem auto;
+            align-items: flex-start;
+            justify-content: center;
+            padding-inline: 1vw;
+
         }
 
-        h1 {
-            text-transform: capitalize;
+        .ad-space,
+        .ad-space-m {
+            width: 260px;
+            margin: 20px 10px;
+            padding: 10px 0px;
         }
+
+        .ad-space-m {
+            display: none;
+        }
+
+        .bp-content {
+            width: 80%;
+            background-color: white;
+            /* padding: 40px; */
+            padding-top: 80px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bp-header {
+            text-align: center;
+            /* margin-bottom: 40px; */
+        }
+
+        .bp-container h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .bp-container .bp-content-text h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-top: 30px;
+        }
+
+        .date {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .banner-image {
+            width: 100%;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .banner-image img {
+            width: 100%;
+            height: 40vmin
+        }
+
+        .bp-content-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+
+        .s2 {
+            margin-bottom: 2rem;
+            flex-direction: row-reverse;
+        }
+
+
+
+        .bp-content-text {
+
+
+            width: 68%;
+        }
+
+        .bp-content-image {
+
+            max-width: 30%;
+        }
+
+        .bp-content-image img {
+            width: 280px;
+            height: 280px;
+
+        }
+
+        .quote {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #2980b9;
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 30px 0;
+        }
+
+        .author {
+            font-weight: bold;
+            color: #34495e;
+        }
+
 
         .shareButton {
             position: relative;
@@ -152,7 +254,7 @@
         .shareOptions {
             z-index: 999 !important;
             position: absolute;
-            right: 10%;
+            right: 26%;
             display: none;
         }
 
@@ -173,7 +275,7 @@
             background-color: #f0f0f0;
             color: #333;
             text-decoration: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 11px rgb(0 0 0 / 76%);
         }
 
         .share-item a:hover {
@@ -196,8 +298,16 @@
             }
         }
 
+        .blog-cont {
+            padding: 0;
+        }
+
+        .blog-card {
+            width: 300px;
+        }
+
         .comments-sec {
-            padding-inline: 5vw;
+            width: 100%;
         }
 
         .user-comments {
@@ -303,6 +413,8 @@
         .seo-hed-in {
             padding: 0vw 2vw 0 0 !important;
             background: #C4C800;
+            box-shadow: 0 2px 11px rgb(0 0 0 / 76%);
+            margin-bottom: 1rem;
         }
 
         .seo-hed-in ul {
@@ -334,7 +446,87 @@
 
 
 
+        .newsletter-subscription {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+
+            width: 100%;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-subscription h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .newsletter-subscription p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .newsletter-subscription form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .newsletter-subscription input[type="text"],
+        .newsletter-subscription input[type="email"] {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .newsletter-subscription button {
+            width: 150px;
+            padding: 10px 15px;
+            background-color: #C4C800;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .newsletter-subscription button:hover {
+            background-color: #0056b3;
+        }
+
+        .blog-paragraph {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+
+        @media screen and (max-width : 2560px) {
+            .shareOptions {
+                right: 20%;
+            }
+        }
+
+        @media screen and (max-width : 1440px) {
+            .shareOptions {
+                right: 27%;
+            }
+        }
+
         @media screen and (max-width: 1024px) {
+            .shareOptions {
+                right: 32%;
+            }
+
             .share-item a {
                 width: 30px;
                 height: 30px;
@@ -378,6 +570,54 @@
         }
 
         @media screen and (max-width: 768px) {
+            .bp-container {
+                flex-direction: column;
+            }
+
+            .bp-content {
+                width: 100%;
+                padding-top: 30px;
+            }
+
+            .ad-space {
+                display: none;
+                width: 100%;
+                height: 100px;
+                margin: 10px 0;
+            }
+
+            .ads-box {
+                display: flex;
+            }
+
+            .ad-space-m {
+                display: block;
+                width: 50%;
+                height: auto;
+            }
+
+            .ad-frame {
+                width: 100%;
+            }
+
+            .bp-content-section {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .bp-content-text {
+                width: 100%;
+            }
+
+            .bp-content-image {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .bp-container h1 {
+                font-size: 4vw;
+            }
+
             .share-item a {
                 width: 22px;
                 height: 22px;
@@ -385,7 +625,7 @@
 
             .shareOptions {
                 position: absolute;
-                right: 11%;
+                /* right: 11%; */
                 display: none;
             }
 
@@ -424,9 +664,98 @@
             .shareOptions li:nth-child(9) {
                 transform: rotate(320deg) translate(34.2836px, -28.423px) rotate(-320deg) !important;
             }
+
+            .newsletter-container {
+                padding: 0 20px;
+            }
+
+            .comment-form form {
+                width: 100%;
+            }
+
+            .comment-form {
+                width: 100%;
+            }
+
+            .comment-form form button {
+                font-size: 1rem;
+            }
+
+            .newsletter-subscription {
+                margin-bottom: 4rem;
+            }
         }
 
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width : 600px) {
+
+            .date {
+                font-size: 1rem;
+            }
+
+            .bp-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .shareButton {
+                position: relative;
+                z-index: 997;
+                padding: 2vw;
+                font-size: 3vw;
+                border-radius: 50%;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                cursor: pointer;
+                margin-right: 8vw;
+            }
+
+            .shareOptions {
+                position: absolute;
+                right: 22%;
+                display: none;
+            }
+
+            .share-item a {
+                width: 18px;
+                height: 18px;
+            }
+
+            .shareOptions li:nth-child(1) {
+                transform: rotate(0deg) translate(50px, 0px) rotate(0deg) !important;
+            }
+
+            .shareOptions li:nth-child(2) {
+                transform: rotate(40deg) translate(36.2836px, 25.423px) rotate(-40deg) !important;
+            }
+
+            .shareOptions li:nth-child(3) {
+                transform: rotate(80deg) translate(11.8919px, 42.7846px) rotate(-80deg) !important;
+            }
+
+            .shareOptions li:nth-child(4) {
+                transform: rotate(120deg) translate(-15px, 35.282px) rotate(-120deg) !important;
+            }
+
+            .shareOptions li:nth-child(5) {
+                transform: rotate(160deg) translate(-38.1754px, 14.3616px) rotate(-160deg) !important;
+            }
+
+            .shareOptions li:nth-child(6) {
+                transform: rotate(200deg) translate(-49.1754px, -11.3616px) rotate(-200deg) !important;
+            }
+
+            .shareOptions li:nth-child(7) {
+                transform: rotate(240deg) translate(-25px, -39.282px) rotate(-240deg) !important;
+            }
+
+            .shareOptions li:nth-child(8) {
+                transform: rotate(280deg) translate(1.8919px, -42.7846px) rotate(-280deg) !important;
+            }
+
+            .shareOptions li:nth-child(9) {
+                transform: rotate(320deg) translate(25.2836px, -23.423px) rotate(-320deg) !important;
+            }
+
             .comment {
                 border: 5px solid #c0b9b963;
                 border-radius: 0vw;
@@ -491,19 +820,6 @@
                 font-size: 5vw !important;
             }
 
-            .shareButton {
-                position: relative;
-                z-index: 997;
-                padding: 2vw;
-                font-size: 3vw;
-                border-radius: 50%;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                cursor: pointer;
-                margin-right: 8vw;
-            }
-
             .seo-hed {
                 padding: 3vw 0;
                 position: sticky;
@@ -512,461 +828,446 @@
             }
 
 
-            .seo-hed-in input {
+            .inpseo input {
                 background: #fafafa;
-                width: 100%;
+                width: 50vw !important;
                 font-size: 1rem;
-                padding: 1.3vw 4vw;
+                padding: 0.8vw 2vw;
                 outline: none;
                 border: 0;
                 border-radius: 5vw;
             }
 
-            .shareOptions {
-                position: absolute;
-                right: 22%;
-                display: none;
+            .comment-form form input,
+            .comment-form form textarea {
+
+                font-size: 3vw !important;
+
             }
 
-            .share-item a {
-                width: 18px;
-                height: 18px;
+
+            .seo-hed-in input {
+                background: #fafafa;
+                width: 60vw !important;
+
             }
-
-            .shareOptions li:nth-child(1) {
-                transform: rotate(0deg) translate(50px, 0px) rotate(0deg) !important;
-            }
-
-            .shareOptions li:nth-child(2) {
-                transform: rotate(40deg) translate(36.2836px, 25.423px) rotate(-40deg) !important;
-            }
-
-            .shareOptions li:nth-child(3) {
-                transform: rotate(80deg) translate(11.8919px, 42.7846px) rotate(-80deg) !important;
-            }
-
-            .shareOptions li:nth-child(4) {
-                transform: rotate(120deg) translate(-15px, 35.282px) rotate(-120deg) !important;
-            }
-
-            .shareOptions li:nth-child(5) {
-                transform: rotate(160deg) translate(-38.1754px, 14.3616px) rotate(-160deg) !important;
-            }
-
-            .shareOptions li:nth-child(6) {
-                transform: rotate(200deg) translate(-49.1754px, -11.3616px) rotate(-200deg) !important;
-            }
-
-            .shareOptions li:nth-child(7) {
-                transform: rotate(240deg) translate(-25px, -39.282px) rotate(-240deg) !important;
-            }
-
-            .shareOptions li:nth-child(8) {
-                transform: rotate(280deg) translate(1.8919px, -42.7846px) rotate(-280deg) !important;
-            }
-
-            .shareOptions li:nth-child(9) {
-                transform: rotate(320deg) translate(25.2836px, -23.423px) rotate(-320deg) !important;
-            }
-        }
-
-
-        .newsletter-subscription {
-            background-color: #f8f9fa;
-            padding: 40px 0;
-            margin-top: 40px;
-        }
-
-        .newsletter-container {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .newsletter-subscription h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .newsletter-subscription p {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: #666;
-        }
-
-        .newsletter-subscription form {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .newsletter-subscription input[type="text"],
-        .newsletter-subscription input[type="email"] {
-            width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .newsletter-subscription button {
-            width: 150px;
-            padding: 10px 15px;
-            background-color: #C4C800;
-            color: black;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .newsletter-subscription button:hover {
-            background-color: #0056b3;
-        }
-
-        .success-message,
-        .error-message {
-            display: none;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-
-        .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .ddf {
-            display: grid;
-            width: 20%;
-        }
-
-        @media (max-width: 768px) {
-            .newsletter-container {
-                padding: 0 20px;
-            }
-
-            .ddf {
-                display: grid;
-                width: 100%;
-            }
-        }
-
-        .video-container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-
-        .blog-paragraph {
-            white-space: pre-wrap;
-            word-wrap: break-word;
         }
     </style>
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1513305058792581"
         crossorigin="anonymous"></script>
-    <!-- Ads1 -->
-
-
-
-
 </head>
 
 <body>
-     <!-- clarity code -->
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M49293JP" height="0" width="0"
-    style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<!-- clarity code -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M49293JP" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <%- include("./includes/navbar") %>
-        <div class="main-page">
-
-            <div class="header">
-                <div class="banner">
-                    <img src="<%= blog.bannerImage %>" alt="Banner Image">
-                    <h1>
-                        <%= blog.title %>
-                    </h1>
-                </div>
-            </div>
-
-            <!-- blog share option -->
-            <div style="display: flex;justify-content: end;padding-inline: 5vw;">
-                <button class="shareButton">Share</button>
-                <div class="shareOptions" style="display:none;">
-                    <!-- Share options will be inserted here -->
-                </div>
-            </div>
-
-            <!-- blog share option -->
 
 
-            <div class="seo-hed" style="width: 100%;">
-                <div class="seo-hed-in">
-                    <form action="/subscribe" method="POST">
-                        <ul>
-                            <li><input type="email" name="email" placeholder="Your Email" required></li>
-                            <li><input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>"></li>
-                            <li><button type="submit">Subscribe</button></li>
-                        </ul>
+        <div class="bp-container">
+            <aside class="ad-space">
+                <div class="ddf">
+                    <% ads.forEach(ad=> { %>
+                        <p style="display: none;">Number of clicks: <span id="clickCount-<%= ad._id %>"
+                                data-click-count="<%= ad.clickCount %>">
+                                <%= ad.clickCount %>
+                            </span></p>
 
-
-
-                    </form>
-                </div>
-            </div>
-
-
-            <section class="blog-content">
-                <p>
-                    <%= blog.shortDescription %>
-                </p>
-
-
-
-                <div class="upk">
-                    <div class="ipk">
-                        <% blog.content.forEach((contentItem, index)=> { %>
-                            <div
-                                class="image-container<%= index % 2 === 0 ? '1' : '2' %> ic <%= !contentItem.image ? 'no-image' : '' %>">
-                                <div class="ic-text">
-                                    <h3>
-                                        <%= contentItem.heading %>
-                                    </h3>
-                                    <p>
-                                        <%- contentItem.paragraph %>
-                                    </p>
+                        <div class="ad-frame">
+                            <div id="<%= ad._id %>" class="ci">
+                                <div id="show-ad-title" style="display: flex;">
+                                    <span id="ad-title">
+                                        <%= ad.title %>
+                                    </span>
+                                    <span>i</span>
                                 </div>
-                                <% if (contentItem.image) { %>
-                                    <div class="ic-img">
-                                        <img src="<%= contentItem.image %>" alt="Blog Image">
-                                    </div>
-                                    <% } %>
-
-
+                                <span class="crss" data-id="<%= ad._id %>"
+                                    data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
                             </div>
-                            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1513305058792581"
-                            data-ad-slot="2626864697" data-ad-format="auto" data-full-width-responsive="true"></ins>
-
-                            <% if (index===0 && blog.videoUrl) { %>
-                                <div class="video-container">
-                                    <% if (blog.videoUrl.includes('youtube.com') || blog.videoUrl.includes('youtu.be'))
-                                        { %>
-                                        <iframe width="450px" height="240px"
-                                            src="https://www.youtube.com/embed/<%= videoHelpers.getYouTubeId(blog.videoUrl) %>"
-                                            frameborder="0" allowfullscreen
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-                                        </iframe>
+                            <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>" class="ad-frame-in">
+                                <div class="touch" data-id="<%= ad._id %>" onclick="trackClick('<%= ad._id %>')">
+                                    <% if (ad.filePath.endsWith('.mp4')) { %>
+                                        <a href="<%= ad.linkPath %>" target="_blank">
+                                            <video style="width: 100%;" autoplay muted loop width="300">
+                                                <source src="<%= ad.filePath %>" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </a>
                                         <% } else { %>
-                                            <iframe width="450px" height="240px" src="<%= blog.videoUrl %>"
-                                                frameborder="0" allowfullscreen
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-                                            </iframe>
+                                            <a href="<%= ad.linkPath %>" target="_blank">
+                                                <img style="width: 100%;" src="<%= ad.filePath %>" width="300"
+                                                    alt="Ad Image">
+                                            </a>
                                             <% } %>
                                 </div>
-                                <% } %>
-                                    <% }) %>
-                    </div>
-
-                    <div class="ddf">
-                        <% ads.forEach(ad=> { %>
-                            <p style="display: none;">Number of clicks: <span id="clickCount-<%= ad._id %>"
-                                    data-click-count="<%= ad.clickCount %>">
-                                    <%= ad.clickCount %>
-                                </span></p>
-
-                            <div class="ad-frame">
-                                <div id="<%= ad._id %>" class="ci">
-                                    <div id="show-ad-title" style="display: flex;">
-                                        <span id="ad-title">
-                                            <%= ad.title %>
-                                        </span>
-                                        <span>i</span>
-                                    </div>
-                                    <span class="crss" data-id="<%= ad._id %>"
-                                        data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
-                                </div>
-                                <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>" class="ad-frame-in">
-                                    <div class="touch" data-id="<%= ad._id %>" onclick="trackClick('<%= ad._id %>')">
-                                        <% if (ad.filePath.endsWith('.mp4')) { %>
-                                            <a href="<%= ad.linkPath %>" target="_blank">
-                                                <video style="width: 100%;" autoplay muted loop width="300">
-                                                    <source src="<%= ad.filePath %>" type="video/mp4">
-                                                    Your browser does not support the video tag.
-                                                </video>
-                                            </a>
-                                            <% } else { %>
-                                                <a href="<%= ad.linkPath %>" target="_blank">
-                                                    <img style="width: 100%;" src="<%= ad.filePath %>" width="300"
-                                                        alt="Ad Image">
-                                                </a>
-                                                <% } %>
-                                    </div>
-                                </div>
                             </div>
-                            <% }) %>
-
-                           
-                    </div>
-
-                    
-
-
+                        </div>
+                        <% }) %>
 
 
                 </div>
 
-                <div class="contentText">
-                    <%- blog.contentText %>
-                </div>
-            </section>
+            </aside>
+            <main class="bp-content">
+                <div class="blog-content">
+                    <header class="bp-header">
+                        <h1>
+                            <%= blog.title %>
+                        </h1>
+                        <p class="date">Published on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                day: 'numeric' , year: 'numeric' , hour: 'numeric' , minute: 'numeric' }) %>
+                        </p>
+                    </header>
 
-
-
-
-
-
-
-
-
-            <div class="comments-sec">
-                <section class="comments">
-                    <div class="cmnts">
-                        <h3>Comments</h3>
+                    <!-- blog share option -->
+                    <div style="display: flex;justify-content: end; width: 100%;">
                         <button class="shareButton">Share</button>
                         <div class="shareOptions" style="display:none;">
                             <!-- Share options will be inserted here -->
                         </div>
                     </div>
-                    <% if (comments.length> 0) { %>
-                        <div class="user-comments">
-                            <% comments.forEach(comment=> { %>
-                                <div class="comment">
-                                    <div style="display: flex;gap: 1vw;align-items: center;">
-                                        <img src="/assets/images/prof.png" alt="prof">
-                                        <h4>
-                                            <%= comment.name %>
-                                        </h4>
-                                    </div>
-                                    <div class="com-des">
-                                        <p>
-                                            <%= comment.comment %>
-                                        </p>
-                                        <small>
-                                            <%= comment.createdAt.toLocaleDateString() %>
-                                        </small>
-                                    </div>
-                                </div>
-                                <% }) %>
+
+                    <!-- blog share option -->
+
+
+
+
+
+                    <div class="banner-image">
+                        <img src="<%= blog.bannerImage %>" alt="<%= blog.title %>">
+                    </div>
+
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1513305058792581"
+                        data-ad-slot="2626864697" data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+                    <div class="seo-hed" style="width: 100%;">
+                        <div class="seo-hed-in">
+                            <form action="/subscribe" method="POST">
+                                <ul>
+                                    <li class="inpseo"><input type="email" name="email" placeholder="Your Email"
+                                            required></li>
+                                    <li><input type="hidden" name="redirectUrl"
+                                            value="/blog-detail/<%= blog.canonical %>"></li>
+                                    <li><button type="submit">Subscribe</button></li>
+                                </ul>
+                            </form>
                         </div>
-                        <% } else { %>
-                            <p>No comments yet.</p>
-                            <% } %>
-                </section>
+                    </div>
 
-
-                <section class="comment-form">
-                    <h3>Leave a Comment</h3>
-                    <form action="/blog-detail/<%= blog.canonical %>/comment" method="POST">
-                        <p style="display: flex;gap: 1vw;">
-                            <input type="text" name="name" placeholder="Your Name" required maxlength="25"
-                                oninput="updateCharCount(this)">
-                            <input type="email" name="email" placeholder="Your Email" required>
+                    <article>
+                        <p>
+                            <%= blog.shortDescription %>
                         </p>
-                        <p><textarea name="comment" placeholder="Your Comment" required maxlength="160"
-                                oninput="updateCharCount(this)"></textarea></p>
-                        <span id="charCount">0 / 160 characters</span>
-                        <p><button type="submit">Submit Comment</button></p>
-                    </form>
-                </section>
-            </div>
 
-            <div class="blogs-recommend">
-                <h3 style="text-align: center;font-size: 3vw;padding: 2vw 0;">Suggested Blogs</h3>
-                <div class="blog-cont">
-                    <div class="mark-section">
-                        <% blogsRecommend.forEach(blog=> { %>
-                            <a href="/blog-detail/<%= blog.canonical %>" class="blog-card">
-                                <div class="mar-img">
-                                    <img class="ad-img" src="<%= blog.showImg %>" loading="lazy"
-                                        alt="<%= blog.title %>">
-                                </div>
-                                <div class="mar-desc">
-                                    <h2>
-                                        <%= blog.title %>
-                                    </h2>
-                                    <div>
-                                        <%= truncateString(blog.shortDescription) %>
+                        <% blog.content.forEach((contentItem, index)=> { %>
+                            <div
+                                class="bp-content-section s<%= index % 2 === 0 ? '1' : '2' %> <%= !contentItem.image ? 'no-image' : '' %>">
+                                <% if (contentItem.image) { %>
+                                    <div class="bp-content-image">
+                                        <img src="<%= contentItem.image %>" alt="blog">
                                     </div>
-                                    <small
-                                        style="color: #000; position: absolute; bottom: 10px; right: 10px; font-size: 1vw;">Published
-                                        on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' , day: 'numeric'
-                                            , year: 'numeric' , hour: 'numeric' , minute: 'numeric' }) %></small>
-                                </div>
-                            </a>
+                                    <% } %>
+                                        <div class="bp-content-text">
+                                            <h2>
+                                                <%= contentItem.heading %>
+                                            </h2>
+                                            <p>
+                                                <%= contentItem.paragraph %>
+                                            </p>
+                                        </div>
+
+                            </div>
                             <% }) %>
+
+
+                                <div class="ads-box">
+                                    <aside class="ad-space-m">
+                                        <div class="ddf">
+                                            <% ads.forEach(ad=> { %>
+                                                <p style="display: none;">Number of clicks: <span
+                                                        id="clickCount-<%= ad._id %>"
+                                                        data-click-count="<%= ad.clickCount %>">
+                                                        <%= ad.clickCount %>
+                                                    </span></p>
+
+                                                <div class="ad-frame">
+                                                    <div id="<%= ad._id %>" class="ci">
+                                                        <div id="show-ad-title" style="display: flex;">
+                                                            <span id="ad-title">
+                                                                <%= ad.title %>
+                                                            </span>
+                                                            <span>i</span>
+                                                        </div>
+                                                        <span class="crss" data-id="<%= ad._id %>"
+                                                            data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
+                                                    </div>
+                                                    <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>"
+                                                        class="ad-frame-in">
+                                                        <div class="touch" data-id="<%= ad._id %>"
+                                                            onclick="trackClick('<%= ad._id %>')">
+                                                            <% if (ad.filePath.endsWith('.mp4')) { %>
+                                                                <a href="<%= ad.linkPath %>" target="_blank">
+                                                                    <video style="width: 100%;" autoplay muted loop
+                                                                        width="300">
+                                                                        <source src="<%= ad.filePath %>"
+                                                                            type="video/mp4">
+                                                                        Your browser does not support the video tag.
+                                                                    </video>
+                                                                </a>
+                                                                <% } else { %>
+                                                                    <a href="<%= ad.linkPath %>" target="_blank">
+                                                                        <img style="width: 100%;"
+                                                                            src="<%= ad.filePath %>" width="300"
+                                                                            alt="Ad Image">
+                                                                    </a>
+                                                                    <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% }) %>
+
+
+                                        </div>
+
+                                    </aside>
+                                    <aside class="ad-space-m">
+                                        <div class="ddf">
+                                            <% ads.forEach(ad=> { %>
+                                                <p style="display: none;">Number of clicks: <span
+                                                        id="clickCount-<%= ad._id %>"
+                                                        data-click-count="<%= ad.clickCount %>">
+                                                        <%= ad.clickCount %>
+                                                    </span></p>
+
+                                                <div class="ad-frame">
+                                                    <div id="<%= ad._id %>" class="ci">
+                                                        <div id="show-ad-title" style="display: flex;">
+                                                            <span id="ad-title">
+                                                                <%= ad.title %>
+                                                            </span>
+                                                            <span>i</span>
+                                                        </div>
+                                                        <span class="crss" data-id="<%= ad._id %>"
+                                                            data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
+                                                    </div>
+                                                    <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>"
+                                                        class="ad-frame-in">
+                                                        <div class="touch" data-id="<%= ad._id %>"
+                                                            onclick="trackClick('<%= ad._id %>')">
+                                                            <% if (ad.filePath.endsWith('.mp4')) { %>
+                                                                <a href="<%= ad.linkPath %>" target="_blank">
+                                                                    <video style="width: 100%;" autoplay muted loop
+                                                                        width="300">
+                                                                        <source src="<%= ad.filePath %>"
+                                                                            type="video/mp4">
+                                                                        Your browser does not support the video tag.
+                                                                    </video>
+                                                                </a>
+                                                                <% } else { %>
+                                                                    <a href="<%= ad.linkPath %>" target="_blank">
+                                                                        <img style="width: 100%;"
+                                                                            src="<%= ad.filePath %>" width="300"
+                                                                            alt="Ad Image">
+                                                                    </a>
+                                                                    <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% }) %>
+
+
+                                        </div>
+
+                                    </aside>
+                                </div>
+
+
+
+
+
+                                <div class="contentText">
+                                    <%- blog.contentText %>
+                                </div>
+                    </article>
+
+
+                    <div class="comments-sec">
+                        <section class="comments">
+                            <div class="cmnts">
+                                <h3>Comments</h3>
+                                <!-- blog share option -->
+                                <div style="display: flex;justify-content: end; width: 100%;">
+                                    <button class="shareButton">Share</button>
+                                    <div class="shareOptions" style="display:none;">
+                                        <!-- Share options will be inserted here -->
+                                    </div>
+                                </div>
+
+                                <!-- blog share option -->
+                            </div>
+                            <% if (comments.length> 0) { %>
+                                <div class="user-comments">
+                                    <% comments.forEach(comment=> { %>
+                                        <div class="comment">
+                                            <div style="display: flex;gap: 1vw;align-items: center;">
+                                                <img src="/assets/images/prof.png" alt="prof">
+                                                <h4>
+                                                    <%= comment.name %>
+                                                </h4>
+                                            </div>
+                                            <div class="com-des">
+                                                <p>
+                                                    <%= comment.comment %>
+                                                </p>
+                                                <small>
+                                                    <%= comment.createdAt.toLocaleDateString() %>
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                                <% } else { %>
+                                    <p>No comments yet.</p>
+                                    <% } %>
+                        </section>
+
+
+                        <section class="comment-form">
+                            <h3>Leave a Comment</h3>
+                            <form action="/blog-detail/<%= blog.canonical %>/comment" method="POST">
+                                <p style="display: flex;gap: 1vw;">
+                                    <input type="text" name="name" placeholder="Your Name" required maxlength="25"
+                                        oninput="updateCharCount(this)">
+                                    <input type="email" name="email" placeholder="Your Email" required>
+                                </p>
+                                <p><textarea name="comment" placeholder="Your Comment" required maxlength="160"
+                                        oninput="updateCharCount(this)"></textarea></p>
+                                <span id="charCount">0 / 160 characters</span>
+                                <p><button type="submit">Submit Comment</button></p>
+                            </form>
+                        </section>
+                    </div>
+
+                    <div class="blogs-recommend">
+                        <h3 style="text-align: center;font-size: 3vw;padding: 2vw 0;">Suggested Blogs</h3>
+                        <div class="blog-cont">
+                            <div class="mark-section">
+                                <% blogsRecommend.forEach(blog=> { %>
+                                    <a href="/blog-detail/<%= blog.canonical %>" class="blog-card">
+                                        <div class="mar-img">
+                                            <img class="ad-img" src="<%= blog.showImg %>" loading="lazy"
+                                                alt="<%= blog.title %>">
+                                        </div>
+                                        <div class="mar-desc">
+                                            <h2>
+                                                <%= blog.title %>
+                                            </h2>
+                                            <div>
+                                                <%= truncateString(blog.shortDescription) %>
+                                            </div>
+                                            <small
+                                                style="color: #000; position: absolute; bottom: 10px; right: 10px; font-size: 1vw;">Published
+                                                on <%= blog.createdAt.toLocaleString('en-US', { month: 'short' ,
+                                                    day: 'numeric' , year: 'numeric' , hour: 'numeric' ,
+                                                    minute: 'numeric' }) %></small>
+                                        </div>
+                                    </a>
+                                    <% }) %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="newsletter-subscription">
+                        <div class="newsletter-container">
+                            <h3>Subscribe to Our Newsletter</h3>
+                            <p>Stay updated with our latest blog posts and news!</p>
+
+                            <form action="/subscribe" method="POST">
+
+                                <input type="email" name="email" placeholder="Your Email" required>
+                                <input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>">
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <div class="chatbot">
+                        <div id="chat-preview">
+                            <div id="chat-preview-header">
+                                <span>Shashi sales and marketing</span>
+                                <button id="chat-preview-close">✕</button>
+                            </div>
+                            <div id="chat-preview-message">
+                                Hello! How can we help you ? We're here to assist you!
+                            </div>
+                        </div>
+                        <button id="chat-button">💬</button>
+                        <div id="chat-container">
+                            <div id="chat-header">
+                                <img src="/assets/images/chatbot-icon.png" alt="">
+                                <p>shashi sales and marketing</p>
+                            </div>
+                            <div id="chat-messages"></div>
+                            <div id="typing-indicator" style="display: none;">Admin is typing...</div>
+                            <div id="chat-input-container">
+                                <input type="text" id="chat-input" placeholder="Type a message...">
+                                <button id="chat-submit">➤</button>
+                            </div>
+                        </div>
+                        <audio id="notificationSound" src="/notification.mp3" preload="auto"></audio>
                     </div>
                 </div>
-            </div>
 
-            <section class="newsletter-subscription">
-                <div class="newsletter-container">
-                    <h3>Subscribe to Our Newsletter</h3>
-                    <p>Stay updated with our latest blog posts and news!</p>
 
-                    <form action="/subscribe" method="POST">
+            </main>
+            <aside class="ad-space">
+                <div class="ddf">
+                    <% ads.forEach(ad=> { %>
+                        <p style="display: none;">Number of clicks: <span id="clickCount-<%= ad._id %>"
+                                data-click-count="<%= ad.clickCount %>">
+                                <%= ad.clickCount %>
+                            </span></p>
 
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <input type="hidden" name="redirectUrl" value="/blog-detail/<%= blog.canonical %>">
-                        <button type="submit">Subscribe</button>
-                    </form>
+                        <div class="ad-frame">
+                            <div id="<%= ad._id %>" class="ci">
+                                <div id="show-ad-title" style="display: flex;">
+                                    <span id="ad-title">
+                                        <%= ad.title %>
+                                    </span>
+                                    <span>i</span>
+                                </div>
+                                <span class="crss" data-id="<%= ad._id %>"
+                                    data-title="<%= ad.title.replace(/\s+/g, '-') %>">&times;</span>
+                            </div>
+                            <div id="<%= ad._id %><%= ad.title.replace(/\s+/g, '-') %>" class="ad-frame-in">
+                                <div class="touch" data-id="<%= ad._id %>" onclick="trackClick('<%= ad._id %>')">
+                                    <% if (ad.filePath.endsWith('.mp4')) { %>
+                                        <a href="<%= ad.linkPath %>" target="_blank">
+                                            <video style="width: 100%;" autoplay muted loop width="300">
+                                                <source src="<%= ad.filePath %>" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </a>
+                                        <% } else { %>
+                                            <a href="<%= ad.linkPath %>" target="_blank">
+                                                <img style="width: 100%;" src="<%= ad.filePath %>" width="300"
+                                                    alt="Ad Image">
+                                            </a>
+                                            <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+
+
                 </div>
-            </section>
 
-            <div class="chatbot">
-                <div id="chat-preview">
-                    <div id="chat-preview-header">
-                        <span>Shashi sales and marketing</span>
-                        <button id="chat-preview-close">✕</button>
-                    </div>
-                    <div id="chat-preview-message">
-                        Hello! How can we help you ? We're here to assist you!
-                    </div>
-                </div>
-                <button id="chat-button">💬</button>
-                <div id="chat-container">
-                    <div id="chat-header">Chat Bot</div>
-                    <div id="chat-messages"></div>
-                    <div id="typing-indicator" style="display: none;">Admin is typing...</div>
-                    <div id="chat-input-container">
-                        <input type="text" id="chat-input" placeholder="Type a message...">
-                        <button id="chat-submit">➤</button>
-                    </div>
-                </div>
-                <audio id="notificationSound" src="/notification.mp3" preload="auto"></audio>
-            </div>
+            </aside>
         </div>
 
-
         <%- include("./includes/footer") %>
-            </div>
-
 
 
 
@@ -1056,10 +1357,10 @@
                         const commentElement = document.createElement('div');
                         commentElement.classList.add('comment');
                         commentElement.innerHTML = `
-            <h4>${escapeHTML(comment.name)}</h4>
-            <p>${escapeHTML(comment.comment)}</p>
-            <small>${new Date(comment.createdAt).toLocaleString()}</small>
-        `;
+        <h4>${escapeHTML(comment.name)}</h4>
+        <p>${escapeHTML(comment.comment)}</p>
+        <small>${new Date(comment.createdAt).toLocaleString()}</small>
+    `;
                         commentsList.prepend(commentElement);
                     }
 
@@ -1077,15 +1378,15 @@
 
                     // Display existing comments
                     eval(`
-    <% if (blog.comments && blog.comments.length > 0) { %>
-        <% blog.comments.forEach(function(comment) { %>
-            displayComment({
-                name: '<%= comment.name %>',
-                comment: '<%= comment.comment %>',
-                createdAt: '<%= comment.createdAt %>'
-            });
-        <% }); %>
-    <% } %>
+<% if (blog.comments && blog.comments.length > 0) { %>
+    <% blog.comments.forEach(function(comment) { %>
+        displayComment({
+            name: '<%= comment.name %>',
+            comment: '<%= comment.comment %>',
+            createdAt: '<%= comment.createdAt %>'
+        });
+    <% }); %>
+<% } %>
 `);
                 });
             </script>
@@ -1219,6 +1520,7 @@
                 });
             </script>
 
+
             <script>
                 const CrossElements = document.querySelectorAll('.crss');
 
@@ -1286,7 +1588,6 @@
                     handleAdClicks();
                 };
             </script>
-
 
 </body>
 
