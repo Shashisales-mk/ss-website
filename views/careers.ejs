@@ -1,0 +1,275 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    .bl {
+        background-color: black;
+    }
+</style>
+
+<body>
+    <div class="career-container">
+        <div class="filter-sidebar">
+            <h2>Filters</h2>
+            
+            <div class="filter-dropdown" data-filter="location">
+                <div class="filter-option">Locations <span>▼</span></div>
+                <div class="filter-content">
+                    <a href="#" data-value="all">All locations</a>
+                    <a href="#" data-value="remote">Remote</a>
+                    <a href="#" data-value="us">United States</a>
+                    <a href="#" data-value="europe">Europe</a>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" data-filter="experience">
+                <div class="filter-option">Experience <span>▼</span></div>
+                <div class="filter-content">
+                    <a href="#" data-value="all">All levels</a>
+                    <a href="#" data-value="entry">Entry level</a>
+                    <a href="#" data-value="mid">Mid level</a>
+                    <a href="#" data-value="senior">Senior level</a>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" data-filter="skills">
+                <div class="filter-option">Skills & qualifications <span>▼</span></div>
+                <div class="filter-content">
+                    <a href="#" data-value="skill1">Skill 1</a>
+                    <a href="#" data-value="skill2">Skill 2</a>
+                    <a href="#" data-value="skill3">Skill 3</a>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" data-filter="degree">
+                <div class="filter-option">Degree <span>▼</span></div>
+                <div class="filter-content">
+                    <a href="#" data-value="all">All degrees</a>
+                    <a href="#" data-value="bachelor">Bachelor's</a>
+                    <a href="#" data-value="master">Master's</a>
+                    <a href="#" data-value="phd">Ph.D.</a>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" data-filter="jobType">
+                <div class="filter-option">Job Type <span>▼</span></div>
+                <div class="filter-content">
+                    <a href="#" data-value="all">All types</a>
+                    <a href="#" data-value="fulltime">Full-time</a>
+                    <a href="#" data-value="parttime">Part-time</a>
+                    <a href="#" data-value="contract">Contract</a>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" data-filter="organization">
+                <div class="filter-option">Organization <span>▼</span></div>
+                <div class="filter-content">
+                    <a href="#" data-value="org1">Organization 1</a>
+                    <a href="#" data-value="org2">Organization 2</a>
+                    <a href="#" data-value="org3">Organization 3</a>
+                </div>
+            </div>
+
+            <div class="filter-dropdown" data-filter="sortBy">
+                <div class="filter-option">Sort by <span>▼</span></div>
+                <div class="filter-content">
+                    <a href="#" data-value="relevance">Relevance</a>
+                    <a href="#" data-value="date">Date posted</a>
+                    <a href="#" data-value="salary">Salary</a>
+                </div>
+            </div>
+
+            <div class="selected-filters">
+                <!-- Selected filters will be dynamically added here -->
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="job-count"><span id="job-count">2,558</span> jobs matched</div>
+                <button class="clear-filters">Clear filters</button>
+                <div class="job-alerts">
+                    Turn on job alerts for this search
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="career-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <input type="text" class="search-bar" placeholder="What do you want to do?" id="search-input">
+            <div class="filters-container">
+                <div class="filter-dropdown">
+                    <div class="filter-option">Locations <span>▼</span></div>
+                    <div class="filter-content">
+                        <a href="#">All locations</a>
+                        <a href="#">Remote</a>
+                        <a href="#">United States</a>
+                        <a href="#">Europe</a>
+                    </div>
+                </div>
+                <div class="filter-dropdown">
+                    <div class="filter-option">Experience <span>▼</span></div>
+                    <div class="filter-content">
+                        <a href="#">All levels</a>
+                        <a href="#">Entry level</a>
+                        <a href="#">Mid level</a>
+                        <a href="#">Senior level</a>
+                    </div>
+                </div>
+                <div class="filter-dropdown">
+                    <div class="filter-option">Skills & qualifications <span>▼</span></div>
+                    <div class="filter-content">
+                        <a href="#">Skill 1</a>
+                        <a href="#">Skill 2</a>
+                        <a href="#">Skill 3</a>
+                    </div>
+                </div>
+            </div>
+            <div id="job-listings">
+                <% jobs.forEach(job=> { %>
+
+                    <div class="job-card">
+                        <h3 class="jtitle">
+                            <%= job.title %>
+                        </h3>
+                        <div class="job-details">
+                            <div> <img src="/assets/images/job-p.png" alt="company"> Shashi sales and marketing
+                            </div>
+                            <div><img src="/assets/images/job-l.png" alt="job location">
+                                <%= job.location %>
+                            </div>
+                            <div> <img src="/assets/images/job-le.png" alt="job level">
+                                <%= job.jobType %>
+                            </div>
+
+                        </div>
+                        <div class="job-qualifications">
+                            <strong>Minimum qualifications:</strong>
+                            <ul>
+                                <% job.requirements.forEach(requirement=> { %>
+                                    <li><%- requirement %></li>
+                                    <% }) %>
+                            </ul>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="/job-detail/<%= job._id %>" class="learn-more">Learn more</a>
+                            <div class="share-icon">
+                                <button class="action-button share-btn">Share</button>
+                                <img src="/assets/images/share.svg" alt="share">
+                            </div>
+                        </div>
+                    </div>
+
+                    <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterDropdowns = document.querySelectorAll('.filter-dropdown');
+            const selectedFiltersContainer = document.querySelector('.selected-filters');
+            const clearFiltersButton = document.querySelector('.clear-filters');
+            const searchInput = document.getElementById('search-input');
+            const selectedFilters = {};
+
+            function toggleDropdown(dropdown) {
+                const content = dropdown.querySelector('.filter-content');
+                content.classList.toggle('show');
+            }
+
+            function closeAllDropdowns() {
+                document.querySelectorAll('.filter-content').forEach(content => {
+                    content.classList.remove('show');
+                });
+            }
+
+            function updateSelectedFilters(filterType, value, text) {
+                if (!selectedFilters[filterType]) {
+                    selectedFilters[filterType] = [];
+                }
+                if (!selectedFilters[filterType].includes(value)) {
+                    selectedFilters[filterType].push(value);
+                    addFilterTag(filterType, value, text);
+                }
+            }
+
+            function addFilterTag(filterType, value, text) {
+                const tag = document.createElement('div');
+                tag.classList.add('selected-filter');
+                tag.innerHTML = `${text} <span class="remove-filter" data-filter="${filterType}" data-value="${value}">✕</span>`;
+                selectedFiltersContainer.appendChild(tag);
+            }
+
+            function removeFilterTag(filterType, value) {
+                const index = selectedFilters[filterType].indexOf(value);
+                if (index > -1) {
+                    selectedFilters[filterType].splice(index, 1);
+                }
+                const tag = selectedFiltersContainer.querySelector(`[data-filter="${filterType}"][data-value="${value}"]`).parentNode;
+                tag.remove();
+            }
+
+            function clearAllFilters() {
+                selectedFiltersContainer.innerHTML = '';
+                Object.keys(selectedFilters).forEach(key => {
+                    selectedFilters[key] = [];
+                });
+                searchInput.value = '';
+                // Reset visual selection in dropdowns
+                document.querySelectorAll('.filter-content a').forEach(a => {
+                    a.classList.remove('selected');
+                });
+                // You might want to trigger a new search or update the job listings here
+                // updateJobListings();
+            }
+
+            filterDropdowns.forEach(dropdown => {
+                const option = dropdown.querySelector('.filter-option');
+                const content = dropdown.querySelector('.filter-content');
+
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeAllDropdowns();
+                    toggleDropdown(dropdown);
+                });
+
+                content.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') {
+                        e.preventDefault();
+                        const filterType = dropdown.dataset.filter;
+                        const value = e.target.dataset.value;
+                        const text = e.target.textContent;
+                        updateSelectedFilters(filterType, value, text);
+                        e.target.classList.add('selected');
+                        toggleDropdown(dropdown);
+                    }
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.filter-dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+
+            selectedFiltersContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-filter')) {
+                    const filterType = e.target.dataset.filter;
+                    const value = e.target.dataset.value;
+                    removeFilterTag(filterType, value);
+                }
+            });
+
+            clearFiltersButton.addEventListener('click', clearAllFilters);
+
+            // Implement search functionality (placeholder)
+            searchInput.addEventListener('input', (e) => {
+                // Implement your search logic here
+                console.log('Search term:', e.target.value);
+            });
+
+            // You might want to implement a function to update job listings based on filters and search
+            // function updateJobListings() {
+            //     // Implement your logic to fetch and display job listings based on filters and search
+            // }
+        });
+    </script>
+</body>

@@ -1,0 +1,110 @@
+const mongoose = require('mongoose');
+
+const applicationSchema = new mongoose.Schema({
+    jobId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'JobPosting',
+        required: true
+    },
+    resume: {
+        type: String,
+        required: true
+    },
+    firstName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    lastName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
+        trim: true
+    },
+    phone: {
+        type: String,
+        required: true,
+        match: [/^\d{10,15}$/, 'Please enter a valid phone number']
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    zip: {
+        type: String,
+        required: true
+    },
+    workExperience: [{
+        company: {
+            type: String,
+            required: true
+        },
+        jobTitle: {
+            type: String,
+            required: true
+        },
+        startDate: {
+            month: {
+                type: String,
+                required: true
+            },
+            year: {
+                type: Number,
+                required: true
+            }
+        },
+        endDate: {
+            month: {
+                type: String,
+                required: true
+            },
+            year: {
+                type: Number,
+                required: true
+            }
+        },
+        currentCTC: {
+            type: Number,
+            required: true
+        },
+        expectedCTC: {
+            type: Number,
+            required: true
+        },
+        skills: {
+            type: String,
+            required: true
+        }
+    }],
+    additionalInfo: String,
+    status: {
+        type: String,
+        enum: ['applied', 'shortlisted', 'rejected', 'hired'],
+        default: 'applied'
+    },
+    appliedAt: {
+        type: Date,
+        default: Date.now
+    }
+}, {
+    timestamps: true
+});
+
+applicationSchema.index({ jobId: 1, email: 1 }, { unique: true });
+
+const Application = mongoose.model('Application', applicationSchema);
+
+module.exports = Application;

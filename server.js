@@ -32,6 +32,7 @@ const Ad = require('./models/Ad');
 const Chatuser = require('./models/Chatuser');
 const Chat = require('./models/ChatSchema');
 const Team = require('./models/Team');
+const JobPosting = require('./models/JobPosting');
 
 const passport = require('./config/passport');
 
@@ -42,6 +43,9 @@ const paypal = require('paypal-rest-sdk');
 
 const galleryRoutes = require('./routes/galleryRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
+const adminRoutes = require('./routes/admin');
+
+
 const { gmail } = require("googleapis/build/src/apis/gmail");
 
 const videoHelpers = require('./utils/vedioHelpers');
@@ -180,6 +184,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/', galleryRoutes);
 app.use('/', testimonialRoutes);
+app.use('/admin', adminRoutes);
 
 
 // Authentication middleware
@@ -337,7 +342,7 @@ app.get("/about-us", async (req, res) => {
         description: 'Shashi Sales and Marketing offers expert digital marketing services to enhance online presence, boost engagement, and drive business growth.',
         keywords: 'Digital Marketing Agency'
     });
-    
+
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -768,6 +773,8 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     const pendingComments = await Comment.find({ isApproved: false }).populate('blog', 'title');
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
     const subscribers = await Subscriber.find();
+    const jobs = await JobPosting.find();
+
 
 
 
@@ -791,6 +798,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
 
     res.render("allBlogs", {
 
+        jobs,
         ads,
         chats,
         closedChats,
@@ -2485,15 +2493,15 @@ app.post("/admin/update-ads-txt", isAdmin, (req, res) => {
     const newAdsTxt = req.body.adsTxt; // Get updated content from the form submission
     const filePath = path.join(__dirname, 'public', 'ads.txt');
 
-   fs.writeFile(filePath, newAdsTxt, (err) => {
-    if (err) {
-        console.error('Error writing file:', err); // Log error for debugging
-        req.flash('error', 'Error writing to ads.txt file');
-        return res.redirect('/admin/edit-ads-txt');
-    }
-    req.flash('success', 'Ads.txt file is updated successfully');
-    res.redirect('/admin/edit-ads-txt');
-});
+    fs.writeFile(filePath, newAdsTxt, (err) => {
+        if (err) {
+            console.error('Error writing file:', err); // Log error for debugging
+            req.flash('error', 'Error writing to ads.txt file');
+            return res.redirect('/admin/edit-ads-txt');
+        }
+        req.flash('success', 'Ads.txt file is updated successfully');
+        res.redirect('/admin/edit-ads-txt');
+    });
 
 });
 
@@ -2636,6 +2644,49 @@ app.post('/start-chat', async (req, res) => {
         res.status(500).json({ error: 'Error starting chat' });
     }
 });
+
+
+
+
+// career page functionality
+
+app.get("/careers", async (req, res) => {
+    const jobs = await JobPosting.find();
+    res.render("careers", {
+        jobs,
+        title: "",
+        description: "",
+        keywords: ""
+    })
+})
+app.get("/apply/:id", async (req, res) => {
+    const job = await JobPosting.findById(req.params.id); 
+    res.render("applicationForm", {
+        job,
+        title: "",
+        description: "",
+        keywords: ""
+    })
+})
+
+
+app.get("/job-detail/:id", async (req, res) => {
+    try {
+        const job = await JobPosting.findById(req.params.id); // Fetch job by ID
+        if (!job) {
+            return res.status(404).send('Job not found');
+        }
+        res.render('job-detail', {
+            job, title: "",
+            description: "",
+            keywords: ""
+        }); // Render the edit form with job data
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+})
+
 
 
 

@@ -1,0 +1,733 @@
+    /* General form styles */
+    .team-form {
+      padding: 2vw;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      margin-block: 2rem;
+    }
+
+    .team-sec {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Input field styles */
+    .input-field {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .input-file {
+      padding: 0.5rem;
+      flex-basis: 30%;
+    }
+
+    /* Textarea styles */
+    .description {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      height: 40px;
+    }
+
+    /* Submit button styles */
+    .form-action {
+      margin-top: 1vw;
+      text-align: center;
+    }
+
+    .submit-btn {
+      background-color: #c4c800;
+      color: black;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .team-sec-btn {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid green;
+      color: green;
+    }
+
+    .new-chat-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: #00ff00;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .new-chat {
+      animation: fadeBackground 2s ease-in-out;
+    }
+
+    @keyframes fadeBackground {
+      0% {
+        background-color: #e6ffe6;
+      }
+
+      100% {
+        background-color: transparent;
+      }
+    }
+
+    #chat-preview {
+      display: none;
+    }
+
+    #chat-button {
+      display: none;
+    }
+
+    #chat-list {
+      width: 30%;
+      max-width: 420px;
+      background-color: #ffffff;
+      border-right: 1px solid #e1e4e8;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #chat-area {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #e5ddd5;
+    }
+
+    #chat-list-header,
+    #chat-area-header {
+      padding: 10px 16px;
+      background-color: #f0f2f5;
+      display: flex;
+      align-items: center;
+      height: 60px;
+    }
+
+    #active-chats {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .chat-item {
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .chat-item:hover {
+      background-color: #f5f6f6;
+    }
+
+    .chat-item.active {
+      background-color: #f0f2f5;
+    }
+
+    .chat-avatar {
+      width: 49px;
+      height: 49px;
+      border-radius: 50%;
+      background-color: #dfe5e7;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .chat-info {
+      flex-grow: 1;
+    }
+
+    .chat-name {
+      font-weight: bold;
+      margin-bottom: 3px;
+      color: #000;
+    }
+
+    .chat-preview {
+      color: #667781;
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #chat-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      max-width: 65%;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 7.5px;
+      position: relative;
+      line-height: 1.4;
+      clear: both;
+    }
+
+    .user-message {
+      background-color: #d9fdd3;
+      align-self: flex-start;
+      float: right;
+    }
+
+    .admin-message {
+      background-color: #ffffff;
+      align-self: flex-end;
+      float: left;
+    }
+
+    .message-time {
+      font-size: 0.75em;
+      color: #667781;
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    #reply-form {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #f0f2f5;
+    }
+
+    #reply-input {
+      flex-grow: 1;
+      padding: 9px 12px;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+      font-size: 15px;
+    }
+
+    #reply-form button {
+      background-color: #00a884;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #close-chat {
+      margin: 10px;
+      padding: 8px 16px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: calc(100% - 20px);
+    }
+
+    .chat-tabs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+
+    .chat-tab {
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+
+    .chat-tab.active {
+      border-bottom-color: #00a884;
+      background-color: #f0f2f5;
+    }
+
+    .chat-list {
+      display: none;
+    }
+
+    .chat-list.active {
+      display: block;
+      background-color: #f0f2f5;
+    }
+
+    .closed-chat-item {
+      opacity: 0.7;
+      background-color: #f0f2f5;
+    }
+
+    #typing-indicator {
+      font-style: italic;
+      color: #707070;
+      margin-bottom: 10px;
+      margin-left: 20px;
+    }
+
+    .bl {
+      background-color: black;
+    }
+
+    .main-page {
+      margin-top: 5rem;
+      margin-bottom: 0rem;
+      display: flex;
+    }
+
+    .bt {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      place-items: center;
+      border-bottom: 1px solid black;
+      padding-block: 1rem;
+    }
+
+    .blog-table-body button {
+      background: transparent;
+      padding: 0.5rem 1.3rem;
+      border: 2px solid red;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: red;
+    }
+
+    .blog-table-body a {
+      background: transparent;
+      padding: 0.5rem 1.3rem;
+      border: 2px solid #11b911;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #11b911;
+    }
+
+    .action-btns {
+      width: 100%;
+      padding: 2vw 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .action-btns a {
+      background: #c4c800;
+      padding: 0.5vw 1vw;
+      border: 2px solid #c4c800;
+      border-radius: 2vw;
+      font-weight: 500;
+      font-size: 1.2vw;
+      color: #000;
+    }
+
+    .dieb {
+      background: #c4c800;
+      padding: 0.5vw 1vw;
+      border: 2px solid #c4c800;
+      border-radius: 2vw;
+      font-weight: 500;
+      font-size: 1.2vw;
+      color: #000;
+      margin-top: 1rem;
+    }
+
+    .sideNavBar,
+    .main-page-in {
+      padding-top: 1vw;
+    }
+
+    .active {
+      background: #c4c800;
+    }
+
+    .sideNavBar {
+      border-right: 0.1vw solid grey;
+      width: 20%;
+      background: #f3eeee;
+    }
+
+    .sideNavBar li {
+      text-align: center;
+      padding: 2vw;
+      border-bottom: 1px solid grey;
+      font-size: 1.2vw;
+      font-weight: 700;
+    }
+
+    .sideNavBar li:hover {
+      cursor: pointer;
+      background: #c4c800;
+    }
+
+    .sideNavBar li.active {
+      background-color: #c4c800;
+    }
+
+    .main-page-in {
+      width: 80%;
+      padding: 3vw 3vw;
+    }
+
+    .main-page-in h1 {
+      justify-content: start !important;
+    }
+
+    .sideNavBar p a,
+    .gallery-section form button {
+      display: flex;
+      justify-content: center;
+      margin: 2vw 4vw;
+      padding: 0.6vw 1vw;
+      background: transparent;
+      color: #979a05;
+      border: 1px solid #979a05;
+      border-radius: 2vw;
+    }
+
+    .gallery-section form button {
+      margin: 2vw 0 0 0;
+    }
+
+    .sideNavBar p a:hover {
+      background: #c4c800;
+      color: #000;
+      border: 1px solid #c4c800;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.3vw;
+    }
+
+    th,
+    td {
+      border: 2px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+
+    .edit-btn {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid orange;
+      color: orange;
+    }
+
+    .popular,
+    .not-popular {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid #c4c800;
+      color: #c4c800;
+      font-weight: bold;
+    }
+
+    .approve,
+    .not-approve {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid green;
+      color: green;
+      font-weight: bold;
+    }
+
+    .del-btn {
+      margin: 0 !important;
+      padding: 0.3vw 2vw !important;
+      border-radius: 3vw !important;
+      background: transparent !important;
+      border: 1px solid red !important;
+      color: red !important;
+    }
+
+    .del-btn:hover {
+      cursor: pointer;
+    }
+
+    .gallery-cont {
+      padding-top: 2vw;
+      display: grid;
+      grid-column-gap: var(--column-gutter);
+      align-items: start;
+      grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    }
+
+    .gal-in {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--row-gutter);
+    }
+
+    .gal-in img,
+    .gal-in video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      unicode-bidi: isolate;
+    }
+
+    .secr {
+      display: flex;
+      gap: 2vw;
+      padding: 2vw 0 0.1vw 0;
+      font-size: 1.2vw;
+    }
+
+    .gallery-section input,
+    .gallery-section select,
+    .testimonial-section input,
+    .testimonial-section select {
+      border: 0;
+      background: #ced5d5;
+      outline: none;
+      padding: 0.5vw;
+      font-size: 1.2vw;
+      border-radius: 0.4vw;
+    }
+
+    .gallery-cont table img,
+    .gallery-cont table video {
+      height: 5vw;
+      width: 5vw;
+    }
+
+    .gallery-cont table li {
+      list-style: none;
+      padding: 0.5vw 1vw;
+      background: #4e4949;
+      color: white;
+      border-radius: 2vw;
+    }
+
+    .gallery-cont table ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1vw;
+      flex-wrap: wrap;
+    }
+
+    .gallery-section p {
+      display: grid;
+      width: 50%;
+    }
+
+    .secr label {
+      display: flex;
+      align-items: center;
+    }
+
+    .appr-btn,
+    .testimonial-section button {
+      padding: 0.3vw 2vw;
+      border-radius: 3vw;
+      background: transparent;
+      border: 1px solid green;
+      color: green;
+    }
+
+    .tarea {
+      padding: 1vw 0;
+    }
+
+    .tarea textarea {
+      padding: 1vw;
+      background: #ced5d536;
+      height: 8vw;
+    }
+
+    .tarea textarea::placeholder {
+      font-size: 1.2rem;
+    }
+
+    .tarea label {
+      display: flex;
+      margin-top: 1vw;
+      font-size: 1vw;
+    }
+
+    .edtes input,
+    .edtes select,
+    .edtes textarea {
+      width: 8vw !important;
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+
+    .comment::placeholder {
+      font-size: 1rem;
+    }
+
+    #charCount {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    .comment {
+      margin-top: 1rem;
+      width: 100%;
+      height: 100px;
+      border: 1px solid black;
+      font-size: 1rem;
+    }
+
+    .testi-sec input:first-child {
+      width: 68%;
+    }
+
+    .testi-sec input:last-child {
+      width: 30%;
+    }
+
+    /* Ads section */
+    .admin-ads {
+      margin-top: 2vw;
+      display: grid;
+      gap: 1vw;
+    }
+
+    .admin-ads input {
+      outline: none;
+      background: rgb(241, 243, 244);
+      padding: 1vw;
+      border: 0;
+      border-radius: 0.3vw;
+    }
+
+    .admin-ads button,
+    .blog-btn {
+      padding: 2vw;
+      font-weight: 700;
+      padding: 0.5vw 2vw;
+      color: green;
+      border: 1px solid green;
+      background: transparent;
+      border-radius: 1vw;
+    }
+
+    .ads-del-btn {
+      margin: 2vw 0;
+      padding: 0.5vw 1vw;
+      background: transparent;
+      border: 1px solid red;
+      color: red;
+      border-radius: 0.3vw;
+    }
+
+    .active-days {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    table ul li {
+      list-style: none;
+    }
+
+    table ul {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .fsf {
+      font-size: 0.8rem;
+    }
+
+
+    /* add job form css */
+
+    .add-job-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        font-family: Arial, sans-serif;
+    }
+    .form-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: #555;
+    }
+    .form-input,
+    .form-select,
+    .form-textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    .form-textarea {
+        min-height: 50px;
+        resize: vertical;
+    }
+    .form-submit {
+        background-color: #c4c800;
+        color: #000;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+    .form-submit:hover {
+        background-color: #c3c554;
+    }
+
+    .job-edit-btn{
+        padding: 0.3vw 2vw;
+    border-radius: 3vw;
+    background: transparent;
+    border: 1px solid green;
+    color: green;
+    font-weight: bold;
+    }

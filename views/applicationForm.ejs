@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for a Job</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Google Sans', Arial, sans-serif;
+            line-height: 1.5;
+            color: #202124;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #202124;
+        }
+
+        p {
+            color: #5f6368;
+            margin-bottom: 32px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #202124;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 9px 8px;
+            font-size: 14px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            box-sizing: border-box;
+            color: #202124;
+        }
+
+        select {
+            height: 36px;
+            padding-right: 24px;
+            background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%235F6368' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 4px center;
+            background-size: 24px 24px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            border: 1px dashed #dadce0;
+            border-radius: 4px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .file-upload svg {
+            width: 24px;
+            height: 24px;
+            fill: #5f6368;
+            margin-bottom: 8px;
+        }
+
+        .file-upload p {
+            margin: 0;
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .file-name {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #5f6368;
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        button[type="submit"] {
+            background-color: #1a73e8;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1765cc;
+        }
+
+        .upload-label {
+            font-weight: 400;
+            color: #5f6368;
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Apply for a Job</h1>
+        <p>Upload your resume and fill out the form below to apply for your dream job.</p>
+        <form id="jobApplicationForm" action="/admin/submit-application" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="upload-label">Upload Resume</label>
+                <div class="file-upload" id="resumeUpload">
+                    <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                    </svg>
+                    <p>Upload a file or drag and drop</p>
+                    <p>PDF, DOC, DOCX up to 10MB</p>
+                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" style="display: none;">
+                </div>
+                <div class="file-name" id="fileName"></div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label for="firstName">First name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="col form-group">
+                    <label for="lastName">Last name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="col form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <input type="hidden" id="phone" name="jobId" value="<%= job._id %>" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="col form-group">
+                    <label for="state">State</label>
+                    <select id="state" name="state" required>
+                        <option value="">Select state</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <!-- Add more states here -->
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label for="zip">Zip</label>
+                    <input type="text" id="zip" name="zip" required>
+                </div>
+            </div>
+
+            <div class="section form-group" id="workExperienceSection">
+                <label for="workExperience">Work Experience</label>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="workExperience[0][company]" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="jobTitle">Job title</label>
+                        <input type="text" id="jobTitle" name="workExperience[0][jobTitle]" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="startDate">Start Date</label>
+                        <div class="row">
+                            <div class="col">
+                                <select id="endMonth" name="workExperience[0][endDate][month]" required>
+                                    <option value="">Month</option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select id="startYear" name="workExperience[0][startDate][year]" required>
+                                    <option value="">Year</option>
+                                    <!-- Populate years dynamically -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-group">
+                        <label for="endDate">End Date</label>
+                        <div class="row">
+                            <div class="col">
+                                <select id="endMonth" name="workExperience[0][endDate][month]" required>
+                                    <option value="">Month</option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <select id="endYear" name="workExperience[0][endDate][year]" required>
+                                    <option value="">Year</option>
+                                    <!-- Populate years dynamically -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="currentCTC">Current CTC (in lakhs)</label>
+                        <input type="number" id="currentCTC" name="workExperience[0][currentCTC]" step="0.01" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="expectedCTC">Expected CTC (in lakhs)</label>
+                        <input type="number" id="expectedCTC" name="workExperience[0][expectedCTC]" step="0.01"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="skills">Skills</label>
+                    <input type="text" id="skills" name="workExperience[0][skills]" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="additionalInfo">Additional Information/Cover Letter</label>
+                <textarea id="additionalInfo" name="additionalInfo"></textarea>
+            </div>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentYear = new Date().getFullYear();
+            const startYearSelect = document.getElementById('startYear');
+            const endYearSelect = document.getElementById('endYear');
+
+            // Populate year dropdowns
+            for (let year = currentYear; year >= 1900; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                startYearSelect.appendChild(option.cloneNode(true));
+                endYearSelect.appendChild(option.cloneNode(true));
+            }
+        });
+
+        // Keep the existing JavaScript for file upload functionality
+        const resumeUpload = document.getElementById('resumeUpload');
+        const resume = document.getElementById('resume');
+        const fileName = document.getElementById('fileName');
+        const form = document.getElementById('jobApplicationForm');
+
+        resumeUpload.addEventListener('click', () => resume.click());
+
+        resumeUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            resumeUpload.style.borderColor = '#1a73e8';
+        });
+
+        resumeUpload.addEventListener('dragleave', () => {
+            resumeUpload.style.borderColor = '#dadce0';
+        });
+
+        resumeUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            resumeUpload.style.borderColor = '#dadce0';
+            if (e.dataTransfer.files.length) {
+                resume.files = e.dataTransfer.files;
+                updateFileName(e.dataTransfer.files[0].name);
+            }
+        });
+
+        resume.addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                updateFileName(e.target.files[0].name);
+            }
+        });
+
+        function updateFileName(name) {
+            fileName.textContent = name;
+        }
+    </script>
+</body>
+
+</html>

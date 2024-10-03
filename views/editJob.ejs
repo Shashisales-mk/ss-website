@@ -1,0 +1,67 @@
+<% layout("/layouts/boilerplate") %>
+<link rel="stylesheet" href="/css/admin.css">
+<style>
+    .bl{
+        background-color: black;
+
+    }
+    .add-job-container{
+        margin-top: 5rem;
+    }
+</style>
+<body>
+    <div class="add-job-container">
+        <h1>Edit Job Posting</h1>
+        <form action="/admin/job/edit/<%= job._id %>" method="POST">
+            <div class="form-group">
+                <label class="form-label" for="title">Job Title:</label>
+                <input class="form-input" type="text" id="title" name="title" value="<%= job.title %>" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="location">Location:</label>
+                <input class="form-input" type="text" id="location" name="location" value="<%= job.location %>" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="jobType">Job Type:</label>
+                <select class="form-select" id="jobType" name="jobType" required>
+                    <option value="Entry Level" <%= job.jobType === 'Entry Level' ? 'selected' : '' %>>Entry Level</option>
+                    <option value="Mid" <%= job.jobType === 'Mid' ? 'selected' : '' %>>Mid</option>
+                    <option value="Senior" <%= job.jobType === 'Senior' ? 'selected' : '' %>>Senior</option>
+                    <option value="Contract" <%= job.jobType === 'Contract' ? 'selected' : '' %>>Contract</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="requirements">Requirements:</label>
+                <textarea class="form-textarea" id="requirements" name="requirements" required><%= job.requirements.join('\n') %></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="qualifications">Qualifications:</label>
+                <textarea class="form-textarea" id="qualifications" name="qualifications" required><%= job.qualifications.join('\n') %></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="description">Job Description:</label>
+                <textarea class="form-textarea" id="description" name="description" required><%= job.description %></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="responsibilities">Responsibilities:</label>
+                <textarea class="form-textarea" id="responsibilities" name="responsibilities" required><%= job.responsibilities %></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="salary">Salary:</label>
+                <input class="form-input" type="text" id="salary" name="salary" value="<%= job.salary %>" required>
+            </div>
+            
+            <button class="form-submit" type="submit">Update Job</button>
+        </form>
+    </div>
+
+   
+</body>
+
