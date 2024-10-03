@@ -2688,6 +2688,10 @@ app.get("/job-detail/:id", async (req, res) => {
 })
 
 
+app.get("/application-successful" , async(req, res)=>{
+    res.render("application-successful")
+})
+
 
 
 

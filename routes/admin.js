@@ -10,29 +10,7 @@ const flash = require('connect-flash');
 router.use(flash());
 
 
-// Set up Multer for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Directory to save uploaded files
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Append timestamp to filename
-    }
-});
-
-const upload = multer({ 
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        const filetypes = /pdf|doc|docx/;
-        const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-        if (mimetype && extname) {
-            return cb(null, true);
-        }
-        cb('Error: File upload only supports the following filetypes - ' + filetypes);
-    }
-});
-
+const upload = multer({ dest: 'uploads/' });
 
 // Route to handle form submission
 router.post('/job/add', async (req, res) => {
@@ -148,17 +126,16 @@ router.post('/job/delete/:id', async (req, res) => {
 
 router.post('/submit-application', upload.fields([{ name: 'resume' }, { name: 'coverLetter' }]), async (req, res) => {
     try {
+        console.log('Received form data:', JSON.stringify(req.body, null, 2));
+
         // Validate workExperience
         if (!Array.isArray(req.body.workExperience) || req.body.workExperience.length === 0) {
             return res.status(400).json({ error: 'At least one work experience is required.' });
         }
 
-        // Helper function to ensure single value for month and year
-        const ensureSingleValue = (value) => Array.isArray(value) ? value[0] : value;
-
         const applicationData = {
             jobId: req.body.jobId,
-            resume: req.files['resume'][0].path,
+            resume: req.files['resume'] ? req.files['resume'][0].path : null,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
@@ -168,22 +145,26 @@ router.post('/submit-application', upload.fields([{ name: 'resume' }, { name: 'c
             state: req.body.state,
             zip: req.body.zip,
             workExperience: req.body.workExperience.map(exp => ({
-                ...exp,
-                startDate: {
-                    month: ensureSingleValue(exp.startDate.month),
-                    year: ensureSingleValue(exp.startDate.year)
-                },
-                endDate: {
-                    month: ensureSingleValue(exp.endDate.month),
-                    year: ensureSingleValue(exp.endDate.year)
-                },
+                company: exp.company,
+                jobTitle: exp.jobTitle,
+                startDate: exp.startDate ? {
+                    month: exp.startDate.month,
+                    year: exp.startDate.year
+                } : undefined,
+                endDate: exp.endDate ? {
+                    month: exp.endDate.month,
+                    year: exp.endDate.year
+                } : undefined,
                 currentCTC: parseFloat(exp.currentCTC),
-                expectedCTC: parseFloat(exp.expectedCTC)
+                expectedCTC: parseFloat(exp.expectedCTC),
+                skills: exp.skills
             })),
             additionalInfo: req.body.additionalInfo,
             status: 'applied',
             appliedAt: new Date()
         };
+
+        console.log('Processed application data:', JSON.stringify(applicationData, null, 2));
 
         // Validate required fields
         const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zip'];
@@ -195,21 +176,20 @@ router.post('/submit-application', upload.fields([{ name: 'resume' }, { name: 'c
 
         // Validate work experience fields
         for (const exp of applicationData.workExperience) {
-            const expRequiredFields = ['company', 'jobTitle', 'startDate', 'endDate', 'currentCTC', 'expectedCTC', 'skills'];
-            for (const field of expRequiredFields) {
-                if (!exp[field] || (typeof exp[field] === 'object' && (!exp[field].month || !exp[field].year))) {
-                    return res.status(400).json({ error: `${field} is required for all work experiences.` });
-                }
+            if (!exp.company || !exp.jobTitle || !exp.startDate || !exp.startDate.month || !exp.startDate.year) {
+                console.log('Invalid work experience:', JSON.stringify(exp, null, 2));
+                return res.status(400).json({ error: 'Company, job title, and start date are required for all work experiences.' });
             }
         }
 
         const application = new Application(applicationData);
         await application.save();
-        res.status(201).json({ message: 'Application submitted successfully!' });
+
+        res.redirect(`/application-successfull`)
     } catch (error) {
+        console.error('Error processing application:', error);
         res.status(500).json({ error: error.message });
     }
 });
-
 
 module.exports = router;

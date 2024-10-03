@@ -3535,7 +3535,7 @@ input:checked+.career-slider:before {
 }
 
 @media (max-width: 768px) {
-  .container {
+  .career-container {
     flex-direction: column;
     padding: 10px;
   }
