@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layouts/boilerplate") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply for a Job</title>
     <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Google Sans', Arial, sans-serif;
-            line-height: 1.5;
-            color: #202124;
-            background-color: #fff;
-        }
+       .bl{
+        background-color: #000;
+       }
 
-        .container {
-            max-width: 740px;
+        .apply-container {
+            max-width: 940px;
             margin: 0 auto;
-            padding: 40px 20px;
+            margin-top: 6rem;
+            padding: 40px 40px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
         }
 
         h1 {
@@ -118,6 +109,7 @@
             font-size: 14px;
             font-weight: 500;
             padding: 10px 24px;
+            
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -169,11 +161,20 @@
             background-repeat: no-repeat;
             background-position: right 8px center;
         }
+
+        @media screen and (max-width:768px) {
+            .date-row{
+                flex-direction: column;
+            }
+            .apply-container{
+                padding-bottom: 8rem;
+            }
+        }
     </style>
-</head>
+
 
 <body>
-    <div class="container">
+    <div class="apply-container">
         <h1>Apply for a Job</h1>
         <p>Upload your resume and fill out the form below to apply for your dream job.</p>
         <form id="jobApplicationForm" action="/admin/submit-application" method="post" enctype="multipart/form-data">
@@ -190,7 +191,7 @@
                 <div class="file-name" id="fileName"></div>
             </div>
 
-            <div class="row">
+            <div class="row date-row">
                 <div class="col form-group">
                     <label for="firstName">First name</label>
                     <input type="text" id="firstName" name="firstName" required>
@@ -209,7 +210,7 @@
                 <div class="col form-group">
                     <label for="phone">Phone</label>
                     <input type="tel" id="phone" name="phone" required>
-                    <input type="hidden" id="phone" name="jobId" value="<%= job._id %>" required>
+                    <input type="hidden"  name="jobId" value="<%= job._id %>" required>
                 </div>
             </div>
 
@@ -218,7 +219,7 @@
                 <input type="text" id="address" name="address" required>
             </div>
 
-            <div class="row">
+            <div class="row date-row">
                 <div class="col form-group">
                     <label for="city">City</label>
                     <input type="text" id="city" name="city" required>
@@ -251,7 +252,7 @@
                             <input type="text" id="jobTitle" name="jobTitle" required>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row date-row">
                         <div class="col form-group">
                             <label for="startDate">Start Date</label>
                             <div class="row">
@@ -391,4 +392,3 @@
     </script>
 </body>
 
-</html>

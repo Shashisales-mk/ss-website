@@ -37,14 +37,18 @@ const upload = multer({
 
 
 // Route to handle form submission
+// Route to handle form submission
 router.post('/job/add', async (req, res) => {
   try {
     const { title, location, jobType, requirements, qualifications, description, responsibilities, salary } = req.body;
 
-    // Convert requirements and qualifications to arrays (as they are entered as text areas)
-    const requirementsArray = requirements.split('\n').map(item => item.trim());
-    const qualificationsArray = qualifications.split('\n').map(item => item.trim());
-    const responsibilitiesArray = responsibilities.split('\n').map(item => item.trim());
+    // Convert requirements, qualifications, and responsibilities to arrays and filter out empty entries
+    const requirementsArray = requirements ? requirements.split('\n').map(item => item.trim()).filter(item => item !== '') : null;
+    const qualificationsArray = qualifications ? qualifications.split('\n').map(item => item.trim()).filter(item => item !== '') : null;
+    const responsibilitiesArray = responsibilities ? responsibilities.split('\n').map(item => item.trim()).filter(item => item !== '') : null;
+
+    // Description remains a string, but set it to null if empty
+    const descriptionField = description ? description.trim() : null;
 
     const newJob = new JobPosting({
       title,
@@ -52,7 +56,7 @@ router.post('/job/add', async (req, res) => {
       jobType,
       requirements: requirementsArray,
       qualifications: qualificationsArray,
-      description,
+      description: descriptionField,
       responsibilities: responsibilitiesArray,
       salary
     });
@@ -62,10 +66,11 @@ router.post('/job/add', async (req, res) => {
     res.redirect('/admin-panel'); // Redirect back to job listings page
   } catch (err) {
     console.error(err);
-    req.flash('error', 'There is some error while adding Job, please try again letter');
+    req.flash('error', 'There is some error while adding Job, please try again later');
     res.status(500).send('Server Error');
   }
 });
+
 
 
 // Route to render edit job form

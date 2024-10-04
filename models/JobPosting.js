@@ -19,19 +19,19 @@ const jobPostingSchema = new mongoose.Schema({
     },
     requirements: {
         type: [String], // Array of strings to store job requirements
-        required: true
+        
     },
     qualifications: {
         type: [String], // Array of strings to store preferred qualifications
-        required: true
+        
     },
     description: {
         type: String, // Detailed job description (HTML allowed using Jodit editor)
-        required: true
+        
     },
     responsibilities: {
         type: [String], // Responsibilities (HTML allowed using Jodit editor)
-        required: true
+        
     },
     salary: {
         type: String, // String to allow salary range input
