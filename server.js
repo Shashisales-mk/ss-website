@@ -49,6 +49,7 @@ const adminRoutes = require('./routes/admin');
 const { gmail } = require("googleapis/build/src/apis/gmail");
 
 const videoHelpers = require('./utils/vedioHelpers');
+const Application = require("./models/Application");
 
 
 
@@ -774,6 +775,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     const approvedComments = await Comment.find({ isApproved: true }).populate('blog', 'title');
     const subscribers = await Subscriber.find();
     const jobs = await JobPosting.find();
+    const applications = await Application.find();
 
 
 
@@ -799,6 +801,7 @@ app.get("/admin-panel", isAdmin, async (req, res) => {
     res.render("allBlogs", {
 
         jobs,
+        applications,
         ads,
         chats,
         closedChats,
@@ -1776,10 +1779,10 @@ async function createDefaultAdminUsers() {
         const existingAdmins = await User.find({ role: 'admin' });
 
 
-        if (existingAdmins.length > 0) {
-            console.log('Admin user already exist');
-            return;
-        }
+        // if (existingAdmins.length > 0) {
+        //     console.log('Admin user already exist');
+        //     return;
+        // }
 
         // Check if environment variables are set
         // if (!process.env.ADMIN_PASS || !process.env.ADMIN_EMAIL) {
@@ -1790,9 +1793,9 @@ async function createDefaultAdminUsers() {
 
 
         const adminUser = new User({
-            name: 'Anurag',
-            email: "anurag.tiwari@shashisales.com",
-            password: "India@420325!", // await the hashed password
+            name: 'admin',
+            email: "bgmilelomujhse@gmail.com",
+            password: "Welcome@2604#", // await the hashed password
             role: 'admin'
         });
 
@@ -1843,6 +1846,69 @@ app.get('/logout', (req, res) => {
         res.redirect('/login');
     });
 });
+
+
+app.get('/forgot-password', (req, res) => {
+    res.render('forgot-password', {
+        title: "",
+        description: "",
+        keywords: ""
+    });
+});
+
+app.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        req.flash('error', 'No account with that email address exists.');
+        return res.redirect('/forgot-password');
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate OTP
+    user.otp = otp;
+    user.otpExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    // Send OTP email (assuming you have a sendEmail function)
+    await Templatesender(user.email, `Your OTP is ${otp}`, 'Password Reset');
+
+    req.flash('success', 'An email has been sent to reset your password.');
+    res.redirect('/verify-otp');
+});
+
+
+app.get('/verify-otp', (req, res) => {
+    res.render('verify-otp' , {
+        title: "",
+        description: "",
+        keywords: ""
+    });
+});
+
+app.post('/verify-otp', async (req, res) => {
+    const { email, otp, newPassword } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        req.flash('error', 'No account with that email address exists.');
+        return res.redirect('/verify-otp');
+    }
+
+    if (user.otp !== otp || Date.now() > user.otpExpires) {
+        req.flash('error', 'OTP is invalid or has expired.');
+        return res.redirect('/verify-otp');
+    }
+
+    user.password = newPassword;
+    user.otp = undefined; // Clear OTP
+    user.otpExpires = undefined; // Clear OTP expiry
+    await user.save();
+
+    req.flash('success', 'Your password has been reset.');
+    res.redirect('/login');
+});
+
 
 //payment gateway integration
 
@@ -2646,6 +2712,19 @@ app.post('/start-chat', async (req, res) => {
 });
 
 
+app.get("/unlock-highquality-plagiarism-free-writing", (req, res) => {
+    res.redirect(301, "/blog-detail/unlock-highquality-plagiarism-free-writing");
+});	
+app.get("/benefits-of-mobile-development-companies", (req, res) => {
+    res.redirect(301, "/blog-detail/benefits-of-mobile-development-companies");
+});
+app.get("/blog-detail/digital-marketing", (req, res) => {
+    res.redirect(301, "/blog-detail/fusion-marketing-funnel-approach");
+});
+app.get("/blog-detail/essential-tips-strategies", (req, res) => {
+    res.redirect(301, "/blog-detail/superstockist");
+});
+
 
 
 // career page functionality
@@ -2672,11 +2751,14 @@ app.get("/apply/:id", async (req, res) => {
 
 app.get("/job-detail/:id", async (req, res) => {
     try {
-        const job = await JobPosting.findById(req.params.id); // Fetch job by ID
+        
+        const allJobs = await JobPosting.find();
+        const job = await JobPosting.findById(req.params.id); 
         if (!job) {
             return res.status(404).send('Job not found');
         }
         res.render('job-detail', {
+            allJobs,
             job, title: "",
             description: "",
             keywords: ""
@@ -2687,10 +2769,16 @@ app.get("/job-detail/:id", async (req, res) => {
     }
 })
 
+app.get("/application-successful", async (req, res) => {
+    const { firstName, lastName } = req.query;
+    const name = `${firstName} ${lastName}`; 
 
-app.get("/application-successful" , async(req, res)=>{
-    res.render("application-successful")
-})
+    res.render("application-successful", { name });
+});
+
+
+
+
 
 
 

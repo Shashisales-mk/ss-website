@@ -7,6 +7,8 @@ const UserSchema = new mongoose.Schema({
   role: { type: String, required: true, enum: ['admin', 'visitor'] },
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
+  otp: { type: String }, // Add OTP field
+  otpExpires: { type: Date } // Add OTP expiry field
 });
 
 UserSchema.pre('save', async function (next) {

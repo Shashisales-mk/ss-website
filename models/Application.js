@@ -1,3 +1,4 @@
+// Consolidated Application Model
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
@@ -23,6 +24,7 @@ const applicationSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique : true,
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
         trim: true
     },
@@ -47,48 +49,42 @@ const applicationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    workExperience: [{
-        company: {
+
+    company: {
+        type: String,
+        required: true
+    },
+    jobTitle: {
+        type: String,
+        required: true
+    },
+    startDate: {
+        month: {
             type: String,
             required: true
         },
-        jobTitle: {
-            type: String,
-            required: true
-        },
-        startDate: {
-            month: {
-                type: String,
-                required: true
-            },
-            year: {
-                type: Number,
-                required: true
-            }
-        },
-        endDate: {
-            month: {
-                type: String,
-                required: true
-            },
-            year: {
-                type: Number,
-                required: true
-            }
-        },
-        currentCTC: {
+        year: {
             type: Number,
-            required: true
-        },
-        expectedCTC: {
-            type: Number,
-            required: true
-        },
-        skills: {
-            type: String,
             required: true
         }
-    }],
+    },
+    endDate: {
+        month: String,
+        year: Number
+    },
+    currentCTC: {
+        type: Number,
+        required: true
+    },
+    expectedCTC: {
+        type: Number,
+        required: true
+    },
+    skills: {
+        type: String,
+        required: true
+    },
+
     additionalInfo: String,
     status: {
         type: String,
@@ -103,7 +99,7 @@ const applicationSchema = new mongoose.Schema({
     timestamps: true
 });
 
-applicationSchema.index({ jobId: 1, email: 1 }, { unique: true });
+applicationSchema.index({email: 1 }, { unique: true });
 
 const Application = mongoose.model('Application', applicationSchema);
 

@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate") %>
 
-<link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/admin.css">
 
   <div class="main-page">
     <div class="sideNavBar">
@@ -13,6 +13,7 @@
         <li id="sec6">Active Queries</li>
         <li id="sec7">Team Members</li>
         <li id="sec8">Jobs Section</li>
+        <li id="sec9">Application Section</li>
         <p><a href="/logout">Logout</a></p>
         <p><a href="/admin/edit-ads-txt">Edit Ads.txt</a></p>
       </ul>
@@ -831,54 +832,54 @@
         <div class="add-job-container">
           <h1 class="form-title">Add Job Posting</h1>
           <form action="/admin/job/add" method="POST">
-              <div class="form-group">
-                  <label class="form-label" for="title">Job Title:</label>
-                  <input class="form-input" type="text" id="title" name="title" required>
-              </div>
-              
-              <div class="form-group">
-                  <label class="form-label" for="location">Location:</label>
-                  <input class="form-input" type="text" id="location" name="location" required>
-              </div>
-              
-              <div class="form-group">
-                  <label class="form-label" for="jobType">Job Type:</label>
-                  <select class="form-select" id="jobType" name="jobType" required>
-                      <option value="Entry Level">Entry Level</option>
-                      <option value="Mid">Mid</option>
-                      <option value="Senior">Senior</option>
-                      <option value="Contract">Contract</option>
-                  </select>
-              </div>
-              
-              <div class="form-group">
-                  <label class="form-label" for="requirements">Requirements:</label>
-                  <textarea class="form-textarea" id="requirements" name="requirements" required></textarea>
-              </div>
-              
-              <div class="form-group">
-                  <label class="form-label" for="qualifications">Qualifications:</label>
-                  <textarea class="form-textarea" id="qualifications" name="qualifications" required></textarea>
-              </div>
-              
-              <div class="form-group">
-                  <label class="form-label" for="description">Job Description:</label>
-                  <textarea class="form-textarea" id="description" name="description" required></textarea>
-              </div>
-              
-              <div class="form-group">
-                  <label class="form-label" for="responsibilities">Responsibilities:</label>
-                  <textarea class="form-textarea" id="responsibilities" name="responsibilities" required></textarea>
-              </div>
-              
-              <div class="form-group">
-                  <label class="form-label" for="salary">Salary:</label>
-                  <input class="form-input" type="text" id="salary" name="salary" required>
-              </div>
-              
-              <button class="form-submit" type="submit">Add Job</button>
+            <div class="form-group">
+              <label class="form-label" for="title">Job Title:</label>
+              <input class="form-input" type="text" id="title" name="title" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="location">Location:</label>
+              <input class="form-input" type="text" id="location" name="location" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="jobType">Job Type:</label>
+              <select class="form-select" id="jobType" name="jobType" required>
+                <option value="Entry Level">Entry Level</option>
+                <option value="Mid">Mid</option>
+                <option value="Senior">Senior</option>
+                <option value="Contract">Contract</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="requirements">Requirements:</label>
+              <textarea class="form-textarea" id="requirements" name="requirements" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="qualifications">Qualifications:</label>
+              <textarea class="form-textarea" id="qualifications" name="qualifications" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="description">Job Description:</label>
+              <textarea class="form-textarea" id="description" name="description" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="responsibilities">Responsibilities:</label>
+              <textarea class="form-textarea" id="responsibilities" name="responsibilities" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="salary">Salary:</label>
+              <input class="form-input" type="text" id="salary" name="salary" required>
+            </div>
+
+            <button class="form-submit" type="submit">Add Job</button>
           </form>
-      </div>
+        </div>
 
 
 
@@ -892,7 +893,7 @@
               <th>Salary</th>
               <th>Type</th>
               <th>Status</th>
-              
+
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -915,13 +916,13 @@
                 <td>
                   <%= job.status %>
                 </td>
-               
+
 
                 <td>
-                  <a class="job-edit-btn" href="/admin/job/edit/<%= job._id %>">Edit</a> 
+                  <a class="job-edit-btn" href="/admin/job/edit/<%= job._id %>">Edit</a>
 
                 </td>
-                <td >
+                <td>
                   <form action="admin/job/delete/<%= job._id %>" method="POST">
                     <button class="del-btn" type="submit">Delete Job</button>
                   </form>
@@ -936,9 +937,116 @@
 
       </div>
 
+
+
+      <!-- Applicatoins section -->
+      <div class="application-section" style="flex-direction: column;">
+        <div class="exist-app">
+          <!-- show existing members -->
+          <h2 style="margin-bottom: 2rem;">Existing Applications</h2>
+          <table id="jobsTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Resume</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Expected CTC</th>
+                <th>Current CTC</th>
+                <th>Skills CTC</th>
+                <th>Apply Date</th>
+                <th>Status</th>
+                <th>Shortlist</th>
+                <th>Hire</th>
+                <th>Reject</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% applications.forEach(appli=> { %>
+                <tr>
+                  <td>
+                    <%= appli.firstName %>
+                      <%= appli.lastName %>
+                  </td>
+                  
+                  <td>
+                    <% if (appli.resume) { %>
+                      <a href="<%= appli.resume %>" class="download-btn">
+                        Download Resume
+                      </a>
+                      <% } else { %>
+                        No resume available
+                        <% } %>
+                  </td>
+                  <td>
+                    <%= appli.email %>
+                  </td>
+                  <td>
+                    <%= appli.phone %>
+                  </td>
+                  <td>
+                    <%= appli.city %>
+                  </td>
+                  <td>
+                    <%= appli.state %>
+                  </td>
+                  <td>
+                    <%= appli.company %>
+                  </td>
+                  <td>
+                    <%= appli.jobTitle %>
+                  </td>
+                  <td>
+                    <%= appli.expectedCTC %>
+                  </td>
+                  <td>
+                    <%= appli.currentCTC %>
+                  </td>
+                  <td>
+                    <%= appli.skills %>
+                  </td>
+                  <td>
+                    <%= new Date(appli.appliedAt).toLocaleDateString('en-US', { day: 'numeric' , month: 'short' }) %>
+                  </td>
+
+                  <td>
+                    <%= appli.status %>
+                  </td>
+                  <td>
+                    <form action="/admin/application/update-status/<%= appli._id %>" method="POST">
+                      <input type="hidden" name="status" value="shortlisted">
+                      <button class="job-edit-btn" type="submit">Shortlist</button>
+                    </form>
+                  </td>
+                  <td>
+                    <form action="/admin/application/update-status/<%= appli._id %>" method="POST">
+                      <input type="hidden" name="status" value="hired">
+                      <button class="del-btn" type="submit">Hire</button>
+                    </form>
+                  </td>
+                  <td>
+                    <form action="/admin/application/update-status/<%= appli._id %>" method="POST">
+                      <input type="hidden" name="status" value="rejected">
+                      <button class="del-btn" type="submit">Reject</button>
+                    </form>
+                  </td>
+
+
+                  
+
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/admin.js"></script>
-  

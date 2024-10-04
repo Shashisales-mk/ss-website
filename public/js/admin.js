@@ -303,6 +303,7 @@
       document.querySelector(".chatbot-section").style.display = "none";
       document.querySelector(".team-section").style.display = "none";
       document.querySelector(".job-section").style.display = "none";
+      document.querySelector(".application-section").style.display = "none";
       // Add additional sections here if needed
     }
 
@@ -369,6 +370,10 @@
       document.querySelector(".job-section").style.display = "flex";
       showSection("job-section", "sec8")
     });
+    document.getElementById("sec9").addEventListener("click", function () {
+      document.querySelector(".application-section").style.display = "flex";
+      showSection("application-section", "sec8")
+    });
 
     // Ensure the form submission keeps the section visible
     document.querySelectorAll("form").forEach((form) => {
@@ -383,6 +388,7 @@
           sec6: "chatbot-section",
           sec7: "team-section",
           sec8: "job-section",
+          sec9: "application-section",
         };
         localStorage.setItem("activeSection", sectionMap[activeSection]);
       });

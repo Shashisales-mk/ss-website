@@ -731,3 +731,12 @@
     color: green;
     font-weight: bold;
     }
+
+    .application-section{
+      width: 100%;
+      overflow-x: auto;
+      
+    }
+    .exist-app table{
+      font-size: 1rem;
+    }

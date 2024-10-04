@@ -1,117 +1,188 @@
 <% layout("/layouts/boilerplate") %>
     <style>
-       .bl{
-        background-color: black;
-        height: 70px;
-       }
-       
+        .bl {
+            background-color: black;
+            height: 70px;
+        }
+
+
+
+        /* job page */
     </style>
 
-<body>
-   
+    <body>
 
-    <div class="job-container">
-        <header class="job-header">
-            <a href="#" class="back-button">
-                <span class="back-arrow">&#8592;</span>
-                Back to jobs search
-            </a>
-            <img src="/assets/images/black-logo.png" alt="Shashi sales and marketing" class="job-logo">
-        </header>
-        <h1 class="job-title"><%= job.title %></h1>
-        <div class="job-meta">
-            <img src="https://www.gstatic.com/images/icons/material/system/1x/place_grey600_24dp.png" alt="Location">
-            <%= job.location %>
-            <img src="/assets/images/job-le.png" alt="Job type" style="margin-left: 20px;">
-            <%= job.jobType %>
-        </div>
-        <div class="apply-share">
-            <a class="apply-btn" href="/apply/<%= job._id  %>">Apply</a>
-            <div class = "share-icon">
-                <button class="action-button share-btn">Share</button>
-                <img src="/assets/images/share.svg" alt="">
+
+        <div class="job-container">
+            <header class="job-header">
+                <a href="#" class="back-button">
+                    <span class="back-arrow">&#8592;</span>
+                    Back to jobs search
+                </a>
+                <img src="/assets/images/black-logo.png" alt="Shashi sales and marketing" class="job-logo">
+            </header>
+            <h1 class="job-title">
+                <%= job.title %>
+            </h1>
+            <div class="job-meta">
+                <img src="https://www.gstatic.com/images/icons/material/system/1x/place_grey600_24dp.png"
+                    alt="Location">
+                <%= job.location %>
+                    <img src="/assets/images/job-le.png" alt="Job type" style="margin-left: 20px;">
+                    <%= job.jobType %>
+            </div>
+            <div class="apply-share">
+                <a class="apply-btn" href="/apply/<%= job._id  %>">Apply</a>
+                <div class="share-icon">
+                    <button class="action-button share-btn">Share</button>
+                    <img src="/assets/images/share.svg" alt="">
+                </div>
+                <div class="share-options" style="display: none; margin-top: 5px;">
+                    <div class="share-option" data-action="copy"> <img width="70px" src="/assets/images/resume.png"
+                            alt="">Copy link</div>
+                    <div class="share-option" data-action="email"> <img width="70px" src="/assets/images/re-mail.png"
+                            alt=""> Email a friend</div>
+                </div>
+            </div>
+
+
+            <div class="section">
+                <h2 class="second-title">Role Description:</h2>
+                <ul class="requirements">
+                    <%- job.description %>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="second-title">Eligibility Criteria:</h2>
+                <ul class="requirements">
+                    <% job.requirements.forEach(requirement=> { %>
+                        <li><%- requirement %></li>
+                        <% }) %>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="second-title">Responsibilities:</h2>
+                <ul class="requirements">
+                    <% job.responsibilities.forEach(responsibility=> { %>
+                        <li><%- responsibility %></li>
+                        <% }) %>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="second-title">Special Benifits:</h2>
+                <ul class="requirements">
+                    <% job.qualifications.forEach(qualification=> { %>
+                        <li><%- qualification %></li>
+                        <% }) %>
+                </ul>
+            </div>
+
+
+
+            <div class="apply-share bottom-cont">
+                <a class="apply-btn" href="/apply/<%= job._id  %>">Apply</a>
+                <div class="share-icon">
+                    <button class="action-button share-btn">Share</button>
+                    <img src="/assets/images/share.svg" alt="">
+                </div>
+                <div class="share-options" style="display: none; margin-top: 5px;">
+                    <div class="share-option" data-action="copy"> <img width="70px" src="/assets/images/resume.png"
+                            alt="">Copy link</div>
+                    <div class="share-option" data-action="email"> <img width="70px" src="/assets/images/re-mail.png"
+                            alt=""> Email a friend</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="second-title">Other Job Opportunities</h2>
+                <div class="other-jobs">
+                    <% allJobs.forEach(job=> { %>
+                        <a href="/job-detail/<%= job._id %>">
+                            <div class="job-card">
+                                <h3>
+                                    <%= job.title %>
+                                </h3>
+                                <p><strong>Location:</strong>
+                                    <%= job.location %>
+                                </p>
+                                <p><strong>Qualifications:</strong></p>
+                                <ul>
+                                    <%- job.requirements[0] %>
+                                </ul>
+                            </div>
+                        </a>
+                        <% }) %>
+
+                </div>
             </div>
         </div>
 
-        <div class="section">
-            <h2 class="second-title">Minimum qualifications:</h2>
-            <ul class="requirements">
-                <% job.requirements.forEach(requirement=> { %>
-                    <li><%- requirement %></li>
-                    <% }) %>
-            </ul>
-        </div>
+        <footer class="job-footer">
+            <p>Shashi sales and marketing is proud to be an equal opportunity workplace and is an affirmative action
+                employer. We are committed to equal employment opportunity regardless of race, color, ancestry,
+                religion, sex, national origin, sexual orientation, age, citizenship, marital status, disability, gender
+                identity or Veteran status. We also consider qualified applicants regardless of criminal histories,
+                consistent with legal requirements. See also <a href="#">Shashi sales and marketing's EEO Policy</a> and
+                <a href="#">EEO is the Law</a>. If you have a disability or special need that requires accommodation,
+                please let us know by completing our <a href="#">Accommodations for Applicants form</a>.
+            </p>
+        </footer>
 
-        <div class="section">
-            <h2 class="second-title">Preferred qualifications:</h2>
-            <ul class="requirements">
-                <% job.qualifications.forEach(qualification=> { %>
-                    <li><%- qualification %></li>
-                    <% }) %>
-            </ul>
-        </div>
+        <script>
+            const shareButtons = document.querySelectorAll('.share-btn');
+            const shareOptionsContainers = document.querySelectorAll('.share-options');
 
-        <div class="section">
-            <h2 class="second-title">About the job</h2>
-            <ul class="requirements">
-                <%- job.description %>
-            </ul>
-        </div>
+            // Function to toggle the display of share options
+            const toggleShareOptions = (button, options) => {
+                // Hide all share options first
+                shareOptionsContainers.forEach(option => option.style.display = 'none');
+                // Toggle the clicked button's share options
+                options.style.display = options.style.display === 'flex' ? 'none' : 'flex';
+            };
 
-        <div class="section">
-            <h2 class="second-title">Responsibilities</h2>
-            <ul class="requirements">
-                <% job.responsibilities.forEach(responsibility=> { %>
-                    <li><%- responsibility %></li>
-                    <% }) %>
-            </ul>
-        </div>
+            // Event listener for each share button
+            shareButtons.forEach((shareBtn, index) => {
+                const shareOptions = shareOptionsContainers[index];
 
-        <div class="apply-share bottom-cont">
-            <button class="apply-btn">Apply</button>
-            <div class = "share-icon">
-                <button class="action-button share-btn">Share</button>
-                <img src="/assets/images/share.svg" alt="">
-            </div>
-        </div>
+                // Toggle share options when the button is clicked
+                shareBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleShareOptions(shareBtn, shareOptions);
+                });
 
-        <div class="section">
-            <h2 class="second-title">Other Job Opportunities</h2>
-            <div class="other-jobs">
-                <div class="job-card">
-                    <h3>Senior UX Researcher, gTech Users and Products</h3>
-                    <p><strong>Location:</strong> Boulder, CO, USA; Atlanta, GA, USA</p>
-                    <p><strong>Qualifications:</strong> Bachelor's degree, 7 years of experience</p>
-                </div>
-                <div class="job-card">
-                    <h3>Chip Package Signal and Power Integrity Engineer</h3>
-                    <p><strong>Location:</strong> Sunnyvale, CA, USA</p>
-                    <p><strong>Qualifications:</strong> Bachelor's degree, 2 years of experience</p>
-                </div>
-                <div class="job-card">
-                    <h3>Digital Business Marketing Apprenticeship, March 2025 Start (English)</h3>
-                    <p><strong>Location:</strong> Hyderabad, Telangana, India; Gurugram, Haryana, India</p>
-                    <p><strong>Qualifications:</strong> Currently pursuing Bachelor's degree</p>
-                </div>
-            </div>
-        </div>
-    </div>
+                // Add event listeners for share options
+                shareOptions.querySelectorAll('.share-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const action = option.getAttribute('data-action');
+                        const currentUrl = window.location.href;
 
-    <footer class="job-footer">
-        <p>Shashi sales and marketing is proud to be an equal opportunity workplace and is an affirmative action employer. We are committed to equal employment opportunity regardless of race, color, ancestry, religion, sex, national origin, sexual orientation, age, citizenship, marital status, disability, gender identity or Veteran status. We also consider qualified applicants regardless of criminal histories, consistent with legal requirements. See also <a href="#">Shashi sales and marketing's EEO Policy</a> and <a href="#">EEO is the Law</a>. If you have a disability or special need that requires accommodation, please let us know by completing our <a href="#">Accommodations for Applicants form</a>.</p>
-    </footer>
+                        if (action === 'copy') {
+                            navigator.clipboard.writeText(currentUrl)
+                                .then(() => {
+                                    alert('Link copied to clipboard!');
+                                })
+                                .catch(err => {
+                                    console.error('Failed to copy: ', err);
+                                });
+                        } else if (action === 'email') {
+                            const subject = encodeURIComponent('Check out this job');
+                            const body = encodeURIComponent(`I found this interesting job: ${currentUrl}`);
+                            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+                        }
 
-    <script>
-        document.querySelectorAll('.apply-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Application submitted!');
+                        shareOptions.style.display = 'none'; // Hide options after action
+                    });
+                });
             });
-        });
 
-        document.querySelectorAll('.job-share-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Share functionality not implemented in this demo.');
+            // Hide share options when clicking outside
+            document.addEventListener('click', () => {
+                shareOptionsContainers.forEach(option => option.style.display = 'none');
             });
-        });
-    </script>
-</body>
+        </script>
+
+    </body>

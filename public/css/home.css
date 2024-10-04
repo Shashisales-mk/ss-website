@@ -3231,7 +3231,6 @@ textarea {
 }
 
 
-
 /* career page */
 
 .career-container {
@@ -3332,12 +3331,44 @@ textarea {
 }
 
 .share-icon {
+ 
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid black;
   padding: .3rem 1rem;
   border-radius: 10px;
+  position: relative;
+}
+
+.share-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.share-option {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.share-option:hover {
+  background-color: #f0f0f0;
+}
+
+.share-option img {
+  width: 20px;
+  height: 20px;
 }
 
 
@@ -3423,6 +3454,8 @@ textarea {
   justify-content: space-between;
   margin-top: 20px;
   align-items: center;
+  width: 100%;
+  position: relative;
 }
 
 .action-button {
@@ -3620,8 +3653,8 @@ input:checked+.career-slider:before {
 }
 
 
+/* job detail page */
 
-/* job page */
 
 .job-container {
   max-width: 1000px;
@@ -3690,9 +3723,10 @@ input:checked+.career-slider:before {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 2rem;
   margin-bottom: 2rem;
+  position: relative;
 }
 
 .apply-btn {
@@ -3773,4 +3807,9 @@ input:checked+.career-slider:before {
   justify-content: space-between;
   margin-top: 20px;
 }
+
+
+
+
+
 
