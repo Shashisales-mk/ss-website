@@ -27,6 +27,12 @@
 
 
 @media only screen and (max-width: 768px) {
+    .inc-siz{
+        font-size: 4vw;
+    }
+    .sec-text h3 {
+        font-size: 3vw !important;
+    }
     .sma{
         display: none;
     }
