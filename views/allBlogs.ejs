@@ -843,36 +843,51 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="jobType">Job Type:</label>
-              <select class="form-select" id="jobType" name="jobType" required>
+              <label class="form-label" for="experience">Experience:</label>
+              <select class="form-select" id="experience" name="experience" required>
                 <option value="Entry Level">Entry Level</option>
                 <option value="Mid">Mid</option>
                 <option value="Senior">Senior</option>
+
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="jobType">Job Type:</label>
+              <select class="form-select" id="jobType" name="jobType" required>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
                 <option value="Contract">Contract</option>
               </select>
             </div>
 
-            
+
 
             <div class="form-group">
               <label class="form-label" for="qualifications">Eligibility Criteria:</label>
-              <textarea class="form-textarea" id="qualifications" name="qualifications" ></textarea>
+              <textarea class="form-textarea" id="qualifications" name="qualifications"></textarea>
             </div>
 
             <div class="form-group">
               <label class="form-label" for="description">Role Description:</label>
-              <textarea class="form-textarea" id="description" name="description" ></textarea>
+              <textarea class="form-textarea" id="description" name="description"></textarea>
             </div>
 
             <div class="form-group">
               <label class="form-label" for="responsibilities">Responsibilities:</label>
-              <textarea class="form-textarea" id="responsibilities" name="responsibilities" ></textarea>
+              <textarea class="form-textarea" id="responsibilities" name="responsibilities"></textarea>
             </div>
 
-            <div class="form-group"></div>
+            <div class="form-group">
               <label class="form-label" for="requirements">Special Benefits:</label>
-              <textarea class="form-textarea" id="requirements" name="requirements" ></textarea>
+              <textarea class="form-textarea" id="requirements" name="requirements"></textarea>
             </div>
+
+            <div class="form-group">
+              <label class="form-label" for="skills">Skills (Enter all the skills with comma sepration, e.g. Node, js,
+                html) :</label>
+              <input class="form-textarea" id="skills" name="skills" required>
+            </div>
+
 
             <div class="form-group">
               <label class="form-label" for="salary">Salary:</label>
@@ -881,64 +896,67 @@
 
             <button class="form-submit" type="submit">Add Job</button>
           </form>
-       
 
 
 
-        <!-- show existing members -->
-        <h2>Existing Jobs</h2>
-        <table id="jobsTable">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Location</th>
-              <th>Salary</th>
-              <th>Type</th>
-              <th>Status</th>
 
-              <th>Edit</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% jobs.forEach(job=> { %>
+          <!-- show existing members -->
+          <h2>Existing Jobs</h2>
+          <table id="jobsTable">
+            <thead>
               <tr>
-                <td>
-                  <%= job.title %>
-                </td>
-                <td>
-                  <%= job.location %>
-                </td>
-                <td>
-                  <%= job.salary %>
-                </td>
-                <td>
-                  <%= job.jobType %>
-                </td>
-                <td>
-                  <%= job.status %>
-                </td>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Salary</th>
+                <th>Type</th>
+                <th>Status</th>
 
-
-                <td>
-                  <a class="job-edit-btn" href="/admin/job/edit/<%= job._id %>">Edit</a>
-
-                </td>
-                <td>
-                  <form action="admin/job/delete/<%= job._id %>" method="POST">
-                    <button class="del-btn" type="submit">Delete Job</button>
-                  </form>
-
-                </td>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
-              <% }) %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% jobs.forEach(job=> { %>
+                <tr>
+                  <td>
+                    <%= job.title %>
+                  </td>
+                  <td>
+                    <%= job.location %>
+                  </td>
+                  <td>
+                    <%= job.salary %>
+                  </td>
+                  <td>
+                    <%= job.jobType %>
+                  </td>
+                  <td>
+                    <%= job.status %>
+                  </td>
 
 
+                  <td>
+                    <a class="job-edit-btn" href="/admin/job/edit/<%= job._id %>">Edit</a>
+
+                  </td>
+                  <td>
+                    <form action="/admin/job/toggle-status/<%= job._id %>" method="POST">
+                      <button class="status-btn del-btn" type="submit">
+                        <%= job.status==='open' ? 'Close Job' : 'Open Job' %>
+                      </button>
+                    </form>
+                  </td>
+
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+
+
+
+        </div>
 
       </div>
-
 
 
       <!-- Applicatoins section -->
@@ -974,7 +992,7 @@
                     <%= appli.firstName %>
                       <%= appli.lastName %>
                   </td>
-                  
+
                   <td>
                     <% if (appli.resume) { %>
                       <a href="<%= appli.resume %>" class="download-btn">
@@ -1038,7 +1056,7 @@
                   </td>
 
 
-                  
+
 
                 </tr>
                 <% }) %>
@@ -1048,6 +1066,8 @@
       </div>
 
     </div>
+
+
   </div>
 
   <script src="/socket.io/socket.io.js"></script>

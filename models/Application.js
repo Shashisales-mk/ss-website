@@ -7,6 +7,10 @@ const applicationSchema = new mongoose.Schema({
         ref: 'JobPosting',
         required: true
     },
+    jobName: {
+        type: String,
+        required: true
+    },
     resume: {
         type: String,
         required: true
@@ -31,7 +35,7 @@ const applicationSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
-        match: [/^\d{10,15}$/, 'Please enter a valid phone number']
+        match: [/^[0-9\s+()-]{10,20}$/, 'Please enter a valid phone number']
     },
     address: {
         type: String,

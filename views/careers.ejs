@@ -15,12 +15,15 @@
                         <div class="filter-option">Locations <span>▼</span></div>
                         <div class="filter-content">
                             <a href="#" data-value="all">All locations</a>
-                            <a href="#" data-value="remote">Remote</a>
-                            <a href="#" data-value="us">United States</a>
-                            <a href="#" data-value="europe">Europe</a>
+                            <% jobs.forEach(job=> { %>
+                                <a href="#" data-value="<%= job.location %>">
+                                    <%= job.location %>
+                                </a>
+                                <% }) %>
+
                         </div>
                     </div>
-    
+
                     <div class="filter-dropdown" data-filter="experience">
                         <div class="filter-option">Experience <span>▼</span></div>
                         <div class="filter-content">
@@ -30,61 +33,36 @@
                             <a href="#" data-value="senior">Senior level</a>
                         </div>
                     </div>
-    
-                    <div class="filter-dropdown" data-filter="skills">
-                        <div class="filter-option">Skills & qualifications <span>▼</span></div>
-                        <div class="filter-content">
-                            <a href="#" data-value="skill1">Skill 1</a>
-                            <a href="#" data-value="skill2">Skill 2</a>
-                            <a href="#" data-value="skill3">Skill 3</a>
-                        </div>
-                    </div>
-    
-                    <div class="filter-dropdown" data-filter="degree">
-                        <div class="filter-option">Degree <span>▼</span></div>
-                        <div class="filter-content">
-                            <a href="#" data-value="all">All degrees</a>
-                            <a href="#" data-value="bachelor">Bachelor's</a>
-                            <a href="#" data-value="master">Master's</a>
-                            <a href="#" data-value="phd">Ph.D.</a>
-                        </div>
-                    </div>
-    
+
+
                     <div class="filter-dropdown" data-filter="jobType">
                         <div class="filter-option">Job Type <span>▼</span></div>
                         <div class="filter-content">
                             <a href="#" data-value="all">All types</a>
-                            <a href="#" data-value="fulltime">Full-time</a>
-                            <a href="#" data-value="parttime">Part-time</a>
+                            <a href="#" data-value="full time">Full Time</a>
+                            <a href="#" data-value="part time">Part Time</a>
                             <a href="#" data-value="contract">Contract</a>
                         </div>
                     </div>
-    
-                    <div class="filter-dropdown" data-filter="organization">
-                        <div class="filter-option">Organization <span>▼</span></div>
-                        <div class="filter-content">
-                            <a href="#" data-value="org1">Organization 1</a>
-                            <a href="#" data-value="org2">Organization 2</a>
-                            <a href="#" data-value="org3">Organization 3</a>
-                        </div>
-                    </div>
-    
+
+
+
                     <div class="filter-dropdown" data-filter="sortBy">
                         <div class="filter-option">Sort by <span>▼</span></div>
                         <div class="filter-content">
-                            <a href="#" data-value="relevance">Relevance</a>
+
                             <a href="#" data-value="date">Date posted</a>
-                            <a href="#" data-value="salary">Salary</a>
+
                         </div>
                     </div>
-    
+
                     <div class="selected-filters">
                         <!-- Selected filters will be dynamically added here -->
                     </div>
                 </div>
             </div>
             <div class="main-content">
-                
+
                 <div class="top-bar">
                     <div class="job-count"><span id="job-count">2,558</span> jobs matched</div>
                     <button class="clear-filters">Clear filters</button>
@@ -96,12 +74,14 @@
                         </label>
                     </div>
                 </div>
-                <input type="text" class="search-bar" placeholder="What do you want to do?" id="search-input">
-                
+                <input type="text" class="search-bar"
+                    placeholder="Search via Job Name / skills / location / salary / experience (Mid / senior/ Entry Level)"
+                    id="search-input">
+
                 <div id="job-listings">
                     <% jobs.forEach(job=> { %>
 
-                        <div class="job-card">
+                        <div class="job-card" data-skills="<%= job.skills %>">
                             <h3 class="jtitle">
                                 <%= job.title %>
                             </h3>
@@ -112,37 +92,52 @@
                                     <%= job.location %>
                                 </div>
                                 <div> <img src="/assets/images/job-le.png" alt="job level">
+                                    <%= job.experience %>
+                                </div>
+                                <div> <img src="/assets/images/job-le.png" alt="job level">
                                     <%= job.jobType %>
                                 </div>
 
                             </div>
-                            <% if (job.requirements && job.requirements.length > 0 && job.requirements.some(requirement => requirement.trim() !== '')) { %>
+                            <% if (job.qualifications && job.qualifications.length> 0 &&
+                                job.qualifications.some(qualification => qualification.trim() !== '')) { %>
                                 <div class="job-qualifications">
                                     <strong>Minimum qualifications:</strong>
                                     <ul>
-                                        <% job.requirements.forEach(requirement => { %>
-                                            <% if (requirement.trim() !== '') { %>  <!-- Check if the requirement is not empty -->
-                                                <li><%- requirement %></li>
-                                            <% } %>
-                                        <% }) %>
+                                        <% job.qualifications.forEach(qualification=> { %>
+                                            <% if (qualification.trim() !=='' ) { %>
+
+                                                <li><%- qualification %></li>
+                                                <% } %>
+                                                    <% }) %>
                                     </ul>
                                 </div>
-                            <% } %>
-                            
-                            <div class="action-buttons">
-                                <a href="/job-detail/<%= job._id %>" class="learn-more">Learn more</a>
-                                <div class="share-icon">
-                                    <button class="action-button share-btn">Share</button>
-                                    <img src="/assets/images/share.svg" alt="share">
-                                </div>
+                                <% } %>
 
-                                <div class="share-options" style="display: none; margin-top: 5px;">
-                                    <div class="share-option" data-action="copy"> <img width="70px"
-                                            src="/assets/images/resume.png" alt="">Copy link</div>
-                                    <div class="share-option" data-action="email"> <img width="70px"
-                                            src="/assets/images/re-mail.png" alt=""> Email a friend</div>
-                                </div>
-                            </div>
+                                    <% if (job.skills && job.skills.trim() !=="" ) { %>
+                                        <div class="job-skills" style="margin-top: 1rem;">
+                                            <p><strong style="color: black;">Skills: </strong>
+                                                <%= job.skills %>
+                                            </p>
+                                        </div>
+                                        <% } %>
+
+
+                                            <div class="action-buttons">
+                                                <a href="/job-detail/<%= job._id %>" class="learn-more">Learn more</a>
+                                                <div class="share-icon">
+                                                    <button class="action-button share-btn">Share</button>
+                                                    <img src="/assets/images/share.svg" alt="share">
+                                                </div>
+
+                                                <div class="share-options" style="display: none; margin-top: 5px;">
+                                                    <div class="share-option" data-action="copy"> <img width="70px"
+                                                            src="/assets/images/resume.png" alt="">Copy link</div>
+                                                    <div class="share-option" data-action="email"> <img width="70px"
+                                                            src="/assets/images/re-mail.png" alt=""> Email a friend
+                                                    </div>
+                                                </div>
+                                            </div>
                         </div>
 
                         <% }) %>
@@ -173,13 +168,14 @@
                 }
 
                 function updateSelectedFilters(filterType, value, text) {
-                    if (!selectedFilters[filterType]) {
-                        selectedFilters[filterType] = [];
+                    // Remove existing filter for this type
+                    if (selectedFilters[filterType]) {
+                        removeFilterTag(filterType, selectedFilters[filterType]);
                     }
-                    if (!selectedFilters[filterType].includes(value)) {
-                        selectedFilters[filterType].push(value);
-                        addFilterTag(filterType, value, text);
-                    }
+
+                    // Update with new filter
+                    selectedFilters[filterType] = value;
+                    addFilterTag(filterType, value, text);
                     updateJobListings();
                 }
 
@@ -191,10 +187,7 @@
                 }
 
                 function removeFilterTag(filterType, value) {
-                    const index = selectedFilters[filterType].indexOf(value);
-                    if (index > -1) {
-                        selectedFilters[filterType].splice(index, 1);
-                    }
+                    delete selectedFilters[filterType];
                     const tag = selectedFiltersContainer.querySelector(`[data-filter="${filterType}"][data-value="${value}"]`).parentNode;
                     tag.remove();
                     updateJobListings();
@@ -203,7 +196,7 @@
                 function clearAllFilters() {
                     selectedFiltersContainer.innerHTML = '';
                     Object.keys(selectedFilters).forEach(key => {
-                        selectedFilters[filterType] = [];
+                        delete selectedFilters[key];
                     });
                     searchInput.value = '';
                     document.querySelectorAll('.filter-content a').forEach(a => {
@@ -219,25 +212,32 @@
                     allJobCards.forEach(jobCard => {
                         const title = jobCard.querySelector('.jtitle').textContent.toLowerCase();
                         const location = jobCard.querySelector('.job-details div:nth-child(2)').textContent.toLowerCase();
-                        const jobType = jobCard.querySelector('.job-details div:nth-child(3)').textContent.toLowerCase();
-                        const requirements = Array.from(jobCard.querySelectorAll('.job-qualifications li')).map(li => li.textContent.toLowerCase());
+                        const experience = jobCard.querySelector('.job-details div:nth-child(3)').textContent.toLowerCase();
+                        const jobType = jobCard.querySelector('.job-details div:nth-child(4)').textContent.trim().toLowerCase(); const skills = jobCard.dataset.skills ? jobCard.dataset.skills.toLowerCase().split(',') : [];
+                        const datePosted = new Date(jobCard.dataset.datePosted);
 
-                        const matchesFilters = Object.entries(selectedFilters).every(([filterType, values]) => {
-                            if (values.length === 0) return true;
+                        const matchesFilters = Object.entries(selectedFilters).every(([filterType, value]) => {
+                            if (!value || value === 'all') return true;
                             switch (filterType) {
                                 case 'location':
-                                    return values.includes('all') || values.some(value => location.includes(value));
+                                    return location.includes(value.toLowerCase());
                                 case 'experience':
-                                    return values.includes('all') || values.some(value => jobType.includes(value));
-                                case 'skills':
-                                    return values.includes('all') || values.some(value => requirements.some(req => req.includes(value)));
-                                // Add more cases for other filter types as needed
+                                    return experience.includes(value.toLowerCase());
+                                case 'jobType':
+                                    return jobType === value.toLowerCase();
+                                case 'sortBy':
+                                    return true; // We'll handle sorting separately
                                 default:
                                     return true;
                             }
                         });
 
-                        const matchesSearch = title.includes(searchTerm) || requirements.some(req => req.includes(searchTerm));
+                        const matchesSearch =
+                            title.includes(searchTerm) ||
+                            location.includes(searchTerm) ||
+                            experience.includes(searchTerm) ||
+                            jobType.includes(searchTerm) ||
+                            skills.some(skill => skill.trim().includes(searchTerm));
 
                         if (matchesFilters && matchesSearch) {
                             jobCard.style.display = '';
@@ -248,8 +248,17 @@
                     });
 
                     updateJobCount(visibleCount);
-                }
 
+                    // Sort by date posted if selected
+                    if (selectedFilters.sortBy === 'date') {
+                        const sortedCards = allJobCards
+                            .filter(card => card.style.display !== 'none')
+                            .sort((a, b) => {
+                                return new Date(b.dataset.datePosted) - new Date(a.dataset.datePosted);
+                            });
+                        sortedCards.forEach(card => jobListings.appendChild(card));
+                    }
+                }
                 function updateJobCount(count) {
                     jobCountElement.textContent = count;
                 }
@@ -271,6 +280,7 @@
                             const value = e.target.dataset.value;
                             const text = e.target.textContent;
                             updateSelectedFilters(filterType, value, text);
+                            content.querySelectorAll('a').forEach(a => a.classList.remove('selected'));
                             e.target.classList.add('selected');
                             toggleDropdown(dropdown);
                         }
@@ -295,7 +305,7 @@
 
                 searchInput.addEventListener('input', updateJobListings);
 
-                // Share functionality (unchanged)
+                // Share functionality
                 jobListings.addEventListener('click', (e) => {
                     const shareBtn = e.target.closest('.share-btn');
                     if (shareBtn) {

@@ -11,32 +11,44 @@ const jobPostingSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    jobType: {
+    experience: {
         type: String,
-        enum: ['Entry Level', 'Mid', 'Senior', 'Contract'],
+        enum: ['Entry Level', 'Mid', 'Senior'],
         default: 'Mid',
         required: true
     },
+    jobType: {
+        type: String,
+        enum: ['Full Time', 'Part Time','Contract'],
+        default: 'Part Time',
+        required: true
+    },
+    
     requirements: {
-        type: [String], // Array of strings to store job requirements
+        type: [String], 
         
     },
     qualifications: {
-        type: [String], // Array of strings to store preferred qualifications
+        type: [String],
         
     },
     description: {
-        type: String, // Detailed job description (HTML allowed using Jodit editor)
+        type: String, 
         
     },
     responsibilities: {
-        type: [String], // Responsibilities (HTML allowed using Jodit editor)
+        type: [String], 
         
+    },
+    skills: {
+        type: String,
+        required: true
     },
     salary: {
         type: String, // String to allow salary range input
         required: true
     },
+
     status: {
         type: String,
         enum: ['open', 'closed'],

@@ -50,6 +50,8 @@ const { gmail } = require("googleapis/build/src/apis/gmail");
 
 const videoHelpers = require('./utils/vedioHelpers');
 const Application = require("./models/Application");
+const sendWhatsappMessage = require('./utils/whatsappSender');
+
 
 
 
@@ -2730,7 +2732,8 @@ app.get("/blog-detail/essential-tips-strategies", (req, res) => {
 // career page functionality
 
 app.get("/careers", async (req, res) => {
-    const jobs = await JobPosting.find();
+    const jobs = await JobPosting.find({ status: 'open' });
+
     res.render("careers", {
         jobs,
         title: "",

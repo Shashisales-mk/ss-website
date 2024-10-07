@@ -210,8 +210,9 @@
                 <div class="col form-group">
                     <label for="phone">Phone</label>
                     <input type="tel" id="phone" name="phone" required>
-                    <input type="hidden"  name="jobId" value="<%= job._id %>" required>
                 </div>
+                <input type="hidden"  name="jobId" value="<%= job._id %>" required>
+                <input type="hidden"  name="jobName" value="<%= job.title %>" required>
             </div>
 
             <div class="form-group">

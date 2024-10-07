@@ -24,27 +24,32 @@
             </div>
             
             <div class="form-group">
+                <label class="form-label" for="experience">Job Type:</label>
+                <select class="form-select" id="experience" name="experience" required>
+                    <option value="Entry Level" <%= job.experience === 'Entry Level' ? 'selected' : '' %>>Entry Level</option>
+                    <option value="Mid" <%= job.experience === 'Mid' ? 'selected' : '' %>>Mid</option>
+                    <option value="Senior" <%= job.experience === 'Senior' ? 'selected' : '' %>>Senior</option>
+                    <option value="Contract" <%= job.experience === 'Contract' ? 'selected' : '' %>>Contract</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label class="form-label" for="jobType">Job Type:</label>
                 <select class="form-select" id="jobType" name="jobType" required>
-                    <option value="Entry Level" <%= job.jobType === 'Entry Level' ? 'selected' : '' %>>Entry Level</option>
-                    <option value="Mid" <%= job.jobType === 'Mid' ? 'selected' : '' %>>Mid</option>
-                    <option value="Senior" <%= job.jobType === 'Senior' ? 'selected' : '' %>>Senior</option>
+                    <option value="Full Time" <%= job.jobType === 'Full Time' ? 'selected' : '' %>>Full Time</option>
+                    <option value="Part Time" <%= job.jobType === 'Part Time' ? 'selected' : '' %>>Part Time</option>
                     <option value="Contract" <%= job.jobType === 'Contract' ? 'selected' : '' %>>Contract</option>
                 </select>
             </div>
             
-            <div class="form-group">
-                <label class="form-label" for="requirements">Requirements:</label>
-                <textarea class="form-textarea" id="requirements" name="requirements" required><%= job.requirements.join('\n') %></textarea>
-            </div>
+            
             
             <div class="form-group">
-                <label class="form-label" for="qualifications">Qualifications:</label>
+                <label class="form-label" for="qualifications">Eligibility Criteria:</label>
                 <textarea class="form-textarea" id="qualifications" name="qualifications" required><%= job.qualifications.join('\n') %></textarea>
             </div>
             
             <div class="form-group">
-                <label class="form-label" for="description">Job Description:</label>
+                <label class="form-label" for="description">Role Description:</label>
                 <textarea class="form-textarea" id="description" name="description" required><%= job.description %></textarea>
             </div>
             
@@ -52,6 +57,17 @@
                 <label class="form-label" for="responsibilities">Responsibilities:</label>
                 <textarea class="form-textarea" id="responsibilities" name="responsibilities" required><%= job.responsibilities %></textarea>
             </div>
+
+            <div class="form-group">
+                <label class="form-label" for="requirements">Special Benefits:</label>
+                <textarea class="form-textarea" id="requirements" name="requirements" required><%= job.requirements.join('\n') %></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="skills">Skills (Enter all the skills with comma sepration, e.g. Node, js,
+                  html) :</label>
+                <input class="form-textarea" id="skills" name="skills" value="<%= job.skills%>" required>
+              </div>
             
             <div class="form-group">
                 <label class="form-label" for="salary">Salary:</label>

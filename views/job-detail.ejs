@@ -22,6 +22,8 @@
                 <img src="https://www.gstatic.com/images/icons/material/system/1x/place_grey600_24dp.png" alt="Location">
                 <%= job.location %>
                 <img src="/assets/images/job-le.png" alt="Job type" style="margin-left: 20px;">
+                <%= job.experience %>
+                <img src="/assets/images/job-le.png" alt="Job type" style="margin-left: 20px;">
                 <%= job.jobType %>
             </div>
 
@@ -48,18 +50,22 @@
             </div>
             <% } %>
 
-            <% if (job.requirements && job.requirements.length > 0 && job.requirements.some(req => req.trim() !== '')) { %>
-            <div class="section">
-                <h2 class="second-title">Eligibility Criteria:</h2>
-                <ul class="requirements">
-                    <% job.requirements.forEach(requirement => { %>
-                        <% if (requirement.trim() !== '') { %>
-                        <li><%- requirement %></li>
-                        <% } %>
-                    <% }) %>
-                </ul>
-            </div>
-            <% } %>
+
+            
+            <% if (job.qualifications && job.qualifications.length > 0 && job.qualifications.some(qual => qual.trim() !== '')) { %>
+                <div class="section">
+                    <h2 class="second-title">Eligibility Criteria:</h2>
+                    <ul class="requirements">
+                        <% job.qualifications.forEach(qualification => { %>
+                            <% if (qualification.trim() !== '') { %>
+                            <li><%- qualification %></li>
+                            <% } %>
+                        <% }) %>
+                    </ul>
+                </div>
+                <% } %>
+
+            
 
             <% if (job.responsibilities && job.responsibilities.length > 0 && job.responsibilities.some(res => res.trim() !== '')) { %>
             <div class="section">
@@ -74,18 +80,19 @@
             </div>
             <% } %>
 
-            <% if (job.qualifications && job.qualifications.length > 0 && job.qualifications.some(qual => qual.trim() !== '')) { %>
-            <div class="section">
-                <h2 class="second-title">Special Benefits:</h2>
-                <ul class="requirements">
-                    <% job.qualifications.forEach(qualification => { %>
-                        <% if (qualification.trim() !== '') { %>
-                        <li><%- qualification %></li>
-                        <% } %>
-                    <% }) %>
-                </ul>
-            </div>
-            <% } %>
+            <% if (job.requirements && job.requirements.length > 0 && job.requirements.some(req => req.trim() !== '')) { %>
+                <div class="section">
+                    <h2 class="second-title">Special Benefits:</h2>
+                    <ul class="requirements">
+                        <% job.requirements.forEach(requirement => { %>
+                            <% if (requirement.trim() !== '') { %>
+                            <li><%- requirement %></li>
+                            <% } %>
+                        <% }) %>
+                    </ul>
+                </div>
+                <% } %>
+
 
             <div class="apply-share bottom-cont">
                 <a class="apply-btn" href="/apply/<%= job._id %>">Apply</a>
