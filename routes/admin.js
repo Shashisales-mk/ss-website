@@ -177,14 +177,16 @@ router.post('/submit-application', upload.single('resume'), async (req, res) => 
     ];
     for (const field of requiredFields) {
       if (!req.body[field]) {
-        return res.status(400).json({ error: `${field} is required.` });
+        
+        req.flash('error',  `${field} is required.`);
       }
     }
 
     // Validate phone number format
     const phonePattern = /^[0-9\s+()-]{10,20}$/;
     if (!phonePattern.test(req.body.phone)) {
-      return res.status(400).json({ error: 'Please enter a valid phone number.' });
+      
+      req.flash('error', 'Please enter a valid phone number');
     }
 
     // Create application data object
@@ -225,10 +227,13 @@ router.post('/submit-application', upload.single('resume'), async (req, res) => 
     res.redirect(`/application-successful?firstName=${applicationData.firstName}&lastName=${applicationData.lastName}`);
   } catch (error) {
     console.error('Error processing application:', error);
+    
     if (error.code === 11000) {
-      res.status(400).json({ error: 'You have already applied for this job.' });
+      
+      req.flash('error', 'You have already applied for this job.');
     } else {
-      res.status(500).json({ error: 'An error occurred while processing your application.' });
+      req.flash('error','An error occurred while processing your application.' );
+      
     }
   }
 });
@@ -243,7 +248,8 @@ router.post('/application/update-status/:id', async (req, res) => {
     // Validate the new status
     const validStatuses = ['applied', 'shortlisted', 'rejected', 'hired'];
     if (!validStatuses.includes(newStatus)) {
-      return res.status(400).json({ error: 'Invalid status' });
+      
+      req.flash('error','Invalid status' );
     }
 
     // Find the application and update its status
@@ -254,7 +260,8 @@ router.post('/application/update-status/:id', async (req, res) => {
     );
 
     if (!updatedApplication) {
-      return res.status(404).json({ error: 'Application not found' });
+      
+      req.flash('error','Application not found' );
     }
 
     // Send WhatsApp message if the status is 'shortlisted'
@@ -601,7 +608,7 @@ router.post('/application/update-status/:id', async (req, res) => {
       Templatesender(
         email,
         htmlTemplate,
-        "subject"
+        "`Congratulations on Your Selection as ${jobName}"
       );
     } else if (newStatus === "rejected") {
       const { jobName, firstName, lastName, email } = updatedApplication;
@@ -709,7 +716,8 @@ router.post('/application/update-status/:id', async (req, res) => {
       Templatesender(
         email,
         htmlTemplate,
-        `Congratulations on Your Selection as ${jobName}`
+        `Update on Your Application
+`
       );
     }
 
@@ -717,6 +725,7 @@ router.post('/application/update-status/:id', async (req, res) => {
     res.redirect('/admin-panel');
   } catch (error) {
     console.error('Error updating application status:', error);
+    req.flash('error','An error occurred while updating the application status.' );
     res.status(500).json({ error: 'An error occurred while updating the application status.' });
   }
 });

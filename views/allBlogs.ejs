@@ -962,14 +962,29 @@
       <!-- Applicatoins section -->
       <div class="application-section" style="flex-direction: column;">
         <div class="exist-app">
-          <!-- show existing members -->
           <h2 style="margin-bottom: 2rem;">Existing Applications</h2>
+
+          <!-- Filter and Sort Options -->
+          <div class="filter-sort-options" style="margin-bottom: 2rem;">
+            <select id="jobNameFilter">
+              <option value="">All Job Names</option>
+              <% const uniqueJobNames=[...new Set(applications.map(app=> app.jobName))]; %>
+                <% uniqueJobNames.forEach(jobName=> { %>
+                  <option value="<%= jobName %>">
+                    <%= jobName %>
+                  </option>
+                  <% }); %>
+            </select>
+            <button id="sortByDate">Sort by Date</button>
+          </div>
+
           <table id="jobsTable">
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Resume</th>
                 <th>Email</th>
+                <th>Job name</th>
                 <th>Phone</th>
                 <th>City</th>
                 <th>State</th>
@@ -977,7 +992,7 @@
                 <th>Job Title</th>
                 <th>Expected CTC</th>
                 <th>Current CTC</th>
-                <th>Skills CTC</th>
+                <th>Skills</th>
                 <th>Apply Date</th>
                 <th>Status</th>
                 <th>Shortlist</th>
@@ -985,25 +1000,25 @@
                 <th>Reject</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="applicationsTableBody">
               <% applications.forEach(appli=> { %>
                 <tr>
                   <td>
                     <%= appli.firstName %>
                       <%= appli.lastName %>
                   </td>
-
                   <td>
                     <% if (appli.resume) { %>
-                      <a href="<%= appli.resume %>" class="download-btn">
-                        Download Resume
-                      </a>
+                      <a href="<%= appli.resume %>" class="download-btn">Download Resume</a>
                       <% } else { %>
                         No resume available
                         <% } %>
                   </td>
                   <td>
                     <%= appli.email %>
+                  </td>
+                  <td>
+                    <%= appli.jobName %>
                   </td>
                   <td>
                     <%= appli.phone %>
@@ -1029,7 +1044,7 @@
                   <td>
                     <%= appli.skills %>
                   </td>
-                  <td>
+                  <td data-appliedAt="<%= appli.appliedAt %>">
                     <%= new Date(appli.appliedAt).toLocaleDateString('en-US', { day: 'numeric' , month: 'short' }) %>
                   </td>
 
@@ -1054,16 +1069,13 @@
                       <button class="del-btn" type="submit">Reject</button>
                     </form>
                   </td>
-
-
-
-
                 </tr>
                 <% }) %>
             </tbody>
           </table>
         </div>
       </div>
+
 
     </div>
 
@@ -1072,3 +1084,44 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const jobNameFilter = document.getElementById('jobNameFilter');
+      const sortByDateBtn = document.getElementById('sortByDate');
+      const tableBody = document.getElementById('applicationsTableBody');
+      let applications = Array.from(tableBody.querySelectorAll('tr'));
+      let isAscending = true;
+
+      function applyFilters() {
+        const selectedJobName = jobNameFilter.value;
+
+        applications.forEach(row => {
+          const jobNameCell = row.querySelector('td:nth-child(4)');
+          if (selectedJobName === '' || jobNameCell.textContent === selectedJobName) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+
+      function sortByDate() {
+        applications.sort((a, b) => {
+          // Find the 'appliedAt' <td> in both rows
+          const dateA = new Date(a.querySelector('td[data-appliedAt]').getAttribute('data-appliedAt'));
+          const dateB = new Date(b.querySelector('td[data-appliedAt]').getAttribute('data-appliedAt'));
+
+          // Sort based on ascending/descending flag
+          return isAscending ? dateA - dateB : dateB - dateA;
+        });
+
+        // Re-append sorted rows to the table body
+        applications.forEach(row => tableBody.appendChild(row));
+        isAscending = !isAscending;  // Toggle sorting order for next click
+      }
+
+
+      jobNameFilter.addEventListener('change', applyFilters);
+      sortByDateBtn.addEventListener('click', sortByDate);
+    });
+  </script>

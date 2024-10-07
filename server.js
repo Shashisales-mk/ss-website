@@ -2755,7 +2755,7 @@ app.get("/apply/:id", async (req, res) => {
 app.get("/job-detail/:id", async (req, res) => {
     try {
         
-        const allJobs = await JobPosting.find();
+        const allJobs = await JobPosting.find({ status: 'open' });
         const job = await JobPosting.findById(req.params.id); 
         if (!job) {
             return res.status(404).send('Job not found');
