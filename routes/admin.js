@@ -168,13 +168,25 @@ router.post('/job/toggle-status/:id', async (req, res) => {
 
 router.post('/submit-application', upload.single('resume'), async (req, res) => {
   try {
-    console.log('Received form data:', req.body);
+   
 
     // Validate required fields
     const requiredFields = [
       'firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zip', 'jobId', 'jobName',
       'company', 'jobTitle', 'startDate.month', 'startDate.year', 'currentCTC', 'expectedCTC', 'skills'
     ];
+
+
+    if (!req.file) {
+      console.error('No file uploaded.');
+      req.flash('error', 'Please upload a resume.');
+      return res.redirect(`/apply/${jobId}`); 
+    }
+
+    console.log('Received form data:', req.body);
+    console.log('Uploaded file:', req.file); // Log the uploaded file details
+
+
     for (const field of requiredFields) {
       if (!req.body[field]) {
         

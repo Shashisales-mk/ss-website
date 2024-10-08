@@ -1010,9 +1010,10 @@
                   <td>
                     <% if (appli.resume) { %>
                       <a href="<%= appli.resume %>" class="download-btn">Download Resume</a>
-                      <% } else { %>
-                        No resume available
-                        <% } %>
+                      <p>Debug: <%= appli.resume %></p> <!-- Debugging line -->
+                    <% } else { %>
+                      No resume available
+                    <% } %>
                   </td>
                   <td>
                     <%= appli.email %>
