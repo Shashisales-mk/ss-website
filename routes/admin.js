@@ -13,7 +13,7 @@ router.use(flash());
 
 
 // Set up multer for file uploads
-const uploadsDir = path.join(__dirname, 'public', 'uploads');
+const uploadsDir = path.join(__dirname, '..', 'public', 'uploads');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadsDir) 
