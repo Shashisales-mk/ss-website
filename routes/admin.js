@@ -98,46 +98,50 @@ router.get('/job/edit/:id', async (req, res) => {
 
 
 
-// Route to handle edit form submission
 router.post('/job/edit/:id', async (req, res) => {
   try {
-    const { title, location, jobType, requirements, qualifications, description, skills, responsibilities, salary } = req.body;
+    console.log('Received edit request for job ID:', req.params.id);
+    console.log('Request body:', req.body);
 
+    const { title, location, jobType, requirements, qualifications, description, skills, responsibilities, salary, experience } = req.body;
+    
     // Convert requirements, qualifications, and responsibilities to arrays and filter out empty entries
-    const requirementsArray = requirements ? requirements.split('\n').map(item => item.trim()).filter(item => item !== '') : null;
-    const qualificationsArray = qualifications ? qualifications.split('\n').map(item => item.trim()).filter(item => item !== '') : null;
-    const responsibilitiesArray = responsibilities ? responsibilities.split('\n').map(item => item.trim()).filter(item => item !== '') : null;
-
-    // Description remains a string, but set it to null if empty
-    const descriptionField = description ? description.trim() : null;
-
+    const requirementsArray = requirements ? requirements.split('\n').map(item => item.trim()).filter(item => item !== '') : [];
+    const qualificationsArray = qualifications ? qualifications.split('\n').map(item => item.trim()).filter(item => item !== '') : [];
+    const responsibilitiesArray = responsibilities ? responsibilities.split('\n').map(item => item.trim()).filter(item => item !== '') : [];
+    
+    // Description remains a string, but set it to an empty string if null or undefined
+    const descriptionField = description || '';
 
     const job = await JobPosting.findById(req.params.id);
     if (!job) {
+      console.log('Job not found:', req.params.id);
       return res.status(404).send('Job not found');
     }
 
     // Update job fields
-    job.title = title;
-    job.location = location;
-    job.jobType = jobType;
-    job.requirements = requirementsArray;
-    job.qualifications = qualificationsArray;
-    job.description = descriptionField;
-    job.responsibilities = responsibilitiesArray;
-    job.salary = salary;
-    job.skills = skills;
+    job.title = title || job.title;
+    job.location = location || job.location;
+    job.jobType = jobType || job.jobType;
+    job.requirements = requirementsArray.length > 0 ? requirementsArray : job.requirements;
+    job.qualifications = qualificationsArray.length > 0 ? qualificationsArray : job.qualifications;
+    job.description = descriptionField || job.description;
+    job.responsibilities = responsibilitiesArray.length > 0 ? responsibilitiesArray : job.responsibilities;
+    job.salary = salary || job.salary;
+    job.skills = skills || job.skills;
+    job.experience = experience || job.experience;
 
-    await job.save(); // Save updated job data
+    console.log('Updating job:', job);
+
+    await job.save();
+    console.log('Job updated successfully');
 
     req.flash('success', 'Job is updated successfully');
-
-    res.redirect('/admin-panel'); // Redirect to job listings page
+    res.redirect('/admin-panel');
   } catch (err) {
-    req.flash('error', 'There is some error while Updating Job, please try again letter');
-
-    console.error(err);
-    res.status(500).send('Server Error');
+    console.error('Error updating job:', err);
+    req.flash('error', 'There was an error updating the job: ' + err.message);
+    res.status(500).send('Server Error: ' + err.message);
   }
 });
 
@@ -182,7 +186,7 @@ router.post('/submit-application', upload.single('resume'), async (req, res) => 
     if (!req.file) {
       console.error('No file uploaded.');
       req.flash('error', 'Please upload a resume.');
-      return res.redirect(`/apply/${jobId}`); 
+      return res.redirect(`/careers/apply/${jobId}`); 
     }
 
     console.log('Received form data:', req.body);

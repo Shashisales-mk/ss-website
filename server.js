@@ -2741,7 +2741,7 @@ app.get("/careers", async (req, res) => {
         keywords: ""
     })
 })
-app.get("/apply/:id", async (req, res) => {
+app.get("/careers/apply/:id", async (req, res) => {
     const job = await JobPosting.findById(req.params.id); 
     res.render("applicationForm", {
         job,
@@ -2752,7 +2752,7 @@ app.get("/apply/:id", async (req, res) => {
 })
 
 
-app.get("/job-detail/:id", async (req, res) => {
+app.get("/careers/:id", async (req, res) => {
     try {
         
         const allJobs = await JobPosting.find({ status: 'open' });

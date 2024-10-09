@@ -11,6 +11,7 @@
             margin-top: 6rem;
             padding: 40px 40px;
             box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+            position: relative;
         }
 
         h1 {
@@ -18,6 +19,7 @@
             font-weight: 400;
             margin-bottom: 8px;
             color: #202124;
+            margin-top: 20px;
         }
 
         p {
@@ -176,6 +178,13 @@
 
 <body>
     <div class="apply-container">
+        <header class="job-header">
+            <a href="/careers/<%= job._id %>" class="back-button">
+                <span class="back-arrow">&#8592;</span>
+                Back to job
+            </a>
+            <img src="/assets/images/black-logo.png" alt="Shashi sales and marketing" class="job-logo">
+        </header>
         <h1>Apply for a Job</h1>
         <p>Upload your resume and fill out the form below to apply for your dream job.</p>
         <form id="jobApplicationForm" action="/admin/submit-application" method="post" enctype="multipart/form-data">

@@ -30,7 +30,7 @@
             </div>
 
             <div class="apply-share">
-                <a class="apply-btn" href="/apply/<%= job._id %>">Apply</a>
+                <a class="apply-btn" href="/careers/apply/<%= job._id %>">Apply</a>
                 <div class="share-icon">
                     <button class="action-button share-btn">Share</button>
                     <img src="/assets/images/share.svg" alt="">
@@ -97,7 +97,7 @@
 
 
             <div class="apply-share bottom-cont">
-                <a class="apply-btn" href="/apply/<%= job._id %>">Apply</a>
+                <a class="apply-btn" href="/careers/apply/<%= job._id %>">Apply</a>
                 <div class="share-icon">
                     <button class="action-button share-btn">Share</button>
                     <img src="/assets/images/share.svg" alt="">
@@ -116,7 +116,7 @@
                 <h2 class="second-title">Other Job Opportunities</h2>
                 <div class="other-jobs">
                     <% allJobs.forEach(job => { %>
-                    <a href="/job-detail/<%= job._id %>" >
+                    <a href="/careers/<%= job._id %>" >
                         <div class="job-card">
                             <h3><%= job.title %></h3>
                             <p><strong>Location:</strong> <%= job.location %></p>
