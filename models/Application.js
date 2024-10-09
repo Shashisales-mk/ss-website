@@ -84,6 +84,18 @@ const applicationSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    totalExperience: {
+        type: Number,
+        required: true
+    },
+    np: {
+        type: Number,
+        required: true
+    },
+    lwd: {
+        type: Date
+        
+    },
     skills: {
         type: String,
         required: true

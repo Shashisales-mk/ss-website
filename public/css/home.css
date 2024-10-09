@@ -3638,12 +3638,19 @@ input:checked+.career-slider:before {
   color: #5f6368;
   font-size: 14px;
   margin-bottom: 20px;
+  justify-content: flex-start;
+}
+
+.job-meta p {
+  margin-left: auto; 
 }
 
 .job-meta img {
   height: 16px;
   margin-right: 5px;
 }
+
+
 
 .apply-share {
   width: 100%;

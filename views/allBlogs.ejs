@@ -992,6 +992,9 @@
                 <th>Job Title</th>
                 <th>Expected CTC</th>
                 <th>Current CTC</th>
+                <th>Total Exp</th>
+                <th>LWD</th>
+                <th>NP</th>
                 <th>Skills</th>
                 <th>Apply Date</th>
                 <th>Status</th>
@@ -1041,6 +1044,15 @@
                   </td>
                   <td>
                     <%= appli.currentCTC %>
+                  </td>
+                  <td>
+                    <%= appli.totalExperience %>
+                  </td>
+                  <td>
+                    <%= new Date(appli.lwd).toLocaleDateString('en-US', { day: 'numeric' , month: 'short' }) %>
+                  </td>
+                  <td>
+                    <%= appli.np %>
                   </td>
                   <td>
                     <%= appli.skills %>

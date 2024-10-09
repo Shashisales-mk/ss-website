@@ -174,9 +174,10 @@ router.post('/submit-application', upload.single('resume'), async (req, res) => 
     // Validate required fields
     const requiredFields = [
       'firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zip', 'jobId', 'jobName',
-      'company', 'jobTitle', 'startDate.month', 'startDate.year', 'currentCTC', 'expectedCTC', 'skills'
+      'company', 'jobTitle', 'startDate.month', 'startDate.year', 'currentCTC', 'expectedCTC', 'skills', "totalExperience", "np"
     ];
 
+    const lwd = req.body.lwd ? new Date(req.body.lwd) : null;
 
     if (!req.file) {
       console.error('No file uploaded.');
@@ -227,6 +228,9 @@ router.post('/submit-application', upload.single('resume'), async (req, res) => 
       } : undefined,
       currentCTC: parseFloat(req.body.currentCTC),
       expectedCTC: parseFloat(req.body.expectedCTC),
+      totalExperience: parseFloat(req.body.totalExperience),
+      lwd,
+      np:parseFloat(req.body.np),
       skills: req.body.skills,
       additionalInfo: req.body.additionalInfo
     };

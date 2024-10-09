@@ -13,15 +13,20 @@
                 <div class="filters">
                     <div class="filter-dropdown" data-filter="location">
                         <div class="filter-option">Locations <span>▼</span></div>
-                        <div class="filter-content">
-                            <a href="#" data-value="all">All locations</a>
-                            <% jobs.forEach(job=> { %>
-                                <a href="#" data-value="<%= job.location %>">
-                                    <%= job.location %>
-                                </a>
-                                <% }) %>
+                        <% const uniqueLocations=new Set(); jobs.forEach(job=> {
+                            uniqueLocations.add(job.location);
+                            });
+                            %>
 
-                        </div>
+                            <div class="filter-content">
+                                <a href="#" data-value="all">All locations</a>
+                                <% uniqueLocations.forEach(location=> { %>
+                                    <a href="#" data-value="<%= location %>">
+                                        <%= location %>
+                                    </a>
+                                    <% }) %>
+                            </div>
+
                     </div>
 
                     <div class="filter-dropdown" data-filter="experience">

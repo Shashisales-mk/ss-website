@@ -25,6 +25,8 @@
                 <%= job.experience %>
                 <img src="/assets/images/job-le.png" alt="Job type" style="margin-left: 20px;">
                 <%= job.jobType %>
+
+                <p>Posted on : <%= new Date(job.createdAt).toLocaleDateString('en-US', { day: 'numeric' , month: 'short' }) %></p>
             </div>
 
             <div class="apply-share">
@@ -58,7 +60,7 @@
                     <ul class="requirements">
                         <% job.qualifications.forEach(qualification => { %>
                             <% if (qualification.trim() !== '') { %>
-                            <li><%- qualification %></li>
+                            <%- qualification %>
                             <% } %>
                         <% }) %>
                     </ul>
@@ -73,7 +75,7 @@
                 <ul class="requirements">
                     <% job.responsibilities.forEach(responsibility => { %>
                         <% if (responsibility.trim() !== '') { %>
-                        <li><%- responsibility %></li>
+                        <%- responsibility %>
                         <% } %>
                     <% }) %>
                 </ul>
@@ -86,7 +88,7 @@
                     <ul class="requirements">
                         <% job.requirements.forEach(requirement => { %>
                             <% if (requirement.trim() !== '') { %>
-                            <li><%- requirement %></li>
+                            <%- requirement %>
                             <% } %>
                         <% }) %>
                     </ul>
@@ -118,12 +120,12 @@
                         <div class="job-card">
                             <h3><%= job.title %></h3>
                             <p><strong>Location:</strong> <%= job.location %></p>
-                            <% if (job.requirements && job.requirements.length > 0 && job.requirements.some(requirement => requirement.trim() !== '')) { %>
+                            <% if (job.qualifications && job.qualifications.length > 0 && job.qualifications.some(qualification => qualification.trim() !== '')) { %>
                             <p><strong>Qualifications:</strong></p>
                             <ul style="color: black;">
-                                <% job.requirements.forEach(requirement => { %>
-                                    <% if (requirement.trim() !== '') { %>
-                                    <li><%- requirement %></li>
+                                <% job.qualifications.forEach(qualification => { %>
+                                    <% if (qualification.trim() !== '') { %>
+                                    <%- qualification %>
                                     <% } %>
                                 <% }) %>
                             </ul>
