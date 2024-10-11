@@ -67,7 +67,30 @@
         <input type="number" name="number" id="" placeholder="Enter Your Contact Number">
         <input type="email" name="email" id="" placeholder="Enter Your Email">
         <input type="number" name="amount" placeholder="Amount">
-        <input type="submit" value="submit">
+        <input type="submit" value="submit" id="amount">
     </form>
    </div>
 </div>
+
+
+<script>
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Prefill the amount if it's provided in the URL and make it readonly
+    window.onload = function() {
+        var amountInput = document.getElementById('amount');
+        var amount = getUrlParameter('amount');
+        if (amount) {
+            amountInput.value = amount;
+            amountInput.readOnly = true;
+        } else {
+            amountInput.readOnly = false;
+        }
+    }
+</script>
