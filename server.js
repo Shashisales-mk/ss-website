@@ -2013,8 +2013,72 @@ app.post("/payment", async (req, res) => {
     }
 });
 
+app.post("/custom-payment", async (req, res) => {
+    try {
+        // Extract the values from req.query instead of req.body
+        const { name, number, amount, email } = req.query; 
+        const merchantTransactionId = 'T' + Date.now();
 
+        const paymentDetails = new PaymentDetails({
+            merchantTransactionId,
+            name,
+            number,
+            email,
+            amount
+        });
+        await paymentDetails.save();
 
+        const data = {
+            "merchantId": process.env.PHONEPE_MERCHANT_ID,
+            "merchantTransactionId": merchantTransactionId,
+            "merchantUserId": process.env.PHONEPE_MERCHANT_UID,
+            "amount": amount * 100,  // converting to paisa (assuming amount is in rupees)
+            "redirectUrl": `https://www.shashisales.com/status/${merchantTransactionId}`,
+            "redirectMode": "POST",
+            "mobileNumber": number,
+            "paymentInstrument": {
+                "type": "PAY_PAGE"
+            }
+        };
+
+        const payload = JSON.stringify(data);
+        const payloadMain = Buffer.from(payload).toString('base64');
+        const key = process.env.PHONEPE_SALT;
+        const keyIndex = process.env.PHONEPE_KEY_INDEX;
+        const stringToHash = payloadMain + '/pg/v1/pay' + key;
+        const sha256 = crypto.createHash('sha256').update(stringToHash).digest('hex');
+        const checksum = sha256 + '###' + keyIndex;
+
+        const URL = "https://api.phonepe.com/apis/hermes/pg/v1/pay";
+
+        const options = {
+            method: 'post',
+            url: URL,
+            headers: {
+                accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-VERIFY': checksum,
+            },
+            data: {
+                request: payloadMain
+            }
+        };
+
+        axios
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
+                res.redirect(response.data.data.instrumentResponse.redirectInfo.url);
+            })
+            .catch(function (error) {
+                console.error(error);
+                res.status(500).send({ message: 'Payment failed', error });
+            });
+    } catch (error) {
+        console.error('Error details:', error);
+        res.status(500).send({ message: error.message, success: false });
+    }
+});
 
 
 app.post("/status/:txnId", async (req, res) => {
