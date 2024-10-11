@@ -43,7 +43,7 @@ const upload = multer({
 
 router.post('/job/add', async (req, res) => {
   try {
-    const { title, location, jobType, requirements, qualifications, description, responsibilities, skills, salary } = req.body;
+    const { urlId, title, location, jobType, requirements, qualifications, description, responsibilities, skills, salary } = req.body;
 
     // Convert requirements, qualifications, and responsibilities to arrays and filter out empty entries
     const requirementsArray = requirements ? requirements.split('\n').map(item => item.trim()).filter(item => item !== '') : null;
@@ -54,6 +54,7 @@ router.post('/job/add', async (req, res) => {
     const descriptionField = description ? description.trim() : null;
 
     const newJob = new JobPosting({
+      urlId,
       title,
       location,
       jobType,
@@ -78,18 +79,19 @@ router.post('/job/add', async (req, res) => {
 
 
 // Route to render edit job form
+
 router.get('/job/edit/:id', async (req, res) => {
   try {
-    const job = await JobPosting.findById(req.params.id); // Fetch job by ID
+    const job = await JobPosting.findOne({ urlId: req.params.id }); 
     if (!job) {
       return res.status(404).send('Job not found');
     }
     res.render('editJob', {
       job,
-      title: "",
-      description: "",
-      keywords: ""
-    }); // Render the edit form with job data
+      title: job.title || '', 
+      description: job.description || '', 
+      keywords: job.keywords || '' 
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
@@ -98,12 +100,13 @@ router.get('/job/edit/:id', async (req, res) => {
 
 
 
+
 router.post('/job/edit/:id', async (req, res) => {
   try {
     console.log('Received edit request for job ID:', req.params.id);
     console.log('Request body:', req.body);
 
-    const { title, location, jobType, requirements, qualifications, description, skills, responsibilities, salary, experience } = req.body;
+    const {urlId, title, location, jobType, requirements, qualifications, description, skills, responsibilities, salary, experience } = req.body;
     
     // Convert requirements, qualifications, and responsibilities to arrays and filter out empty entries
     const requirementsArray = requirements ? requirements.split('\n').map(item => item.trim()).filter(item => item !== '') : [];
@@ -120,6 +123,7 @@ router.post('/job/edit/:id', async (req, res) => {
     }
 
     // Update job fields
+    job.urlId = urlId || job.urlId;
     job.title = title || job.title;
     job.location = location || job.location;
     job.jobType = jobType || job.jobType;
@@ -146,10 +150,10 @@ router.post('/job/edit/:id', async (req, res) => {
 });
 
 // Route to handle job status toggle
+
 router.post('/job/toggle-status/:id', async (req, res) => {
   try {
-    const jobId = req.params.id;
-    const job = await JobPosting.findById(jobId); // Find the job by ID
+    const job = await JobPosting.findOne({ urlId: req.params.id }); 
 
     if (!job) {
       return res.status(404).send('Job not found');
@@ -162,11 +166,12 @@ router.post('/job/toggle-status/:id', async (req, res) => {
     req.flash('success', `Job status changed to ${job.status} successfully`);
     res.redirect('/admin-panel'); // Redirect to admin panel after updating the status
   } catch (err) {
-    console.error(err);
+    console.error('Error while updating job status:', err);
     req.flash('error', 'There was an error while updating the job status, please try again later');
     res.status(500).send('Server Error');
   }
 });
+
 
 
 

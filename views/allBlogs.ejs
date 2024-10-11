@@ -833,6 +833,10 @@
           <h1 class="form-title">Add Job Posting</h1>
           <form action="/admin/job/add" method="POST">
             <div class="form-group">
+              <label class="form-label" for="jid">Job Canonical:</label>
+              <input class="form-input" type="text" id="jid" name="urlId" required>
+            </div>
+            <div class="form-group">
               <label class="form-label" for="title">Job Title:</label>
               <input class="form-input" type="text" id="title" name="title" required>
             </div>
@@ -936,15 +940,17 @@
 
 
                   <td>
-                    <a class="job-edit-btn" href="/admin/job/edit/<%= job._id %>">Edit</a>
+                    <a class="job-edit-btn" href="/admin/job/edit/<%= job.urlId %>">Edit</a>
 
                   </td>
                   <td>
-                    <form action="/admin/job/toggle-status/<%= job._id %>" method="POST">
+                    <form action="/admin/job/toggle-status/<%= job.urlId %>" method="POST">
                       <button class="status-btn del-btn" type="submit">
                         <%= job.status==='open' ? 'Close Job' : 'Open Job' %>
                       </button>
                     </form>
+
+
                   </td>
 
                 </tr>
@@ -1013,9 +1019,9 @@
                   <td>
                     <% if (appli.resume) { %>
                       <a href="<%= appli.resume %>" class="download-btn">Download Resume</a>
-                    <% } else { %>
-                      No resume available
-                    <% } %>
+                      <% } else { %>
+                        No resume available
+                        <% } %>
                   </td>
                   <td>
                     <%= appli.email %>

@@ -897,12 +897,12 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
                 heading: headings[i],
                 paragraph: paragraphs[i].replace(/\n/g, '<br>'),
                 image: images[i] || null,
-                altTag : altTags[i]
+                altTag: altTags[i]
             });
         }
 
         console.log(content);
-        
+
 
         const updatedBlog = await Blog.findByIdAndUpdate(id, {
             name: authorName,
@@ -1888,7 +1888,7 @@ app.post('/forgot-password', async (req, res) => {
 
 
 app.get('/verify-otp', (req, res) => {
-    res.render('verify-otp' , {
+    res.render('verify-otp', {
         title: "",
         description: "",
         keywords: ""
@@ -2723,7 +2723,7 @@ app.post('/start-chat', async (req, res) => {
 
 app.get("/unlock-highquality-plagiarism-free-writing", (req, res) => {
     res.redirect(301, "/blog-detail/unlock-highquality-plagiarism-free-writing");
-});	
+});
 app.get("/benefits-of-mobile-development-companies", (req, res) => {
     res.redirect(301, "/blog-detail/benefits-of-mobile-development-companies");
 });
@@ -2743,45 +2743,57 @@ app.get("/careers", async (req, res) => {
 
     res.render("careers", {
         jobs,
-        title: "",
-        description: "",
+        title: "Web design & Development Jobs, Digital Marketing Career - Shashi Sales",
+        description: "Shashi Sales Careers—We're hiring! Discover opportunities in internet marketing, web design & development, and digital marketing roles at Shashi Sales And Marketing.",
         keywords: ""
     })
 })
 app.get("/careers/apply/:id", async (req, res) => {
-    const job = await JobPosting.findById(req.params.id); 
-    res.render("applicationForm", {
-        job,
-        title: "",
-        description: "",
-        keywords: ""
-    })
-})
+    try {
+        // Use findOne() to search by the custom field urlId
+        const job = await JobPosting.findOne({ urlId: req.params.id });
+        if (!job) {
+            return res.status(404).send('Job not found');
+        }
+        res.render("applicationForm", {
+            job,
+            title: job.title || "",
+            description: job.description || "",
+            keywords: job.keywords || ""
+        });
+    } catch (err) {
+        console.error('Error fetching job by urlId:', err);
+        res.status(500).send('Server Error');
+    }
+});
+
 
 
 app.get("/careers/:id", async (req, res) => {
     try {
-        
         const allJobs = await JobPosting.find({ status: 'open' });
-        const job = await JobPosting.findById(req.params.id); 
+        // Find the job by urlId instead of _id
+        const job = await JobPosting.findOne({ urlId: req.params.id });
         if (!job) {
             return res.status(404).send('Job not found');
         }
         res.render('job-detail', {
             allJobs,
-            job, title: "",
-            description: "",
-            keywords: ""
-        }); // Render the edit form with job data
+            job,
+            title: job.title, // You can use job title for dynamic page title
+            description: job.description, // Assuming you have a description field in the job
+            keywords: job.keywords || "" // Assuming keywords are defined, or set as an empty string
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server Error');
     }
-})
+});
+
 
 app.get("/application-successful", async (req, res) => {
     const { firstName, lastName } = req.query;
-    const name = `${firstName} ${lastName}`; 
+    const name = `${firstName} ${lastName}`;
 
     res.render("application-successful", { name });
 });
