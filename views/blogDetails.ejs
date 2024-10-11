@@ -991,7 +991,7 @@
                                     class="bp-content-section s<%= index % 2 === 0 ? '1' : '2' %> <%= !contentItem.image ? 'no-image' : '' %>">
                                     <% if (contentItem.image) { %>
                                         <div class="bp-content-image">
-                                            <img src="<%= contentItem.image %>" alt="blog">
+                                            <img src="<%= contentItem.image %>" alt="<%= contentItem.altTag %>">
                                         </div>
                                         <% } %>
                                             <div class="bp-content-text">

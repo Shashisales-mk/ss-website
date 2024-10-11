@@ -677,7 +677,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
     try {
         const {
             authorName, authorEmail, blogTitle, blogShortDesc, videoUrl,
-            headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical
+            headings, paragraphs, altTags, metaTitle, metaDescription, metaKeywords, canonical
         } = req.body;
 
         const bannerImage = req.files['blogBannerImage'] ? req.files['blogBannerImage'][0] : null;
@@ -698,9 +698,12 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
             content.push({
                 heading: headings[i],
                 paragraph: paragraphs[i].replace(/\n/g, '<br>'),
-                image: images[i] || null
+                image: images[i] || null,
+                altTag: altTags[i]
             });
         }
+
+        console.log(content);
 
         const contentText = req.body.contentText.replace(/<\/?[^>]+(>|$)/g, '');
 
@@ -868,7 +871,7 @@ app.get('/edit-blog/:canonical', isAdmin, async (req, res) => {
 app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        const { authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
+        const { authorName, authorEmail, blogTitle, blogShortDesc, headings, paragraphs, altTags, metaTitle, metaDescription, metaKeywords, canonical, contentText, isLatest, isPopular, isApprove } = req.body;
 
         const subscribers = await Subscriber.find();
 
@@ -893,9 +896,13 @@ app.put('/update-blog/:id', uploadFields, isAdmin, async (req, res) => {
             content.push({
                 heading: headings[i],
                 paragraph: paragraphs[i].replace(/\n/g, '<br>'),
-                image: images[i] || null
+                image: images[i] || null,
+                altTag : altTags[i]
             });
         }
+
+        console.log(content);
+        
 
         const updatedBlog = await Blog.findByIdAndUpdate(id, {
             name: authorName,
