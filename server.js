@@ -2754,10 +2754,20 @@ app.get("/careers/apply/:id", async (req, res) => {
         const job = await JobPosting.findOne({ urlId: req.params.id });
         const description = job.description;
         if (job) {
-            const description = job.description.substring(0, 160);
-        } else {
+            // Get the job description from the database
+            const rawDescription = job.description;
+          
+            // Remove HTML tags using a regular expression
+            const descriptionWithoutHtml = rawDescription.replace(/<\/?[^>]+(>|$)/g, "");
+          
+            // Trim the description to 160 characters
+            const description = descriptionWithoutHtml.substring(0, 160);
+            
+            // Now the 'description' variable contains plain text with only 160 characters
+          } else {
+            // Handle the case where no job is found
             console.log('Job not found');
-        }
+          }
         if (!job) {
             return res.status(404).send('Job not found');
         }
@@ -2784,10 +2794,20 @@ app.get("/careers/:id", async (req, res) => {
             return res.status(404).send('Job not found');
         }
         if (job) {
-            const description = job.description.substring(0, 160);
-        } else {
+            // Get the job description from the database
+            const rawDescription = job.description;
+          
+            // Remove HTML tags using a regular expression
+            const descriptionWithoutHtml = rawDescription.replace(/<\/?[^>]+(>|$)/g, "");
+          
+            // Trim the description to 160 characters
+            const description = descriptionWithoutHtml.substring(0, 160);
+            
+            // Now the 'description' variable contains plain text with only 160 characters
+          } else {
+            // Handle the case where no job is found
             console.log('Job not found');
-        }
+          }
 
         res.render('job-detail', {
             allJobs,
