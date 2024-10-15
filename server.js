@@ -2745,13 +2745,19 @@ app.get("/careers", async (req, res) => {
         jobs,
         title: "Web design & Development Jobs, Digital Marketing Career - Shashi Sales",
         description: "Shashi Sales Careers—We're hiring! Discover opportunities in internet marketing, web design & development, and digital marketing roles at Shashi Sales And Marketing.",
-        keywords: ""
+        keywords: "Website Development, Digital Marketing Services"
     })
 })
 app.get("/careers/apply/:id", async (req, res) => {
     try {
         // Use findOne() to search by the custom field urlId
         const job = await JobPosting.findOne({ urlId: req.params.id });
+        const description = job.description;
+        if (job) {
+            const description = job.description.substring(0, 160);
+        } else {
+            console.log('Job not found');
+        }
         if (!job) {
             return res.status(404).send('Job not found');
         }
@@ -2759,7 +2765,7 @@ app.get("/careers/apply/:id", async (req, res) => {
             job,
             title: job.title || "",
             description: job.description || "",
-            keywords: job.keywords || ""
+            keywords: job.skills || ""
         });
     } catch (err) {
         console.error('Error fetching job by urlId:', err);
@@ -2777,12 +2783,18 @@ app.get("/careers/:id", async (req, res) => {
         if (!job) {
             return res.status(404).send('Job not found');
         }
+        if (job) {
+            const description = job.description.substring(0, 160);
+        } else {
+            console.log('Job not found');
+        }
+
         res.render('job-detail', {
             allJobs,
             job,
-            title: job.title, // You can use job title for dynamic page title
-            description: job.description, // Assuming you have a description field in the job
-            keywords: job.keywords || "" // Assuming keywords are defined, or set as an empty string
+            title: job.title,
+            description: job.description,
+            keywords: job.skills || ""
         });
     } catch (err) {
         console.error(err);
