@@ -2754,16 +2754,15 @@ app.get("/careers/apply/:id", async (req, res) => {
         const job = await JobPosting.findOne({ urlId: req.params.id });
         const description = job.description;
         if (job) {
-            // Get the job description from the database
+            // Get the job description in HTML format
             const rawDescription = job.description;
           
-            // Remove HTML tags using a regular expression
+            // Use a regular expression to remove HTML tags and extract plain text
             const descriptionWithoutHtml = rawDescription.replace(/<\/?[^>]+(>|$)/g, "");
           
-            // Trim the description to 160 characters
+            // Trim the plain text description to 160 characters
             const description = descriptionWithoutHtml.substring(0, 160);
-            
-            // Now the 'description' variable contains plain text with only 160 characters
+          
           } else {
             // Handle the case where no job is found
             console.log('Job not found');
@@ -2794,16 +2793,16 @@ app.get("/careers/:id", async (req, res) => {
             return res.status(404).send('Job not found');
         }
         if (job) {
-            // Get the job description from the database
+            // Get the job description in HTML format
             const rawDescription = job.description;
           
-            // Remove HTML tags using a regular expression
+            // Use a regular expression to remove HTML tags and extract plain text
             const descriptionWithoutHtml = rawDescription.replace(/<\/?[^>]+(>|$)/g, "");
           
-            // Trim the description to 160 characters
+            // Trim the plain text description to 160 characters
             const description = descriptionWithoutHtml.substring(0, 160);
-            
-            // Now the 'description' variable contains plain text with only 160 characters
+          
+           
           } else {
             // Handle the case where no job is found
             console.log('Job not found');
