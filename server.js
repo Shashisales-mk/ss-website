@@ -2736,6 +2736,7 @@ app.get("/blog-detail/essential-tips-strategies", (req, res) => {
 
 
 
+
 // career page functionality
 
 app.get("/careers", async (req, res) => {

@@ -4,6 +4,9 @@ User-agent: *
 Disallow: /login
 Disallow: /admin-panel
 Disallow: /cgi-bin/
+Disallow: /careers/66ffe9d0286403f981f4fa4d
+Disallow: /careers/67053a618b2eb401b981f5a9
+Disallow: /careers/67053c228b2eb401b981fa32
 
 Sitemap: https://shashisales.com/sitemap.xml
 
