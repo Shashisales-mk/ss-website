@@ -34,7 +34,8 @@
 
 #navigation {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 1rem;
     margin-top: 1rem;
 }
 
@@ -63,7 +64,13 @@ textarea{
     margin-bottom: 2rem;
     
 }
+.optional{
+    margin-bottom: .5rem;
+}
 
+.optional:first-child{
+    padding-bottom: 10rem;
+}
 </style>
 <body>
     <div id="main-page">
@@ -77,7 +84,7 @@ textarea{
                 <textarea name="answer" rows="4" cols="50" required></textarea>
             <% } else if (question.type === 'mcq') { %>
                 <% question.options.forEach((option, index) => { %>
-                    <div>
+                    <div class="optional">
                         <input type="radio" id="option<%= index %>" name="answer" value="<%= option %>" required>
                         <label for="option<%= index %>"><%= option %></label>
                     </div>
@@ -89,7 +96,7 @@ textarea{
             
             <div id="navigation">
                 <% if (questionNumber > 1) { %>
-                    <a href="/survey?q=<%= questionNumber - 1 %>" class="btn">Previous</a>
+                    <a href="/survey?q=<%= questionNumber - 1 %>" class="btn" style="background-color: white;">Previous</a>
                 <% } %>
                 
                 <button type="submit" class="btn">

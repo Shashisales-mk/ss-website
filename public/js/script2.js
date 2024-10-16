@@ -92,12 +92,12 @@ function validateForm() {
       return false;
   }
   
+// Simple phone validation (allows optional +, digits, spaces, hyphens, and parentheses)
+if (!/^\+?[\d\s\-()]+$/.test(phone)) {
+  alert('Phone number should only contain digits, spaces, hyphens, or parentheses');
+  return false;
+}
 
-  // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-  if (!/^\+[\d\s\-()]+$/.test(phone)) {
-      alert('Phone number should only contain digits, spaces, hyphens, or parentheses');
-      return false;
-  }
 
   // Simple email validation
   if (!/\S+@\S+\.\S+/.test(email)) {

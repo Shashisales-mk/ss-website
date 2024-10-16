@@ -1294,7 +1294,7 @@ app.post('/submit-quote', async (req, res) => {
     }
 
     // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
-    if (!/^\+[\d\s\-()]+$/.test(formData.tel)) {
+    if (!/^\+?[\d\s\-()]+$/.test(formData.tel)) {
         req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
         return res.redirect(referrerUrl);
     }
@@ -2757,17 +2757,17 @@ app.get("/careers/apply/:id", async (req, res) => {
         if (job) {
             // Get the job description in HTML format
             const rawDescription = job.description;
-          
+
             // Use a regular expression to remove HTML tags and extract plain text
             const descriptionWithoutHtml = rawDescription.replace(/<\/?[^>]+(>|$)/g, "");
-          
+
             // Trim the plain text description to 160 characters
             const description = descriptionWithoutHtml.substring(0, 160);
-          
-          } else {
+
+        } else {
             // Handle the case where no job is found
             console.log('Job not found');
-          }
+        }
         if (!job) {
             return res.status(404).send('Job not found');
         }
@@ -2796,18 +2796,18 @@ app.get("/careers/:id", async (req, res) => {
         if (job) {
             // Get the job description in HTML format
             const rawDescription = job.description;
-          
+
             // Use a regular expression to remove HTML tags and extract plain text
             const descriptionWithoutHtml = rawDescription.replace(/<\/?[^>]+(>|$)/g, "");
-          
+
             // Trim the plain text description to 160 characters
             const description = descriptionWithoutHtml.substring(0, 160);
-          
-           
-          } else {
+
+
+        } else {
             // Handle the case where no job is found
             console.log('Job not found');
-          }
+        }
 
         res.render('job-detail', {
             allJobs,
