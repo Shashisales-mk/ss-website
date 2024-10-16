@@ -1276,12 +1276,13 @@ app.post('/submit-quote', async (req, res) => {
 
     // Server-side validation
     if (!formData.firstName || !formData.lastName || !formData.tel || !formData.email || !formData.service) {
-        req.session.errorMessage = 'All fields are required';
+    
+        req.flash('error', 'All fields are required.');
         return res.redirect(referrerUrl);
     }
 
     if (!/^[A-Za-z ]+$/.test(formData.firstName) || !/^[A-Za-z ]+$/.test(formData.lastName)) {
-        req.session.errorMessage = 'Names should only contain letters and spaces';
+        req.flash('error', 'Names should only contain letters and spaces');
         return res.redirect(referrerUrl);
     }
 
@@ -1289,22 +1290,23 @@ app.post('/submit-quote', async (req, res) => {
     const phoneDigits = formData.tel.replace(/[^\d+]/g, '');
 
     if (phoneDigits.length < 8) {
-        req.session.errorMessage = 'Please enter a valid phone number with valid format of your country';
+        req.flash('error', 'Please enter a valid phone number with valid format of your country');
         return res.redirect(referrerUrl);
     }
 
     // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
     if (!/^\+?[\d\s\-()]+$/.test(formData.tel)) {
-        req.session.errorMessage = 'Phone number should only contain digits, spaces, hyphens, or parentheses';
+        req.flash('error', 'Phone number should only contain digits, spaces, hyphens, or parentheses');
         return res.redirect(referrerUrl);
     }
-
-
+    
+    
     // Simple email validation
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        req.session.errorMessage = 'Please enter a valid email address';
+        req.flash('error', 'Please enter a valid email address');
         return res.redirect(referrerUrl);
     }
+   
 
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
@@ -1372,6 +1374,7 @@ app.post('/submit-quote', async (req, res) => {
         await appendToSheet(authClient, formData);
 
         req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
+        
 
 
         res.redirect(referrerUrl);
