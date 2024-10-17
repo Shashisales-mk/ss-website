@@ -2835,7 +2835,15 @@ app.get("/application-successful", async (req, res) => {
 
 
 
+//  landing page route
 
+app.get("/landing-page" , (req, res)=>{
+    res.render("landingPage" , {
+        title: "",
+        description : "",
+        keywords : ""
+    });
+})
 
 
 
