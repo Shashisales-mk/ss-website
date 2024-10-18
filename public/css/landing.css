@@ -2476,6 +2476,10 @@ textarea {
         z-index: 99;
     }
 
+    .cen-pop{
+        z-index: 999;
+    }
+
     .swiper {
         padding-top: 0;
         padding-bottom: 50px;
