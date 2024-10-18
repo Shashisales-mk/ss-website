@@ -2736,6 +2736,9 @@ app.get("/blog-detail/digital-marketing", (req, res) => {
 app.get("/blog-detail/essential-tips-strategies", (req, res) => {
     res.redirect(301, "/blog-detail/superstockist");
 });
+app.get("/seo-company-in-delhi-ncr", (req, res) => {
+    res.redirect(301, "/blog-detail/seo-company-in-delhi-ncr");
+});
 
 
 
@@ -2837,14 +2840,140 @@ app.get("/application-successful", async (req, res) => {
 
 //  landing page route
 
-app.get("/landing-page" , (req, res)=>{
+app.get("/landing-page" , async(req, res)=>{
+    const testimonials = await Testimonial.find().populate('page');
     res.render("landingPage" , {
+        testimonials,
         title: "",
         description : "",
         keywords : ""
     });
 })
 
+
+
+// submit forms of landing page
+
+app.post('/submit-query', async (req, res) => {
+    const formData = req.body;
+    const referrerUrl = req.get('Referrer') || '/';
+
+    const name = (formData.firstName && formData.lastName) ? `${formData.firstName} ${formData.lastName}` : `${formData.name}` ;
+
+    console.log(req.body);
+    
+
+    // Server-side validation
+    if (!name || !formData.phone || !formData.email || !formData.message) {
+    
+        req.flash('error', 'All fields are required.');
+        return res.redirect("/landing-page");
+    }
+
+    if (!/^[A-Za-z ]+$/.test(name)) {
+        req.flash('error', 'Names should only contain letters and spaces');
+        return res.redirect("/landing-page");
+    }
+
+    // Remove non-digit characters for length check
+    const phoneDigits = formData.phone.replace(/[^\d+]/g, '');
+
+    if (phoneDigits.length < 8) {
+        req.flash('error', 'Please enter a valid phone number with valid format of your country');
+        return res.redirect("/landing-page");
+    }
+
+    // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+    if (!/^\+?[\d\s\-()]+$/.test(formData.phone)) {
+        req.flash('error', 'Phone number should only contain digits, spaces, hyphens, or parentheses');
+        return res.redirect("/landing-page");
+    }
+    
+    
+    // Simple email validation
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        req.flash('error', 'Please enter a valid email address');
+        return res.redirect("/landing-page");
+    }
+   
+
+    const htmlTemplate = `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shashi sales and marketing</title>
+        <style>
+        .main-page{
+            height: 100vh;
+            width: 100%;
+            position: relative;
+        }
+        .details{
+            width: 350px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(239, 229, 229);
+            padding: 3rem 1.5rem;
+            
+        }
+
+        .details h1{
+            font-size: 1.5rem;
+
+
+        }
+        
+
+
+    </style>
+    </head>
+    
+    <body>
+        <div class="main-page">
+            <div class="details">
+                <h1>New Lead Notification</h1>
+                <br>
+                <p id="Full name"><b>Name :</b> ${name} </p>
+                <br>
+                <p class="phone-number"><b>Number :</b> ${formData.phone}</p> <br>
+                <p class="email"><b>Email :</b> ${formData.email}</p> <br>
+                <p class="service"><b>Service :</b> ${formData.message}</p> <br>
+            </div>
+            </div>
+    
+                    
+    </body>
+    
+    </html>`
+
+
+
+    try {
+        console.log('Received form data:', formData);
+        // mailsender(formData, recipients);
+        // Templatesender(recipients, htmlTemplate, "You Got New Lead");
+        Templatesender("bgmilelomujhse@gmail.com", htmlTemplate, "You Got New Lead");
+
+        // const authClient = await authenticate();
+        // Append data to Google Sheets
+        // await appendToSheet(authClient, formData);
+
+        req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
+        
+
+
+        res.redirect("/landing-page");
+    } catch (error) {
+        console.error('Failed to send email:', error);
+
+        req.flash('error', 'An error occurred while submitting your form. Please try again later.');
+        res.redirect("/");
+    }
+});
 
 
 
