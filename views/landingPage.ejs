@@ -102,14 +102,10 @@
                             <img src="/assets/images/msglp2.webp" class="animate" alt="message">
                         </figure>
                     </div>
-                    <div class="ssstrip animate">
-                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi
-                            Sales
-                            And
+                    <div class="ssstrip animate-text">
+                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And
                             Marketing</span>
-                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi
-                            Sales
-                            And
+                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And
                             Marketing</span>
                     </div>
                 </section>
@@ -523,36 +519,36 @@
 
                     <div class="industries-cont-mob">
                         <div class="ind-item">
-                        <img src="/assets/images/Banker.png" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/Banker.png" alt="">
+                            <p>Banking and Financial</p>
                         </div>
                         <div class="ind-item">
-                        <img src="/assets/images/ecom.png" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/ecom.png" alt="">
+                            <p>E-commerce / Online Retail</p>
                         </div>
                         <div class="ind-item">
-                        <img src="/assets/images/it.png" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/it.png" alt="">
+                            <p>IT Services and Business Solutions</p>
                         </div>
                         <div class="ind-item">
-                        <img src="/assets/images/rea.svg" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/rea.svg" alt="">
+                            <p>Real Estate</p>
                         </div>
                         <div class="ind-item">
-                        <img src="/assets/images/blockchain.png" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/blockchain.png" alt="">
+                            <p>Block Chain</p>
                         </div>
                         <div class="ind-item">
-                        <img src="/assets/images/digitalmarketing.png" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/digitalmarketing.png" alt="">
+                            <p>Digital Advertising, Marketing Technology</p>
                         </div>
                         <div class="ind-item">
-                        <img src="/assets/images/business.png" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/business.png" alt="">
+                            <p>Business Consulting, Professional Services</p>
                         </div>
                         <div class="ind-item">
-                        <img src="/assets/images/Doctor.png" alt="">
-                            <p>Lorem ipsum flue</p>
+                            <img src="/assets/images/Doctor.png" alt="">
+                            <p>Health Services, Medical Services</p>
                         </div>
                     </div>
                 </section>
@@ -578,15 +574,15 @@
                         </div>
                     </div>
                     <ul class="companies-sec">
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
-                        <li><img height="50" width="50" src="/assets/images/logo.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll1.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll2.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll3.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll4.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll5.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll6.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll7.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll8.png" alt="logo"></li>
+                        <li><img height="50" width="50" src="/assets/images/ll9.png" alt="logo"></li>
                     </ul>
                     <!-- <table>
                     <tr>
@@ -981,7 +977,7 @@
             <footer class="landing-footer">
                 <section class="footer-p1">
                     <ul>
-                        <li><a href="#">Shashi Sales & Marketing</a></li>
+                        <li class="lgo"><a href="#"><img src="/assets/images/logo.png" alt="logo"></a></li>
                         <li><a href="#">Pages</a></li>
                         <li><a href="#">Pages</a></li>
                         <li><a href="#">Pages</a></li>
@@ -1332,6 +1328,22 @@
                     threshold: 0.20
                 });
                 const elements = document.querySelectorAll('.animate');
+                elements.forEach(element => observer.observe(element));
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible-text');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.20
+                });
+                const elements = document.querySelectorAll('.animate-text');
                 elements.forEach(element => observer.observe(element));
             });
         </script>
