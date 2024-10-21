@@ -13,6 +13,8 @@
 
 html,
 body {
+    margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
 }
@@ -105,7 +107,10 @@ h2 {
 .landing-header a:hover {
     color: rgb(213, 206, 206);
 }
-
+.landing-header, .hero-section-2, .hero-section-landing {
+    margin: 0; 
+    padding: 0; 
+}
 
 
 .landing-header ul {
@@ -2179,6 +2184,7 @@ h2 {
 
     .hero-section-2 {
         display: none;
+        padding: 0;
     }
 
     .hero-section-2-mob {
