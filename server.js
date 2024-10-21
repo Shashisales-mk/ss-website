@@ -2954,14 +2954,11 @@ app.post('/submit-query', async (req, res) => {
 
     try {
         console.log('Received form data:', formData);
-        // mailsender(formData, recipients);
-        // Templatesender(recipients, htmlTemplate, "You Got New Lead");
+       
+        Templatesender(recipients, htmlTemplate, "You Got New Lead");
         Templatesender("bgmilelomujhse@gmail.com", htmlTemplate, "You Got New Lead");
 
-        // const authClient = await authenticate();
-        // Append data to Google Sheets
-        // await appendToSheet(authClient, formData);
-
+        
         req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
         
 
