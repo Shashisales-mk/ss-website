@@ -84,7 +84,7 @@ h2 {
     display: flex;
     justify-content: space-between;
     gap: 1vw;
-    padding: 2vw 4vw;
+    padding: 1vw 4vw;
     color: rgba(255, 255, 255, 1);
     align-items: center;
 }
@@ -228,7 +228,7 @@ h2 {
     justify-content: space-between;
     padding: 0vw 2vw;
     font-family: "Inter", sans-serif;
-    z-index: 1;
+    /* z-index: 3; */
 }
 
 .hero-sec-l,
@@ -391,9 +391,9 @@ h2 {
 }
 
 
-.ssstrip.elevated {
+.hero-section-landing.elevated {
     z-index: 99;
-    pointer-events: none;
+    
 }
 
 .hero-section-2 {
@@ -415,7 +415,7 @@ h2 {
     transform: translate(-50%, -50%);
     width: 500px;
     height: 400px;
-    z-index: 99999;
+    z-index: 999;
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.6s ease-in-out, visibility 0s 1s;
@@ -2273,7 +2273,7 @@ h2 {
 .cen-pop {
     display: none;
     position: fixed;
-    z-index: 15;
+    z-index: 999;
     left: 0;
     top: 0;
     width: 100%;
@@ -2453,6 +2453,12 @@ textarea {
     padding: 0 5vw;
 }
 
+.header-anc {
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: .5rem 1.5rem;
+    /* font-size: 0.8rem; */
+}
 
 @media screen and (max-width: 600px) {
     .lp-menu-bar{
@@ -2460,6 +2466,9 @@ textarea {
     }
 
     .header-anc {
+        border: 1px solid white;
+        border-radius: 20px;
+        padding: .2rem .5rem;
         font-size: 0.8rem;
     }
 

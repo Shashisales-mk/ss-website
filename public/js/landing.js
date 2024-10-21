@@ -68,7 +68,7 @@ const hi1 = document.querySelector('.hi1');
 const sp2 = document.querySelector('.sp2');
 const hi2 = document.querySelector('.hi2');
 
-const pt = document.querySelector('.ssstrip');
+const pt = document.querySelector('.hero-section-landing');
 
 function addHoverEffect(sectionClass, imageClass) {
     const section = document.querySelector(`.${sectionClass}`);
