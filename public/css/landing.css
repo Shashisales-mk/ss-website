@@ -1340,7 +1340,7 @@ h2 {
 
 
 .hero-sec-5-mob{
-    display: none;
+    display: none !important;
 }
 
 
