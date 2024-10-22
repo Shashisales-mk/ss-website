@@ -191,3 +191,29 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
   });
 });
+
+
+fetch('https://restcountries.com/v3.1/all')
+    .then(response => response.json())
+    .then(data => {
+        const countryCodeSelect = document.getElementById('countryCode');
+
+        data.forEach(country => {
+            if (country.idd?.root && country.idd?.suffixes) {
+                const countryCode = `${country.idd.root}${country.idd.suffixes[0]}`;
+                const option = document.createElement('option');
+                option.value = countryCode;
+                option.text = `${country.name.common} (${countryCode})`;
+
+                // Append option to the select element
+                countryCodeSelect.appendChild(option);
+
+                // Check if the country is India and set it as default
+                if (country.name.common === "India") {
+                    option.selected = true;  // Set as default selected
+                }
+            }
+        });
+    })
+    .catch(error => console.error('Error fetching country codes:', error));
+

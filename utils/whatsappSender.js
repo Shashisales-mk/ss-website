@@ -21,7 +21,7 @@ const sendWhatsappMessage = (mobileNumber, templateName, messageBody, bodyValues
     }
   };
 
-  console.log('Data being sent:', data); // Log the data object here
+  // console.log('Data being sent:', data); // Log the data object here
 
   const config = {
     method: 'post',

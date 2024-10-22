@@ -246,13 +246,14 @@ async function appendToSheet(auth, data) {
         // For /submit-quote-lead route
         const { countryCode, phoneNumber } = parsePhoneNumber(data.number);
         values = [Number(phoneNumber), new Date().toISOString(), '', '', '', Number(countryCode)];
-    } else if (data.tel) {
+    } else if (data.tel ? data.tel : data.phone) {
         // For /submit-quote route
-        const { countryCode, phoneNumber } = parsePhoneNumber(data.tel);
+        const { countryCode, phoneNumber } = parsePhoneNumber(data.tel ? data.tel : data.phone);
+
         values = [
             Number(phoneNumber),
             new Date().toISOString(),
-            `${data.firstName} ${data.lastName}`,
+            (data.firstName && data.lastName) ? `${data.firstName} ${data.lastName}` : data.name,
             data.email,
             data.service,
             Number(countryCode)
@@ -282,18 +283,36 @@ async function appendToSheet(auth, data) {
 
 
 function parsePhoneNumber(phoneNumber) {
-    // Remove all non-digit characters
-    const cleaned = phoneNumber.replace(/\D/g, '');
+    // Remove all non-digit characters except the leading +
+    let cleaned = phoneNumber.replace(/[^\d+]/g, '');
 
-    // Always take the first two digits as the country code
-    const countryCode = cleaned.slice(0, 2);
-    const number = cleaned.slice(2);
+    let countryCode = '';
+    let number = '';
 
+    // If the phone number starts with '+', extract country code
+    if (cleaned.startsWith('+')) {
+        const splitAt = cleaned.indexOf(' ') > 0 ? cleaned.indexOf(' ') : 3; // Split at space or first 3 characters
+        countryCode = cleaned.slice(0, splitAt);
+        number = cleaned.slice(splitAt).replace(/\D/g, ''); // Remove all non-digit characters from the rest
+    } else {
+        // If no country code and the number length is <= 10, assume it's an Indian number and add +91
+        if (cleaned.length <= 10) {
+            countryCode = '+91';
+            number = cleaned;
+        } else {
+            // Handle case where number is long enough but doesn't have a '+', treat first 2 digits as country code
+            countryCode = `+${cleaned.slice(0, 2)}`;
+            number = cleaned.slice(2);
+        }
+    }
+
+    // Return the result as an object
     return {
         countryCode: countryCode,
         phoneNumber: number
     };
 }
+
 
 
 
@@ -1276,7 +1295,7 @@ app.post('/submit-quote', async (req, res) => {
 
     // Server-side validation
     if (!formData.firstName || !formData.lastName || !formData.tel || !formData.email || !formData.service) {
-    
+
         req.flash('error', 'All fields are required.');
         return res.redirect(referrerUrl);
     }
@@ -1299,14 +1318,14 @@ app.post('/submit-quote', async (req, res) => {
         req.flash('error', 'Phone number should only contain digits, spaces, hyphens, or parentheses');
         return res.redirect(referrerUrl);
     }
-    
-    
+
+
     // Simple email validation
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
         req.flash('error', 'Please enter a valid email address');
         return res.redirect(referrerUrl);
     }
-   
+
 
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
@@ -1374,7 +1393,7 @@ app.post('/submit-quote', async (req, res) => {
         await appendToSheet(authClient, formData);
 
         req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
-        
+
 
 
         res.redirect(referrerUrl);
@@ -2840,13 +2859,13 @@ app.get("/application-successful", async (req, res) => {
 
 //  landing page route
 
-app.get("/landing-page" , async(req, res)=>{
+app.get("/landing-page", async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
-    res.render("landingPage" , {
+    res.render("landingPage", {
         testimonials,
         title: "",
-        description : "",
-        keywords : ""
+        description: "",
+        keywords: ""
     });
 })
 
@@ -2858,14 +2877,14 @@ app.post('/submit-query', async (req, res) => {
     const formData = req.body;
     const referrerUrl = req.get('Referrer') || '/';
 
-    const name = (formData.firstName && formData.lastName) ? `${formData.firstName} ${formData.lastName}` : `${formData.name}` ;
+    const name = (formData.firstName && formData.lastName) ? `${formData.firstName} ${formData.lastName}` : `${formData.name}`;
 
     console.log(req.body);
-    
+
 
     // Server-side validation
     if (!name || !formData.phone || !formData.email || !formData.message) {
-    
+
         req.flash('error', 'All fields are required.');
         return res.redirect("/landing-page");
     }
@@ -2888,14 +2907,14 @@ app.post('/submit-query', async (req, res) => {
         req.flash('error', 'Phone number should only contain digits, spaces, hyphens, or parentheses');
         return res.redirect("/landing-page");
     }
-    
-    
+
+
     // Simple email validation
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
         req.flash('error', 'Please enter a valid email address');
         return res.redirect("/landing-page");
     }
-   
+
 
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
@@ -2954,18 +2973,104 @@ app.post('/submit-query', async (req, res) => {
 
     try {
         console.log('Received form data:', formData);
-       
+
         Templatesender(recipients, htmlTemplate, "You Got New Lead");
         Templatesender("bgmilelomujhse@gmail.com", htmlTemplate, "You Got New Lead");
 
-        
+        const saveDataToSheet = {
+            name: `${name}`,
+            phone: `${formData.phone}`,
+            email: `${formData.email}`,
+            service: `${formData.message}`
+        }
+
+        console.log(saveDataToSheet);
+
+        const authClient = await authenticate();
+        // Append data to Google Sheets
+        await appendToSheet(authClient, saveDataToSheet);
+
+
         req.flash('success', 'Thank you for your interest in Shashi sales and marketing, we will get back to you soon');
-        
+
 
 
         res.redirect("/landing-page");
     } catch (error) {
         console.error('Failed to send email:', error);
+
+        req.flash('error', 'An error occurred while submitting your form. Please try again later.');
+        res.redirect("/");
+    }
+});
+
+
+app.post('/book-consultation', async (req, res) => {
+    const formData = req.body;
+    console.log(req.body);
+
+
+    // Server-side validation
+    if (!formData.fname || !formData.lname || !formData.number || !formData.countryCode || !formData.email || !formData.service || !formData.appointmentDate || !formData.appointmentTime) {
+
+        req.flash('error', 'All fields are required.');
+        return res.redirect("/landing-page");
+    }
+
+    if (!/^[A-Za-z ]+$/.test(formData.fname)) {
+        req.flash('error', 'Names should only contain letters and spaces');
+        return res.redirect("/landing-page");
+    }
+    if (!/^[A-Za-z ]+$/.test(formData.lname)) {
+        req.flash('error', 'Names should only contain letters and spaces');
+        return res.redirect("/landing-page");
+    }
+
+    // Remove non-digit characters for length check
+    const phoneDigits = formData.number.replace(/[^\d+]/g, '');
+
+    if (phoneDigits.length < 8) {
+        req.flash('error', 'Please enter a valid phone number with valid format of your country');
+        return res.redirect("/landing-page");
+    }
+
+    // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
+    if (!/^\+?[\d\s\-()]+$/.test(formData.number)) {
+        req.flash('error', 'Phone number should only contain digits, spaces, hyphens, or parentheses');
+        return res.redirect("/landing-page");
+    }
+
+
+    // Simple email validation
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        req.flash('error', 'Please enter a valid email address');
+        return res.redirect("/landing-page");
+    }
+
+
+   
+
+
+
+    try {
+        console.log('Received form data:', formData);
+
+        // Templatesender(recipients, htmlTemplate, "You Got New Lead");
+        // Templatesender("bgmilelomujhse@gmail.com", htmlTemplate, "You Got New Lead");
+
+
+        // sendWhatsappMessage(formData.number, "template name" , "message body" , ["body values"]);
+        sendWhatsappMessage(formData.number, "testt" , "hello i am a test message" );
+        
+
+
+        req.flash('success', 'Thank you for your interest in Shashi sales and marketing, Please check your whatsapp for confirmation');
+
+
+
+        res.redirect("/landing-page");
+    } catch (error) {
+        console.error('Failed to send whatsapp:', error);
 
         req.flash('error', 'An error occurred while submitting your form. Please try again later.');
         res.redirect("/");
