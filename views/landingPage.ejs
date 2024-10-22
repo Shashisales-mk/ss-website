@@ -29,6 +29,129 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
         rel="stylesheet" />
+
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .sub-btn {
+            display: inline-block;
+            background: #007bc2;
+            color: #fff;
+            padding: .7rem 2.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 28px;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        .popup-content input[type="text"],
+        .popup-content input[type="email"],
+        .popup-content input[type="tel"],
+        .popup-content input[type="number"],
+        .popup-content input[type="date"],
+        .popup-content input[type="time"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+            margin-top: .8rem;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 15;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+
+            padding: 20px;
+            border: 1px solid #888;
+
+            width: 500px;
+            width: 400px;
+            position: relative;
+            border-radius: 15px;
+            padding: 5rem 2rem;
+        }
+
+        .pi-1 {
+            position: absolute;
+            top: -53px;
+            left: -54px;
+        }
+
+        .pi-2 {
+            position: absolute;
+            bottom: -67px;
+            right: -60px;
+        }
+
+        .close {
+            color: #000;
+            float: right;
+            font-size: 42px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 13px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .popup-content select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+            margin-top: .8rem;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 98%;
+            background-position-y: 50%;
+        }
+
+        @media (max-width: 600px) {
+            .popup-content {
+                width: 90%;
+            }
+        }
+    </style>
 </head>
 
 
@@ -36,7 +159,7 @@
 <body>
     <%- include("./includes/flash-message") %>
         <div class="full-website">
-            <header class="landing-header non-scrollable-section ">
+            <header class="landing-header ">
                 <nav>
                     <ul>
                         <li>
@@ -65,15 +188,51 @@
             <main class="landing-page">
 
 
+                <!-- appointment popup -->
+
+                <div id="popup" class="popup">
+                    <div class="popup-content">
+                        <span class="close">&times;</span>
+                        <img class="pi-1" src="/assets/i1.png" alt="hello">
+                        <!-- <img class="pi-2" src="/assets/i2.png" alt="hello"> -->
+                        <form id="consultationForm" action="/submit-consultation" method="POST">
+                            <div id="infoSection">
+                                <h2 style="text-align: center;">Book Your Consultation</h2>
+                                <input type="text" name="name" placeholder="Name" required>
+                                <input type="email" name="email" placeholder="Email" required>
+                                <input type="tel" name="number" placeholder="Phone Number" required>
+                                <input type="number" name="age" placeholder="Age" required>
+                                <select name="service" required>
+                                    <option value="">Select a service</option>
+                                    <option value="Early Intervention">Early Intervention</option>
+                                    <option value="Speech Therapy ">Speech Therapy</option>
+                                    <option value="Hearing Aids Trial Fitting">Hearing Aids Trial Fitting</option>
+                                    <option value="Hearing Tests">Hearing Tests</option>
+                                    <option value="Special Education">Special Education</option>
+                                    <option value="Occupational Threapy">Occupational Therapy</option>
+                                </select>
+                                <button type="button" class="sub-btn" id="nextBtn">Next</button>
+                            </div>
+                            <div id="appointmentSection" style="display: none;">
+                                <h2>Select Appointment Date and Time</h2>
+                                <input type="date" name="appointmentDate" required>
+                                <input type="time" name="appointmentTime" required>
+                                <button type="submit" class="sub-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- appointment popup -->
 
 
 
-                <section class="hero-section-landing non-scrollable-section ">
-                    <div class="hideimg hi1">
+                <section class="hero-section-landing ">
+                    <div class="hideimg hi1 non-scrollable-section ">
                         <!-- <img src="/assets/images/ar22.webp" alt=""> -->
                         <p>Digital Marketing</p>
                     </div>
-                    <div class="hideimg hi2">
+                    <div class="hideimg hi2 non-scrollable-section ">
                         <!-- <img src="/assets/images/ar33.webp" alt=""> -->
                         <p>Development</p>
                     </div>
@@ -103,9 +262,11 @@
                         </figure>
                     </div>
                     <div class="ssstrip animate-text">
-                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And
+                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi
+                            Sales And
                             Marketing</span>
-                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And
+                        <span>Shashi Sales And Marketing Shashi Sales And Marketing Shashi Sales And Marketing Shashi
+                            Sales And
                             Marketing</span>
                     </div>
                 </section>
@@ -113,14 +274,14 @@
 
 
 
-                <section class="hero-section-2 animate non-scrollable-section ">
+                <section class="hero-section-2 animate  ">
                     <ul>
                         <li>
                             <a href="#">
                                 <div class="hover-img">
                                     <img src="/assets/images/abo-img-1.webp" alt="Arrow Icon">
                                 </div>
-                                Ira
+                                Ecommerce Showcase
                             </a>
                         </li>
                         <li>
@@ -128,7 +289,7 @@
                                 <div class="hover-img">
                                     <img src="/assets/images/blog 4.webp" alt="Arrow Icon">
                                 </div>
-                                Suak
+                                Healthcare Showcase
                             </a>
                         </li>
                         <li>
@@ -136,30 +297,33 @@
                                 <div class="hover-img">
                                     <img src="/assets/images/m4.webp" alt="Arrow Icon">
                                 </div>
-                                My speech
+                                Job Board Showcase
+
                             </a>
                         </li>
 
                     </ul>
-                    <p><a class="getq-form">Get quote<span><img height="50" width="500"
+                    <p><a class="consult">Book a Free Consultation<span><img height="50" width="500"
                                     src="/assets/images/Arrowrightcircle.webp" alt="Arrowrightcircle"></span></a></p>
                 </section>
 
 
 
-                <section class="hero-section-2-mob animate non-scrollable-section ">
+                <section class="hero-section-2-mob animate ">
                     <ul>
                         <li><a>
                                 <div class="hover-img">
                                     <img src="/assets/images/abo-img-1.webp" alt="Arrow Icon">
                                 </div>
-                                Suak
+                                Ecommerce Showcase
                             </a></li>
                         <!-- <li><a href="#">AngeList</a></li>
                 <li><a href="#">AngeList</a></li> -->
                     </ul>
-                    <p><a class="getq-form">Get quote<span><img height="50" width="500"
-                                    src="/assets/images/Arrowrightcircle.webp" alt="Arrowrightcircle"></span></a></p>
+                    <p><a class="getq-form">Book a Free Consultation<span>
+                                <!-- <img height="50" width="500" src="/assets/images/Arrowrightcircle.webp"
+                                    alt="Arrowrightcircle"></span> -->
+                        </a></p>
 
                 </section>
                 <!-- popup form -->
@@ -345,7 +509,7 @@
                 </section>
 
                 <section class="hero-section-3 animate">
-                    <p>What You'll <span>Gain?</span>
+                    <p style="padding-top: .7rem;">What You'll <span>Gain?</span>
                     </p>
                 </section>
                 <section id="whyChooseUs">
@@ -453,7 +617,7 @@
 
                 <section class="hero-section-5 animate">
                     <h2>Industries <span>We Empower</span></h2>
-                    
+
                     <div class="industries-cont-out">
                         <!-- <button class="scroll-btn left-btn" id="scroll-left">&lt;</button> -->
                         <ul id="scroll-container">
@@ -513,7 +677,7 @@
                 <section class="hero-section-5-mob">
                     <div class="hero-section-5-mob-head">
                         <h2>Industries <span>We Empower</span></h2>
-                     
+
                     </div>
 
 
@@ -554,16 +718,13 @@
                 </section>
 
 
-                <!-- <section class="testimonial-sec-l">
-            
-        </section> -->
 
                 <section class="landing-section-6 animate">
                     <div class="landing-section-6-in">
                         <div class="lp6">
                             <small>Brands...</small>
-                            <h2>Trusted by Leading </h2>
-                            
+                            <h2>Trusted by Aspiring </h2>
+
                         </div>
                         <div class="lp6">
                             <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
@@ -776,155 +937,7 @@
                     </section>
 
 
-                    <!-- Pricing cards -->
 
-                    <!-- <div class="pricing-cards-cont animate">
-                        <div class="pricing-container">
-                            <div class="pricing-card animate">
-                                <svg class="card-bg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="currentColor"
-                                        d="M39.9,-65.7C46.9,-55.9,44.9,-37.5,48.7,-22.9C52.4,-8.2,61.8,2.7,64.1,15.8C66.3,28.8,61.4,44,50.6,53.5C39.8,63,23.1,66.8,6.2,68.4C-10.7,70,-27.9,69.4,-40.5,61.6C-53.1,53.8,-61.1,38.8,-65.7,23.3C-70.3,7.9,-71.5,-8,-65.3,-20C-59.2,-32,-45.7,-40.2,-33.3,-48.4C-20.9,-56.6,-10.4,-64.9,3.6,-70.4C17.6,-75.9,35.2,-78.5,39.9,-65.7Z"
-                                        transform="translate(100 100)" />
-                                </svg>
-                                <div class="card-content">
-                                    <h2 class="plan-name">Basic</h2>
-                                    <p class="price">$9.99 <span>/month</span></p>
-                                    <ul class="features">
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            5GB Storage
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            10 Users
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            Basic Support
-                                        </li>
-                                    </ul>
-                                    <button class="cta-button">Get Started</button>
-                                </div>
-                            </div>
-                            <div class="pricing-card animate">
-                                <div class="popular-tag">Popular</div>
-                                <svg class="card-bg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="currentColor"
-                                        d="M47.7,-57.2C59,-47.3,63.6,-29.7,64.4,-13.2C65.2,3.3,62.3,18.8,54.8,32.5C47.3,46.2,35.2,58.1,20.3,65.3C5.4,72.5,-12.3,74.9,-27.4,69.2C-42.5,63.5,-55,49.7,-62.3,34.3C-69.6,19,-71.7,2.1,-67.5,-12.7C-63.3,-27.5,-52.8,-40.2,-40.3,-50C-27.8,-59.8,-13.9,-66.7,2.4,-69.6C18.7,-72.5,37.3,-71.4,47.7,-57.2Z"
-                                        transform="translate(100 100)" />
-                                </svg>
-                                <div class="card-content">
-                                    <h2 class="plan-name">Standard</h2>
-                                    <p class="price">$19.99 <span>/month</span></p>
-                                    <ul class="features">
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            25GB Storage
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            50 Users
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            Priority Support
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            Advanced Analytics
-                                        </li>
-                                    </ul>
-                                    <button class="cta-button">Get Started</button>
-                                </div>
-                            </div>
-                            <div class="pricing-card animate">
-                                <svg class="card-bg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="currentColor"
-                                        d="M42.7,-62.9C50.9,-52.8,50.1,-34.4,51.7,-19.2C53.4,-4,57.4,8,54.4,18.7C51.4,29.4,41.4,38.8,30.2,45.9C19,52.9,6.6,57.6,-7.4,58.7C-21.4,59.8,-42.9,57.3,-55.3,46.5C-67.7,35.7,-71.1,16.6,-70.6,-2.1C-70.2,-20.8,-65.9,-39.2,-54.6,-50C-43.3,-60.8,-25,-64,-7.4,-63.4C10.2,-62.8,20.4,-58.4,42.7,-62.9Z"
-                                        transform="translate(100 100)" />
-                                </svg>
-                                <div class="card-content">
-                                    <h2 class="plan-name">Premium</h2>
-                                    <p class="price">$29.99 <span>/month</span></p>
-                                    <ul class="features">
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            Unlimited Storage
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            Unlimited Users
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            24/7 Premium Support
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            Advanced Analytics
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                            Custom Integrations
-                                        </li>
-                                    </ul>
-                                    <button class="cta-button">Get Started</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> -->
-
-
-                    <!-- Pricing cards -->
 
 
 
@@ -979,18 +992,19 @@
                 <section class="footer-p1">
                     <ul>
                         <li class="lgo"><a href="#"><img src="/assets/images/logo.png" alt="logo"></a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li><a href="#">Pages</a></li>
-                        <li><a href="#">Follow Us</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/about-us">About</a></li>
+                        <li><a href="/digital-marketing">Marketing</a></li>
+                        <li><a href="/web-development">Development</a></li>
+
                         <li>
-                            <span><a href="#"><img height="25" width="25" src="/assets/images/Twitter2.webp"
-                                        alt="Twitter2"></a></span>
-                            <span><a href="#"><img height="25" width="25" src="/assets/images/Instagram2.webp"
-                                        alt="Instagram2"></a></span>
-                            <span><a href="#"><img height="25" width="25" src="/assets/images/Facebook2.webp"
-                                        alt="Facebook2"></a></span>
+                            <span style="margin-right: 2.3rem;"><a href="#">Follow Us</a></span>
+                            <span style="margin-right: .8rem;"><a href="#"><img height="25" width="25"
+                                        src="/assets/images/Twitter2.webp" alt="Twitter2"></a></span>
+                            <span style="margin-right: .8rem;"><a href="#"><img height="25" width="25"
+                                        src="/assets/images/Instagram2.webp" alt="Instagram2"></a></span>
+                            <span style="margin-right: .8rem;"><a href="#"><img height="25" width="25"
+                                        src="/assets/images/Facebook2.webp" alt="Facebook2"></a></span>
                             <span><a href="#"><img height="25" width="25" src="/assets/images/Linkedin2.webp"
                                         alt="Linkedin2"></a></span>
                         </li>
@@ -999,7 +1013,7 @@
                 <section class="footer-p2">
                     <ul>
                         <li>© 2024 shashisales. All Rights Reserved.</li>
-                        <li>Made by - shashisales.com</li>
+                        <li>Developed by - shashisales.com</li>
                     </ul>
                 </section>
             </footer>

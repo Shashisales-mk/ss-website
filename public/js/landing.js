@@ -149,3 +149,45 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }, 3000); 
 });
+
+
+
+//   popup script
+
+document.addEventListener('DOMContentLoaded', () => {
+  const consultButtons = document.querySelectorAll('.consult'); 
+  const popup = document.getElementById('popup');
+  const closeBtn = document.querySelector('.close');
+  const nextBtn = document.getElementById('nextBtn');
+  const infoSection = document.getElementById('infoSection');
+  const appointmentSection = document.getElementById('appointmentSection');
+  const popupContent = document.querySelector('.popup-content');
+
+  // Attach event listeners to each 'consult' button
+  consultButtons.forEach(button => {
+      button.addEventListener('click', () => {
+          popup.style.display = 'flex';
+      });
+  });
+
+  closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+  });
+
+  nextBtn.addEventListener('click', () => {
+      infoSection.style.display = 'none';
+      appointmentSection.style.display = 'block';
+  });
+
+  // Close popup when clicking outside the form
+  popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+          popup.style.display = 'none';
+      }
+  });
+
+  // Prevent closing when clicking inside the form
+  popupContent.addEventListener('click', (e) => {
+      e.stopPropagation();
+  });
+});

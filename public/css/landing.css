@@ -21,7 +21,7 @@ body {
 }
 
 .non-scrollable-section {
-    overflow-x: hidden; /* Prevent horizontal overflow */
+    overflow-x: hidden; 
 }
 
 .animate {
@@ -659,7 +659,7 @@ h2 {
     border-top-right-radius: 4vw;
     border-bottom-right-radius: 4vw;
     border-left: 0;
-    width: 38vw;
+    width: 50vw;
     text-align: center;
 }
 
@@ -3057,7 +3057,14 @@ textarea {
     border: 1px solid white;
     border-radius: 20px;
     padding: .5rem 1.5rem;
-    /* font-size: 0.8rem; */
+    transition: all 0.5s ease;
+}
+
+.header-anc:hover{
+    background-color: #C4C800;
+    border-color: #c4C800;
+    color: #000 !important;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 600px) {
@@ -3077,7 +3084,7 @@ textarea {
 
     .hero-section-2-mob {
         padding-top: 8px;
-
+        gap: 1rem;
         position: sticky;
         top: 0;
         z-index: 99;
