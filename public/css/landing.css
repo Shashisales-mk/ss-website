@@ -17,6 +17,11 @@ body {
     padding: 0;
     height: 100%;
     width: 100%;
+   
+}
+
+.non-scrollable-section {
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .animate {
@@ -192,6 +197,7 @@ h2 {
     padding: 2vw;
     text-align: center;
     border: 1px solid grey;
+    background-color: #fff;
 }
 
 .companies-sec img {
@@ -2163,6 +2169,13 @@ h2 {
                 flex-direction: column;
     }
 
+    /* Ensure no empty elements are causing gaps */
+.landing-header:empty,
+.hero-section-2:empty,
+.hero-section-landing:empty {
+    display: none; /* Hide empty sections */
+}
+
     .hero-cards-sec h2 {
         font-size: 4.8vw;
     }
@@ -2479,7 +2492,7 @@ h2 {
             transform: translateX(-50%);
     border-width: 0 10px 15px 10px;
     border-style: solid;
-    border-color: transparent transparent #333 transparent;
+    border-color: transparent transparent #000 transparent;
 }
 
 @media screen and (max-width: 768px) {
@@ -2511,6 +2524,8 @@ h2 {
         font-size: 3vw;
         padding: 6vw 4vw;
         height: 40vw;
+        color: #fff;
+        font-weight: 500;
     }
 
     .testimonial img {
@@ -2533,7 +2548,7 @@ h2 {
     }
     .ind-item{
         width: 23%;
-        height: 160px;
+        height: 170px;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -3145,7 +3160,7 @@ textarea {
     }
 
     .lp6 small {
-        font-size: 3vw;
+        font-size: 5vw;
     }
 
     .lp6 p {

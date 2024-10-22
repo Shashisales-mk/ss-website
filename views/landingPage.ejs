@@ -36,7 +36,7 @@
 <body>
     <%- include("./includes/flash-message") %>
         <div class="full-website">
-            <header class="landing-header">
+            <header class="landing-header non-scrollable-section ">
                 <nav>
                     <ul>
                         <li>
@@ -68,7 +68,7 @@
 
 
 
-                <section class="hero-section-landing ">
+                <section class="hero-section-landing non-scrollable-section ">
                     <div class="hideimg hi1">
                         <!-- <img src="/assets/images/ar22.webp" alt=""> -->
                         <p>Digital Marketing</p>
@@ -113,7 +113,7 @@
 
 
 
-                <section class="hero-section-2 animate">
+                <section class="hero-section-2 animate non-scrollable-section ">
                     <ul>
                         <li>
                             <a href="#">
@@ -147,7 +147,7 @@
 
 
 
-                <section class="hero-section-2-mob animate">
+                <section class="hero-section-2-mob animate non-scrollable-section ">
                     <ul>
                         <li><a>
                                 <div class="hover-img">
@@ -164,7 +164,7 @@
                 </section>
                 <!-- popup form -->
 
-                <div class="cen-pop">
+                <div class="cen-pop ">
                     <div class="show-form">
                         <div class="get-quote-menu a">
                             <div class="contact-left">
@@ -345,7 +345,7 @@
                 </section>
 
                 <section class="hero-section-3 animate">
-                    <p>What You’ll <span>Gain?</span>
+                    <p>What You'll <span>Gain?</span>
                     </p>
                 </section>
                 <section id="whyChooseUs">
@@ -561,17 +561,17 @@
                 <section class="landing-section-6 animate">
                     <div class="landing-section-6-in">
                         <div class="lp6">
-                            <small>company</small>
-                            <h2>Trusted by Leading Brands...</h2>
+                            <small>Brands...</small>
+                            <h2>Trusted by Leading </h2>
                             
                         </div>
                         <div class="lp6">
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                            <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                                 has
                                 been
                                 the industry's standard dummy text ever since the 1500s, when an unknown printer took a
                                 galley
-                            </p>
+                            </p> -->
                         </div>
                     </div>
                     <ul class="companies-sec">
@@ -1212,7 +1212,8 @@
                     answerElement.style.opacity = "0";
                     answerElement.style.overflow = "hidden";
 
-                    linElement.addEventListener('click', function () {
+                    linElement.addEventListener('click', function (e) {
+                        e.preventDefault()
                         if (answerElement.style.maxHeight === "0px") {
                             answerElement.style.maxHeight = answerElement.scrollHeight + "px";
                             answerElement.style.marginTop = "1vw";
