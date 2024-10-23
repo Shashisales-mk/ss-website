@@ -316,26 +316,29 @@ function parsePhoneNumber(phoneNumber) {
 
 // Middleware to capture client IP
 const getClientIP = (req, res, next) => {
-    // Use the x-forwarded-for header or fall back to socket remote address
-    let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  
-    // If x-forwarded-for has multiple IPs (in case of multiple proxies), get the first one (client IP)
-    if (ip.includes(',')) {
-      ip = ip.split(',')[0].trim();
+    // Try multiple headers in priority order
+    let ip = 
+        req.headers['x-real-ip'] ||
+        req.headers['x-forwarded-for'] ||
+        req.socket.remoteAddress ||
+        '0.0.0.0';  // fallback
+    
+    // If x-forwarded-for has multiple IPs, get the first one
+    if (ip && ip.includes(',')) {
+        ip = ip.split(',')[0].trim();
     }
-  
-    // Strip IPv6-mapped IPv4 addresses (::ffff:192.168.x.x)
-    if (ip.includes('::ffff:')) {
-      ip = ip.split('::ffff:')[1];
+    
+    // Strip IPv6-mapped IPv4 addresses
+    if (ip && ip.includes('::ffff:')) {
+        ip = ip.split('::ffff:')[1];
     }
-  
+    
     const ipVersion = ip.includes(':') ? 'IPv6' : 'IPv4';
-  
-    // Log the visitor's IP to the console
+    
+    // Log the visitor's IP and headers for debugging
     console.log(`Visitor IP: ${ip}, Version: ${ipVersion}`);
-    console.log('Raw headers:', req.headers); // For debugging
-
-    // Continue to the next middleware/route handler
+    console.log('Raw headers:', req.headers);
+    
     next();
 };
 
