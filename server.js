@@ -315,53 +315,35 @@ function parsePhoneNumber(phoneNumber) {
 
 
 // Middleware to capture client IP
-const getClientIP = (req, res) => {
-    // Try multiple headers in order of reliability
-    const ip = 
-        req.headers['x-real-ip'] || 
-        req.headers['x-forwarded-for'] || 
-        req.connection.remoteAddress ||
-        req.socket.remoteAddress ||
-        req.connection.socket?.remoteAddress;
-
-    let clientIP = ip;
-
-    // Handle multiple IPs in x-forwarded-for
-    if (clientIP && clientIP.includes(',')) {
-        clientIP = clientIP.split(',')[0].trim();
+const getClientIP = (req, res, next) => {
+    // Use the x-forwarded-for header or fall back to socket remote address
+    let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  
+    // If x-forwarded-for has multiple IPs (in case of multiple proxies), get the first one (client IP)
+    if (ip.includes(',')) {
+      ip = ip.split(',')[0].trim();
     }
-
-    // Handle IPv6 format
-    if (clientIP && clientIP.includes('::ffff:')) {
-        clientIP = clientIP.split('::ffff:')[1];
+  
+    // Strip IPv6-mapped IPv4 addresses (::ffff:192.168.x.x)
+    if (ip.includes('::ffff:')) {
+      ip = ip.split('::ffff:')[1];
     }
+  
+    const ipVersion = ip.includes(':') ? 'IPv6' : 'IPv4';
+  
+    // Log the visitor's IP to the console
+    console.log(`Visitor IP: ${ip}, Version: ${ipVersion}`);
+    console.log('Raw headers:', req.headers); // For debugging
 
-    const ipVersion = clientIP.includes(':') ? 'IPv6' : 'IPv4';
-
-    console.log(`Visitor IP: ${clientIP}, Version: ${ipVersion}`);
-    console.log('Raw headers:', req.headers); // Temporary debug log
-
-    // res.json({
-    //     statusCode: 200,
-    //     data: {
-    //         ip: clientIP,
-    //         ipv: ipVersion,
-    //         rawIp: ip, // Include raw IP for debugging
-    //         headers: req.headers // Include headers for debugging
-    //     },
-    //     message: "IP information returned",
-    //     success: true,
-    // });
-
-    
-    
+    // Continue to the next middleware/route handler
+    next();
 };
 
 
 
+app.use(getClientIP);
 
-
-app.get("/",  async (req, res) => {
+app.get("/", async (req, res) => {
 
 
  
