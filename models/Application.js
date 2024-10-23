@@ -32,6 +32,10 @@ const applicationSchema = new mongoose.Schema({
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address'],
         trim: true
     },
+    countryCode : {
+        type: Number,
+        required: true
+    },
     phone: {
         type: String,
         required: true,

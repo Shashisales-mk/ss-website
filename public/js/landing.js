@@ -1,3 +1,8 @@
+window.removeEventListener('beforeunload', (e)=>{
+  console.log(e);
+  
+});
+
 // testimonials section.
 
 document.addEventListener("DOMContentLoaded", function () {

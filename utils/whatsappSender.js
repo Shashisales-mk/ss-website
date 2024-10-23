@@ -8,7 +8,8 @@ dotenv.config();
 const API_KEY = process.env.API_KEY;
 
 const sendWhatsappMessage = (mobileNumber, templateName, messageBody, bodyValues) => {
-  const phoneNumber = `+91${mobileNumber}`; // Add country code +91
+  const phoneNumber = mobileNumber; // Add country code +91
+  
   const data = {
     fullPhoneNumber: phoneNumber,
     callbackData: 'some_callback_data',

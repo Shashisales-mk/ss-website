@@ -501,7 +501,8 @@
 
 
                 <section class="hero-section-5 animate">
-                    <h2>Industries <span>We Empower</span></h2>
+                    <h2>Here's Just A TINY Selection of <span>Who Shashi Sales is Perfect For</span></h2>
+                    <p>Industries We Empower</p>
 
                     <div class="industries-cont-out">
                         <!-- <button class="scroll-btn left-btn" id="scroll-left">&lt;</button> -->
@@ -607,8 +608,8 @@
                 <section class="landing-section-6 animate">
                     <div class="landing-section-6-in">
                         <div class="lp6">
-                            <small>Brands...</small>
-                            <h2>Trusted by Aspiring </h2>
+                            <h2>Trusted by <span style="color: #c4c800;">Aspiring Brands...</span></h2>
+                            
 
                         </div>
                         <div class="lp6">
@@ -653,7 +654,7 @@
 
                 <!-- TESTIMONIAL SECTION     -->
 
-                <h2 class="all-heading">Client Testimonials</h1>
+                <h2 class="all-heading">Hear From Our Happy Clients</h1>
 
                     <div class="testimonial-section">
                         <div class="swiper testimonial-swiper">
@@ -877,10 +878,11 @@
                 <section class="footer-p1">
                     <ul>
                         <li class="lgo"><a href="#"><img src="/assets/images/logo.png" alt="logo"></a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="/about-us">About</a></li>
-                        <li><a href="/digital-marketing">Marketing</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/about-us">About Us</a></li>
+                        <li><a href="/digital-marketing">Advertising</a></li>
                         <li><a href="/web-development">Development</a></li>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
 
                         <li>
                             <span style="margin-right: 2.3rem;"><a href="#">Follow Us</a></span>
@@ -943,20 +945,21 @@
                 <div class="down">Social Handles</div>
             </div>
         </div>
-
+        
         <div class="vertical-icons">
             <a href="https://www.facebook.com/shashigroups" target="_blank"><img height="30" width="30"
-                    src="/assets/images/fb.webp" alt="Facebook" /></a>
-            <a href="https://www.instagram.com/shashisales/" target="_blank"><img height="30" width="30"
+                src="/assets/images/fb.webp" alt="Facebook" /></a>
+                <a href="https://www.instagram.com/shashisales/" target="_blank"><img height="30" width="30"
                     src="/assets/images/in.webp" alt="Instagram" /></a>
-            <a href="https://www.linkedin.com/company/shashisales/" target="_blank"><img height="30" width="30"
-                    src="/assets/images/ln.webp" alt="LinkedIn" /></a>
-        </div>
-
-
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-        <script>
+                    <a href="https://www.linkedin.com/company/shashisales/" target="_blank"><img height="30" width="30"
+                        src="/assets/images/ln.webp" alt="LinkedIn" /></a>
+                    </div>
+                    
+                    
+                    <script src="/js/landing.js"></script>
+                    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+                    
+                    <script>
             function getPhoneNumber(event) {
                 event.preventDefault(); // Prevent the default action of the anchor tag
 
@@ -995,7 +998,7 @@
                             alert("Unable to retrieve phone number.");
                         });
                 }
-
+                
                 // Error callback
                 function error() {
                     alert("Location access denied.");
@@ -1006,26 +1009,26 @@
                     // Display an alert with both phone numbers
                     const indiaNumber = "18005710605"; // Replace with your India number
                     const globalNumber = "+1-321-125-5890"; // Replace with your global number
-
+                    
                     const userChoice = confirm(`Location access was denied.\n\nPlease choose a number to call:\n\nIndia: ${indiaNumber}\nGlobal: ${globalNumber}`);
-
+                    
                     if (userChoice) {
                         callLink.href = `tel:${indiaNumber}`;
                     } else {
                         callLink.href = `tel:${globalNumber}`;
                     }
-
+                    
                     window.location.href = callLink.href; // Trigger the call with the chosen number
                 }
             }
+            
+            </script>
 
-        </script>
-
-        <script>
+<script>
             document.addEventListener("DOMContentLoaded", function () {
                 const showVerticalButton = document.querySelector(".show-vertical");
                 const verticalIcons = document.querySelector(".vertical-icons");
-
+                
                 showVerticalButton.addEventListener("click", function () {
                     verticalIcons.classList.toggle("show");
                 });
@@ -1131,7 +1134,6 @@
             });
         </script>
 
-        <script src="/js/landing.js"></script>
         <script>
             // Save scroll position before page unload
             window.addEventListener('beforeunload', function () {

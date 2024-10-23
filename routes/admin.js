@@ -182,7 +182,7 @@ router.post('/submit-application', upload.single('resume'), async (req, res) => 
 
     // Validate required fields
     const requiredFields = [
-      'firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zip', 'jobId', 'jobName',
+      'firstName', 'lastName', 'email', 'countryCode', 'phone', 'address', 'city', 'state', 'zip', 'jobId', 'jobName',
       'company', 'jobTitle', 'startDate.month', 'startDate.year', 'currentCTC', 'expectedCTC', 'skills', "totalExperience", "np"
     ];
 
@@ -221,6 +221,7 @@ router.post('/submit-application', upload.single('resume'), async (req, res) => 
       jobName: req.body.jobName,
       email: req.body.email,
       phone: req.body.phone,
+      countryCode: req.body.countryCode,
       address: req.body.address,
       city: req.body.city,
       state: req.body.state,
@@ -292,11 +293,12 @@ router.post('/application/update-status/:id', async (req, res) => {
 
     // Send WhatsApp message if the status is 'shortlisted'
     if (newStatus === 'shortlisted') {
-      const { jobName, firstName, lastName, phone, email } = updatedApplication;
+      const { jobName, firstName, lastName, countryCode, phone, email } = updatedApplication;
       const name = `${firstName} ${lastName}`;
+      const phoneNumber = `${countryCode}${phone}`
 
       sendWhatsappMessage(
-        phone,
+        phoneNumber,
         'shortlisted_candidates_ss',
         'Hello {{1}} ,Congratulations! We are pleased to inform you that you have been shortlisted for our interview process at shashisales.com Designation: { { 2 } } To schedule your interview at a time that works best for you, please click the link below and choose a convenient slot.',
         [name, jobName]

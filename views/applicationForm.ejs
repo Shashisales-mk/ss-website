@@ -1,9 +1,9 @@
 <% layout("/layouts/boilerplate") %>
 
     <style>
-       .bl{
-        background-color: #000;
-       }
+        .bl {
+            background-color: #000;
+        }
 
         .apply-container {
             max-width: 940px;
@@ -112,7 +112,7 @@
             font-size: 14px;
             font-weight: 500;
             padding: 10px 24px;
-            
+
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -166,251 +166,280 @@
         }
 
         @media screen and (max-width:768px) {
-            .date-row{
+            .date-row {
                 flex-direction: column;
             }
-            .apply-container{
+
+            .apply-container {
                 padding-bottom: 8rem;
             }
         }
     </style>
 
 
-<body>
-    <div class="apply-container">
-        <header class="job-header">
-            <a href="/careers/<%= job._id %>" class="back-button">
-                <span class="back-arrow">&#8592;</span>
-                Back to job
-            </a>
-            <img src="/assets/images/black-logo.png" alt="Shashi sales and marketing" class="job-logo">
-        </header>
-        <h1>Apply for a Job</h1>
-        <p>Upload your resume and fill out the form below to apply for your dream job.</p>
-        <form id="jobApplicationForm" action="/admin/submit-application" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label class="upload-label">Upload Resume</label>
-                <div class="file-upload" id="resumeUpload">
-                    <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-                    </svg>
-                    <p>Upload a file or drag and drop</p>
-                    <p>PDF, DOC, DOCX up to 10MB</p>
-                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" style="display: none;">
-                </div>
-                <div class="file-name" id="fileName"></div>
-            </div>
-
-            <div class="row date-row">
-                <div class="col form-group">
-                    <label for="firstName">First name</label>
-                    <input type="text" id="firstName" name="firstName" required>
-                </div>
-                <div class="col form-group">
-                    <label for="lastName">Last name</label>
-                    <input type="text" id="lastName" name="lastName" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="col form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <input type="hidden"  name="jobId" value="<%= job._id %>" required>
-                <input type="hidden"  name="jobName" value="<%= job.title %>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" required>
-            </div>
-
-            <div class="row date-row">
-                <div class="col form-group">
-                    <label for="city">City</label>
-                    <input type="text" id="city" name="city" required>
-                </div>
-                <div class="col form-group">
-                    <label for="state">State</label>
-                    <input type="text" name="state" id="state" required>
-                </div>
-                <div class="col form-group">
-                    <label for="zip">Zip</label>
-                    <input type="text" id="zip" name="zip" required>
-                </div>
-            </div>
-
-            <div class="section form-group" id="workExperienceSection">
-                <h3>Work Experience</h3>
-                <div class="work-experience-entry">
-                    <div class="row">
-                        <div class="col form-group">
-                            <label for="company">Company (Last company or current company only)</label>
-                            <input type="text" id="company" name="company" required>
-                        </div>
-                        <div class="col form-group">
-                            <label for="jobTitle">Job Title</label>
-                            <input type="text" id="jobTitle" name="jobTitle" required>
-                        </div>
+    <body>
+        <div class="apply-container">
+            <header class="job-header">
+                <a href="/careers/<%= job._id %>" class="back-button">
+                    <span class="back-arrow">&#8592;</span>
+                    Back to job
+                </a>
+                <img src="/assets/images/black-logo.png" alt="Shashi sales and marketing" class="job-logo">
+            </header>
+            <h1>Apply for a Job</h1>
+            <p>Upload your resume and fill out the form below to apply for your dream job.</p>
+            <form id="jobApplicationForm" action="/admin/submit-application" method="post"
+                enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="upload-label">Upload Resume</label>
+                    <div class="file-upload" id="resumeUpload">
+                        <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                        </svg>
+                        <p>Upload a file or drag and drop</p>
+                        <p>PDF, DOC, DOCX up to 10MB</p>
+                        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" style="display: none;">
                     </div>
-                    <div class="row date-row">
-                        <div class="col form-group">
-                            <label for="startDate">Start Date</label>
-                            <div class="row">
-                                <div class="col">
-                                    <select id="startMonth" name="startDate.month" required>
-                                        <option value="">Month</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                        <option value="May">May</option>
-                                        <option value="June">June</option>
-                                        <option value="July">July</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
-                                        <option value="October">October</option>
-                                        <option value="November">November</option>
-                                        <option value="December">December</option>
-                                    </select>
+                    <div class="file-name" id="fileName"></div>
+                </div>
+
+                <div class="row date-row">
+                    <div class="col form-group">
+                        <label for="firstName">First name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="lastName">Last name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="col form-group">
+                       
+                        <label for="phone">Phone</label>
+                        <input type="tel"  name="phone" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="countryCode">Country Code</label>
+                        <select name="countryCode" id="countryCode" required>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <input type="hidden" name="jobId" value="<%= job._id %>" required>
+                    <input type="hidden" name="jobName" value="<%= job.title %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <div class="row date-row">
+                    <div class="col form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="state">State</label>
+                        <input type="text" name="state" id="state" required>
+                    </div>
+                    <div class="col form-group">
+                        <label for="zip">Zip</label>
+                        <input type="text" id="zip" name="zip" required>
+                    </div>
+                </div>
+
+                <div class="section form-group" id="workExperienceSection">
+                    <h3>Work Experience</h3>
+                    <div class="work-experience-entry">
+                        <div class="row">
+                            <div class="col form-group">
+                                <label for="company">Company (Last company or current company only)</label>
+                                <input type="text" id="company" name="company" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="jobTitle">Job Title</label>
+                                <input type="text" id="jobTitle" name="jobTitle" required>
+                            </div>
+                        </div>
+                        <div class="row date-row">
+                            <div class="col form-group">
+                                <label for="startDate">Start Date</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <select id="startMonth" name="startDate.month" required>
+                                            <option value="">Month</option>
+                                            <option value="January">January</option>
+                                            <option value="February">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="August">August</option>
+                                            <option value="September">September</option>
+                                            <option value="October">October</option>
+                                            <option value="November">November</option>
+                                            <option value="December">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select id="startYear" name="startDate.year" required>
+                                            <option value="">Year</option>
+                                            <!-- You can populate this dynamically with JavaScript -->
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <select id="startYear" name="startDate.year" required>
-                                        <option value="">Year</option>
-                                        <!-- You can populate this dynamically with JavaScript -->
-                                    </select>
+                            </div>
+                            <div class="col form-group">
+                                <label for="endDate">End Date</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <select id="endMonth" name="endDate.month">
+                                            <option value="">Month</option>
+                                            <option value="January">January</option>
+                                            <option value="February">February</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="August">August</option>
+                                            <option value="September">September</option>
+                                            <option value="October">October</option>
+                                            <option value="November">November</option>
+                                            <option value="December">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select id="endYear" name="endDate.year">
+                                            <option value="">Year</option>
+                                            <!-- You can populate this dynamically with JavaScript -->
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col form-group">
-                            <label for="endDate">End Date</label>
-                            <div class="row">
-                                <div class="col">
-                                    <select id="endMonth" name="endDate.month">
-                                        <option value="">Month</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                        <option value="May">May</option>
-                                        <option value="June">June</option>
-                                        <option value="July">July</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
-                                        <option value="October">October</option>
-                                        <option value="November">November</option>
-                                        <option value="December">December</option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <select id="endYear" name="endDate.year">
-                                        <option value="">Year</option>
-                                        <!-- You can populate this dynamically with JavaScript -->
-                                    </select>
-                                </div>
+                        <div class="row">
+                            <div class="col form-group">
+                                <label for="currentCTC">Current CTC (in lakhs)</label>
+                                <input type="number" id="currentCTC" name="currentCTC" step="0.01" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="expectedCTC">Expected CTC (in lakhs)</label>
+                                <input type="number" id="expectedCTC" name="expectedCTC" step="0.01" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="totalExperience">Total Experience(in years)</label>
+                                <input type="number" id="totalExperience" name="totalExperience" step="0.1" required>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col form-group">
-                            <label for="currentCTC">Current CTC (in lakhs)</label>
-                            <input type="number" id="currentCTC" name="currentCTC" step="0.01"
-                                required>
+                        <div class="row">
+                            <div class="col form-group">
+                                <label for="lwd">Last working day</label>
+                                <input type="date" id="lwd" name="lwd">
+                            </div>
+                            <div class="col form-group">
+                                <label for="np">Notice Period (in days)</label>
+                                <input type="number" id="np" name="np" step="1" required>
+                            </div>
+
                         </div>
-                        <div class="col form-group">
-                            <label for="expectedCTC">Expected CTC (in lakhs)</label>
-                            <input type="number" id="expectedCTC" name="expectedCTC" step="0.01"
-                                required>
-                        </div>
-                        <div class="col form-group">
-                            <label for="totalExperience">Total Experience(in years)</label>
-                            <input type="number" id="totalExperience" name="totalExperience" step="0.1"
-                                required>
+                        <div class="form-group">
+                            <label for="skills">Skills</label>
+                            <input type="text" id="skills" name="skills" required>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col form-group">
-                            <label for="lwd">Last working day</label>
-                            <input type="date" id="lwd" name="lwd" >
-                        </div>
-                        <div class="col form-group">
-                            <label for="np">Notice Period (in days)</label>
-                            <input type="number" id="np" name="np" step="1" required>
-                        </div>
-                        
-                    </div>
-                    <div class="form-group">
-                        <label for="skills">Skills</label>
-                        <input type="text" id="skills" name="skills" required>
-                    </div>
+                    <!-- You can add a button here to dynamically add more work experience entries if needed -->
                 </div>
-                <!-- You can add a button here to dynamically add more work experience entries if needed -->
-            </div>
 
-            <div class="form-group">
-                <label for="additionalInfo">Additional Information/Cover Letter</label>
-                <textarea id="additionalInfo" name="additionalInfo"></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="additionalInfo">Additional Information/Cover Letter</label>
+                    <textarea id="additionalInfo" name="additionalInfo"></textarea>
+                </div>
 
-            <button type="submit">Submit Application</button>
-        </form>
-    </div>
+                <button type="submit">Submit Application</button>
+            </form>
+        </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const yearDropdowns = document.querySelectorAll('#startYear, #endYear');
-            const currentYear = new Date().getFullYear();
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const yearDropdowns = document.querySelectorAll('#startYear, #endYear');
+                const currentYear = new Date().getFullYear();
 
-            yearDropdowns.forEach(dropdown => {
-                for (let year = currentYear; year >= currentYear - 50; year--) {
-                    const option = document.createElement('option');
-                    option.value = year;
-                    option.textContent = year;
-                    dropdown.appendChild(option);
+                yearDropdowns.forEach(dropdown => {
+                    for (let year = currentYear; year >= currentYear - 50; year--) {
+                        const option = document.createElement('option');
+                        option.value = year;
+                        option.textContent = year;
+                        dropdown.appendChild(option);
+                    }
+                });
+            });
+
+            fetch('https://restcountries.com/v3.1/all')
+                .then(response => response.json())
+                .then(data => {
+                    const countryCodeSelect = document.getElementById('countryCode');
+
+                    data.forEach(country => {
+                        if (country.idd?.root && country.idd?.suffixes) {
+                            const countryCode = `${country.idd.root}${country.idd.suffixes[0]}`;
+                            const option = document.createElement('option');
+                            option.value = countryCode;
+                            option.text = `${country.name.common} (${countryCode})`;
+
+                            // Append option to the select element
+                            countryCodeSelect.appendChild(option);
+
+                            // Check if the country is India and set it as default
+                            if (country.name.common === "India") {
+                                option.selected = true;  // Set as default selected
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching country codes:', error));
+
+            // Keep the existing JavaScript for file upload functionality
+            const resumeUpload = document.getElementById('resumeUpload');
+            const resume = document.getElementById('resume');
+            const fileName = document.getElementById('fileName');
+            const form = document.getElementById('jobApplicationForm');
+
+            resumeUpload.addEventListener('click', () => resume.click());
+
+            resumeUpload.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                resumeUpload.style.borderColor = '#1a73e8';
+            });
+
+            resumeUpload.addEventListener('dragleave', () => {
+                resumeUpload.style.borderColor = '#dadce0';
+            });
+
+            resumeUpload.addEventListener('drop', (e) => {
+                e.preventDefault();
+                resumeUpload.style.borderColor = '#dadce0';
+                if (e.dataTransfer.files.length) {
+                    resume.files = e.dataTransfer.files;
+                    updateFileName(e.dataTransfer.files[0].name);
                 }
             });
-        });
 
-        // Keep the existing JavaScript for file upload functionality
-        const resumeUpload = document.getElementById('resumeUpload');
-        const resume = document.getElementById('resume');
-        const fileName = document.getElementById('fileName');
-        const form = document.getElementById('jobApplicationForm');
+            resume.addEventListener('change', (e) => {
+                if (e.target.files[0]) {
+                    updateFileName(e.target.files[0].name);
+                }
+            });
 
-        resumeUpload.addEventListener('click', () => resume.click());
-
-        resumeUpload.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            resumeUpload.style.borderColor = '#1a73e8';
-        });
-
-        resumeUpload.addEventListener('dragleave', () => {
-            resumeUpload.style.borderColor = '#dadce0';
-        });
-
-        resumeUpload.addEventListener('drop', (e) => {
-            e.preventDefault();
-            resumeUpload.style.borderColor = '#dadce0';
-            if (e.dataTransfer.files.length) {
-                resume.files = e.dataTransfer.files;
-                updateFileName(e.dataTransfer.files[0].name);
+            function updateFileName(name) {
+                fileName.textContent = name;
             }
-        });
-
-        resume.addEventListener('change', (e) => {
-            if (e.target.files[0]) {
-                updateFileName(e.target.files[0].name);
-            }
-        });
-
-        function updateFileName(name) {
-            fileName.textContent = name;
-        }
-    </script>
-</body>
-
+        </script>
+    </body>

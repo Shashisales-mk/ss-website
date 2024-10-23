@@ -3055,12 +3055,57 @@ app.post('/book-consultation', async (req, res) => {
     try {
         console.log('Received form data:', formData);
 
-        // Templatesender(recipients, htmlTemplate, "You Got New Lead");
-        // Templatesender("bgmilelomujhse@gmail.com", htmlTemplate, "You Got New Lead");
+        const name = `${formData.fname} ${formData.lname}`
+
+        // Format the appointment date to 'DD MMMM YYYY' (e.g., 27 September 2024)
+        const appointmentDate = new Date(formData.appointmentDate);
+        const formattedDate = appointmentDate.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        // Check if the appointmentTime is valid and convert it if needed
+        let formattedTime;
+        if (formData.appointmentTime) {
+            const timeParts = formData.appointmentTime.split(':'); // Assuming HH:mm format
+            let hours = parseInt(timeParts[0], 10);
+            const minutes = timeParts[1] || '00';
+            let period = 'AM';
+
+            if (hours >= 12) {
+                period = 'PM';
+                hours = hours > 12 ? hours - 12 : hours;
+            } else if (hours === 0) {
+                hours = 12;
+            }
+
+            formattedTime = `${hours}:${minutes} ${period}`;
+        } else {
+            formattedTime = 'Invalid Time';
+        }
+
+        console.log(formattedDate, formattedTime);
+
+        const phoneNumber = `${formData.countryCode}${formData.number}`
+        console.log(phoneNumber);
+        
 
 
-        // sendWhatsappMessage(formData.number, "template name" , "message body" , ["body values"]);
-        sendWhatsappMessage(formData.number, "testt" , "hello i am a test message" );
+        // for client
+        
+        sendWhatsappMessage(phoneNumber, "ss_lp_appointment_for_cx" , "Hi {{1}} ,Thank you for booking an appointment with SSM! Your appointment is confirmed for {{2}} at {{3}} . We look forward to assisting you. Feel free to reach out if you have any questions." , [name, formattedDate , formattedTime] );
+
+
+        // for management
+
+        sendWhatsappMessage(+918744906520, "ss_lp_appointment_for_mgmt" , `New Appointment Dear SSM Team, You have a new appointment booking: 
+            Customer Name: {{1}} 
+            Contact Number: {{2}} 
+            Email Address: {{3}} 
+            Appointment Details: 
+            Date: {{4}} Time: {{5}} 
+            Please ensure everything is set for the scheduled appointment.` , [name, formData.number, formData.email, formattedDate , formattedTime] );
         
 
 
