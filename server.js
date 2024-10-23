@@ -314,22 +314,46 @@ function parsePhoneNumber(phoneNumber) {
 }
 
 
-
-
-
-
-
-
-
-
-app.get("/", async (req, res) => {
-
-
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    const ipVersion = req.socket.remoteFamily; // IPv4 or IPv6
-
-    // Log the visitor's IP to the console or a file
+// Middleware to capture client IP
+const getClientIP = (req, res) => {
+    // Use the x-forwarded-for header or fall back to socket remote address
+    let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  
+    // If x-forwarded-for has multiple IPs (in case of multiple proxies), get the first one (client IP)
+    if (ip.includes(',')) {
+      ip = ip.split(',')[0].trim();
+    }
+  
+    // Strip IPv6-mapped IPv4 addresses (::ffff:192.168.x.x)
+    if (ip.includes('::ffff:')) {
+      ip = ip.split('::ffff:')[1];
+    }
+  
+    const ipVersion = ip.includes(':') ? 'IPv6' : 'IPv4';
+  
+    // Log the visitor's IP to the console
     console.log(`Visitor IP: ${ip}, Version: ${ipVersion}`);
+  
+    // Send the IP back as a response (optional)
+    res.json({
+      statusCode: 200,
+      data: {
+        ip: ip,
+        ipv: ipVersion,
+      },
+      message: "IP information returned",
+      success: true,
+    });
+  };
+
+
+
+
+
+app.get("/", getClientIP, async (req, res) => {
+
+
+ 
 
 
     const now = new Date();
