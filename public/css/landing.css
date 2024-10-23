@@ -20,8 +20,8 @@ body {
 
 }
 
-.non-scrollable-section {   
-    overflow-x: hidden; 
+.non-scrollable-section {
+    overflow-x: hidden;
 }
 
 .animate {
@@ -165,27 +165,53 @@ h2 {
 
 .lp-menu-bar {
     display: none;
-    /* Initially hidden */
     position: absolute;
     top: 100%;
-    left: -100%;
-    /* Initially off-screen to the left */
+    left: 0;
     z-index: 5;
     background: -webkit-gradient(linear, left top, left bottom, from(#3f1a30), to(#5c3d58)) !important;
     background: -o-linear-gradient(top, #3f1a30, #5c3d58) !important;
     background: linear-gradient(to bottom, #3f1a30, #5c3d58) !important;
     color: #fff !important;
     width: 100%;
-    -webkit-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    /* Smooth transition */
+    transform: scale(0);
+    opacity: 0;
+    transform-origin: top left;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out, backdrop-filter 0.4s ease-out;
+    backdrop-filter: blur(0px);
+    /* No blur initially */
 }
 
 .lp-menu-bar.show {
-    left: 0;
-    /* Slide in from the left */
+    display: block;
+    transform: scale(1);
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    /* Adds a blur effect */
 }
+
+.lp-menu-bar-overlay {
+    display: none;
+    position: fixed;
+    /* Changed to fixed for full screen blur effect */
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    backdrop-filter: blur(10px);
+    /* Blur effect */
+    height: 100%;
+    width: 100%;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 0.4s ease-out, backdrop-filter 0.4s ease-out;
+}
+
+.lp-menu-bar-overlay.show {
+    opacity: 1;
+    display: block;
+}
+
 
 .companies-sec {
     display: -ms-grid;
@@ -278,7 +304,7 @@ h2 {
 .lp-menu-bar li {
     z-index: 2;
     width: 33%;
-    font-size: 3vw;
+    font-size: 2vw;
     font-weight: 800;
 }
 
@@ -1356,6 +1382,13 @@ h2 {
     border-radius: 5vw;
     font-family: "Inter", sans-serif;
     font-size: 20px;
+    transition: all 0.3s ease-in-out;
+}
+.get2 form button:hover {
+    transform: scale(0.98);
+    background: #C4C800;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .get2 form label {
@@ -1941,17 +1974,21 @@ h2 {
 
     .hum {
         left: 25%;
+        opacity: 0.6;
+        z-index: 1 !important;
     }
 
     .lp-menu-bar li {
-        width: 33%;
-        font-size: 3vw;
+        width: 100%;
+        font-size: 4.5vw;
+        z-index: 2;
     }
 
     .nmu span {
         font-size: 5.5vw;
-        top: -27%;
+        top: 10%;
     }
+
 
     .hum img {
         height: 90%;
@@ -3126,7 +3163,7 @@ button:hover {
 
 
 .popup {
-    display: none ;
+    display: none;
     position: fixed;
     z-index: 100;
     left: 0;

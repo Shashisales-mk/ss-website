@@ -222,3 +222,51 @@ fetch('https://restcountries.com/v3.1/all')
     })
     .catch(error => console.error('Error fetching country codes:', error));
 
+
+
+
+    // menu script
+
+    document.querySelector('.ham-cont').addEventListener('click', function (event) {
+      event.stopPropagation();
+
+      const menu = document.querySelector('.mob-menu');
+      const hamburger = document.querySelector('.ham-cont');
+      const lpMenuBar = document.querySelector('.lp-menu-bar');
+      const lpMenuBarBgBlur = document.querySelector('.lp-menu-bar-overlay');
+      
+      hamburger.classList.toggle('active');
+
+      // Toggle LP menu bar visibility with scaling animation
+      if (!lpMenuBar.classList.contains('show')) {
+          lpMenuBar.style.display = 'block';  // Ensure it's displayed first
+          lpMenuBarBgBlur.style.display = 'block';  // Display the overlay
+
+          // Use requestAnimationFrame for smoother animation
+          requestAnimationFrame(() => {
+              lpMenuBar.classList.add('show'); // Add show class for scaling and opacity
+              lpMenuBarBgBlur.classList.add('show'); // Add show class for the overlay
+          });
+      } else {
+          lpMenuBar.classList.remove('show'); // Remove show class to scale it out
+          lpMenuBarBgBlur.classList.remove('show'); // Remove show class for the overlay
+
+          setTimeout(() => {
+              lpMenuBar.style.display = 'none'; // Hide it after the animation ends
+              lpMenuBarBgBlur.style.display = 'none'; // Hide the overlay after animation
+          }, 400); // Match the duration of the CSS transition
+      }
+
+      // Original mobile menu functionality
+      if (menu.classList.contains('show')) {
+          menu.classList.remove('show');
+          setTimeout(() => {
+              menu.style.display = 'none'; // Hide the mobile menu after animation
+          }, 300);
+      } else {
+          menu.style.display = 'flex'; // Show the mobile menu
+          setTimeout(() => {
+              menu.classList.add('show'); // Add the show class for animation
+          }, 10);
+      }
+  });

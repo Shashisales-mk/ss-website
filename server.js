@@ -316,12 +316,13 @@ function parsePhoneNumber(phoneNumber) {
 
 
 
+
+
+
+
+
+
 app.get("/", async (req, res) => {
-
-
- 
-
-
     const now = new Date();
     const dayOfWeek = now.toLocaleString('en-us', { weekday: 'long' });
     const currentTime = now.toTimeString().slice(0, 5);
@@ -2858,7 +2859,7 @@ app.get("/application-successful", async (req, res) => {
 
 //  landing page route
 
-app.get("/landing-page", async (req, res) => {
+app.get("/website-development", async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
     res.render("landingPage", {
         testimonials,
@@ -3047,7 +3048,7 @@ app.post('/book-consultation', async (req, res) => {
     }
 
 
-
+   
 
 
 
@@ -3088,24 +3089,24 @@ app.post('/book-consultation', async (req, res) => {
 
         const phoneNumber = `${formData.countryCode}${formData.number}`
         console.log(phoneNumber);
-
+        
 
 
         // for client
-
-        sendWhatsappMessage(phoneNumber, "ss_lp_appointment_for_cx", "Hi {{1}} ,Thank you for booking an appointment with SSM! Your appointment is confirmed for {{2}} at {{3}} . We look forward to assisting you. Feel free to reach out if you have any questions.", [name, formattedDate, formattedTime]);
+        
+        sendWhatsappMessage(phoneNumber, "ss_lp_appointment_for_cx" , "Hi {{1}} ,Thank you for booking an appointment with SSM! Your appointment is confirmed for {{2}} at {{3}} . We look forward to assisting you. Feel free to reach out if you have any questions." , [name, formattedDate , formattedTime] );
 
 
         // for management
 
-        sendWhatsappMessage(+918744906520, "ss_lp_appointment_for_mgmt", `New Appointment Dear SSM Team, You have a new appointment booking: 
+        sendWhatsappMessage(+918744906520, "ss_lp_appointment_for_mgmt" , `New Appointment Dear SSM Team, You have a new appointment booking: 
             Customer Name: {{1}} 
             Contact Number: {{2}} 
             Email Address: {{3}} 
             Appointment Details: 
             Date: {{4}} Time: {{5}} 
-            Please ensure everything is set for the scheduled appointment.` , [name, formData.number, formData.email, formattedDate, formattedTime]);
-
+            Please ensure everything is set for the scheduled appointment.` , [name, formData.number, formData.email, formattedDate , formattedTime] );
+        
 
 
         req.flash('success', 'Thank you for your interest in Shashi sales and marketing, Please check your whatsapp for confirmation');
@@ -3130,6 +3131,6 @@ app.all("*", (req, res) => {
 
 
 
-http.listen(4000, '0.0.0.0', () => {
+http.listen(4000, () => {
     console.log("listening on port 4000");
 })
