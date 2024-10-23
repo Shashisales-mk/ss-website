@@ -361,7 +361,7 @@ const getClientIP = (req, res) => {
 
 
 
-app.get("/", getClientIP, async (req, res) => {
+app.get("/",  async (req, res) => {
 
 
  
