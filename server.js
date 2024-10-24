@@ -724,7 +724,7 @@ app.post('/upload-blog', uploadFields, async (req, res) => {
 
         console.log(content);
 
-        const contentText = req.body.contentText.replace(/<\/?[^>]+(>|$)/g, '');
+        const contentText = req.body.contentText;
 
         const blog = new Blog({
             name: authorName,

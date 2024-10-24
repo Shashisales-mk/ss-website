@@ -259,7 +259,7 @@
                 var contentText = document.querySelector('input[name=contentText]');
                 var processedContent = processQuillContent(quill.root.innerHTML);
                 contentText.value = processedContent;
-                this.submit();  // Submit the form
+                this.submit();  
             };
 
             const paragraphTextareas = document.querySelectorAll('textarea[name="paragraphs"]');
@@ -313,6 +313,8 @@
                 }
             }
         });
+    
+    
     </script>
 
 <script>

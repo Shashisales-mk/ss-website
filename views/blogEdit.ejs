@@ -143,7 +143,7 @@
                 <div>
                     <label for="paragraph<%= index + 1 %>">Paragraph <%= index + 1 %>: (max word limit: 150
                             words)</label>
-                    <textarea name="paragraphs" required><%- content.paragraph %></textarea>
+                    <textarea style="white-space: pre-wrap;" name="paragraphs" required><%- content.paragraph.replace(/<br>/g, '\n') %></textarea>
                 </div>
                 <div>
                     <label for="altTag<%= index + 1 %>">Alt Tag <%= index + 1 %>:</label>
@@ -177,7 +177,7 @@
                             required><%= blog.metaDescription %></textarea>
                     </div>
                     <div id="editor-container"></div>
-                    <input type="hidden" name="contentText" id="hidden-input" value="<%= blog.contentText %>">
+                    <input type="hidden" name="contentText" id="hidden-input" value="<%- blog.contentText %>">
 
                     <!-- New fields for isLatest and isPopular -->
                     <div>
