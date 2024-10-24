@@ -1,70 +1,70 @@
-window.removeEventListener('beforeunload', (e)=>{
-  console.log(e);
-  
+window.removeEventListener('beforeunload', (e) => {
+    console.log(e);
+
 });
 
 // testimonials section.
 
 document.addEventListener("DOMContentLoaded", function () {
     const swiper = new Swiper('.testimonial-swiper', {
-      slidesPerView: 'auto',
-      centeredSlides: true,
-      spaceBetween: 30,
-      loop: true,
-      speed: 500,
-      effect: 'coverflow',
-      coverflowEffect: {
-        rotate: 0,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: false,
-      },
-      breakpoints: {
-        320: {
-          slidesPerView: 1.2,
-          spaceBetween: 20
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 30,
+        loop: true,
+        speed: 500,
+        effect: 'coverflow',
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: false,
         },
-        768: {
-          slidesPerView: 3,
-          spaceBetween: 30
-        }
-      },
-      allowTouchMove: true,
+        breakpoints: {
+            320: {
+                slidesPerView: 1.2,
+                spaceBetween: 20
+            },
+            768: {
+                slidesPerView: 3,
+                spaceBetween: 30
+            }
+        },
+        allowTouchMove: true,
     });
-  
+
     swiper.slides.forEach((slide) => {
-      slide.addEventListener('click', () => {
-        if (slide.classList.contains('swiper-slide-prev')) {
-          swiper.slidePrev();
-        } else if (slide.classList.contains('swiper-slide-next')) {
-          swiper.slideNext();
-        }
-      });
+        slide.addEventListener('click', () => {
+            if (slide.classList.contains('swiper-slide-prev')) {
+                swiper.slidePrev();
+            } else if (slide.classList.contains('swiper-slide-next')) {
+                swiper.slideNext();
+            }
+        });
     });
-  });
-  
-  async function openUserStory() {
+});
+
+async function openUserStory() {
     const activeSlide = document.querySelector('.swiper-slide-active');
     if (activeSlide) {
-      const testimonialId = activeSlide.dataset.id;
-      try {
-        const response = await fetch(`/check-user-story/${testimonialId}`);
-        const data = await response.json();
-        
-        if (data.hasStory) {
-          window.location.href = `/user-story/${testimonialId}`;
-        } else {
-          alert('Case Study is not available for this client.');
+        const testimonialId = activeSlide.dataset.id;
+        try {
+            const response = await fetch(`/check-user-story/${testimonialId}`);
+            const data = await response.json();
+
+            if (data.hasStory) {
+                window.location.href = `/user-story/${testimonialId}`;
+            } else {
+                alert('Case Study is not available for this client.');
+            }
+        } catch (error) {
+            console.error('Error checking Case Study availability:', error);
+            alert('An error occurred while checking the Case Study availability.');
         }
-      } catch (error) {
-        console.error('Error checking Case Study availability:', error);
-        alert('An error occurred while checking the Case Study availability.');
-      }
     }
-  }
-  
-  
+}
+
+
 
 
 
@@ -90,7 +90,7 @@ function addHoverEffect(sectionClass, imageClass) {
     });
 }
 
-addHoverEffect('sp1', 'hi1'); 
+addHoverEffect('sp1', 'hi1');
 addHoverEffect('sp2', 'hi2');
 
 
@@ -112,8 +112,8 @@ getqForms.forEach(getqForm => {
     });
 });
 document.addEventListener('click', function (event) {
-    const isClickOutside = !getQuoteMenu.contains(event.target) && 
-                           !Array.from(getqForms).some(form => form.contains(event.target));
+    const isClickOutside = !getQuoteMenu.contains(event.target) &&
+        !Array.from(getqForms).some(form => form.contains(event.target));
 
     if (isClickOutside) {
         cenPop.classList.remove('flex');
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             scrollContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
         }
-    }, 3000); 
+    }, 3000);
 });
 
 
@@ -160,44 +160,45 @@ document.addEventListener("DOMContentLoaded", function () {
 //   popup script
 
 document.addEventListener('DOMContentLoaded', () => {
-  const consultButtons = document.querySelectorAll('.consult'); 
-  const popup = document.getElementById('popup');
-  const closeBtn = document.querySelector('.close');
-  const nextBtn = document.getElementById('nextBtn');
-  const infoSection = document.getElementById('infoSection');
-  const appointmentSection = document.getElementById('appointmentSection');
-  const popupContent = document.querySelector('.popup-content');
+    const consultButtons = document.querySelectorAll('.consult');
+    const popup = document.getElementById('popup');
+    const closeBtn = document.querySelector('.close');
+    const nextBtn = document.getElementById('nextBtn');
+    const infoSection = document.getElementById('infoSection');
+    const appointmentSection = document.getElementById('appointmentSection');
+    const popupContent = document.querySelector('.popup-content');
 
-  // Attach event listeners to each 'consult' button
-  consultButtons.forEach(button => {
-      button.addEventListener('click', () => {
-          popup.style.display = 'flex';
-      });
-  });
+    // Attach event listeners to each 'consult' button
+    consultButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            popup.style.display = 'flex';
+        });
+    });
 
-  closeBtn.addEventListener('click', () => {
-      popup.style.display = 'none';
-  });
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
 
-  nextBtn.addEventListener('click', () => {
-      infoSection.style.display = 'none';
-      appointmentSection.style.display = 'block';
-  });
+    nextBtn.addEventListener('click', () => {
+        infoSection.style.display = 'none';
+        appointmentSection.style.display = 'block';
+    });
 
-  // Close popup when clicking outside the form
-  popup.addEventListener('click', (e) => {
-      if (e.target === popup) {
-          popup.style.display = 'none';
-      }
-  });
+    // Close popup when clicking outside the form
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
 
-  // Prevent closing when clicking inside the form
-  popupContent.addEventListener('click', (e) => {
-      e.stopPropagation();
-  });
+    // Prevent closing when clicking inside the form
+    popupContent.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
 });
 
 
+// fetch conuntry codes
 fetch('https://restcountries.com/v3.1/all')
     .then(response => response.json())
     .then(data => {
@@ -222,51 +223,138 @@ fetch('https://restcountries.com/v3.1/all')
     })
     .catch(error => console.error('Error fetching country codes:', error));
 
+    const timeZones = moment.tz.names();
+    const select = document.getElementById('timeZone');
+
+    // Add time zones to select element
+    timeZones.forEach(zone => {
+        const option = document.createElement('option');
+        option.value = zone;
+        option.text = zone;
+        select.appendChild(option);
+    });
 
 
 
-    // menu script
+// menu script
 
-    document.querySelector('.ham-cont').addEventListener('click', function (event) {
-      event.stopPropagation();
+document.querySelector('.ham-cont').addEventListener('click', function (event) {
+    event.stopPropagation();
 
-      const menu = document.querySelector('.mob-menu');
-      const hamburger = document.querySelector('.ham-cont');
-      const lpMenuBar = document.querySelector('.lp-menu-bar');
-      const lpMenuBarBgBlur = document.querySelector('.lp-menu-bar-overlay');
-      
-      hamburger.classList.toggle('active');
+    const menu = document.querySelector('.mob-menu');
+    const hamburger = document.querySelector('.ham-cont');
+    const lpMenuBar = document.querySelector('.lp-menu-bar');
+    const lpMenuBarBgBlur = document.querySelector('.lp-menu-bar-overlay');
 
-      // Toggle LP menu bar visibility with scaling animation
-      if (!lpMenuBar.classList.contains('show')) {
-          lpMenuBar.style.display = 'block';  // Ensure it's displayed first
-          lpMenuBarBgBlur.style.display = 'block';  // Display the overlay
+    hamburger.classList.toggle('active');
 
-          // Use requestAnimationFrame for smoother animation
-          requestAnimationFrame(() => {
-              lpMenuBar.classList.add('show'); // Add show class for scaling and opacity
-              lpMenuBarBgBlur.classList.add('show'); // Add show class for the overlay
-          });
-      } else {
-          lpMenuBar.classList.remove('show'); // Remove show class to scale it out
-          lpMenuBarBgBlur.classList.remove('show'); // Remove show class for the overlay
+    // Toggle LP menu bar visibility with scaling animation
+    if (!lpMenuBar.classList.contains('show')) {
+        lpMenuBar.style.display = 'block';  // Ensure it's displayed first
+        lpMenuBarBgBlur.style.display = 'block';  // Display the overlay
 
-          setTimeout(() => {
-              lpMenuBar.style.display = 'none'; // Hide it after the animation ends
-              lpMenuBarBgBlur.style.display = 'none'; // Hide the overlay after animation
-          }, 400); // Match the duration of the CSS transition
-      }
+        // Use requestAnimationFrame for smoother animation
+        requestAnimationFrame(() => {
+            lpMenuBar.classList.add('show'); // Add show class for scaling and opacity
+            lpMenuBarBgBlur.classList.add('show'); // Add show class for the overlay
+        });
+    } else {
+        lpMenuBar.classList.remove('show'); // Remove show class to scale it out
+        lpMenuBarBgBlur.classList.remove('show'); // Remove show class for the overlay
 
-      // Original mobile menu functionality
-      if (menu.classList.contains('show')) {
-          menu.classList.remove('show');
-          setTimeout(() => {
-              menu.style.display = 'none'; // Hide the mobile menu after animation
-          }, 300);
-      } else {
-          menu.style.display = 'flex'; // Show the mobile menu
-          setTimeout(() => {
-              menu.classList.add('show'); // Add the show class for animation
-          }, 10);
-      }
-  });
+        setTimeout(() => {
+            lpMenuBar.style.display = 'none'; // Hide it after the animation ends
+            lpMenuBarBgBlur.style.display = 'none'; // Hide the overlay after animation
+        }, 400); // Match the duration of the CSS transition
+    }
+
+    // Original mobile menu functionality
+    if (menu.classList.contains('show')) {
+        menu.classList.remove('show');
+        setTimeout(() => {
+            menu.style.display = 'none'; // Hide the mobile menu after animation
+        }, 300);
+    } else {
+        menu.style.display = 'flex'; // Show the mobile menu
+        setTimeout(() => {
+            menu.classList.add('show'); // Add the show class for animation
+        }, 10);
+    }
+});
+
+
+
+document.querySelectorAll('.like, .dislike').forEach(button => {
+    const itemId = button.closest('li').getAttribute('id');
+    const storageKey = `user-action-${itemId}`;
+    let storedAction = JSON.parse(localStorage.getItem(storageKey)) || { liked: false, disliked: false };
+
+    // Add classes on page load based on stored actions
+    const likeButton = button.closest('.like-dislike').querySelector('.like .aata');
+    const dislikeButton = button.closest('.like-dislike').querySelector('.dislike .aata');
+
+    if (storedAction.liked) {
+        likeButton.classList.add('blue-add');
+    }
+    if (storedAction.disliked) {
+        dislikeButton.classList.add('red-add');
+    }
+
+    button.addEventListener('click', async (e) => {
+        const isLike = e.currentTarget.classList.contains('like');
+        let finalAction;
+
+        // Determine the action based on current state and clicked button
+        if (isLike && storedAction.liked) {
+            finalAction = 'undo-like';
+            storedAction.liked = false;
+            likeButton.classList.remove('blue-add');
+        } else if (!isLike && storedAction.disliked) {
+            finalAction = 'undo-dislike';
+            storedAction.disliked = false;
+            dislikeButton.classList.remove('red-add');
+        } else if (isLike && storedAction.disliked) {
+            finalAction = 'switch-to-like';
+            storedAction.liked = true;
+            storedAction.disliked = false;
+            likeButton.classList.add('blue-add');
+            dislikeButton.classList.remove('red-add');
+        } else if (!isLike && storedAction.liked) {
+            finalAction = 'switch-to-dislike';
+            storedAction.disliked = true;
+            storedAction.liked = false;
+            dislikeButton.classList.add('red-add');
+            likeButton.classList.remove('blue-add');
+        } else if (isLike) {
+            finalAction = 'like';
+            storedAction.liked = true;
+            likeButton.classList.add('blue-add');
+        } else {
+            finalAction = 'dislike';
+            storedAction.disliked = true;
+            dislikeButton.classList.add('red-add');
+        }
+
+        try {
+            const response = await fetch('/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ itemId, action: finalAction })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                // Update the small tag with the new count values
+                likeButton.closest('.like-dislike').querySelector('.like small').textContent = data.likes;
+                dislikeButton.closest('.like-dislike').querySelector('.dislike small').textContent = data.dislikes;
+
+                // Store the updated action in local storage
+                localStorage.setItem(storageKey, JSON.stringify(storedAction));
+            }
+        } catch (err) {
+            console.error('Error updating like/dislike:', err);
+        }
+    });
+});

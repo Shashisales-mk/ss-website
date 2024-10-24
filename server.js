@@ -44,6 +44,8 @@ const paypal = require('paypal-rest-sdk');
 const galleryRoutes = require('./routes/galleryRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
 const adminRoutes = require('./routes/admin');
+const likeDislikeRoutes = require('./routes/likedislike');
+const LikeDislike = require('./models/LikeDislike');
 
 
 const { gmail } = require("googleapis/build/src/apis/gmail");
@@ -188,6 +190,7 @@ app.use((req, res, next) => {
 app.use('/', galleryRoutes);
 app.use('/', testimonialRoutes);
 app.use('/admin', adminRoutes);
+app.use('/update', likeDislikeRoutes);
 
 
 // Authentication middleware
@@ -2861,7 +2864,10 @@ app.get("/application-successful", async (req, res) => {
 
 app.get("/website-development", async (req, res) => {
     const testimonials = await Testimonial.find().populate('page');
+    const getLikesDislikes = await LikeDislike.find();
+
     res.render("landingPage", {
+        getLikesDislikes,
         testimonials,
         title: "",
         description: "",
@@ -2886,12 +2892,12 @@ app.post('/submit-query', async (req, res) => {
     if (!name || !formData.phone || !formData.email || !formData.message) {
 
         req.flash('error', 'All fields are required.');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
     if (!/^[A-Za-z ]+$/.test(name)) {
         req.flash('error', 'Names should only contain letters and spaces');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
     // Remove non-digit characters for length check
@@ -2899,20 +2905,20 @@ app.post('/submit-query', async (req, res) => {
 
     if (phoneDigits.length < 8) {
         req.flash('error', 'Please enter a valid phone number with valid format of your country');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
     // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
     if (!/^\+?[\d\s\-()]+$/.test(formData.phone)) {
         req.flash('error', 'Phone number should only contain digits, spaces, hyphens, or parentheses');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
 
     // Simple email validation
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
         req.flash('error', 'Please enter a valid email address');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
 
@@ -2995,7 +3001,7 @@ app.post('/submit-query', async (req, res) => {
 
 
 
-        res.redirect("/landing-page");
+        res.redirect("/website-development");
     } catch (error) {
         console.error('Failed to send email:', error);
 
@@ -3011,19 +3017,19 @@ app.post('/book-consultation', async (req, res) => {
 
 
     // Server-side validation
-    if (!formData.fname || !formData.lname || !formData.number || !formData.countryCode || !formData.email || !formData.service || !formData.appointmentDate || !formData.appointmentTime) {
+    if (!formData.fname || !formData.timeZone || !formData.lname || !formData.number || !formData.countryCode || !formData.email || !formData.service || !formData.appointmentDate || !formData.appointmentTime) {
 
         req.flash('error', 'All fields are required.');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
     if (!/^[A-Za-z ]+$/.test(formData.fname)) {
         req.flash('error', 'Names should only contain letters and spaces');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
     if (!/^[A-Za-z ]+$/.test(formData.lname)) {
         req.flash('error', 'Names should only contain letters and spaces');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
     // Remove non-digit characters for length check
@@ -3031,20 +3037,20 @@ app.post('/book-consultation', async (req, res) => {
 
     if (phoneDigits.length < 8) {
         req.flash('error', 'Please enter a valid phone number with valid format of your country');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
     // Simple phone validation (allows digits, spaces, hyphens, and parentheses)
     if (!/^\+?[\d\s\-()]+$/.test(formData.number)) {
         req.flash('error', 'Phone number should only contain digits, spaces, hyphens, or parentheses');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
 
     // Simple email validation
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
         req.flash('error', 'Please enter a valid email address');
-        return res.redirect("/landing-page");
+        return res.redirect("/website-development");
     }
 
 
@@ -3080,15 +3086,16 @@ app.post('/book-consultation', async (req, res) => {
                 hours = 12;
             }
 
-            formattedTime = `${hours}:${minutes} ${period}`;
+            formattedTime = `${hours}:${minutes} ${period} and Time Zone : ${formData.timeZone}`;
         } else {
             formattedTime = 'Invalid Time';
         }
 
-        console.log(formattedDate, formattedTime);
+        
+       
 
         const phoneNumber = `${formData.countryCode}${formData.number}`
-        console.log(phoneNumber);
+       
         
 
 
@@ -3113,7 +3120,7 @@ app.post('/book-consultation', async (req, res) => {
 
 
 
-        res.redirect("/landing-page");
+        res.redirect("/website-development");
     } catch (error) {
         console.error('Failed to send whatsapp:', error);
 

@@ -1384,6 +1384,7 @@ h2 {
     font-size: 20px;
     transition: all 0.3s ease-in-out;
 }
+
 .get2 form button:hover {
     transform: scale(0.98);
     background: #C4C800;
@@ -3548,5 +3549,90 @@ button:hover {
 
     .last-quote-form {
         margin-bottom: 5rem;
+    }
+}
+
+
+
+/* like dislike */
+.aata {
+    background: transparent;
+    padding: 0.3vw;
+    /* border-radius: 50%; */
+    height: 3vw !important;
+    width: auto !important;
+}
+
+.blue-add {
+    background: rgb(37 166 241) !important;
+}
+
+.red-add {
+    background: red !important;
+}
+
+.like-dislike {
+    display: flex;
+    justify-content: end;
+    gap: 2vw;
+    margin: 2vw 1vw;
+}
+
+.like,
+.dislike {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 0.5vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.liked small {
+    color: grey;
+}
+
+.liked span img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.grnimg {
+    position: relative !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: inherit;
+    height: auto;
+    width: auto;
+    -webkit-transform: rotate(0deg) !important;
+    -ms-transform: rotate(0deg) !important;
+    transform: rotate(0deg) !important;
+}
+
+@media screen and (max-screen: 768px) {
+    .like-dislike {
+        display: flex;
+        gap: 5vw;
+        margin: 2vw 0;
+    }
+
+    .aata {
+        padding: 1.3vw;
+        height: 6vw !important;
+    }
+
+    .gfg2 {
+        position: relative !important;
+    }
+
+    .gfg3 {
+        background: black;
+        position: relative !important;
+        right: 0 !important;
+        top: 0 !important;
+        height: 30vw;
+        width: auto;
+        -webkit-transform: rotate(0deg) !important;
+        -ms-transform: rotate(0deg) !important;
+        transform: rotate(0deg) !important;
     }
 }

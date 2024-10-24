@@ -29,9 +29,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
         rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
 
 
-        
+
 
 </head>
 
@@ -82,13 +85,13 @@
                                 <input type="text" name="fname" placeholder="First Name" required>
                                 <input type="text" name="lname" placeholder="Last Name" required>
                                 <input type="email" name="email" placeholder="Email" required>
-                              
-                                    <select name="countryCode" id="countryCode" required>
-                                        <!-- Options will be populated by JavaScript -->
-                                    </select>
-                                    
-                                    <input type="tel" name="number" placeholder="Phone Number" required>
-                                
+
+                                <select name="countryCode" id="countryCode" required>
+                                    <!-- Options will be populated by JavaScript -->
+                                </select>
+
+                                <input type="tel" name="number" placeholder="Phone Number" required>
+
                                 <!-- <input type="number" name="age" placeholder="Age" required> -->
                                 <select name="service" required>
                                     <option value="">Select a service</option>
@@ -105,6 +108,10 @@
                                 <h2>Select Appointment Date and Time</h2>
                                 <input type="date" name="appointmentDate" required>
                                 <input type="time" name="appointmentTime" required>
+                                <select id="timeZone" name="timeZone" required>
+                                    <option value="">Select Time Zone</option>
+                                </select>
+
                                 <button type="submit" class="sub-btn">Submit</button>
                             </div>
                         </form>
@@ -205,7 +212,7 @@
                                 </div>
                                 Ecommerce Showcase
                             </a></li>
-                       
+
                     </ul>
                     <p class="non-scrollable-section"><a class="consult">Book a Free Consultation<span>
                                 <!-- <img height="50" width="500" src="/assets/images/Arrowrightcircle.webp"
@@ -301,7 +308,7 @@
                 <section class="hero-section-4 animate">
                     <div class="hero-cards-sec">
                         <ul class="ul1">
-                            <li class="animate ani-pop">
+                            <li class="animate ani-pop" id="1">
                                 <!-- <p><img src="/assets/images/aimhorn.webp" alt="aimhorn"></p> -->
                                 <p>
 
@@ -314,8 +321,34 @@
                                     density can seriously affect speed. These factors frustrate visitors, hurting your
                                     business growth and making it difficult to retain customers.
                                 </p>
+                                <div class="like-dislike">
+                                    <div class="like">
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <div class=""
+                                                style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                                <img class="aata" height="30" width="30"
+                                                    src="/assets/images/thumbs-up.webp" alt="thumbs-up">
+                                            </div>
+                                            <small>
+                                                <%= getLikesDislikes[0].likes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                    <div class="dislike">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
+                                            alt="thumbs-down">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[0].dislikes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                </div>
                             </li>
-                            <li class="fordes animate ani-pop">
+                            <li class="fordes animate ani-pop" id="3">
                                 <p><img src="/assets/images/rating.webp" alt="rating"></p>
                                 <h2>Is a high bounce rate costing you potential customers?
                                 </h2>
@@ -324,8 +357,34 @@
                                     Improving user experience, optimizing page load speed, and refining content can help
                                     reduce bounce rates and boost engagement, leading to higher conversions.
                                 </p>
+                                <div class="like-dislike">
+                                    <div class="like">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata gfg2" height="30" width="30"
+                                            src="/assets/images/thumbs-up.webp" alt="thumbs-up">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[2].likes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                    <div class="dislike">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata gfg2" height="30" width="30"
+                                            src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[2].dislikes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                </div>
                             </li>
-                            <li class="fordes asw animate ani-pop">
+                            <li class="fordes asw animate ani-pop" id="4">
                                 <p><img src="/assets/images/msglp2.webp" alt="msglp2"></p>
                                 <h2>Is your website losing customers because it's not mobile-friendly?
                                 </h2>
@@ -335,8 +394,34 @@
                                     mobile searches overtaking desktop, optimizing for mobile boosts rankings and user
                                     experience.
                                 </p>
+                                <div class="like-dislike">
+                                    <div class="like">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata gfg3" height="30" width="30"
+                                            src="/assets/images/thumbs-up.webp" alt="thumbs-up">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[3].likes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                    <div class="dislike">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata gfg3" height="30" width="30"
+                                            src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[3].dislikes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                </div>
                             </li>
-                            <li class="animate ani-pop">
+                            <li class="animate ani-pop" id="2">
                                 <!-- <p><img src="/assets/images/aimhorn.webp" alt="aimhorn"></p> -->
                                 <p>
 
@@ -351,10 +436,36 @@
                                     relationships and greater loyalty in today’s digital landscape where security is a
                                     top priority.
                                 </p>
+                                <div class="like-dislike">
+                                    <div class="like">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
+                                            alt="thumbs-up">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[1].likes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                    <div class="dislike">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
+                                            alt="thumbs-down">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[1].dislikes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                         <ul class="ul2">
-                            <li class="formob animate ani-pop">
+                            <li class="formob animate ani-pop" id="3">
                                 <p><img src="/assets/images/rating.webp" alt="rating"></p>
                                 <h2>Is a high bounce rate costing you potential customers?
 
@@ -366,11 +477,37 @@
 
 
                                 </p>
+                                <div class="like-dislike">
+                                    <div class="like">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
+                                            alt="thumbs-up">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[2].likes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                    <div class="dislike">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
+                                            alt="thumbs-down">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[2].dislikes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                </div>
                             </li>
 
 
 
-                            <li class="formob animate ani-pop">
+                            <li class="formob animate ani-pop" id="4">
                                 <p><img src="/assets/images/msglp2.webp" alt="msglp2"></p>
                                 <h2>Is your website losing customers because it's not mobile-friendly?
                                 </h2>
@@ -380,8 +517,34 @@
                                     mobile searches overtaking desktop, optimizing for mobile boosts rankings and user
                                     experience.
                                 </p>
+                                <div class="like-dislike">
+                                    <div class="like">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata grnimg" height="30" width="30"
+                                            src="/assets/images/thumbs-up.webp" alt="thumbs-up">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[3].likes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                    <div class="dislike">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata grnimg" height="30" width="30"
+                                            src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[3].dislikes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                </div>
                             </li>
-                            <li class="animate ani-pop">
+                            <li class="animate ani-pop" id="5">
                                 <p><img src="/assets/images/rating.webp" alt="rating"></p>
                                 <h2>Struggling to choose the right language for your mobile app?
                                 </h2>
@@ -390,9 +553,36 @@
                                     Facebook in 2018, it supports third-party plugins, low code, and hot reloading. Get
                                     your app developed in React by the best developers of Shashi Sales & Marketing.
                                 </p>
+                                <div class="like-dislike">
+                                    <div class="like">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
+                                            alt="thumbs-up">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[4].likes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                    <div class="dislike">
+                                        <div class=""
+                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
+                                            alt="thumbs-down">
+                                            </div>
+                                        <% if (getLikesDislikes.length> 0) { %>
+                                            <small>
+                                                <%= getLikesDislikes[4].dislikes %>
+                                            </small>
+                                            <% } %>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
+
                 </section>
 
                 <section class="hero-section-3 animate">
@@ -611,7 +801,7 @@
                     <div class="landing-section-6-in">
                         <div class="lp6">
                             <h2>Trusted by <span style="color: #c4c800;">Aspiring Brands...</span></h2>
-                            
+
 
                         </div>
                         <div class="lp6">
@@ -947,90 +1137,90 @@
                 <div class="down">Social Handles</div>
             </div>
         </div>
-        
+
         <div class="vertical-icons">
             <a href="https://www.facebook.com/shashigroups" target="_blank"><img height="30" width="30"
-                src="/assets/images/fb.webp" alt="Facebook" /></a>
-                <a href="https://www.instagram.com/shashisales/" target="_blank"><img height="30" width="30"
+                    src="/assets/images/fb.webp" alt="Facebook" /></a>
+            <a href="https://www.instagram.com/shashisales/" target="_blank"><img height="30" width="30"
                     src="/assets/images/in.webp" alt="Instagram" /></a>
-                    <a href="https://www.linkedin.com/company/shashisales/" target="_blank"><img height="30" width="30"
-                        src="/assets/images/ln.webp" alt="LinkedIn" /></a>
-                    </div>
-                    
-                    
-                    <script src="/js/landing.js"></script>
-                    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-                    
-                    <script>
-            function getPhoneNumber(event) {
-                event.preventDefault(); // Prevent the default action of the anchor tag
+            <a href="https://www.linkedin.com/company/shashisales/" target="_blank"><img height="30" width="30"
+                    src="/assets/images/ln.webp" alt="LinkedIn" /></a>
+        </div>
 
-                const callLink = document.getElementById("callLink");
 
-                // Check if Geolocation is available
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(success, error);
-                } else {
-                    alert("Geolocation is not supported by your browser.");
-                    showPhoneNumberOptions(); // Show both phone numbers
-                }
+        <script src="/js/landing.js"></script>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-                // Success callback
-                function success(position) {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
+        function getPhoneNumber(event) {
+        event.preventDefault(); // Prevent the default action of the anchor tag
 
-                    // Send coordinates to the server
-                    fetch('/get-phone-number', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ latitude, longitude })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Set the phone number based on location
-                            callLink.href = `tel:${data.phone}`;
-                            // Trigger the call after updating the phone number
-                            window.location.href = callLink.href;
-                        })
-                        .catch(err => {
-                            console.error('Error:', err);
-                            alert("Unable to retrieve phone number.");
-                        });
-                }
-                
-                // Error callback
-                function error() {
-                    alert("Location access denied.");
-                    showPhoneNumberOptions(); // Show both phone numbers
-                }
+        const callLink = document.getElementById("callLink");
 
-                function showPhoneNumberOptions() {
-                    // Display an alert with both phone numbers
-                    const indiaNumber = "18005710605"; // Replace with your India number
-                    const globalNumber = "+1-321-125-5890"; // Replace with your global number
-                    
-                    const userChoice = confirm(`Location access was denied.\n\nPlease choose a number to call:\n\nIndia: ${indiaNumber}\nGlobal: ${globalNumber}`);
-                    
-                    if (userChoice) {
-                        callLink.href = `tel:${indiaNumber}`;
-                    } else {
-                        callLink.href = `tel:${globalNumber}`;
-                    }
-                    
-                    window.location.href = callLink.href; // Trigger the call with the chosen number
-                }
-            }
-            
-            </script>
+        // Check if Geolocation is available
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+        alert("Geolocation is not supported by your browser.");
+        showPhoneNumberOptions(); // Show both phone numbers
+        }
 
-<script>
+        // Success callback
+        function success(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        // Send coordinates to the server
+        fetch('/get-phone-number', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ latitude, longitude })
+        })
+        .then(response => response.json())
+        .then(data => {
+        // Set the phone number based on location
+        callLink.href = `tel:${data.phone}`;
+        // Trigger the call after updating the phone number
+        window.location.href = callLink.href;
+        })
+        .catch(err => {
+        console.error('Error:', err);
+        alert("Unable to retrieve phone number.");
+        });
+        }
+
+        // Error callback
+        function error() {
+        alert("Location access denied.");
+        showPhoneNumberOptions(); // Show both phone numbers
+        }
+
+        function showPhoneNumberOptions() {
+        // Display an alert with both phone numbers
+        const indiaNumber = "18005710605"; // Replace with your India number
+        const globalNumber = "+1-321-125-5890"; // Replace with your global number
+
+        const userChoice = confirm(`Location access was denied.\n\nPlease choose a number to call:\n\nIndia:
+        ${indiaNumber}\nGlobal: ${globalNumber}`);
+
+        if (userChoice) {
+        callLink.href = `tel:${indiaNumber}`;
+        } else {
+        callLink.href = `tel:${globalNumber}`;
+        }
+
+        window.location.href = callLink.href; // Trigger the call with the chosen number
+        }
+        }
+
+        </script>
+
+        <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const showVerticalButton = document.querySelector(".show-vertical");
                 const verticalIcons = document.querySelector(".vertical-icons");
-                
+
                 showVerticalButton.addEventListener("click", function () {
                     verticalIcons.classList.toggle("show");
                 });
@@ -1065,8 +1255,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 
 
-      
- 
+
+
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
