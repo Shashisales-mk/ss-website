@@ -87,9 +87,11 @@
     <!-- End Google Tag Manager -->
     <style>
         #editor-container {
-            height: 200px;
+            height: 3
+            00px;
             width: 100%;
             border: 1px solid black;
+            padding: 20px;
         }
 
         .ql-toolbar.ql-snow {
@@ -98,6 +100,9 @@
 
         .ql-editor {
             width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+
         }
     </style>
 </head>
@@ -177,7 +182,7 @@
                             required><%= blog.metaDescription %></textarea>
                     </div>
                     <div id="editor-container"></div>
-                    <input type="hidden" name="contentText" id="hidden-input" value="<%- blog.contentText %>">
+                    <input type="hidden" name="contentText" id="hidden-input" value="<%= blog.contentText %>">
 
                     <!-- New fields for isLatest and isPopular -->
                     <div>
