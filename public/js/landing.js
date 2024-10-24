@@ -241,6 +241,23 @@ const countryCodesData = [
     { name: "Zimbabwe", code: "+263" }
 ];
 
+
+// Add default values and better placeholders
+window.onload = function() {
+    const dateInput = document.querySelector('.date-input');
+    const timeInput = document.querySelector('.time-input');
+    
+    // Set today's date as default
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+    
+    // Set current time as default
+    const now = new Date();
+    const currentTime = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+    timeInput.value = currentTime;
+}
+
+
 // testimonials section.
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -305,8 +322,10 @@ async function openUserStory() {
 
 
 
+// hover effect of hero section
 
-const sp1 = document.querySelector('.sp1');
+document.addEventListener('DOMContentLoaded' , ()=>{
+    const sp1 = document.querySelector('.sp1');
 const sp2 = document.querySelector('.sp2');
 const stripSpans = document.querySelectorAll('.ssstrip span');
 const pt = document.querySelector(".ssstrip")
@@ -358,8 +377,38 @@ sp2.addEventListener('mouseout', () => {
     pt.style.zIndex = 0;
    
 });
+// Hover effects for sp1
+sp1.addEventListener('touchstart', () => {
+    updateStripText('Customized Website Development');
+    addStrokeEffect();
+    pt.style.zIndex = 2;
+  
+});
+
+sp1.addEventListener('touchmove', () => {
+    updateStripText('Shashi Sales And Marketing');
+    removeStrokeEffect();
+    pt.style.zIndex = 0;
+   
+});
+
+// Hover effects for sp2
+sp2.addEventListener('touchstart', () => {
+    updateStripText('Task Automation Solutions');
+    addStrokeEffect();
+    pt.style.zIndex = 2;
+  
+});
+
+sp2.addEventListener('touchmove', () => {
+    updateStripText('Shashi Sales And Marketing');
+    removeStrokeEffect();
+    pt.style.zIndex = 0;
+   
+});
 
 
+})
 
 // popup script
 
