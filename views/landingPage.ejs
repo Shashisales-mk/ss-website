@@ -36,11 +36,190 @@
 
 
 
+    <!-- clarity code -->
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-M49293JP');</script>
+    <!-- End Google Tag Manager -->
+
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "o7qe7mmne2");
+    </script>
+
+    <!-- clarity code -->
+
+
+
+
+    <!-- Google tag (gtag.js) -->
+    <script>
+        // Define dataLayer and the gtag function.
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        // Set default consent to 'denied' as a placeholder
+        // Determine actual values based on your own requirements
+        gtag("consent", "default", {
+            ad_storage: "granted",
+            ad_user_data: "granted",
+            ad_personalization: "granted",
+            analytics_storage: "granted",
+            functionality_storage: "granted",
+            personalization_storage: "granted",
+            security_storage: "granted",
+        });
+
+
+        var allGranted = {
+            ad_storage: "granted",
+            ad_user_data: "granted",
+            ad_personalization: "granted",
+            analytics_storage: "granted",
+            functionality_storage: "granted",
+            personalization_storage: "granted",
+            security_storage: "granted",
+        };
+
+        var essentialOnlyGranted = {
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied",
+            analytics_storage: "denied",
+            functionality_storage: "granted",
+            personalization_storage: "granted",
+            security_storage: "granted",
+        };
+
+        if (readCookie("google-consent") != null)
+            gtag("consent", "update", allGranted);
+    </script>
+
+
+    <!-- Create one update function for each consent parameter -->
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != "dataLayer" ? "&l=" + l : "";
+            j.async = true;
+            j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, "script", "dataLayer", "GTM-FZVQLLDS0B");
+    </script>
+    <!-- End Google Tag Manager -->
+
+
+
+
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1007318860933777');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1007318860933777&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+
+
+
+    <!-- </script> -->
+
+    <script>
+        function consentAll() {
+            gtag('consent', 'update', allGranted);
+            createCookie('google-consent', true, 30);
+            document.getElementById('consent-banner').style = 'display: none;';
+            dataLayer.push({ 'event': 'consent-updated' });
+        }
+        function essentialOnly() {
+            gtag('consent', 'update', essentialOnlyGranted);
+            createCookie('google-consent', true, 30);
+            document.getElementById('consent-banner').style = 'display: none;';
+            dataLayer.push({ 'event': 'consent-updated' });
+        }
+
+        function createCookie(name, value, days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                var expires = "; expires=" + date.toGMTString();
+            }
+            else var expires = "";
+
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (readCookie('google-consent') == null)
+                document.getElementById('consent-banner').style = '';
+        });
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZVQLLDS0B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-FZVQLLDS0B');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1513305058792581"
+        crossorigin="anonymous"></script>
+
 </head>
 
 
 
 <body>
+    <!-- clarity code -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M49293JP" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- clarity code -->
+
+
     <%- include("./includes/flash-message") %>
         <div class="full-website">
             <header class="landing-header  ">
@@ -112,6 +291,7 @@
                                     <option value="">Select Time Zone</option>
                                 </select>
 
+                                <button type="button" id="prevBtn" class="sub-btn" style="background-color: transparent; border: black; border: 2px solid black; padding-block: .6rem; margin-right: 2vw;">Back</button>
                                 <button type="submit" class="sub-btn">Submit</button>
                             </div>
                         </form>
@@ -122,15 +302,15 @@
 
 
 
-                <section class="hero-section-landing ">
-                    <div class="hideimg hi1 non-scrollable-section ">
-                        <!-- <img src="/assets/images/ar22.webp" alt=""> -->
+                <section class="hero-section-landing non-scrollable-section">
+                    <!-- <div class="hideimg hi1 non-scrollable-section ">
+                       
                         <p>Digital Marketing</p>
                     </div>
                     <div class="hideimg hi2 non-scrollable-section ">
-                        <!-- <img src="/assets/images/ar33.webp" alt=""> -->
+                       
                         <p>Development</p>
-                    </div>
+                    </div> -->
                     <!-- <div class="hideimg hi3">
                     <img src="/assets/images/ar22.webp" alt="">
                 </div> -->
@@ -336,10 +516,10 @@
                                     </div>
                                     <div class="dislike">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
-                                            alt="thumbs-down">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata" height="30" width="30"
+                                                src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[0].dislikes %>
@@ -360,10 +540,10 @@
                                 <div class="like-dislike">
                                     <div class="like">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata gfg2" height="30" width="30"
-                                            src="/assets/images/thumbs-up.webp" alt="thumbs-up">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata gfg2" height="30" width="30"
+                                                src="/assets/images/thumbs-up.webp" alt="thumbs-up">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[2].likes %>
@@ -372,10 +552,10 @@
                                     </div>
                                     <div class="dislike">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata gfg2" height="30" width="30"
-                                            src="/assets/images/thumbs-down.webp" alt="thumbs-down">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata gfg2" height="30" width="30"
+                                                src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[2].dislikes %>
@@ -397,10 +577,10 @@
                                 <div class="like-dislike">
                                     <div class="like">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata gfg3" height="30" width="30"
-                                            src="/assets/images/thumbs-up.webp" alt="thumbs-up">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata gfg3" height="30" width="30"
+                                                src="/assets/images/thumbs-up.webp" alt="thumbs-up">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[3].likes %>
@@ -409,10 +589,10 @@
                                     </div>
                                     <div class="dislike">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata gfg3" height="30" width="30"
-                                            src="/assets/images/thumbs-down.webp" alt="thumbs-down">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata gfg3" height="30" width="30"
+                                                src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[3].dislikes %>
@@ -439,10 +619,10 @@
                                 <div class="like-dislike">
                                     <div class="like">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
-                                            alt="thumbs-up">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
+                                                alt="thumbs-up">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[1].likes %>
@@ -451,10 +631,10 @@
                                     </div>
                                     <div class="dislike">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
-                                            alt="thumbs-down">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata" height="30" width="30"
+                                                src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[1].dislikes %>
@@ -480,10 +660,10 @@
                                 <div class="like-dislike">
                                     <div class="like">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
-                                            alt="thumbs-up">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
+                                                alt="thumbs-up">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[2].likes %>
@@ -492,10 +672,10 @@
                                     </div>
                                     <div class="dislike">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
-                                            alt="thumbs-down">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata" height="30" width="30"
+                                                src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[2].dislikes %>
@@ -520,10 +700,10 @@
                                 <div class="like-dislike">
                                     <div class="like">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata grnimg" height="30" width="30"
-                                            src="/assets/images/thumbs-up.webp" alt="thumbs-up">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata grnimg" height="30" width="30"
+                                                src="/assets/images/thumbs-up.webp" alt="thumbs-up">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[3].likes %>
@@ -532,10 +712,10 @@
                                     </div>
                                     <div class="dislike">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata grnimg" height="30" width="30"
-                                            src="/assets/images/thumbs-down.webp" alt="thumbs-down">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata grnimg" height="30" width="30"
+                                                src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[3].dislikes %>
@@ -556,10 +736,10 @@
                                 <div class="like-dislike">
                                     <div class="like">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
-                                            alt="thumbs-up">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata" height="30" width="30" src="/assets/images/thumbs-up.webp"
+                                                alt="thumbs-up">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[4].likes %>
@@ -568,10 +748,10 @@
                                     </div>
                                     <div class="dislike">
                                         <div class=""
-                                        style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                        <img class="aata" height="30" width="30" src="/assets/images/thumbs-down.webp"
-                                            alt="thumbs-down">
-                                            </div>
+                                            style="border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                            <img class="aata" height="30" width="30"
+                                                src="/assets/images/thumbs-down.webp" alt="thumbs-down">
+                                        </div>
                                         <% if (getLikesDislikes.length> 0) { %>
                                             <small>
                                                 <%= getLikesDislikes[4].dislikes %>
@@ -1116,7 +1296,7 @@
                 </div>
             </div>
 
-            <a href="tel:18005710605" id="callLink" class="mob-ele" onclick="getPhoneNumber(event)">
+            <a href="tel:18005710605" id="callLink" class="mob-ele">
                 <div class="up">
                     <img src="/assets/images/mob-call-icon2.png" height="30" width="30" alt="mob-call-icon1" />
                 </div>
@@ -1151,68 +1331,70 @@
         <script src="/js/landing.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-        function getPhoneNumber(event) {
-        event.preventDefault(); // Prevent the default action of the anchor tag
+        <script>
 
-        const callLink = document.getElementById("callLink");
+            function getPhoneNumber(event) {
+                event.preventDefault(); // Prevent the default action of the anchor tag
 
-        // Check if Geolocation is available
-        if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-        } else {
-        alert("Geolocation is not supported by your browser.");
-        showPhoneNumberOptions(); // Show both phone numbers
-        }
+                const callLink = document.getElementById("callLink");
 
-        // Success callback
-        function success(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+                // Check if Geolocation is available
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(success, error);
+                } else {
+                    alert("Geolocation is not supported by your browser.");
+                    showPhoneNumberOptions(); // Show both phone numbers
+                }
 
-        // Send coordinates to the server
-        fetch('/get-phone-number', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ latitude, longitude })
-        })
-        .then(response => response.json())
-        .then(data => {
-        // Set the phone number based on location
-        callLink.href = `tel:${data.phone}`;
-        // Trigger the call after updating the phone number
-        window.location.href = callLink.href;
-        })
-        .catch(err => {
-        console.error('Error:', err);
-        alert("Unable to retrieve phone number.");
-        });
-        }
+                // Success callback
+                function success(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
 
-        // Error callback
-        function error() {
-        alert("Location access denied.");
-        showPhoneNumberOptions(); // Show both phone numbers
-        }
+                    // Send coordinates to the server
+                    fetch('/get-phone-number', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ latitude, longitude })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Set the phone number based on location
+                            callLink.href = `tel:${data.phone}`;
+                            // Trigger the call after updating the phone number
+                            window.location.href = callLink.href;
+                        })
+                        .catch(err => {
+                            console.error('Error:', err);
+                            alert("Unable to retrieve phone number.");
+                        });
+                }
 
-        function showPhoneNumberOptions() {
-        // Display an alert with both phone numbers
-        const indiaNumber = "18005710605"; // Replace with your India number
-        const globalNumber = "+1-321-125-5890"; // Replace with your global number
+                // Error callback
+                function error() {
+                    alert("Location access denied.");
+                    showPhoneNumberOptions(); // Show both phone numbers
+                }
 
-        const userChoice = confirm(`Location access was denied.\n\nPlease choose a number to call:\n\nIndia:
+                function showPhoneNumberOptions() {
+                    // Display an alert with both phone numbers
+                    const indiaNumber = "18005710605"; // Replace with your India number
+                    const globalNumber = "+1-321-125-5890"; // Replace with your global number
+
+                    const userChoice = confirm(`Location access was denied.\n\nPlease choose a number to call:\n\nIndia:
         ${indiaNumber}\nGlobal: ${globalNumber}`);
 
-        if (userChoice) {
-        callLink.href = `tel:${indiaNumber}`;
-        } else {
-        callLink.href = `tel:${globalNumber}`;
-        }
+                    if (userChoice) {
+                        callLink.href = `tel:${indiaNumber}`;
+                    } else {
+                        callLink.href = `tel:${globalNumber}`;
+                    }
 
-        window.location.href = callLink.href; // Trigger the call with the chosen number
-        }
-        }
+                    window.location.href = callLink.href; // Trigger the call with the chosen number
+                }
+            }
 
         </script>
 
